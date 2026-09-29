@@ -24,16 +24,22 @@ def main() -> None:
     choices = list(cfg.ALL_MODELS) + [cfg.JUDGE_MODEL["name"]]
     parser = argparse.ArgumentParser()
     parser.add_argument("models", nargs="+", choices=choices)
+    parser.add_argument("--check", action="store_true", help="download nothing; exit 1 if any model is incomplete")
     args = parser.parse_args()
 
     from huggingface_hub import HfApi, snapshot_download
     api = HfApi()
+    incomplete = []
     for model in args.models:
         spec = spec_of(model)
         info = api.model_info(spec["repo"], revision=spec["revision"], files_metadata=True)
         missing = [s for s in info.siblings if not (cfg.model_dir(model) / s.rfilename).exists()]
         if not missing:
             print(f"{model}: {spec['repo']}@{spec['revision'][:8]} already complete")
+            continue
+        if args.check:
+            print(f"{model}: {len(missing)} files missing")
+            incomplete.append(model)
             continue
         need_gb = sum(s.size or 0 for s in missing) / 1e9
         free_gb = shutil.disk_usage(cfg.HF_HUB_DIR).free / 1e9
@@ -43,6 +49,8 @@ def main() -> None:
         print(f"{model}: downloading {need_gb:.1f} GB ({len(missing)} files) of {spec['repo']}@{spec['revision']}")
         snapshot_download(spec["repo"], revision=spec["revision"], cache_dir=cfg.HF_HUB_DIR)
         print(f"{model}: done -> {cfg.model_dir(model)}")
+    if incomplete:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

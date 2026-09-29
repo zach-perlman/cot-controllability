@@ -1,0 +1,27 @@
+{
+  "exp_id": "exp02_prompt_grid",
+  "written": "2026-09-29T17:35:00+00:00",
+  "written_before": "the A100 steps below were run",
+  "why": "The H100 instance was replaced by an 8x A100-SXM4-40GB instance (PCIe only, no NVLink) while Qwen3.6-27B chunk 2 of 2 was 488/1000 done; that partial chunk was never written (chunks are written only when complete) and is regenerated from scratch.",
+  "unchanged": [
+    "requests.jsonl and items.jsonl (sha256 as in manifest.json), prompts, sampling parameters, per-request seeds, caps, model revisions, judge settings",
+    "software: vLLM 0.30.0, torch 2.13.0+cu132, transformers 5.17.0, flashinfer 0.6.18.post1 (log/setup_a100/freeze_vllm.txt vs log/setup/freeze_vllm.txt)",
+    "every cache key (scripts/check_cache_keys.py gives identical output on commit 869016b and on the code that ran these steps)"
+  ],
+  "generated_on_h100": [
+    "Qwen3-8B, all 2000 requests",
+    "Qwen3-32B (FP8), all 2000 requests",
+    "Qwen3.6-27B requests 0-999 (chunk_000; items: 720 GPQA + 280 HLE traces)"
+  ],
+  "generated_on_a100": {
+    "Qwen3.6-27B requests 1000-1999 (chunk_001; items: 480 HLE + 520 MMLU-Pro traces)": "4 shards x tensor-parallel 2 (scripts/run_sharded.sh); shard k runs every 4th request of the chunk starting at k",
+    "Qwen3-32B-bf16 precision check (baseline prompt, word_suppression + lowercase_thinking)": "1 shard x tensor-parallel 4, max_model_len 28800 as planned",
+    "Qwen3.8-27B judge for every exp02 generation file": "tensor-parallel 4"
+  },
+  "consequences": [
+    "Samples are not token-identical to what the H100 would have produced (different kernels and batch composition); they are draws from the same distribution.",
+    "Prompt-vs-baseline contrasts are not confounded by hardware: each chunk holds every prompt and mode in equal numbers for its items (225 per prompt, 100 per mode), and contrasts are paired within item.",
+    "Qwen3.6-27B per-source numbers mix hardware with source: GPQA traces are all from the H100, MMLU-Pro traces all from the A100, HLE from both.",
+    "The precision check compares bf16 on A100 with FP8 on H100, so hardware and precision are confounded in it; its rule (bf16 compliance inside the FP8 cell's 95% CI) is unchanged."
+  ]
+}

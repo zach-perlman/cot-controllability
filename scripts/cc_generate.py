@@ -14,15 +14,24 @@ Engine profiles (cc_config.ENGINE_PROFILES) change only GPU scheduling. "v1" (de
 trace's answer phase starts when its reasoning ends, and rows are appended to <...>.parts/stream.jsonl as they
 finish (resumable). Non-default profiles are part of the output key and file name (<model>__<sampling>__<profile>__).
 
+Multi-GPU (v1 only): --shard K/N runs every N-th request of each unwritten chunk, starting at K, into
+<...>.parts/chunk_<i>.shard<K>of<N>.jsonl; --merge-shards N (no GPU) joins the shard files into chunk_<i>.jsonl in
+request order and writes the output. Every request keeps its own seed, so sharding changes which requests share a
+batch, not the requests. scripts/run_sharded.sh launches the shards and the merge. The GPU type and tensor-parallel
+degree are recorded in the meta files, not in the key (like the GPU model, they are hardware, not the experiment).
+
 Run (vLLM venv):
   scripts/vllm_python.sh scripts/cc_generate.py --exp exp02 --model Qwen3-8B [--requests PATH]
       [--prompts baseline --modes word_suppression lowercase_thinking] [--sampling card|greedy] [--engine stream]
+      [--shard K/N | --merge-shards N]
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -32,6 +41,18 @@ import cc_config as cfg
 # Requests per chunk; a crash loses at most one chunk. Each chunk ends waiting on its longest (up to 25k-token)
 # trace, so fewer, larger chunks waste less GPU time.
 CHUNK_SIZE = 1000
+
+# Tensor-parallel degree of every engine this process loads (subject models and the judge): 40 GB GPUs cannot hold
+# the 27B-32B bf16 models alone. Set by scripts/run_sharded.sh; recorded in the meta files, not in any key.
+TENSOR_PARALLEL = int(os.environ.get("CC_TENSOR_PARALLEL", "1"))
+
+
+def visible_gpus() -> list[str]:
+    """Names of the GPUs this process may use (hardware provenance for the meta files)."""
+    query = ["nvidia-smi", "--query-gpu=name", "--format=csv,noheader"]
+    if os.environ.get("CUDA_VISIBLE_DEVICES"):
+        query += ["-i", os.environ["CUDA_VISIBLE_DEVICES"]]
+    return subprocess.run(query, capture_output=True, text=True, check=True).stdout.split("\n")[:-1]
 
 
 def sampling_for(exp_key: str, family: str, override: str | None) -> tuple[str, dict]:
@@ -64,7 +85,7 @@ def load_llm(model_path: Path, gpu_memory_utilization: float, max_model_len: int
     kwargs = {"limit_mm_per_prompt": {"image": 0, "video": 0}} if multimodal else {}
     return LLM(model=str(model_path), max_model_len=max_model_len, max_num_seqs=cfg.VLLM_MAX_NUM_SEQS,
                gpu_memory_utilization=gpu_memory_utilization, seed=cfg.VLLM_ENGINE_SEED,
-               enable_prefix_caching=True, **kwargs, **(extra or {}))
+               enable_prefix_caching=True, tensor_parallel_size=TENSOR_PARALLEL, **kwargs, **(extra or {}))
 
 
 # Under vLLM's priority scheduling a lower value is scheduled first: answer phases go ahead of waiting reasoning
@@ -269,27 +290,69 @@ def read_stream(path: Path) -> dict[str, dict]:
     return rows
 
 
+def chunks_of(requests: list[dict]) -> list[list[dict]]:
+    return [requests[i:i + CHUNK_SIZE] for i in range(0, len(requests), CHUNK_SIZE)]
+
+
+def chunk_path(parts: Path, index: int) -> Path:
+    return parts / f"chunk_{index:03d}.jsonl"
+
+
+def shard_path(parts: Path, index: int, shard: tuple[int, int]) -> Path:
+    return parts / f"chunk_{index:03d}.shard{shard[0]}of{shard[1]}.jsonl"
+
+
+def write_jsonl(path: Path, lines: list[str]) -> None:
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text("".join(line + "\n" for line in lines))
+    tmp.rename(path)
+
+
 def run_batch(llm, tokenizer, family: str, requests: list[dict], sampling: dict, max_model_len: int, parts: Path,
-              row_of) -> list[str]:
+              row_of, shard: tuple[int, int] | None = None) -> list[str] | None:
     """Engine profile v1: CHUNK_SIZE requests at a time through generate_two_phase, one file per chunk.
-    Returns the output's JSON lines, in request order."""
-    chunks = [requests[i:i + CHUNK_SIZE] for i in range(0, len(requests), CHUNK_SIZE)]
+    Returns the output's JSON lines, in request order. With shard=(K, N), runs requests K, K+N, ... of every
+    unwritten chunk into its shard file and returns None (merge_shards writes the chunks)."""
+    chunks = chunks_of(requests)
     for index, chunk in enumerate(chunks):
-        chunk_path = parts / f"chunk_{index:03d}.jsonl"
-        if chunk_path.exists():
+        if chunk_path(parts, index).exists():
+            continue
+        target = chunk_path(parts, index) if shard is None else shard_path(parts, index, shard)
+        todo = chunk if shard is None else chunk[shard[0]::shard[1]]
+        if target.exists():
             continue
         jobs = [{"prompt_ids": render_prompt_ids(tokenizer, family, r["system"], r["user"]), "seed": r["seed"]}
-                for r in chunk]
+                for r in todo]
         results = generate_two_phase(llm, tokenizer, family, jobs, sampling, cfg.REASONING_CAP_TOKENS,
                                      cfg.ANSWER_CAP_TOKENS, max_model_len)
-        tmp = chunk_path.with_suffix(".tmp")
-        with tmp.open("w") as f:
-            for request, result in zip(chunk, results):
-                f.write(json.dumps(row_of(request, result)) + "\n")
-        tmp.rename(chunk_path)
-        print(f"chunk {index + 1}/{len(chunks)} written", flush=True)
-    return [line for index in range(len(chunks))
-            for line in (parts / f"chunk_{index:03d}.jsonl").read_text().splitlines()]
+        write_jsonl(target, [json.dumps(row_of(request, result)) for request, result in zip(todo, results)])
+        print(f"chunk {index + 1}/{len(chunks)} written" + (f" (shard {shard[0]} of {shard[1]})" if shard else ""),
+              flush=True)
+    if shard is not None:
+        return None
+    return [line for index in range(len(chunks)) for line in chunk_path(parts, index).read_text().splitlines()]
+
+
+def merge_shards(requests: list[dict], parts: Path, n_shards: int) -> list[str]:
+    """Join the shard files of every unwritten chunk into chunk_<i>.jsonl (request order); return run_batch's
+    lines. Refuses if a shard file is missing or its rows are not exactly that shard's requests."""
+    chunks = chunks_of(requests)
+    for index, chunk in enumerate(chunks):
+        if chunk_path(parts, index).exists():
+            continue
+        rows = {}
+        for k in range(n_shards):
+            path = shard_path(parts, index, (k, n_shards))
+            if not path.exists():
+                raise SystemExit(f"missing {path.name}; run its shard first")
+            shard_rows = [json.loads(line) for line in path.read_text().splitlines()]
+            expected = [r["request_id"] for r in chunk[k::n_shards]]
+            if [r["request_id"] for r in shard_rows] != expected:
+                raise SystemExit(f"{path.name}: rows are not shard {k}'s requests")
+            rows.update({r["request_id"]: r for r in shard_rows})
+        write_jsonl(chunk_path(parts, index), [json.dumps(rows[r["request_id"]]) for r in chunk])
+        print(f"chunk {index + 1}/{len(chunks)} merged from {n_shards} shards", flush=True)
+    return [line for index in range(len(chunks)) for line in chunk_path(parts, index).read_text().splitlines()]
 
 
 def run_streaming(llm, tokenizer, family: str, requests: list[dict], sampling: dict, max_model_len: int,
@@ -326,7 +389,13 @@ def main() -> None:
                         help="lower only when the KV cache cannot hold one full-length sequence (bf16 32B check)")
     parser.add_argument("--engine", choices=list(cfg.ENGINE_PROFILES), default=cfg.DEFAULT_ENGINE_PROFILE,
                         help="GPU scheduling only (cc_config.ENGINE_PROFILES); non-default profiles change the key")
+    parser.add_argument("--shard", default=None, help="K/N: run shard K of N of every unwritten chunk (v1 only)")
+    parser.add_argument("--merge-shards", type=int, default=None, metavar="N",
+                        help="join N shard files per unwritten chunk and write the output (no GPU)")
     args = parser.parse_args()
+    shard = tuple(int(x) for x in args.shard.split("/")) if args.shard else None
+    if (shard or args.merge_shards) and cfg.ENGINE_PROFILES[args.engine]["scheduler"] != "batch":
+        raise SystemExit("--shard / --merge-shards work with the batch engine profile (v1) only")
 
     spec = cfg.ALL_MODELS[args.model]
     family = spec["family"]
@@ -340,14 +409,28 @@ def main() -> None:
         return
     parts = out.with_suffix(".parts")
     parts.mkdir(parents=True, exist_ok=True)
+
+    if args.merge_shards:
+        write_jsonl(out, merge_shards(requests, parts, args.merge_shards))
+        print(f"wrote {out}", flush=True)
+        return
+
     gpu_memory_utilization = profile["gpu_memory_utilization"] or spec["gpu_memory_utilization"]
     extra = engine_args(args.engine, family)
-    (parts / "meta.json").write_text(json.dumps(
-        {"exp": args.exp, "model": args.model, "spec": spec, "sampling_name": sampling_name, "sampling": sampling,
-         "n_requests": len(requests), "max_model_len": args.max_model_len, "requests_file": str(requests_path),
-         "engine": args.engine, "gpu_memory_utilization": gpu_memory_utilization, "engine_args": extra}, indent=2))
-    print(f"{args.model}: {len(requests)} requests, sampling {sampling_name}, engine {args.engine} -> {out.name}",
-          flush=True)
+    meta = {"exp": args.exp, "model": args.model, "spec": spec, "sampling_name": sampling_name, "sampling": sampling,
+            "n_requests": len(requests), "max_model_len": args.max_model_len, "requests_file": str(requests_path),
+            "engine": args.engine, "gpu_memory_utilization": gpu_memory_utilization, "engine_args": extra,
+            "gpus": visible_gpus(), "tensor_parallel": TENSOR_PARALLEL, "shard": args.shard,
+            "started": time.strftime("%Y-%m-%dT%H:%M:%S%z")}
+    # meta.json describes the first run into this output; a resumed or sharded run (other hardware, other
+    # shards) adds its own file instead of rewriting it.
+    meta_path = parts / "meta.json"
+    if meta_path.exists():
+        tag = f"shard{shard[0]}of{shard[1]}" if shard else "resume"
+        meta_path = parts / f"meta_{tag}_{int(time.time())}.json"
+    meta_path.write_text(json.dumps(meta, indent=2))
+    print(f"{args.model}: {len(requests)} requests, sampling {sampling_name}, engine {args.engine}, "
+          f"TP {TENSOR_PARALLEL}, shard {args.shard} -> {out.name}", flush=True)
 
     from transformers import AutoTokenizer
     tokenizer = AutoTokenizer.from_pretrained(cfg.model_dir(args.model))
@@ -357,18 +440,18 @@ def main() -> None:
     def row_of(request: dict, result: dict) -> dict:
         return output_row(request, args.model, sampling_name, args.engine, result)
 
-    run = run_streaming if profile["scheduler"] == "streaming" else run_batch
     started = time.time()
-    lines = run(llm, tokenizer, family, requests, sampling, args.max_model_len, parts, row_of)
+    if profile["scheduler"] == "streaming":
+        lines = run_streaming(llm, tokenizer, family, requests, sampling, args.max_model_len, parts, row_of)
+    else:
+        lines = run_batch(llm, tokenizer, family, requests, sampling, args.max_model_len, parts, row_of, shard)
     (parts / f"timing_{int(started)}.json").write_text(json.dumps(
-        {"engine": args.engine, "seconds": round(time.time() - started), "n_requests": len(requests)}))
+        {"engine": args.engine, "seconds": round(time.time() - started), "n_requests": len(requests),
+         "shard": args.shard, "tensor_parallel": TENSOR_PARALLEL, "gpus": meta["gpus"]}))
 
-    tmp = out.with_suffix(".tmp")
-    with tmp.open("w") as f:
-        for line in lines:
-            f.write(line + "\n")
-    tmp.rename(out)
-    print(f"wrote {out}", flush=True)
+    if lines is not None:
+        write_jsonl(out, lines)
+        print(f"wrote {out}", flush=True)
 
     sys.path.insert(0, str(Path(__file__).parent))
     from exp03_exit import exit_without_teardown
