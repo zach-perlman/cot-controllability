@@ -1,5 +1,5 @@
 {
-  "written": "2026-09-29T21:50Z, before any FP8 generation or judging",
+  "written": "2026-09-29T21:41:31Z (commit fc2b574), before any FP8 generation or judging; first version said 21:50Z by mistake",
   "decision": "human (2026-09-29 17:40 EDT), to shorten the run: FP8 weights for the models not yet run on the H200 (Qwen3.6-27B and the judge); Qwen3-32B keeps running unchanged (its pre-registered checkpoint is already FP8). Offered alongside: keep bf16 (report ~9:30-11:15 PM EDT) or also an FP8 KV cache with a Qwen3-32B restart (not chosen).",
   "supersedes": "deviations_h200.json's 'Qwen3.6-27B (bf16, as in the manifest)' and its judge line; everything else there stands.",
   "changes": {
