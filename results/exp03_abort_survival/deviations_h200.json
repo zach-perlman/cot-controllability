@@ -1,5 +1,5 @@
 {
-  "written": "2026-09-29T21:25:00Z",
+  "written": "2026-09-29T21:08:23Z (commit 40033d9, before generation started; first version said 21:25Z by mistake)",
   "decision": "human (2026-09-29 ~16:50 EDT): move from 8x A100-40GB to 1x H200 mid-generation; 'restore our state and run'. Agent chose to regenerate Qwen3-32B and Qwen3.6-27B from scratch on the H200 (reasons below).",
   "hardware": "1x H200 141GB. Qwen3-32B then Qwen3.6-27B (bf16, as in the manifest), each 1 shard x TP 1; judge Qwen3.8-27B TP 1 on all three models' grades (scripts/h200_exp03.sh). The manifest's other settings (engine seed, per-request seeds, caps, max_num_seqs, abort rule) are unchanged.",
   "kept_from_a100": "Qwen3-8B: all 3,700 requests generated (4 shards x TP 1) and graded (grade key 058984d0842a) on the A100; not rerun.",
