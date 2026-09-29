@@ -79,8 +79,12 @@ def split_reasoning(completion, fam: dict) -> tuple[list[int], list[int], str]:
 
 
 def generate_two_phase(llm, tokenizer, family: str, jobs: list[dict], sampling: dict, reasoning_cap: int,
-                       answer_cap: int, max_model_len: int) -> list[dict]:
-    """jobs: dicts with prompt_ids and seed. Returns one result dict per job, same order."""
+                       answer_cap: int, max_model_len: int, answer_after_no_close: bool = False) -> list[dict]:
+    """jobs: dicts with prompt_ids and seed. Returns one result dict per job, same order.
+
+    answer_after_no_close (judge only): if the model ends its turn without </think>, close it and ask for the
+    answer anyway, as for a truncated trace. Subject models keep "no_think_close" with no answer phase.
+    """
     from vllm import SamplingParams
     fam = cfg.FAMILIES[family]
     close_ids = tokenizer.encode(cfg.FORCED_THINK_CLOSE, add_special_tokens=False)
@@ -106,9 +110,9 @@ def generate_two_phase(llm, tokenizer, family: str, jobs: list[dict], sampling: 
                   "prompt_tokens": len(job["prompt_ids"]), "answer": "", "answer_tokens": 0,
                   "answer_finish": None}
         results.append(result)
-        if status == "no_think_close":
+        if status == "no_think_close" and not answer_after_no_close:
             continue  # the model ended its turn without closing <think>; there is no answer phase
-        continuation = phase1_ids + (close_ids if status == "truncated" else [])
+        continuation = phase1_ids + (close_ids if status != "closed" else [])
         phase2_prompts.append({"prompt_token_ids": job["prompt_ids"] + continuation})
         phase2_params.append(SamplingParams(**sampling, max_tokens=answer_cap, seed=cfg.phase2_seed(job["seed"]),
                                             stop_token_ids=[fam["im_end"]], skip_special_tokens=True))

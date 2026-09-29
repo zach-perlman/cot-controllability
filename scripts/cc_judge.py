@@ -64,18 +64,28 @@ class Judge:
         self.llm = load_llm(cfg.model_dir(cfg.JUDGE_MODEL["name"]), cfg.JUDGE_MODEL["gpu_memory_utilization"],
                             cfg.JUDGE_MAX_MODEL_LEN)
 
-    def run(self, prompts: list[str], seeds: list[int]) -> list[dict]:
+    def run(self, prompts: list[str], seeds: list[int], parser) -> list[dict]:
+        """Judge each prompt; a verdict the parser cannot read is asked once more with a new seed."""
+        results = self._generate(prompts, seeds)
+        retry = [i for i, r in enumerate(results) if parse_or_none(parser, r["answer"]) is None]
+        if retry:
+            again = self._generate([prompts[i] for i in retry], [seeds[i] + 1 for i in retry])
+            for i, r in zip(retry, again):
+                results[i] = {**r, "retried": True}
+        return results
+
+    def _generate(self, prompts: list[str], seeds: list[int]) -> list[dict]:
         jobs = [{"prompt_ids": render_prompt_ids(self.tokenizer, self.family, "", p), "seed": s}
                 for p, s in zip(prompts, seeds)]
         return generate_two_phase(self.llm, self.tokenizer, self.family, jobs, cfg.FAMILIES[self.family]["sampling"],
                                   cfg.JUDGE_THINKING_CAP_TOKENS, cfg.JUDGE_ANSWER_CAP_TOKENS,
-                                  cfg.JUDGE_MAX_MODEL_LEN)
+                                  cfg.JUDGE_MAX_MODEL_LEN, answer_after_no_close=True)
 
 
 def judge_rows(judge: Judge, rows: list[dict], gens: dict, requests: dict) -> list[dict]:
     out = {r["request_id"]: {"request_id": r["request_id"], "ignore_question_checks": None,
                              "ignore_question_compliant": None, "meta_no_discussion": None, "meta_violations": None,
-                             "meta_answer": None, "judge_think_status": []} for r in rows}
+                             "meta_answer": None, "judge_think_status": [], "judge_retries": 0} for r in rows}
 
     # ignore_question: up to three rounds; a round only re-asks traces that were T in every earlier round.
     pending = []
@@ -91,12 +101,14 @@ def judge_rows(judge: Judge, rows: list[dict], gens: dict, requests: dict) -> li
         if not pending:
             break
         prompts = [ignore_question_prompt(requests[i]["grading_prompt"], gens[i]["reasoning"]) for i in pending]
-        results = judge.run(prompts, [judge_seed(i, "ignore_question", check) for i in pending])
+        results = judge.run(prompts, [judge_seed(i, "ignore_question", check) for i in pending],
+                            grade_csv._parse_judge_response)
         still = []
         for rid, res in zip(pending, results):
             verdict = parse_or_none(grade_csv._parse_judge_response, res["answer"])
             out[rid]["ignore_question_checks"].append(verdict)
             out[rid]["judge_think_status"].append(res["think_status"])
+            out[rid]["judge_retries"] += int(res.get("retried", False))
             if verdict == 1:
                 still.append(rid)
         pending = still
@@ -116,12 +128,14 @@ def judge_rows(judge: Judge, rows: list[dict], gens: dict, requests: dict) -> li
     meta_ids = [r["request_id"] for r in rows if final_compliant(r) == 1 and gens[r["request_id"]]["reasoning"]]
     if meta_ids:
         prompts = [meta_prompt(requests[i]["grading_prompt"], gens[i]["reasoning"]) for i in meta_ids]
-        results = judge.run(prompts, [judge_seed(i, "meta", 0) for i in meta_ids])
+        results = judge.run(prompts, [judge_seed(i, "meta", 0) for i in meta_ids],
+                            grade_csv._parse_meta_discussion_response)
         for rid, res in zip(meta_ids, results):
             parsed = parse_or_none(grade_csv._parse_meta_discussion_response, res["answer"])
             out[rid].update(meta_no_discussion=parsed[0] if parsed else None,
                             meta_violations=parsed[1] if parsed else None, meta_answer=res["answer"])
             out[rid]["judge_think_status"].append(res["think_status"])
+            out[rid]["judge_retries"] += int(res.get("retried", False))
     return [out[r["request_id"]] for r in rows]
 
 
