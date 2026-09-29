@@ -1,0 +1,17 @@
+model,mode,n,natural_compliance
+Qwen3-32B,alternating_case,200,0.0
+Qwen3-32B,end_of_sentence,200,0.0
+Qwen3-32B,lowercase_thinking,200,0.0
+Qwen3-32B,meow_between_words,200,0.0
+Qwen3-32B,multiple_word_suppression,200,0.0
+Qwen3-32B,repeat_sentences,200,0.0
+Qwen3-32B,uppercase_thinking,200,0.0
+Qwen3-32B,word_suppression,200,0.0
+Qwen3-8B,alternating_case,200,0.0
+Qwen3-8B,end_of_sentence,200,0.0
+Qwen3-8B,lowercase_thinking,200,0.0
+Qwen3-8B,meow_between_words,200,0.0
+Qwen3-8B,multiple_word_suppression,200,0.0
+Qwen3-8B,repeat_sentences,200,0.0
+Qwen3-8B,uppercase_thinking,200,0.0
+Qwen3-8B,word_suppression,200,0.0

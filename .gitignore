@@ -1,4 +1,8 @@
 cache/
+# Files that quote benchmark questions or traces (GPQA/HLE must not be published): private HF backup only
+results/*/verification*/
+results/*/analysis/*/read_samples.md
+results/*/prompt_examples.md
 models/
 *.safetensors
 .env

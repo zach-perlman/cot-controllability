@@ -1,0 +1,960 @@
+{
+  "exp_id": "exp02_prompt_grid",
+  "run": "grid",
+  "smoke": false,
+  "per_model": [
+    {
+      "model": "Qwen3-8B",
+      "prompt": "baseline",
+      "n_traces": 450,
+      "n_compliance_unknown": 0,
+      "n_meta_unknown": 0,
+      "P1": {
+        "value": 0.7905566385098548,
+        "ci": [
+          0.1949317738791423,
+          1.5811132770197096
+        ]
+      },
+      "P2_judge": {
+        "value": 0.5956248646307126,
+        "ci": [
+          0.0,
+          1.2272579597140807
+        ]
+      },
+      "P2_regex": {
+        "value": 0.7905566385098548,
+        "ci": [
+          0.1949317738791423,
+          1.5811132770197096
+        ]
+      },
+      "P3": {
+        "value": 1.0000000000000002,
+        "ci": [
+          0.2246566791510613,
+          2.10254160540717
+        ]
+      },
+      "accuracy": {
+        "value": 41.77777777777778,
+        "ci": [
+          33.77777777777778,
+          49.333333333333336
+        ]
+      },
+      "accuracy_gpqa_hle": {
+        "value": 30.03003003003003,
+        "ci": [
+          22.22222222222222,
+          37.83783783783784
+        ]
+      },
+      "accuracy_compliant": 25.0,
+      "n_compliant": 4,
+      "P1_nondegenerate": {
+        "value": 0.3898635477582846,
+        "ci": [
+          0.0,
+          0.9746588693957114
+        ]
+      },
+      "n_compliant_degenerate": 2,
+      "n_compliant_truncated": 2,
+      "n_compliant_near_empty": 0,
+      "near_empty_rate": 11.11111111111111,
+      "truncation_rate": 0.6666666666666667,
+      "no_think_close_rate": 0.0,
+      "median_reasoning_tokens": 2611.5,
+      "mean_reasoning_kchars": 14.51850222222222,
+      "n_capped_below_25k": 0,
+      "P1_suppression": {
+        "value": 1.1695906432748537,
+        "ci": [
+          0.0,
+          2.923976608187134
+        ]
+      },
+      "P1_addition": {
+        "value": 1.2020792722547107,
+        "ci": [
+          0.0,
+          3.021442495126705
+        ]
+      },
+      "P1_stylistic": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "no_constraint_accuracy": {
+        "value": 43.5,
+        "ci": [
+          33.5,
+          53.0
+        ]
+      },
+      "no_constraint_median_tokens": 4534.0
+    },
+    {
+      "model": "Qwen3-8B",
+      "prompt": "repetition",
+      "n_traces": 450,
+      "n_compliance_unknown": 0,
+      "n_meta_unknown": 0,
+      "P1": {
+        "value": 1.2812182402825678,
+        "ci": [
+          0.4006930907515703,
+          2.39347478382566
+        ]
+      },
+      "P2_judge": {
+        "value": 1.2812182402825678,
+        "ci": [
+          0.4006930907515703,
+          2.39347478382566
+        ]
+      },
+      "P2_regex": {
+        "value": 1.2812182402825678,
+        "ci": [
+          0.4006930907515703,
+          2.39347478382566
+        ]
+      },
+      "P3": {
+        "value": 1.0932085932085933,
+        "ci": [
+          0.39619107541822146,
+          1.914695300824708
+        ]
+      },
+      "accuracy": {
+        "value": 42.888888888888886,
+        "ci": [
+          33.33333333333333,
+          52.44444444444445
+        ]
+      },
+      "accuracy_gpqa_hle": {
+        "value": 32.732732732732735,
+        "ci": [
+          22.214714714714727,
+          42.94294294294294
+        ]
+      },
+      "accuracy_compliant": 16.666666666666664,
+      "n_compliant": 6,
+      "P1_nondegenerate": {
+        "value": 1.2812182402825678,
+        "ci": [
+          0.4006930907515703,
+          2.39347478382566
+        ]
+      },
+      "n_compliant_degenerate": 0,
+      "n_compliant_truncated": 0,
+      "n_compliant_near_empty": 0,
+      "near_empty_rate": 2.0,
+      "truncation_rate": 0.0,
+      "no_think_close_rate": 0.0,
+      "median_reasoning_tokens": 1861.0,
+      "mean_reasoning_kchars": 10.428626666666666,
+      "n_capped_below_25k": 7,
+      "P1_suppression": {
+        "value": 0.5847953216374269,
+        "ci": [
+          0.0,
+          1.7543859649122806
+        ]
+      },
+      "P1_addition": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1_stylistic": {
+        "value": 3.258859399210276,
+        "ci": [
+          0.8547008547008548,
+          6.31435247663317
+        ]
+      },
+      "no_constraint_accuracy": {
+        "value": 43.5,
+        "ci": [
+          33.5,
+          53.0
+        ]
+      },
+      "no_constraint_median_tokens": 4534.0,
+      "P1_minus_baseline": {
+        "value": 0.490661601772713,
+        "ci": [
+          -0.5956248646307126,
+          1.6824528081837993
+        ]
+      },
+      "P2_judge_minus_baseline": {
+        "value": 0.6855933756518552,
+        "ci": [
+          -0.38986354775828447,
+          1.8618483530764234
+        ]
+      },
+      "P3_minus_baseline": {
+        "value": 0.0932085932085931,
+        "ci": [
+          -1.1786339611096663,
+          1.2548770078117109
+        ]
+      },
+      "accuracy_minus_baseline": {
+        "value": 1.1111111111111072,
+        "ci": [
+          -3.111111111111109,
+          5.111111111111111
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-8B",
+      "prompt": "self_monitor",
+      "n_traces": 450,
+      "n_compliance_unknown": 0,
+      "n_meta_unknown": 0,
+      "P1": {
+        "value": 0.9704936605521399,
+        "ci": [
+          0.1949317738791423,
+          1.9521917328934855
+        ]
+      },
+      "P2_judge": {
+        "value": 0.9704936605521399,
+        "ci": [
+          0.1949317738791423,
+          1.9521917328934855
+        ]
+      },
+      "P2_regex": {
+        "value": 0.9704936605521399,
+        "ci": [
+          0.1949317738791423,
+          1.9521917328934855
+        ]
+      },
+      "P3": {
+        "value": 0.8760278304870336,
+        "ci": [
+          0.15503875968992248,
+          2.09025198938992
+        ]
+      },
+      "accuracy": {
+        "value": 38.44444444444444,
+        "ci": [
+          29.777777777777775,
+          46.44444444444444
+        ]
+      },
+      "accuracy_gpqa_hle": {
+        "value": 28.52852852852853,
+        "ci": [
+          19.51951951951952,
+          36.93693693693694
+        ]
+      },
+      "accuracy_compliant": 25.0,
+      "n_compliant": 4,
+      "P1_nondegenerate": {
+        "value": 0.7755618866729979,
+        "ci": [
+          0.0,
+          1.6777461221905667
+        ]
+      },
+      "n_compliant_degenerate": 1,
+      "n_compliant_truncated": 1,
+      "n_compliant_near_empty": 0,
+      "near_empty_rate": 4.666666666666667,
+      "truncation_rate": 1.1111111111111112,
+      "no_think_close_rate": 0.0,
+      "median_reasoning_tokens": 1748.5,
+      "mean_reasoning_kchars": 11.640897777777779,
+      "n_capped_below_25k": 0,
+      "P1_suppression": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1_addition": {
+        "value": 0.5847953216374269,
+        "ci": [
+          0.0,
+          1.7543859649122806
+        ]
+      },
+      "P1_stylistic": {
+        "value": 2.3266856600189936,
+        "ci": [
+          0.0,
+          5.0332383665717
+        ]
+      },
+      "no_constraint_accuracy": {
+        "value": 43.5,
+        "ci": [
+          33.5,
+          53.0
+        ]
+      },
+      "no_constraint_median_tokens": 4534.0,
+      "P1_minus_baseline": {
+        "value": 0.17993702204228512,
+        "ci": [
+          -0.9746588693957114,
+          1.424772163076255
+        ]
+      },
+      "P2_judge_minus_baseline": {
+        "value": 0.3748687959214273,
+        "ci": [
+          -0.7005881274887122,
+          1.5402942303527098
+        ]
+      },
+      "P3_minus_baseline": {
+        "value": -0.12397216951296663,
+        "ci": [
+          -1.5283459620384756,
+          1.3491329205942524
+        ]
+      },
+      "accuracy_minus_baseline": {
+        "value": -3.3333333333333357,
+        "ci": [
+          -7.5555555555555545,
+          0.6666666666666654
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-8B",
+      "prompt": "stacked",
+      "n_traces": 450,
+      "n_compliance_unknown": 0,
+      "n_meta_unknown": 0,
+      "P1": {
+        "value": 5.805468086169841,
+        "ci": [
+          3.5904100231585607,
+          8.024857966378434
+        ]
+      },
+      "P2_judge": {
+        "value": 5.805468086169841,
+        "ci": [
+          3.5904100231585607,
+          8.024857966378434
+        ]
+      },
+      "P2_regex": {
+        "value": 5.610536312290698,
+        "ci": [
+          3.5059187617667167,
+          7.724796321287547
+        ]
+      },
+      "P3": {
+        "value": 7.143091598144164,
+        "ci": [
+          4.125041293560129,
+          11.087213158358017
+        ]
+      },
+      "accuracy": {
+        "value": 42.44444444444444,
+        "ci": [
+          33.77222222222223,
+          50.66666666666667
+        ]
+      },
+      "accuracy_gpqa_hle": {
+        "value": 30.930930930930934,
+        "ci": [
+          21.92192192192192,
+          40.24024024024024
+        ]
+      },
+      "accuracy_compliant": 24.0,
+      "n_compliant": 25,
+      "P1_nondegenerate": {
+        "value": 4.914113393645558,
+        "ci": [
+          2.699055330634278,
+          7.16688742273537
+        ]
+      },
+      "n_compliant_degenerate": 4,
+      "n_compliant_truncated": 5,
+      "n_compliant_near_empty": 0,
+      "near_empty_rate": 10.666666666666668,
+      "truncation_rate": 2.0,
+      "no_think_close_rate": 0.0,
+      "median_reasoning_tokens": 1395.5,
+      "mean_reasoning_kchars": 9.52184888888889,
+      "n_capped_below_25k": 0,
+      "P1_suppression": {
+        "value": 2.3391812865497075,
+        "ci": [
+          0.0,
+          5.263157894736842
+        ]
+      },
+      "P1_addition": {
+        "value": 8.701954315989404,
+        "ci": [
+          4.665866946568701,
+          12.610586294796821
+        ]
+      },
+      "P1_stylistic": {
+        "value": 6.375268655970411,
+        "ci": [
+          2.8789923526765633,
+          10.252224221522463
+        ]
+      },
+      "no_constraint_accuracy": {
+        "value": 43.5,
+        "ci": [
+          33.5,
+          53.0
+        ]
+      },
+      "no_constraint_median_tokens": 4534.0,
+      "P1_minus_baseline": {
+        "value": 5.014911447659987,
+        "ci": [
+          2.6581321537461893,
+          7.334932773529264
+        ]
+      },
+      "P2_judge_minus_baseline": {
+        "value": 5.209843221539129,
+        "ci": [
+          2.9686901251228743,
+          7.48765015577881
+        ]
+      },
+      "P3_minus_baseline": {
+        "value": 6.143091598144164,
+        "ci": [
+          2.9501067385227078,
+          10.067872919017184
+        ]
+      },
+      "accuracy_minus_baseline": {
+        "value": 0.6666666666666643,
+        "ci": [
+          -4.005555555555549,
+          5.333333333333329
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "prompt": "baseline",
+      "n_traces": 450,
+      "n_compliance_unknown": 0,
+      "n_meta_unknown": 0,
+      "P1": {
+        "value": 3.2263707702304196,
+        "ci": [
+          1.6710817880408524,
+          5.017473051098781
+        ]
+      },
+      "P2_judge": {
+        "value": 3.2263707702304196,
+        "ci": [
+          1.6710817880408524,
+          5.017473051098781
+        ]
+      },
+      "P2_regex": {
+        "value": 3.2263707702304196,
+        "ci": [
+          1.6710817880408524,
+          5.017473051098781
+        ]
+      },
+      "P3": {
+        "value": 3.7500000000000004,
+        "ci": [
+          2.0643867123417983,
+          5.655363848246954
+        ]
+      },
+      "accuracy": {
+        "value": 47.55555555555556,
+        "ci": [
+          39.111111111111114,
+          55.333333333333336
+        ]
+      },
+      "accuracy_gpqa_hle": {
+        "value": 36.33633633633634,
+        "ci": [
+          27.32732732732733,
+          45.34534534534534
+        ]
+      },
+      "accuracy_compliant": 33.33333333333333,
+      "n_compliant": 15,
+      "P1_nondegenerate": {
+        "value": 3.2263707702304196,
+        "ci": [
+          1.6710817880408524,
+          5.017473051098781
+        ]
+      },
+      "n_compliant_degenerate": 0,
+      "n_compliant_truncated": 0,
+      "n_compliant_near_empty": 0,
+      "near_empty_rate": 4.0,
+      "truncation_rate": 0.2222222222222222,
+      "no_think_close_rate": 0.0,
+      "median_reasoning_tokens": 1493.0,
+      "mean_reasoning_kchars": 11.541742222222224,
+      "n_capped_below_25k": 0,
+      "P1_suppression": {
+        "value": 5.598040685759983,
+        "ci": [
+          2.0199805068226198,
+          10.026490728245113
+        ]
+      },
+      "P1_addition": {
+        "value": 1.1695906432748537,
+        "ci": [
+          0.0,
+          2.923976608187134
+        ]
+      },
+      "P1_stylistic": {
+        "value": 2.91148098165642,
+        "ci": [
+          0.6172839506172839,
+          5.7912855500574745
+        ]
+      },
+      "no_constraint_accuracy": {
+        "value": 47.0,
+        "ci": [
+          37.5,
+          56.00000000000001
+        ]
+      },
+      "no_constraint_median_tokens": 2888.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "prompt": "repetition",
+      "n_traces": 450,
+      "n_compliance_unknown": 0,
+      "n_meta_unknown": 0,
+      "P1": {
+        "value": 3.9436197330934166,
+        "ci": [
+          2.4137801769380722,
+          5.578047683310841
+        ]
+      },
+      "P2_judge": {
+        "value": 3.7486879592142754,
+        "ci": [
+          2.2042285200179936,
+          5.383115909431698
+        ]
+      },
+      "P2_regex": {
+        "value": 3.7486879592142754,
+        "ci": [
+          2.2042285200179936,
+          5.383115909431698
+        ]
+      },
+      "P3": {
+        "value": 3.7599717751550745,
+        "ci": [
+          2.2388365924693168,
+          5.400335148453485
+        ]
+      },
+      "accuracy": {
+        "value": 48.66666666666667,
+        "ci": [
+          40.44444444444444,
+          56.44444444444444
+        ]
+      },
+      "accuracy_gpqa_hle": {
+        "value": 37.83783783783784,
+        "ci": [
+          29.429429429429426,
+          46.246246246246244
+        ]
+      },
+      "accuracy_compliant": 35.294117647058826,
+      "n_compliant": 17,
+      "P1_nondegenerate": {
+        "value": 3.9436197330934166,
+        "ci": [
+          2.4137801769380722,
+          5.578047683310841
+        ]
+      },
+      "n_compliant_degenerate": 0,
+      "n_compliant_truncated": 0,
+      "n_compliant_near_empty": 0,
+      "near_empty_rate": 9.777777777777779,
+      "truncation_rate": 0.4444444444444444,
+      "no_think_close_rate": 0.0,
+      "median_reasoning_tokens": 1133.5,
+      "mean_reasoning_kchars": 9.168064444444445,
+      "n_capped_below_25k": 7,
+      "P1_suppression": {
+        "value": 3.193882141250562,
+        "ci": [
+          0.5847953216374269,
+          6.072874493927125
+        ]
+      },
+      "P1_addition": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1_stylistic": {
+        "value": 8.63697705802969,
+        "ci": [
+          4.588394062078273,
+          13.315339631129106
+        ]
+      },
+      "no_constraint_accuracy": {
+        "value": 47.0,
+        "ci": [
+          37.5,
+          56.00000000000001
+        ]
+      },
+      "no_constraint_median_tokens": 2888.0,
+      "P1_minus_baseline": {
+        "value": 0.717248962862997,
+        "ci": [
+          -1.5063061261891666,
+          2.936742973292679
+        ]
+      },
+      "P2_judge_minus_baseline": {
+        "value": 0.5223171889838558,
+        "ci": [
+          -1.697010213092084,
+          2.6882257876409916
+        ]
+      },
+      "P3_minus_baseline": {
+        "value": 0.00997177515507408,
+        "ci": [
+          -2.5833272146869715,
+          2.605810375525765
+        ]
+      },
+      "accuracy_minus_baseline": {
+        "value": 1.1111111111111143,
+        "ci": [
+          -2.4444444444444438,
+          4.666666666666663
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "prompt": "self_monitor",
+      "n_traces": 450,
+      "n_compliance_unknown": 0,
+      "n_meta_unknown": 0,
+      "P1": {
+        "value": 5.747988204128554,
+        "ci": [
+          3.5221005981239903,
+          7.995534896119691
+        ]
+      },
+      "P2_judge": {
+        "value": 5.178187634327984,
+        "ci": [
+          3.2263707702304196,
+          7.202479132303694
+        ]
+      },
+      "P2_regex": {
+        "value": 5.268156145349128,
+        "ci": [
+          3.2480298562169905,
+          7.3785216840772385
+        ]
+      },
+      "P3": {
+        "value": 5.085822338607064,
+        "ci": [
+          3.2858299708170766,
+          7.1315972591411185
+        ]
+      },
+      "accuracy": {
+        "value": 48.44444444444444,
+        "ci": [
+          39.111111111111114,
+          57.56111111111109
+        ]
+      },
+      "accuracy_gpqa_hle": {
+        "value": 37.53753753753754,
+        "ci": [
+          27.927927927927925,
+          47.74774774774775
+        ]
+      },
+      "accuracy_compliant": 64.0,
+      "n_compliant": 25,
+      "P1_nondegenerate": {
+        "value": 5.747988204128554,
+        "ci": [
+          3.5221005981239903,
+          7.995534896119691
+        ]
+      },
+      "n_compliant_degenerate": 0,
+      "n_compliant_truncated": 1,
+      "n_compliant_near_empty": 0,
+      "near_empty_rate": 1.1111111111111112,
+      "truncation_rate": 0.4444444444444444,
+      "no_think_close_rate": 0.0,
+      "median_reasoning_tokens": 1295.5,
+      "mean_reasoning_kchars": 9.89814,
+      "n_capped_below_25k": 0,
+      "P1_suppression": {
+        "value": 6.787624331483981,
+        "ci": [
+          2.91148098165642,
+          11.485979907032538
+        ]
+      },
+      "P1_addition": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1_stylistic": {
+        "value": 10.456340280901683,
+        "ci": [
+          6.338469035837463,
+          14.807317438896387
+        ]
+      },
+      "no_constraint_accuracy": {
+        "value": 47.0,
+        "ci": [
+          37.5,
+          56.00000000000001
+        ]
+      },
+      "no_constraint_median_tokens": 2888.0,
+      "P1_minus_baseline": {
+        "value": 2.5216174338981348,
+        "ci": [
+          0.3268647639992678,
+          4.6794038753103075
+        ]
+      },
+      "P2_judge_minus_baseline": {
+        "value": 1.9518168640975646,
+        "ci": [
+          -0.05189850219090102,
+          3.875581046633677
+        ]
+      },
+      "P3_minus_baseline": {
+        "value": 1.3358223386070631,
+        "ci": [
+          -0.9721208988148454,
+          3.6240705022262505
+        ]
+      },
+      "accuracy_minus_baseline": {
+        "value": 0.8888888888888857,
+        "ci": [
+          -2.2222222222222254,
+          3.9999999999999925
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "prompt": "stacked",
+      "n_traces": 450,
+      "n_compliance_unknown": 0,
+      "n_meta_unknown": 0,
+      "P1": {
+        "value": 4.254344312823846,
+        "ci": [
+          2.8039144632711883,
+          5.6830109461688405
+        ]
+      },
+      "P2_judge": {
+        "value": 3.3738191632928474,
+        "ci": [
+          2.024291497975708,
+          4.813315339631129
+        ]
+      },
+      "P2_regex": {
+        "value": 3.7745122540444167,
+        "ci": [
+          2.335016077706136,
+          5.318971693240699
+        ]
+      },
+      "P3": {
+        "value": 3.825763640686277,
+        "ci": [
+          2.292341603166165,
+          5.699820052796359
+        ]
+      },
+      "accuracy": {
+        "value": 48.66666666666667,
+        "ci": [
+          40.4388888888889,
+          56.888888888888886
+        ]
+      },
+      "accuracy_gpqa_hle": {
+        "value": 36.03603603603604,
+        "ci": [
+          27.027027027027028,
+          46.246246246246244
+        ]
+      },
+      "accuracy_compliant": 31.57894736842105,
+      "n_compliant": 19,
+      "P1_nondegenerate": {
+        "value": 4.254344312823846,
+        "ci": [
+          2.8039144632711883,
+          5.6830109461688405
+        ]
+      },
+      "n_compliant_degenerate": 0,
+      "n_compliant_truncated": 0,
+      "n_compliant_near_empty": 1,
+      "near_empty_rate": 6.666666666666667,
+      "truncation_rate": 0.0,
+      "no_think_close_rate": 0.0,
+      "median_reasoning_tokens": 1035.5,
+      "mean_reasoning_kchars": 8.366833333333334,
+      "n_capped_below_25k": 0,
+      "P1_suppression": {
+        "value": 6.105363122906983,
+        "ci": [
+          2.6415754485929925,
+          9.679612135752484
+        ]
+      },
+      "P1_addition": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1_stylistic": {
+        "value": 6.657669815564553,
+        "ci": [
+          2.922852001799372,
+          10.751237067026539
+        ]
+      },
+      "no_constraint_accuracy": {
+        "value": 47.0,
+        "ci": [
+          37.5,
+          56.00000000000001
+        ]
+      },
+      "no_constraint_median_tokens": 2888.0,
+      "P1_minus_baseline": {
+        "value": 1.027973542593426,
+        "ci": [
+          -0.8913546925242828,
+          2.8051431998800362
+        ]
+      },
+      "P2_judge_minus_baseline": {
+        "value": 0.14744839306242774,
+        "ci": [
+          -1.5921094283667379,
+          1.9020009663284507
+        ]
+      },
+      "P3_minus_baseline": {
+        "value": 0.07576364068627672,
+        "ci": [
+          -1.9503621929487112,
+          2.3978426863838376
+        ]
+      },
+      "accuracy_minus_baseline": {
+        "value": 1.1111111111111143,
+        "ci": [
+          -2.444444444444449,
+          4.4444444444444455
+        ]
+      }
+    }
+  ],
+  "gate": null,
+  "precision_check": null,
+  "checks": {
+    "locator_checked": 3200,
+    "locator_disagreements": 0,
+    "near_empty_share_of_compliant": 0.8695652173913043,
+    "degenerate_share_of_compliant": 6.086956521739131,
+    "truncated_share_of_compliant": 7.82608695652174,
+    "judge_parse_failures": 0,
+    "compliance_unknown": 0,
+    "meta_unknown": 0,
+    "regex_meta_rate_no_constraint": 2.0,
+    "think_status": {
+      "closed": 3578,
+      "truncated": 22
+    }
+  }
+}
