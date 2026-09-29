@@ -77,8 +77,8 @@ def generate_streaming_abort(llm, tokenizer, family: str, jobs: list[dict], samp
                              stop_token_ids=[fam["think_end"], fam["im_end"]], skip_special_tokens=False,
                              output_kind=RequestOutputKind.DELTA if job["abort"] else RequestOutputKind.FINAL_ONLY)
               for job, cap in zip(jobs, caps)]
-    request_ids = llm.enqueue([{"prompt_token_ids": j["prompt_ids"]} for j in jobs], params,
-                              priority=[gen.REASONING_PRIORITY] * len(jobs), use_tqdm=False)
+    request_ids = gen.add_requests(llm, [j["prompt_ids"] for j in jobs], params,
+                                   [gen.REASONING_PRIORITY] * len(jobs))
     reasoning_of = dict(zip(request_ids, range(len(jobs))))
     streamed = {rid: [] for rid, i in reasoning_of.items() if jobs[i]["abort"]}  # token ids so far
     next_check = {rid: cfg.ABORT_CHECK_MIN_TOKENS for rid in streamed}
@@ -142,10 +142,12 @@ def generate_streaming_abort(llm, tokenizer, family: str, jobs: list[dict], samp
                 answer_params = SamplingParams(**sampling, max_tokens=cfg.ANSWER_CAP_TOKENS,
                                                seed=cfg.phase2_seed(jobs[i]["seed"]), stop_token_ids=[fam["im_end"]],
                                                skip_special_tokens=True, output_kind=RequestOutputKind.FINAL_ONLY)
-                [answer_id] = llm.enqueue([{"prompt_token_ids": jobs[i]["prompt_ids"] + continuation}],
-                                          [answer_params], priority=[gen.ANSWER_PRIORITY], use_tqdm=False)
+                [answer_id] = gen.add_requests(llm, [jobs[i]["prompt_ids"] + continuation], [answer_params],
+                                               [gen.ANSWER_PRIORITY])
                 answer_of[answer_id] = (i, result)
-            elif rid in answer_of and out.finished:
+            elif rid not in answer_of:
+                raise RuntimeError(f"engine output for request {rid!r}, which this loop did not add or has aborted")
+            elif out.finished:
                 i, result = answer_of.pop(rid)
                 completion = out.outputs[0]
                 result.update(answer=completion.text.strip(), answer_tokens=len(completion.token_ids),

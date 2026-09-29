@@ -177,6 +177,21 @@ def generate_two_phase(llm, tokenizer, family: str, jobs: list[dict], sampling: 
     return results
 
 
+def add_requests(llm, prompts: list[list[int]], params: list, priorities: list[int]) -> list[str]:
+    """Adds token-id prompts to the engine queue; returns the request ids that engine.step() outputs carry and
+    engine.abort_request() takes.
+
+    Not LLM.enqueue: in vLLM 0.30 it overrides every SamplingParams.output_kind with FINAL_ONLY (so nothing streams)
+    and returns the engine's internal ids ('<id>-<8 random characters>'), which step() outputs do not carry."""
+    ids = []
+    for prompt_ids, sp, priority in zip(prompts, params, priorities, strict=True):
+        rid = str(next(llm.request_counter))
+        llm.llm_engine.add_request(rid, llm._preprocess_cmpl_one({"prompt_token_ids": prompt_ids}), sp,
+                                   priority=priority)
+        ids.append(rid)
+    return ids
+
+
 def generate_streaming(llm, tokenizer, family: str, jobs: list[dict], sampling: dict, reasoning_cap: int,
                        answer_cap: int, max_model_len: int, on_result) -> None:
     """The requests of generate_two_phase (same prompts, SamplingParams and seeds; subject models, so no
@@ -200,8 +215,8 @@ def generate_streaming(llm, tokenizer, family: str, jobs: list[dict], sampling: 
         reasoning_params.append(SamplingParams(**sampling, max_tokens=cap, seed=job["seed"],
                                                stop_token_ids=[fam["think_end"], fam["im_end"]],
                                                skip_special_tokens=False))
-    request_ids = llm.enqueue([{"prompt_token_ids": j["prompt_ids"]} for j in jobs], reasoning_params,
-                              priority=[REASONING_PRIORITY] * len(jobs), use_tqdm=False)
+    request_ids = add_requests(llm, [j["prompt_ids"] for j in jobs], reasoning_params,
+                               [REASONING_PRIORITY] * len(jobs))
     reasoning_of = dict(zip(request_ids, range(len(jobs))))  # engine request id -> job index
     answer_of = {}  # engine request id -> (job index, result without the answer yet)
 
@@ -226,8 +241,8 @@ def generate_streaming(llm, tokenizer, family: str, jobs: list[dict], sampling: 
                 answer_params = SamplingParams(**sampling, max_tokens=answer_cap,
                                                seed=cfg.phase2_seed(jobs[i]["seed"]),
                                                stop_token_ids=[fam["im_end"]], skip_special_tokens=True)
-                [answer_id] = llm.enqueue([{"prompt_token_ids": jobs[i]["prompt_ids"] + continuation}],
-                                          [answer_params], priority=[ANSWER_PRIORITY], use_tqdm=False)
+                [answer_id] = add_requests(llm, [jobs[i]["prompt_ids"] + continuation], [answer_params],
+                                           [ANSWER_PRIORITY])
                 answer_of[answer_id] = (i, result)
             else:
                 i, result = answer_of.pop(out.request_id)

@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import enum
 import hashlib
+import itertools
 import json
 import random
 import sys
@@ -56,7 +57,8 @@ class FakeEngine:
     def __init__(self, tokenizer, traces: dict, crash_after: int | None = None):
         self.tokenizer, self.traces, self.crash_after = tokenizer, traces, crash_after
         self.running = {}  # request id -> state
-        self.counter, self.finished, self.aborted, self.answer_prompts = 0, 0, [], []
+        self.request_counter = itertools.count()
+        self.finished, self.aborted, self.answer_prompts = 0, [], []
         self.rng = random.Random(0)
         self.llm_engine = self
 
@@ -83,19 +85,29 @@ class FakeEngine:
             outs.append(self.output(None, tokens, True, fr, sr))
         return outs
 
+    def _preprocess_cmpl_one(self, prompt):
+        return prompt
+
     def enqueue(self, prompts, params, priority, use_tqdm=True):
+        """As vLLM 0.30's LLM.enqueue: forces FINAL_ONLY and returns internal ids that step() outputs do not carry."""
         ids = []
-        for p, sp in zip(prompts, params):
-            rid = f"req{self.counter}"
-            self.counter += 1
-            tokens, fr, sr = self.completion(p["prompt_token_ids"], sp.kwargs)
-            # Chunk sizes depend only on the request (vLLM without speculative decoding returns one token per step,
-            # so where a trace is checked does not depend on which requests share the engine).
-            chunks = random.Random(hashlib.sha256(json.dumps(p["prompt_token_ids"]).encode()).hexdigest())
-            self.running[rid] = {"tokens": tokens, "sent": 0, "fr": fr, "sr": sr, "kind": sp.kwargs["output_kind"],
-                                 "chunks": chunks}
-            ids.append(rid)
+        for p, sp, pr in zip(prompts, params, priority):
+            sp.kwargs["output_kind"] = StubOutputKind.FINAL_ONLY
+            rid = str(next(self.request_counter))
+            self.add_request(rid, p, sp, priority=pr)
+            ids.append(f"{rid}-0a1b2c3d")
         return ids
+
+    def add_request(self, rid, prompt, sp, priority=0):
+        """As LLMEngine.add_request: outputs carry rid, and sp.output_kind decides what streams."""
+        assert rid not in self.running, f"duplicate request id {rid}"
+        tokens, fr, sr = self.completion(prompt["prompt_token_ids"], sp.kwargs)
+        # Chunk sizes depend only on the request (vLLM without speculative decoding returns one token per step,
+        # so where a trace is checked does not depend on which requests share the engine).
+        chunks = random.Random(hashlib.sha256(json.dumps(prompt["prompt_token_ids"]).encode()).hexdigest())
+        self.running[rid] = {"tokens": tokens, "sent": 0, "fr": fr, "sr": sr, "kind": sp.kwargs["output_kind"],
+                             "chunks": chunks}
+        return f"{rid}-0a1b2c3d"
 
     def has_unfinished_requests(self):
         return bool(self.running)

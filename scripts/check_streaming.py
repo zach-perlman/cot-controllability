@@ -19,6 +19,7 @@ Run: /venv/main/bin/python scripts/check_streaming.py
 from __future__ import annotations
 
 import hashlib
+import itertools
 import json
 import random
 import sys
@@ -72,7 +73,7 @@ class FakeEngine:
         self.tokenizer = tokenizer
         self.issued = []  # (signature, priority) of every request, in issue order
         self.waiting = {}  # request id -> (prompt ids, params)
-        self.counter = 0
+        self.request_counter = itertools.count()
         self.rng = random.Random(0)
         self.finished_count = 0
         self.crash_after = crash_after
@@ -84,15 +85,20 @@ class FakeEngine:
         return [types.SimpleNamespace(outputs=[fake_completion(p["prompt_token_ids"], sp, self.tokenizer)])
                 for p, sp in zip(prompts, params)]
 
+    def _preprocess_cmpl_one(self, prompt):
+        return prompt
+
     def enqueue(self, prompts, params, priority, use_tqdm=True):
-        ids = []
-        for p, sp, pr in zip(prompts, params, priority):
-            request_id = str(self.counter)
-            self.counter += 1
-            self.waiting[request_id] = (p["prompt_token_ids"], sp)
-            self.issued.append((request_signature(p["prompt_token_ids"], sp), pr))
-            ids.append(request_id)
-        return ids
+        """As vLLM 0.30's LLM.enqueue: returns internal ids that step() outputs do not carry."""
+        return [self.add_request(str(next(self.request_counter)), p, sp, priority=pr)
+                for p, sp, pr in zip(prompts, params, priority)]
+
+    def add_request(self, request_id, prompt, sp, priority=0):
+        """As LLMEngine.add_request: outputs carry request_id; returns the internal id."""
+        assert request_id not in self.waiting, f"duplicate request id {request_id}"
+        self.waiting[request_id] = (prompt["prompt_token_ids"], sp)
+        self.issued.append((request_signature(prompt["prompt_token_ids"], sp), priority))
+        return f"{request_id}-0a1b2c3d"
 
     def has_unfinished_requests(self) -> bool:
         return bool(self.waiting)
