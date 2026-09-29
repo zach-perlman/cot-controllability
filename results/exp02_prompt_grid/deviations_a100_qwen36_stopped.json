@@ -1,0 +1,8 @@
+{
+  "written": "2026-09-29T18:32:00Z",
+  "decision": "human (2026-09-29 14:31 EDT): end exp02 now and start exp03; fold exp02 results into exp03 where easy",
+  "stopped": "Qwen3.6-27B requests 1000-1999 (4 shards x TP 2, about 36% done). The finished rows stay in cache/exp02/generations/Qwen3.6-27B__card__15067d29d090.parts/ and are not analyzed: chunk 0 plus a partial chunk 1 over-represents GPQA and HLE, so Qwen3.6-27B compliance would be confounded with question source.",
+  "exp02_reports": "Qwen3-8B and Qwen3-32B only (all 2,000 requests each, graded), judged on this instance (Qwen3.8-27B, TP 4). No bf16 precision check (deviations_a100_bf16_dropped.json).",
+  "folded_into_exp03": "cc_survival's pooled secondary analysis uses exp02's Qwen3-8B and Qwen3-32B (150 items); Qwen3.6-27B is exp03-only.",
+  "schedule": "scripts/a100_exp03.sh replaces scripts/a100_lanes.sh, which was stopped while both lanes were still waiting (it had run nothing)."
+}

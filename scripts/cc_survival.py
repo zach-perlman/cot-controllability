@@ -263,7 +263,7 @@ def report(summary: dict, figure: str, fig_dir) -> str:
               "P2 uses the LLM judge (Qwen3.8-27B) and is weaker evidence than the grader-based S(t*), reached-t* "
               "and P1.", ""]
     pooled = summary.get("pooled_with_exp02")
-    lines += ["## Secondary: pooled with exp02 (150 items)", ""]
+    lines += ["## Secondary: pooled with exp02 (150 items; models exp02 completed)", ""]
     if isinstance(pooled, dict):
         lines += ["| model | prompt | S(t*) | P1 |", "|---|---|---|---|"]
         lines += [f"| {r['model']} | {r['prompt']} | {f(r['S_t_star'])} | {f(r['P1'])} |" for r in pooled["per_model"]]
@@ -310,7 +310,8 @@ def main() -> None:
         try:
             old = load_exp02()
             old = old.assign(aborted=False, abort_on_violation=False, full_trace_cell=False)
-            both = pd.concat([df, old[df.columns.intersection(old.columns)]], ignore_index=True)
+            both = pd.concat([df[df["model"].isin(set(old["model"]))], old[df.columns.intersection(old.columns)]],
+                             ignore_index=True)
             both_items = items + [json.loads(line) for line in cfg.ITEMS_PATH.open()]
             prow, pcontrasts = outcome_table(both, ca.Bootstrap(both_items, cfg.BOOTSTRAP_ITERS, cfg.BOOTSTRAP_SEED))
             summary["pooled_with_exp02"] = {"per_model": [{k: r[k] for k in ("model", "prompt", "n", "S_t_star", "P1")}

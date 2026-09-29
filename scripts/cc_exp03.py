@@ -120,7 +120,9 @@ def write_manifest() -> None:
             "accuracy on full traces only (ignore_question, repeat_sentences and the full-trace cells), per prompt, "
             "paired within the same cells; no-constraint accuracy",
             "near-empty, truncation and censoring-before-t* rates per (model, prompt)",
-            "pooled with exp02's 50 items (same models, prompts, sampling; exp02 traces are full): S(t*) and P1",
+            "pooled with exp02's 50 items for Qwen3-8B and Qwen3-32B (same prompts, sampling; exp02 traces are "
+            "full): S(t*) and P1. exp02's Qwen3.6-27B run was stopped half-way by the human and is not used "
+            "(results/exp02_prompt_grid/deviations_a100_qwen36_stopped.json)",
         ],
         "not_estimable": "P3 (exp02's length-quintile reweighting) needs the final length of every trace; aborted "
                          "traces have none. The survival outcome replaces it.",
@@ -135,10 +137,10 @@ def write_manifest() -> None:
                       "primary outcome. At 3-6% survival the standard error of a prompt - baseline difference is "
                       "about 1.1-1.3 points (independent traces; clustering by item widens it). With Holm over 9 "
                       "contrasts, a 4-5 point difference has about 80% power; 3 points is borderline.",
-        "hardware": "8x A100-SXM4-40GB (PCIe, no NVLink); Qwen3-8B 4 shards x TP 1 (GPUs 4-7), Qwen3-32B (FP8 "
+        "hardware": "8x A100-SXM4-40GB (PCIe, no NVLink); Qwen3-8B 4 shards x TP 1 (GPUs 0-3), Qwen3-32B (FP8 "
                     "checkpoint; A100 has no FP8 tensor cores, so vLLM runs it with bf16 activations) 2 shards x "
-                    "TP 2 (GPUs 4-7), Qwen3.6-27B 2 shards x TP 2 (GPUs 0-3); judge Qwen3.8-27B TP 4 "
-                    "(scripts/a100_lanes.sh)",
+                    "TP 2 (GPUs 0-3), Qwen3.6-27B 2 shards x TP 2 (GPUs 4-7); judge Qwen3.8-27B TP 4 "
+                    "(scripts/a100_exp03.sh)",
         "engine": "streaming queue (one engine loop; a trace's answer phase is enqueued when its reasoning ends); "
                   "aborted traces get no answer phase. Compared with the batch engine on the smoke requests before "
                   "this manifest (results/exp03_abort_survival/engine_check.json).",
