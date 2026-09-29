@@ -17,9 +17,10 @@ exp03_abort_survival (human-chosen design: 100 new items, primary KM S(1000) mac
 25% full-trace cells, exp02 pooled as secondary): engine check PASS, manifest written. Qwen3-8B generated + graded
 on A100. Qwen3-32B and Qwen3.6-27B were partial (2-shard stream files, cache/exp03/generations/*.parts/
 stream.shard{0,1}of2.jsonl) when the human moved to an H200; those rows are archived in cache/exp03/a100_partial/
-and not analyzed. Qwen3-32B and Qwen3.6-27B are being regenerated from scratch on 1x H200, then grade, judge (all
-three models), scripts/cc_survival.py --run main: scripts/h200_exp03.sh, log/exp03/h200_exp03.log, deviation in
-results/exp03_abort_survival/deviations_h200.json. Off-box backup of cache/ and of the files git ignores because
+and not analyzed. Qwen3-32B is being regenerated from scratch on 1x H200 (scripts/h200_exp03.sh started it);
+then, with FP8 weights by human choice, Qwen3.6-27B-FP8, grading, the FP8 judge on all three models, and
+scripts/cc_survival.py --run main (scripts/h200_exp03_fp8.sh, log/exp03/h200_exp03_fp8.log). Deviations:
+results/exp03_abort_survival/deviations_h200.json, deviations_h200_fp8.json (no bf16 check of Qwen3.6 yet). Off-box backup of cache/ and of the files git ignores because
 they quote questions: private HF dataset zachperlman20/cot-controllability-cache. exp01_paper_gate: gate PASS, UNVERIFIED —
 Qwen3-32B P1 = 2.0 [0.8, 3.4] vs paper 2.3 (9 of 450 compliant, all read by the agent and genuine; 1 truncated);
 Qwen3-8B P1 = 0.6 [0.0, 1.2]. The CI is wide (50 items), so the gate rules out large setup errors only.
