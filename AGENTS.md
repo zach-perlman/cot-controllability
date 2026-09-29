@@ -11,11 +11,16 @@ without giving up accuracy.
 So what: CoT-Control numbers are used in system cards to argue CoT monitorability; if they are under-elicited at
 matched length, those arguments are weaker than stated.
 Established so far (exp ids): none verified.
-In flight (exp ids): exp02_prompt_grid, finishing on 8x A100-40GB (scripts/exp02_finish_a100.sh; hardware
-deviation in results/exp02_prompt_grid/deviations_a100.json). exp03_abort_survival (human-chosen design: 100 new
-items, primary KM S(1000) macro over the 7 abortable modes, 25% full-trace cells, exp02 pooled as secondary):
-scripts/exp03_chain_a100.sh runs the GPU engine check, writes the manifest, generates, grades, judges, analyzes
-(scripts/cc_survival.py); logs in log/exp03/. exp01_paper_gate: gate PASS, UNVERIFIED —
+In flight (exp ids): exp02_prompt_grid closed at Qwen3-8B + Qwen3-32B (Qwen3.6 and the bf16 check dropped by
+the human, see deviations_a100_*.json); report results/exp02_prompt_grid/analysis/grid/REPORT_auto.md, UNVERIFIED.
+exp03_abort_survival (human-chosen design: 100 new items, primary KM S(1000) macro over the 7 abortable modes,
+25% full-trace cells, exp02 pooled as secondary): engine check PASS, manifest written. Qwen3-8B generated + graded
+on A100. Qwen3-32B and Qwen3.6-27B were partial (2-shard stream files, cache/exp03/generations/*.parts/
+stream.shard{0,1}of2.jsonl) when the human moved to an H200. Restore: private HF dataset
+zachperlman20/cot-controllability-cache (cache/, results/, log/; results/ there includes the files that quote
+questions, which git ignores). Stream files resume only with the same shard count (N=2); running shards 0of2 and
+1of2 on the new box reuses the A100 rows but mixes hardware within a model: record a deviation before the run
+(and one for FP8 Qwen3.6 if used). Then grade, judge, scripts/cc_survival.py --run main. exp01_paper_gate: gate PASS, UNVERIFIED —
 Qwen3-32B P1 = 2.0 [0.8, 3.4] vs paper 2.3 (9 of 450 compliant, all read by the agent and genuine; 1 truncated);
 Qwen3-8B P1 = 0.6 [0.0, 1.2]. The CI is wide (50 items), so the gate rules out large setup errors only.
 Current story candidate: none yet. Smoke test (Qwen3-8B, 3 items) showed two ways to "comply" without controlling
@@ -25,7 +30,9 @@ Next experiment and why: exp03 (exp02's 50 items resolve only large prompt effec
 stops traces at the first violation, which in exp02 was followed by 93-96% of the abortable modes' tokens).
 Kill criteria in force: exp03 engine check (results/exp03_abort_survival/engine_check.json) fails -> no exp03
 manifest or generation until a human decides.
-Last updated: 2026-09-29 by agent (exp02 finishing on A100, exp03 chain launched)
+Open issue for the human: three tracked files quote benchmark question text (prompt_examples.md,
+verification_smoke/sheet.md, exp01 read_samples.md) and are in public git history.
+Last updated: 2026-09-29 by agent (moving from 8x A100 to H200 mid-exp03)
 
 ## Roles
 - Agent: implement, run, report in the format below.
