@@ -266,7 +266,7 @@ def main() -> None:
                         help="default: every finished file in cache/<exp>/generations/")
     args = parser.parse_args()
     exp = cfg.EXPERIMENTS[args.exp]
-    items = {it["item_id"]: it for it in map(json.loads, cfg.ITEMS_PATH.open())}
+    items = {it["item_id"]: it for it in map(json.loads, cfg.ITEMS_BY_EXP[args.exp].open())}
     requests = load_requests(args.exp)
     for gen_path in args.generations or sorted(exp.generations.glob("*.jsonl")):
         grade_file(gen_path, requests, items)

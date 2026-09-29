@@ -11,7 +11,7 @@ FREEZE_DIR="${REPO_DIR}/log/setup"
 
 RESEARCH_PACKAGES=(
   transformers accelerate peft datasets pandas pyarrow scipy matplotlib openai nnterp jupytext ruff
-  plotly python-dotenv
+  plotly python-dotenv lifelines
 )
 TORCH_FAMILY_REGEX='^(torch|torchvision|torchaudio|torchcodec|triton|nvidia-[a-z0-9-]+)=='
 

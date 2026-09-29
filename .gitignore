@@ -7,3 +7,5 @@ __pycache__/
 # per-step run logs (vLLM progress output); the committed logs are setup, gates and chain summaries
 log/exp01/*.log
 log/exp02/*.log
+log/setup_a100/downloads*.log
+log/exp03/*.log

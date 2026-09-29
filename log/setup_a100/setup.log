@@ -1,0 +1,13 @@
+Downloading cpython-3.12.14-linux-x86_64-gnu (download) (32.6MiB)
+ Downloaded cpython-3.12.14-linux-x86_64-gnu (download)
+Using CPython 3.12.14
+Creating virtual environment with seed packages at: /workspace/.venv-vllm
+ + pip==26.2.1
+Activate with: source /workspace/.venv-vllm/bin/activate
+Using Python 3.12.14 environment at: /workspace/.venv-vllm
+error: Request failed after 4 retries in 122.9s
+  Caused by: Failed to fetch: `https://files.pythonhosted.org/packages/85/66/6ccca4722987ddedaa7fc9c3f4708af7431f5535666c174350830888c6b7/cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl.metadata`
+  Caused by: error sending request for url (https://files.pythonhosted.org/packages/85/66/6ccca4722987ddedaa7fc9c3f4708af7431f5535666c174350830888c6b7/cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl.metadata)
+  Caused by: client error (SendRequest)
+  Caused by: connection error
+  Caused by: timed out

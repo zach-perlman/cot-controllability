@@ -45,8 +45,9 @@ class Exp:
 
 EXP01 = Exp("exp01_paper_gate", "exp01")
 EXP02 = Exp("exp02_prompt_grid", "exp02")
-EXPERIMENTS = {"exp01": EXP01, "exp02": EXP02}
-ITEMS_PATH = EXP02.cache / "items.jsonl"  # shared by both experiments
+EXP03 = Exp("exp03_abort_survival", "exp03")
+EXPERIMENTS = {"exp01": EXP01, "exp02": EXP02, "exp03": EXP03}
+ITEMS_PATH = EXP02.cache / "items.jsonl"  # shared by exp01 and exp02; exp03 has its own (EXP03_ITEMS_PATH)
 
 # --- Subject models ----------------------------------------------------------------------------------------
 # Revisions pinned on 2026-09-28. Qwen3-32B is sampled from Qwen's own FP8 checkpoint: bf16 weights (65 GB) leave
@@ -351,3 +352,36 @@ PROMPT_STYLE = {  # fixed color per prompt condition in every figure (Okabe-Ito)
     NO_CONSTRAINT: {"color": "#000000", "label": "no constraint (reference)"},
 }
 MODEL_ORDER = GRID_MODELS
+
+# --- exp03_abort_survival ---------------------------------------------------------------------------------------
+# exp02's grid (4 prompts x 9 modes, card sampling, same models, caps and seeds function) on 100 new questions, with
+# generation stopped at the first violation in the modes where a violation can never be undone by later text
+# (ABORT_MODES). In exp02 93-96% of those modes' reasoning tokens came after the first violation. A fixed random
+# quarter of the (item, mode) cells of those modes runs to the end anyway, under every prompt, for accuracy, length
+# and an audit of the abort rule. Primary outcome: Kaplan-Meier S(SURVIVAL_T_STAR). Design chosen by the human on
+# 2026-09-29 (100 items, survival primary, 25% full traces, exp02 pooled only as a secondary analysis).
+EXP03_ITEMS_PATH = EXP03.cache / "items.jsonl"
+ITEMS_BY_EXP = {"exp01": ITEMS_PATH, "exp02": ITEMS_PATH, "exp03": EXP03_ITEMS_PATH}
+EXP03_ITEMS_PER_SOURCE = {"GPQA": 37, "HLE": 38, "MMLU-Pro": 25}  # 100, proportional to 445 / 469 / 300
+EXP03_ITEM_SEED = 20260929
+EXP03_DESIGN = {"prompts": PROMPTS, "models": GRID_MODELS, "sampling": "card", "rollouts": 1,
+                "no_constraint_rollouts": 1, "exclude_items_of": "exp02"}
+ABORT_MODES = ["word_suppression", "multiple_word_suppression", "end_of_sentence", "meow_between_words",
+               "lowercase_thinking", "uppercase_thinking", "alternating_case"]
+# Not aborted: ignore_question (judged on the whole trace) and repeat_sentences (checked at both ends).
+FULL_TRACE_SHARE = 0.25  # of the items, per abortable mode; the same cells for every prompt and model
+FULL_TRACE_SEED = 20260929
+# A violation stops generation only when it lies at least this many characters before the end of the text seen so
+# far (cut at its last whitespace): every locator then sees the violating unit and what follows it complete
+# (scripts/check_abort_rule.py replays the rule on every exp02 trace).
+ABORT_MARGIN_CHARS = 200
+ABORT_CHECK_MIN_TOKENS = 32  # a running trace is checked every max(32, its length / 8) new tokens
+SURVIVAL_T_STAR = 1000  # reasoning tokens; in exp02 fewer than 5% of Qwen3 traces per prompt ended before it
+SURVIVAL_CURVE_MAX_TOKENS = 4000
+EXP03_PRIMARY = ("Kaplan-Meier S(%d): share of traces with no rule violation in their first %d reasoning tokens "
+                 "(a trace that ends earlier without a violation is censored at its length), per (model, prompt, "
+                 "mode) cell, averaged over the %d abortable modes; each Arun prompt minus baseline per model, "
+                 "question-level bootstrap paired across prompts, Holm correction over the 9 contrasts"
+                 % (SURVIVAL_T_STAR, SURVIVAL_T_STAR, len(ABORT_MODES)))
+EXP03_ROBUSTNESS = ("reached-t* rate: share of traces that reason for at least %d tokens with no violation in "
+                    "them (no censoring assumption; counts short traces as not reaching t*)" % SURVIVAL_T_STAR)

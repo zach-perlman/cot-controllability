@@ -1,0 +1,38 @@
+{
+ "traces": 3500,
+ "violating": 3383,
+ "caught": 3383,
+ "false_aborts_or_unstable": 0,
+ "overshoot_chars_median": 208,
+ "overshoot_chars_p95": 223,
+ "per_model": {
+  "Qwen3-32B": {
+   "traces": 1400,
+   "violating": 1329,
+   "caught": 1329,
+   "chars": 14459090,
+   "chars_kept_if_aborted": 987659
+  },
+  "Qwen3-8B": {
+   "traces": 1400,
+   "violating": 1361,
+   "caught": 1361,
+   "chars": 17732822,
+   "chars_kept_if_aborted": 1317518
+  },
+  "Qwen3.6-27B": {
+   "traces": 700,
+   "violating": 693,
+   "caught": 693,
+   "chars": 13668428,
+   "chars_kept_if_aborted": 388675
+  }
+ },
+ "rule": {
+  "margin_chars": 200,
+  "dense_step": 16,
+  "dense_until": 20000,
+  "sparse_step": 256
+ }
+}
+exit 0
