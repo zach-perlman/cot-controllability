@@ -139,14 +139,15 @@ def judge_rows(judge: Judge, rows: list[dict], gens: dict, requests: dict) -> li
     return [out[r["request_id"]] for r in rows]
 
 
-def judge_key() -> str:
-    """Hash of everything that decides a verdict: judge settings, CoT-Control commit, and the judging functions
-    (not the CLI, so editing main() does not invalidate cached verdicts)."""
+def judge_key(judge_model: dict | None = None) -> str:
+    """Hash of everything that decides a verdict: judge settings (default cfg.JUDGE_MODEL), CoT-Control commit, and
+    the judging functions (not the CLI, so editing main() does not invalidate cached verdicts)."""
     import cc_generate
+    judge_model = judge_model or cfg.JUDGE_MODEL
     code = [inspect.getsource(f) for f in (judge_seed, ignore_question_prompt, meta_prompt, parse_or_none,
                                            Judge, judge_rows, cc_generate.generate_two_phase,
                                            cc_generate.split_reasoning, cc_generate.render_prompt_ids)]
-    return cfg.content_key({"judge": cfg.JUDGE_MODEL, "sampling": cfg.FAMILIES[cfg.JUDGE_MODEL["family"]],
+    return cfg.content_key({"judge": judge_model, "sampling": cfg.FAMILIES[judge_model["family"]],
                             "caps": [cfg.JUDGE_THINKING_CAP_TOKENS, cfg.JUDGE_ANSWER_CAP_TOKENS,
                                      cfg.JUDGE_MAX_MODEL_LEN], "checks": cfg.JUDGE_IGNORE_QUESTION_CHECKS,
                             "seed": cfg.JUDGE_SEED, "cotcontrol": cfg.COTCONTROL_COMMIT, "code": code})
@@ -164,11 +165,12 @@ def judged_rows(grades_path: Path) -> list[dict]:
 def judge_output_path(grades_path: Path) -> Path:
     """<run dir>/judge/<generation stem>__<input key>__<judge key>.jsonl. The input key covers what the judge uses
     from the grades (which traces, their mode and programmatic compliance), so a grader change that leaves
-    compliance unchanged reuses the verdicts."""
+    compliance unchanged reuses the verdicts. The judge is the one of the run's experiment (cfg.JUDGE_BY_EXP)."""
     rows = judged_rows(grades_path)
     input_key = cfg.content_key({"rows": [[r["request_id"], r["mode"], r["compliant"]] for r in rows]})
     gen_stem = generation_path_for(grades_path).stem
-    return grades_path.parent.parent / "judge" / f"{gen_stem}__{input_key}__{judge_key()}.jsonl"
+    run_dir = grades_path.parent.parent
+    return run_dir / "judge" / f"{gen_stem}__{input_key}__{judge_key(cfg.judge_for_run(run_dir))}.jsonl"
 
 
 def main() -> None:
@@ -178,6 +180,8 @@ def main() -> None:
                         help="default: the current-code grades file of every generation file of the experiment")
     args = parser.parse_args()
     exp = cfg.EXPERIMENTS[args.exp]
+    # Judge reads cfg.JUDGE_MODEL, and its source is part of the judge key, so the experiment's judge is chosen here.
+    cfg.JUDGE_MODEL = cfg.JUDGE_BY_EXP[args.exp]
     if not args.grades:
         import cc_grade
         args.grades = [exp.grades / f"{g.stem}__{cc_grade.code_key()}.jsonl"
@@ -190,6 +194,9 @@ def main() -> None:
         if p.exists():
             requests.update({r["request_id"]: r for r in map(json.loads, p.open())})
 
+    other_judge = [g for g in args.grades if cfg.judge_for_run(g.parent.parent) != cfg.JUDGE_MODEL]
+    if other_judge:
+        raise SystemExit(f"not {args.exp}'s grades (another judge): {[g.name for g in other_judge]}")
     todo = [(g, judge_output_path(g)) for g in args.grades]
     todo = [(g, o) for g, o in todo if not o.exists()]
     if not todo:

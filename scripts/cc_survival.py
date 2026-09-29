@@ -125,7 +125,7 @@ def holm(p_values: dict) -> dict:
 def outcome_table(df: pd.DataFrame, boot: ca.Bootstrap) -> tuple[list[dict], list[dict]]:
     """Per (model, prompt) outcomes, and the 9 prompt - baseline contrasts of the primary and robustness outcomes."""
     rows, contrasts = [], []
-    for model in [m for m in cfg.GRID_MODELS if m in set(df["model"])]:
+    for model in [m for m in cfg.EXP03_MODELS if m in set(df["model"])]:
         draws = {}
         for prompt in cfg.PROMPTS:
             d = df[(df["model"] == model) & (df["prompt"] == prompt)]
@@ -221,7 +221,7 @@ def dumb_checks(df: pd.DataFrame) -> dict:
 # --- Figures and report -----------------------------------------------------------------------------------------
 def figure_survival(df: pd.DataFrame, fig_dir) -> str:
     grid = np.arange(0, cfg.SURVIVAL_CURVE_MAX_TOKENS + 1, 20, dtype=float)
-    models = [m for m in cfg.GRID_MODELS if m in set(df["model"])]
+    models = [m for m in cfg.EXP03_MODELS if m in set(df["model"])]
     fig, axes = plt.subplots(1, len(models), figsize=(5 * len(models), 3.6), squeeze=False, sharey=True)
     pfig = make_subplots(rows=1, cols=len(models), subplot_titles=models)
     for k, model in enumerate(models):
@@ -260,8 +260,8 @@ def report(summary: dict, figure: str, fig_dir) -> str:
         lines.append(f"| {c['model']} | {c['prompt']} | {c['outcome']} | {f(c['difference'])} | {c['p']:.3f} | "
                      f"{c['p_holm']:.3f} |")
     lines += ["", f"![survival]({os.path.relpath(fig_dir, summary['_results_root'])}/{figure})", "",
-              "P2 uses the LLM judge (Qwen3.8-27B) and is weaker evidence than the grader-based S(t*), reached-t* "
-              "and P1.", ""]
+              f"P2 uses the LLM judge ({cfg.JUDGE_BY_EXP['exp03']['name']}) and is weaker evidence than the "
+              "grader-based S(t*), reached-t* and P1.", ""]
     pooled = summary.get("pooled_with_exp02")
     lines += ["## Secondary: pooled with exp02 (150 items; models exp02 completed)", ""]
     if isinstance(pooled, dict):

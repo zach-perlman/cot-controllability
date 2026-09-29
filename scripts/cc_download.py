@@ -17,11 +17,11 @@ MIN_FREE_GB = 20
 
 
 def spec_of(model: str) -> dict:
-    return cfg.JUDGE_MODEL if model == cfg.JUDGE_MODEL["name"] else cfg.ALL_MODELS[model]
+    return cfg.JUDGE_MODELS.get(model) or cfg.ALL_MODELS[model]
 
 
 def main() -> None:
-    choices = list(cfg.ALL_MODELS) + [cfg.JUDGE_MODEL["name"]]
+    choices = list(cfg.ALL_MODELS) + list(cfg.JUDGE_MODELS)
     parser = argparse.ArgumentParser()
     parser.add_argument("models", nargs="+", choices=choices)
     parser.add_argument("--check", action="store_true", help="download nothing; exit 1 if any model is incomplete")

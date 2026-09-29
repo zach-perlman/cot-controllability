@@ -1,0 +1,16 @@
+{
+  "written": "2026-09-29T21:50Z, before any FP8 generation or judging",
+  "decision": "human (2026-09-29 17:40 EDT), to shorten the run: FP8 weights for the models not yet run on the H200 (Qwen3.6-27B and the judge); Qwen3-32B keeps running unchanged (its pre-registered checkpoint is already FP8). Offered alongside: keep bf16 (report ~9:30-11:15 PM EDT) or also an FP8 KV cache with a Qwen3-32B restart (not chosen).",
+  "supersedes": "deviations_h200.json's 'Qwen3.6-27B (bf16, as in the manifest)' and its judge line; everything else there stands.",
+  "changes": {
+    "Qwen3.6-27B": "generated from Qwen/Qwen3.6-27B-FP8@e89b16ebf1988b3d6befa7de50abc2d76f26eb09 (cfg.EXTRA_SUBJECTS['Qwen3.6-27B-FP8']) instead of the pre-registered bf16 Qwen/Qwen3.6-27B@6a9e13bd. Rows are labelled model 'Qwen3.6-27B-FP8'; cfg.EXP03_MODELS lists the models exp03 was generated with.",
+    "judge": "all exp03 verdicts (Qwen3-8B, Qwen3-32B, Qwen3.6-27B-FP8) from Qwen/Qwen3.8-27B-FP8@017b9c7af6b5689d5dd426a76e0bc077eb5ca20a (cfg.JUDGE_BY_EXP['exp03'], judge key 8312e40b3419) instead of the bf16 Qwen3.8-27B that judged exp02 (judge key 5c1fdbe18a06).",
+    "unchanged": "requests, seeds, caps, abort rule, engine settings (KV cache stays 16-bit), Qwen3-8B and Qwen3-32B."
+  },
+  "consequences": [
+    "Qwen3.6 results describe Qwen's FP8 checkpoint. There is no bf16-vs-FP8 measurement on these metrics: cc_config's note on Qwen3.6-27B-FP8 says a run using it needs a bf16 precision check, and exp02's bf16 check of Qwen3-32B was dropped. Whether to run one (for example the baseline prompt's abort-eligible cells in bf16, same seeds) is for the human.",
+    "Judge-scored exp03 outcomes (P2, ignore_question compliance) are not directly comparable with exp02's. The primary outcome S(1000), reached-t*, P1, and the pooled exp02 secondary analysis (S(t*) and P1 only) use no judge."
+  ],
+  "code": "cc_config: JUDGE_MODEL_FP8, JUDGE_MODELS, JUDGE_BY_EXP, judge_for_run, EXP03_MODELS; cc_judge: judge_key takes the judge spec, judge_output_path uses the run's experiment's judge, main selects the experiment's judge; cc_survival: exp03 model list and judge name. scripts/check_cache_keys.py output is identical before and after (exp01/exp02 generation, grade and judge keys unchanged); exp02 judge outputs still resolve.",
+  "schedule": "scripts/h200_exp03_fp8.sh replaces the rest of scripts/h200_exp03.sh (whose shell was stopped while Qwen3-32B generation, its child, kept running): wait for Qwen3-32B, grade it, generate Qwen3.6-27B-FP8, grade, judge all three with the FP8 judge, survival analysis."
+}

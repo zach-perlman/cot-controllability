@@ -81,7 +81,7 @@ GRID_MODELS = ["Qwen3-8B", "Qwen3-32B", "Qwen3.6-27B"]
 
 
 def model_dir(model: str) -> Path:
-    spec = ALL_MODELS.get(model) or JUDGE_MODEL
+    spec = ALL_MODELS.get(model) or JUDGE_MODELS[model]
     return HF_HUB_DIR / f"models--{spec['repo'].replace('/', '--')}" / "snapshots" / spec["revision"]
 
 
@@ -298,6 +298,23 @@ PRECISION_CHECK = {"model": "Qwen3-32B-bf16", "compared_to": "Qwen3-32B", "promp
 JUDGE_MODEL = {"name": "Qwen3.8-27B", "repo": "Qwen/Qwen3.8-27B",
                "revision": "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0", "family": "qwen3.8",
                "gpu_memory_utilization": 0.90}
+# exp03 is judged by Qwen's FP8 checkpoint of the same model (human choice on 2026-09-29, to shorten the H200 run;
+# results/exp03_abort_survival/deviations_h200_fp8.json). Its verdicts have their own judge key.
+JUDGE_MODEL_FP8 = {"name": "Qwen3.8-27B-FP8", "repo": "Qwen/Qwen3.8-27B-FP8",
+                   "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a", "family": "qwen3.8",
+                   "gpu_memory_utilization": 0.90}
+JUDGE_MODELS = {j["name"]: j for j in (JUDGE_MODEL, JUDGE_MODEL_FP8)}
+JUDGE_BY_EXP = {"exp01": JUDGE_MODEL, "exp02": JUDGE_MODEL, "exp03": JUDGE_MODEL_FP8}
+
+
+def judge_for_run(run_dir: Path) -> dict:
+    """The judge of the experiment whose cache holds run_dir (smoke runs live inside their experiment's cache)."""
+    for name, exp in EXPERIMENTS.items():
+        if run_dir.resolve().is_relative_to(exp.cache.resolve()):
+            return JUDGE_BY_EXP[name]
+    raise ValueError(f"{run_dir} is not inside an experiment's cache")
+
+
 JUDGE_THINKING_CAP_TOKENS = 8192
 JUDGE_ANSWER_CAP_TOKENS = 512
 JUDGE_MAX_MODEL_LEN = 65536  # ignore_question sees the full reasoning (up to 25k tokens)
@@ -366,6 +383,9 @@ EXP03_ITEMS_PER_SOURCE = {"GPQA": 37, "HLE": 38, "MMLU-Pro": 25}  # 100, proport
 EXP03_ITEM_SEED = 20260929
 EXP03_DESIGN = {"prompts": PROMPTS, "models": GRID_MODELS, "sampling": "card", "rollouts": 1,
                 "no_constraint_rollouts": 1, "exclude_items_of": "exp02"}
+# The models exp03 was generated with: Qwen3.6-27B from its FP8 checkpoint (human choice on 2026-09-29;
+# results/exp03_abort_survival/deviations_h200_fp8.json). EXP03_DESIGN is what the manifest pre-registered.
+EXP03_MODELS = ["Qwen3-8B", "Qwen3-32B", "Qwen3.6-27B-FP8"]
 ABORT_MODES = ["word_suppression", "multiple_word_suppression", "end_of_sentence", "meow_between_words",
                "lowercase_thinking", "uppercase_thinking", "alternating_case"]
 # Not aborted: ignore_question (judged on the whole trace) and repeat_sentences (checked at both ends).
