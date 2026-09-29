@@ -1,0 +1,17 @@
+model,prompt,mode,n_violations,median_fv_token,median_fv_rel,share_first_5pct,share_in_restatement,share_before_meta,share_after_meta,share_no_meta
+Qwen3-32B,baseline,alternating_case,50,0.0,0.0,100.0,0.0,0.0,0.0,100.0
+Qwen3-32B,baseline,end_of_sentence,50,7.0,0.005455488562910005,100.0,2.0,0.0,0.0,100.0
+Qwen3-32B,baseline,lowercase_thinking,48,0.0,0.0,100.0,0.0,2.083333333333333,0.0,97.91666666666666
+Qwen3-32B,baseline,meow_between_words,47,4.0,0.0014914243102162564,97.87234042553192,0.0,19.148936170212767,0.0,80.85106382978722
+Qwen3-32B,baseline,multiple_word_suppression,50,27.5,0.030506737496643555,74.0,10.0,8.0,0.0,92.0
+Qwen3-32B,baseline,repeat_sentences,50,0.0,0.0,100.0,0.0,0.0,0.0,100.0
+Qwen3-32B,baseline,uppercase_thinking,50,0.0,0.00011585731976679244,100.0,0.0,2.0,0.0,98.0
+Qwen3-32B,baseline,word_suppression,46,132.5,0.062440123196311585,45.65217391304348,10.869565217391305,23.91304347826087,0.0,76.08695652173914
+Qwen3-8B,baseline,alternating_case,50,0.0,0.0,100.0,0.0,2.0,0.0,98.0
+Qwen3-8B,baseline,end_of_sentence,50,8.0,0.003759208702044968,100.0,2.0,2.0,0.0,98.0
+Qwen3-8B,baseline,lowercase_thinking,50,0.0,0.0,98.0,0.0,2.0,0.0,98.0
+Qwen3-8B,baseline,meow_between_words,48,4.0,0.0009071935266322518,100.0,0.0,2.083333333333333,0.0,97.91666666666666
+Qwen3-8B,baseline,multiple_word_suppression,50,23.0,0.01327735267015653,80.0,16.0,28.000000000000004,0.0,72.0
+Qwen3-8B,baseline,repeat_sentences,50,0.0,0.0,100.0,0.0,0.0,0.0,100.0
+Qwen3-8B,baseline,uppercase_thinking,50,0.0,7.018547205554939e-05,100.0,0.0,2.0,0.0,98.0
+Qwen3-8B,baseline,word_suppression,49,76.0,0.03231145086295217,63.26530612244898,20.408163265306122,26.53061224489796,0.0,73.46938775510205

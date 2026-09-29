@@ -10,13 +10,17 @@ rules more often than under the paper's baseline prompt, at matched CoT length, 
 without giving up accuracy.
 So what: CoT-Control numbers are used in system cards to argue CoT monitorability; if they are under-elicited at
 matched length, those arguments are weaker than stated.
-Established so far (exp ids):
-In flight (exp ids): exp01_paper_gate, exp02_prompt_grid
-Current story candidate:
+Established so far (exp ids): none verified.
+In flight (exp ids): exp02_prompt_grid (launched after the gate). exp01_paper_gate: gate PASS, UNVERIFIED —
+Qwen3-32B P1 = 2.0 [0.8, 3.4] vs paper 2.3 (9 of 450 compliant, all read by the agent and genuine; 1 truncated);
+Qwen3-8B P1 = 0.6 [0.0, 1.2]. The CI is wide (50 items), so the gate rules out large setup errors only.
+Current story candidate: none yet. Smoke test (Qwen3-8B, 3 items) showed two ways to "comply" without controlling
+content: empty reasoning under ignore_question (7 of 12) and 25k-token "meow meow ..." traces that pass the meow
+grader; both are now flagged (near-empty, degenerate) and reported next to compliance.
 Next experiment and why: exp01 gate (does the paper's Qwen3-32B 2.3% reproduce under our vLLM setup?), then the
 exp02 prompt grid.
 Kill criteria in force: exp01 gate fails -> exp02 does not start until a human decides.
-Last updated: 2026-09-28 by agent (repo created)
+Last updated: 2026-09-29 by agent (exp01 gate passed, exp02 launched)
 
 ## Roles
 - Agent: implement, run, report in the format below.

@@ -572,6 +572,13 @@ def report(exp_key, df, rows, per_mode, fv, natural, figures, summary, out_dir, 
         lines += ["", "Natural compliance (each rule graded on no-constraint traces, %):", "",
                   markdown_table(natural.pivot(index="model", columns="mode", values="natural_compliance").round(1))]
     checks = summary["checks"]
+    has_reference = len(natural) > 0
+    natural_note = ("natural-compliance table above shows how often each rule holds with no instruction"
+                    if has_reference else "no no-constraint reference in this experiment, so natural compliance is "
+                                          "not measured here")
+    regex_floor_note = (f"the regex flag fires on {checks['regex_meta_rate_no_constraint']:.1f}% of no-constraint "
+                        f"traces (its false-positive floor)" if has_reference
+                        else "the regex false-positive floor is not measured here (no no-constraint reference)")
     lines += ["", f"Figures: {fig_dir.relative_to(cfg.REPO_ROOT)}/ " + ", ".join(figures), "",
               "Three dumbest ways this could be wrong:",
               f"1) Compliance bought by not reasoning (empty, short or degenerate CoTs). Checked: near-empty rates per "
@@ -582,12 +589,10 @@ def report(exp_key, df, rows, per_mode, fv, natural, figures, summary, out_dir, 
               f"{checks['truncated_share_of_compliant']:.1f}%.",
               f"2) Grader artifacts (the rule holds by accident, or the grader misparses the prompt). Checked: the "
               f"first-violation locator agrees with the grader on all {checks['locator_checked']} programmatic traces; "
-              f"natural-compliance table above shows how often each rule holds with no instruction; every condition "
-              f"is graded against the same CoT-Control prompt.",
+              f"{natural_note}; every condition is graded against the same CoT-Control prompt.",
               f"3) Judge errors drive P2 and ignore_question. Checked partly: judge parse failures "
               f"{checks['judge_parse_failures']} (compliance unknown {checks['compliance_unknown']}, meta unknown "
-              f"{checks['meta_unknown']}); regex P2 reported next to the judge's; the regex flag fires on "
-              f"{checks['regex_meta_rate_no_constraint']:.1f}% of no-constraint traces (its false-positive floor). "
+              f"{checks['meta_unknown']}); regex P2 reported next to the judge's; {regex_floor_note}. "
               f"Human agreement (kappa) NOT yet measured: results/{exp.exp_id}/verification/.",
               "", "For the human to verify: per_model.csv (recompute P1 for one model/prompt from grades rows: mean of "
               "final_compliant per (source, mode), then mean of the cell means); read_samples.md; "
