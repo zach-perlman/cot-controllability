@@ -1,0 +1,9 @@
+cache/
+models/
+*.safetensors
+.env
+__pycache__/
+.ruff_cache/
+# per-step run logs (vLLM progress output); the committed logs are setup, gates and chain summaries
+log/exp01/*.log
+log/exp02/*.log
