@@ -1,0 +1,22 @@
+{
+  "requests": 120,
+  "aborted": 80,
+  "not_aborted_identical_reasoning": "9/40",
+  "not_aborted_diverged_first_difference_median_rel": 0.016046946406314915,
+  "aborted_prefix_of_v1": 46,
+  "aborted_prefix_of_v1_but_v1_disagrees (must be 0)": 0,
+  "aborted_after_drift": 34,
+  "aborted_after_drift_consistent_with_own_prefix": 34,
+  "abortable_mode_compliance_v1": 0.03571428571428571,
+  "abortable_mode_compliance_abort": 0.047619047619047616,
+  "reasoning_tokens_v1": 951998,
+  "reasoning_tokens_abort": 277480,
+  "wall_seconds_v1": 2548,
+  "wall_seconds_abort": 603,
+  "failures": [],
+  "pass": true,
+  "files": [
+    "Qwen3-8B__greedy__ce39d2f95c80.jsonl",
+    "Qwen3-8B__greedy__stream_abort__730bcbe8e8da.jsonl"
+  ]
+}
