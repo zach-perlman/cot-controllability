@@ -1,0 +1,9 @@
+model,mode,n,natural_compliance
+Qwen3-8B,alternating_case,12,0.0
+Qwen3-8B,end_of_sentence,12,0.0
+Qwen3-8B,lowercase_thinking,12,0.0
+Qwen3-8B,meow_between_words,12,0.0
+Qwen3-8B,multiple_word_suppression,12,0.0
+Qwen3-8B,repeat_sentences,12,0.0
+Qwen3-8B,uppercase_thinking,12,0.0
+Qwen3-8B,word_suppression,12,0.0

@@ -11,7 +11,8 @@ prompt condition is judged against the same constraint sentence.
 
 A verdict the parser cannot read is recorded as None (parse failure) and reported, as CoT-Control records errors.
 
-Output: cache/<exp>/judge/<grades stem>__<judge key>.jsonl. Existing outputs are reused, never rewritten.
+Output: cache/<exp>/judge/<generation stem>__<input key>__<judge key>.jsonl (judge_output_path). Existing outputs
+are reused, never rewritten.
 
 Run (vLLM venv): scripts/vllm_python.sh scripts/cc_judge.py --exp exp02 --grades FILE [FILE ...]
 """
@@ -20,6 +21,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import inspect
 import json
 import sys
 from pathlib import Path
@@ -124,11 +126,16 @@ def judge_rows(judge: Judge, rows: list[dict], gens: dict, requests: dict) -> li
 
 
 def judge_key() -> str:
+    """Hash of everything that decides a verdict: judge settings, CoT-Control commit, and the judging functions
+    (not the CLI, so editing main() does not invalidate cached verdicts)."""
+    import cc_generate
+    code = [inspect.getsource(f) for f in (judge_seed, ignore_question_prompt, meta_prompt, parse_or_none,
+                                           Judge, judge_rows, cc_generate.generate_two_phase,
+                                           cc_generate.split_reasoning, cc_generate.render_prompt_ids)]
     return cfg.content_key({"judge": cfg.JUDGE_MODEL, "sampling": cfg.FAMILIES[cfg.JUDGE_MODEL["family"]],
                             "caps": [cfg.JUDGE_THINKING_CAP_TOKENS, cfg.JUDGE_ANSWER_CAP_TOKENS,
                                      cfg.JUDGE_MAX_MODEL_LEN], "checks": cfg.JUDGE_IGNORE_QUESTION_CHECKS,
-                            "seed": cfg.JUDGE_SEED, "cotcontrol": cfg.COTCONTROL_COMMIT,
-                            "code": Path(__file__).read_text()})
+                            "seed": cfg.JUDGE_SEED, "cotcontrol": cfg.COTCONTROL_COMMIT, "code": code})
 
 
 def generation_path_for(grades_path: Path) -> Path:
@@ -136,25 +143,47 @@ def generation_path_for(grades_path: Path) -> Path:
     return grades_path.parent.parent / "generations" / (grades_path.stem.rsplit("__", 1)[0] + ".jsonl")
 
 
+def judged_rows(grades_path: Path) -> list[dict]:
+    return [r for r in map(json.loads, grades_path.open()) if r["mode"] != cfg.NO_CONSTRAINT]
+
+
+def judge_output_path(grades_path: Path) -> Path:
+    """<run dir>/judge/<generation stem>__<input key>__<judge key>.jsonl. The input key covers what the judge uses
+    from the grades (which traces, their mode and programmatic compliance), so a grader change that leaves
+    compliance unchanged reuses the verdicts."""
+    rows = judged_rows(grades_path)
+    input_key = cfg.content_key({"rows": [[r["request_id"], r["mode"], r["compliant"]] for r in rows]})
+    gen_stem = generation_path_for(grades_path).stem
+    return grades_path.parent.parent / "judge" / f"{gen_stem}__{input_key}__{judge_key()}.jsonl"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--exp", choices=list(cfg.EXPERIMENTS), required=True)
-    parser.add_argument("--grades", nargs="+", type=Path, required=True)
+    parser.add_argument("--grades", nargs="*", type=Path, default=None,
+                        help="default: the current-code grades file of every generation file of the experiment")
     args = parser.parse_args()
     exp = cfg.EXPERIMENTS[args.exp]
+    if not args.grades:
+        import cc_grade
+        args.grades = [exp.grades / f"{g.stem}__{cc_grade.code_key()}.jsonl"
+                       for g in sorted(exp.generations.glob("*.jsonl"))]
+        missing = [g for g in args.grades if not g.exists()]
+        if missing:
+            raise SystemExit(f"grade these first: {[m.name for m in missing]}")
     requests = {}
     for p in [exp.requests, exp.cache / "smoke" / "requests.jsonl"]:
         if p.exists():
             requests.update({r["request_id"]: r for r in map(json.loads, p.open())})
 
-    todo = [(g, g.parent.parent / "judge" / f"{g.stem}__{judge_key()}.jsonl") for g in args.grades]
+    todo = [(g, judge_output_path(g)) for g in args.grades]
     todo = [(g, o) for g, o in todo if not o.exists()]
     if not todo:
         print("all judge outputs exist")
         return
     judge = Judge()
     for grades_path, out in todo:
-        rows = [r for r in map(json.loads, grades_path.open()) if r["mode"] != cfg.NO_CONSTRAINT]
+        rows = judged_rows(grades_path)
         gens = {g["request_id"]: g for g in map(json.loads, generation_path_for(grades_path).open())}
         judged = judge_rows(judge, rows, gens, requests)
         out.parent.mkdir(parents=True, exist_ok=True)

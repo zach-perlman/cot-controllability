@@ -24,7 +24,9 @@ from pathlib import Path
 
 import cc_config as cfg
 
-CHUNK_SIZE = 500  # requests per chunk; a crash loses at most one chunk
+# Requests per chunk; a crash loses at most one chunk. Each chunk ends waiting on its longest (up to 25k-token)
+# trace, so fewer, larger chunks waste less GPU time.
+CHUNK_SIZE = 1000
 
 
 def sampling_for(exp_key: str, family: str, override: str | None) -> tuple[str, dict]:
