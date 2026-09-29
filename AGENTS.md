@@ -16,11 +16,11 @@ the human, see deviations_a100_*.json); report results/exp02_prompt_grid/analysi
 exp03_abort_survival (human-chosen design: 100 new items, primary KM S(1000) macro over the 7 abortable modes,
 25% full-trace cells, exp02 pooled as secondary): engine check PASS, manifest written. Qwen3-8B generated + graded
 on A100. Qwen3-32B and Qwen3.6-27B were partial (2-shard stream files, cache/exp03/generations/*.parts/
-stream.shard{0,1}of2.jsonl) when the human moved to an H200. Restore: private HF dataset
-zachperlman20/cot-controllability-cache (cache/, results/, log/; results/ there includes the files that quote
-questions, which git ignores). Stream files resume only with the same shard count (N=2); running shards 0of2 and
-1of2 on the new box reuses the A100 rows but mixes hardware within a model: record a deviation before the run
-(and one for FP8 Qwen3.6 if used). Then grade, judge, scripts/cc_survival.py --run main. exp01_paper_gate: gate PASS, UNVERIFIED —
+stream.shard{0,1}of2.jsonl) when the human moved to an H200; those rows are archived in cache/exp03/a100_partial/
+and not analyzed. Qwen3-32B and Qwen3.6-27B are being regenerated from scratch on 1x H200, then grade, judge (all
+three models), scripts/cc_survival.py --run main: scripts/h200_exp03.sh, log/exp03/h200_exp03.log, deviation in
+results/exp03_abort_survival/deviations_h200.json. Off-box backup of cache/ and of the files git ignores because
+they quote questions: private HF dataset zachperlman20/cot-controllability-cache. exp01_paper_gate: gate PASS, UNVERIFIED —
 Qwen3-32B P1 = 2.0 [0.8, 3.4] vs paper 2.3 (9 of 450 compliant, all read by the agent and genuine; 1 truncated);
 Qwen3-8B P1 = 0.6 [0.0, 1.2]. The CI is wide (50 items), so the gate rules out large setup errors only.
 Current story candidate: none yet. Smoke test (Qwen3-8B, 3 items) showed two ways to "comply" without controlling
@@ -32,7 +32,7 @@ Kill criteria in force: exp03 engine check (results/exp03_abort_survival/engine_
 manifest or generation until a human decides.
 Open issue for the human: three tracked files quote benchmark question text (prompt_examples.md,
 verification_smoke/sheet.md, exp01 read_samples.md) and are in public git history.
-Last updated: 2026-09-29 by agent (moving from 8x A100 to H200 mid-exp03)
+Last updated: 2026-09-29 by agent (exp03 Qwen3-32B / Qwen3.6-27B running on H200)
 
 ## Roles
 - Agent: implement, run, report in the format below.
