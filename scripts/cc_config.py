@@ -74,6 +74,12 @@ PRECISION_CHECK_MAX_MODEL_LEN = 28800
 EXTRA_SUBJECTS = {
     "Qwen3.6-27B-FP8": {"repo": "Qwen/Qwen3.6-27B-FP8", "revision": "e89b16ebf1988b3d6befa7de50abc2d76f26eb09",
                         "family": "qwen3.6", "gpu_memory_utilization": 0.90},
+    # exp03 extension (human choice on 2026-09-29; results/exp03_abort_survival/manifest_extension_qwen35.json).
+    # bf16: Qwen publishes no FP8 checkpoints of these. Revisions pinned on 2026-09-29.
+    "Qwen3.5-9B": {"repo": "Qwen/Qwen3.5-9B", "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+                   "family": "qwen3.5", "gpu_memory_utilization": 0.90},
+    "Qwen3.5-4B": {"repo": "Qwen/Qwen3.5-4B", "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+                   "family": "qwen3.5", "gpu_memory_utilization": 0.90},
 }
 ALL_MODELS = {**SUBJECTS, **PRECISION_CHECK_MODEL, **EXTRA_SUBJECTS}
 GATE_MODELS = ["Qwen3-8B", "Qwen3-32B"]
@@ -102,6 +108,17 @@ FAMILIES = {
         # The template itself ends with "<|im_start|>assistant\n<think>\n".
         "template_opens_think": True,
         # Card's "thinking mode for general tasks" settings.
+        "sampling": {"temperature": 1.0, "top_p": 0.95, "top_k": 20, "min_p": 0.0,
+                     "presence_penalty": 0.0, "repetition_penalty": 1.0},
+        "chat_template_kwargs": {},
+    },
+    "qwen3.5": {  # same special tokens and chat template as qwen3.6 (checked on the 9B and 4B tokenizers)
+        "think_start": 248068, "think_end": 248069, "im_end": 248046,
+        "template_opens_think": True,
+        # Card's "thinking mode for general tasks" settings except presence_penalty (card: 1.5; human choice on
+        # 2026-09-29): it lowers the logit of every token already in the output, which penalizes what meow_between_words,
+        # end_of_sentence and repeat_sentences require and favors unused case variants in the case modes. With it at
+        # 0.0 these are Qwen3.6's card settings.
         "sampling": {"temperature": 1.0, "top_p": 0.95, "top_k": 20, "min_p": 0.0,
                      "presence_penalty": 0.0, "repetition_penalty": 1.0},
         "chat_template_kwargs": {},
@@ -386,6 +403,11 @@ EXP03_DESIGN = {"prompts": PROMPTS, "models": GRID_MODELS, "sampling": "card", "
 # The models exp03 was generated with: Qwen3.6-27B from its FP8 checkpoint (human choice on 2026-09-29;
 # results/exp03_abort_survival/deviations_h200_fp8.json). EXP03_DESIGN is what the manifest pre-registered.
 EXP03_MODELS = ["Qwen3-8B", "Qwen3-32B", "Qwen3.6-27B-FP8"]
+# Added after the manifest (human choice on 2026-09-29; results/exp03_abort_survival/manifest_extension_qwen35.json):
+# same requests and seeds, analyzed as a separate family with its own Holm correction, so the pre-registered 9
+# primary contrasts keep theirs.
+EXP03_EXTENSION_MODELS = ["Qwen3.5-9B", "Qwen3.5-4B"]
+HOLM_FAMILY = {**{m: "pre-registered" for m in EXP03_MODELS}, **{m: "extension" for m in EXP03_EXTENSION_MODELS}}
 ABORT_MODES = ["word_suppression", "multiple_word_suppression", "end_of_sentence", "meow_between_words",
                "lowercase_thinking", "uppercase_thinking", "alternating_case"]
 # Not aborted: ignore_question (judged on the whole trace) and repeat_sentences (checked at both ends).

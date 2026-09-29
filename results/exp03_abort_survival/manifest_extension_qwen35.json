@@ -1,0 +1,44 @@
+{
+  "exp_id": "exp03_abort_survival (extension: Qwen3.5-9B, Qwen3.5-4B)",
+  "written": "2026-09-29T22:21:32Z, before any Qwen3.5 generation",
+  "decision": "human (2026-09-29 18:17 EDT): add Qwen3.5-9B and Qwen3.5-4B to exp03, generated before the judge step; presence penalty turned off (human, 18:20 EDT).",
+  "question": "exp03's question (manifest.json) for two smaller models of the Qwen3.5/3.6 family.",
+  "design": "exp03's requests, unchanged: cache/exp03/requests.jsonl (sha256 e07887151baff41a4c73c15389c0e680d31157a7025f3caa2a8067299c942082), same items, prompts, modes, abort flags, full-trace cells, per-request seeds, engine seed, caps and abort rule.",
+  "models": {
+    "Qwen3.5-9B": {
+      "repo": "Qwen/Qwen3.5-9B",
+      "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "family": "qwen3.5",
+      "gpu_memory_utilization": 0.9
+    },
+    "Qwen3.5-4B": {
+      "repo": "Qwen/Qwen3.5-4B",
+      "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "family": "qwen3.5",
+      "gpu_memory_utilization": 0.9
+    }
+  },
+  "sampling": {
+    "settings": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "repetition_penalty": 1.0
+    },
+    "deviation_from_card": "presence_penalty 0.0 instead of the card's 1.5 for thinking mode. The penalty subtracts 1.5 from the logit of every token already in the output, which penalizes the repeated tokens meow_between_words, end_of_sentence and repeat_sentences require and favors unused case variants in the case modes, so compliance would partly measure the sampler, and the other exp03 models run at 0.0. With it at 0.0 the settings equal Qwen3.6's card. Risk: more repetition loops in small models; degenerate and truncated shares are reported next to compliance."
+  },
+  "analysis": "cc_survival.py, the same outcomes as the manifest (primary S(1000) macro over the 7 abortable modes; reached-t*, P1, P2 judge, accuracy on full traces). The 6 contrasts per outcome (2 models x 3 Arun prompts vs baseline) are Holm-corrected as their own family (cfg.HOLM_FAMILY); the manifest's 9 pre-registered contrasts keep their own correction. Not pooled with exp02 (exp02 has no Qwen3.5 data).",
+  "judge": {
+    "name": "Qwen3.8-27B-FP8",
+    "repo": "Qwen/Qwen3.8-27B-FP8",
+    "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+    "family": "qwen3.8",
+    "gpu_memory_utilization": 0.9,
+    "note": "the exp03 judge (deviations_h200_fp8.json)"
+  },
+  "hardware": "1x H200 141GB, 1 shard x TP 1 each, bf16 (Qwen publishes no FP8 checkpoints of these models), after Qwen3.6-27B-FP8 (scripts/h200_exp03_all.sh)",
+  "not_checked_before_the_run": "No smoke test on these models: the GPU is busy until the run. Same architecture class (Qwen3_5ForConditionalGeneration) and chat template as Qwen3.6-27B, which ran in exp02 on the same vLLM; special tokens match (checked on both tokenizers). think_status and truncation are read after generation.",
+  "commit_before_run": "the commit adding this file"
+}

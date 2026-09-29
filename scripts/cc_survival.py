@@ -123,9 +123,10 @@ def holm(p_values: dict) -> dict:
 
 # --- Tables -------------------------------------------------------------------------------------------------------
 def outcome_table(df: pd.DataFrame, boot: ca.Bootstrap) -> tuple[list[dict], list[dict]]:
-    """Per (model, prompt) outcomes, and the 9 prompt - baseline contrasts of the primary and robustness outcomes."""
+    """Per (model, prompt) outcomes, and the prompt - baseline contrasts of the primary and robustness outcomes, Holm-
+    corrected within each outcome and model family (cfg.HOLM_FAMILY: the 9 pre-registered contrasts, the extension)."""
     rows, contrasts = [], []
-    for model in [m for m in cfg.EXP03_MODELS if m in set(df["model"])]:
+    for model in [m for m in cfg.EXP03_MODELS + cfg.EXP03_EXTENSION_MODELS if m in set(df["model"])]:
         draws = {}
         for prompt in cfg.PROMPTS:
             d = df[(df["model"] == model) & (df["prompt"] == prompt)]
@@ -157,12 +158,14 @@ def outcome_table(df: pd.DataFrame, boot: ca.Bootstrap) -> tuple[list[dict], lis
                 point = draws[prompt][outcome][0] - draws["baseline"][outcome][0]
                 diff = draws[prompt][outcome][1] - draws["baseline"][outcome][1]
                 contrasts.append({"model": model, "prompt": prompt, "outcome": outcome,
+                                  "holm_family": cfg.HOLM_FAMILY[model],
                                   "difference": ca.stat(point, diff), "p": bootstrap_p(diff)})
     for outcome in ("survival", "reached"):
-        subset = [c for c in contrasts if c["outcome"] == outcome]
-        adjusted = holm({(c["model"], c["prompt"]): c["p"] for c in subset})
-        for c in subset:
-            c["p_holm"] = adjusted[(c["model"], c["prompt"])]
+        for family in set(cfg.HOLM_FAMILY.values()):
+            subset = [c for c in contrasts if c["outcome"] == outcome and c["holm_family"] == family]
+            adjusted = holm({(c["model"], c["prompt"]): c["p"] for c in subset})
+            for c in subset:
+                c["p_holm"] = adjusted[(c["model"], c["prompt"])]
     return rows, contrasts
 
 
@@ -221,7 +224,7 @@ def dumb_checks(df: pd.DataFrame) -> dict:
 # --- Figures and report -----------------------------------------------------------------------------------------
 def figure_survival(df: pd.DataFrame, fig_dir) -> str:
     grid = np.arange(0, cfg.SURVIVAL_CURVE_MAX_TOKENS + 1, 20, dtype=float)
-    models = [m for m in cfg.EXP03_MODELS if m in set(df["model"])]
+    models = [m for m in cfg.EXP03_MODELS + cfg.EXP03_EXTENSION_MODELS if m in set(df["model"])]
     fig, axes = plt.subplots(1, len(models), figsize=(5 * len(models), 3.6), squeeze=False, sharey=True)
     pfig = make_subplots(rows=1, cols=len(models), subplot_titles=models)
     for k, model in enumerate(models):
@@ -255,10 +258,13 @@ def report(summary: dict, figure: str, fig_dir) -> str:
         lines.append(f"| {r['model']} | {r['prompt']} | {f(r['S_t_star'])} | {f(r['reached_t_star'])} | "
                      f"{f(r['P1'])} | {f(r['P2_judge'])} | {f(r['P2_regex'])} | {f(r['accuracy_full_traces'])} | "
                      f"{r['aborted_share_of_abortable']:.1f} | {r['censored_before_t_star_share']:.1f} |")
-    lines += ["", "| model | prompt | outcome | difference | p | p (Holm, 9) |", "|---|---|---|---|---|---|"]
+    lines += ["", "Holm correction within each outcome and family: pre-registered (the manifest's 9 contrasts) and "
+              f"extension ({', '.join(cfg.EXP03_EXTENSION_MODELS)}, added after the manifest).", "",
+              "| model | family | prompt | outcome | difference | p | p (Holm, within family) |",
+              "|---|---|---|---|---|---|---|"]
     for c in summary["contrasts"]:
-        lines.append(f"| {c['model']} | {c['prompt']} | {c['outcome']} | {f(c['difference'])} | {c['p']:.3f} | "
-                     f"{c['p_holm']:.3f} |")
+        lines.append(f"| {c['model']} | {c['holm_family']} | {c['prompt']} | {c['outcome']} | {f(c['difference'])} | "
+                     f"{c['p']:.3f} | {c['p_holm']:.3f} |")
     lines += ["", f"![survival]({os.path.relpath(fig_dir, summary['_results_root'])}/{figure})", "",
               f"P2 uses the LLM judge ({cfg.JUDGE_BY_EXP['exp03']['name']}) and is weaker evidence than the "
               "grader-based S(t*), reached-t* and P1.", ""]
