@@ -42,3 +42,32 @@ Pipeline per experiment: `cc_generate.py` (two-phase vLLM: reasoning to `</think
 -> `cc_analysis.py` (bootstrap CIs, figures, `REPORT_auto.md`) -> `cc_verification.py` (blinded human sheet, kappa).
 Caches live in `cache/<exp>/` under content-hash names; analysis outputs in `results/<exp>/analysis/<run>/` and
 `figures/<exp>/<run>/` are never overwritten.
+
+### Faster generation (for the next experiments)
+
+exp01/exp02 ran on one H100 with engine profile `v1`, at 400-600 output tokens/s: only ~4-6 long traces fit in the
+KV cache at once, and the separate answer phase re-prefilled every prompt + reasoning (35-38 min per 1,000 Qwen3-32B
+requests). The opt-in pieces below change scheduling or hardware use, not what is sampled:
+
+- `cc_generate.py --engine stream`: the same requests (prompts, sampling parameters, seeds) in one priority queue.
+  Each answer phase starts as soon as its reasoning ends, while the reasoning is still in the prefix cache. There is
+  no per-chunk wait on the longest trace, rows are appended as they finish (resumable), and GPU memory use is 0.95.
+  `--engine stream_mtp` also uses Qwen3.6's own multi-token-prediction draft head (same output distribution, but
+  different samples; benchmark it first, since the gain shrinks at long context).
+- `Qwen3.6-27B-FP8` (pinned in `cc_config.EXTRA_SUBJECTS`): 31 GB of weights instead of 56 GB, so ~2.5x the KV cache.
+  It needs a bf16 precision check, as Qwen3-32B has.
+- `generate_models.sh --exp <exp> [flags] -- <models>`: one model per GPU in parallel on a multi-GPU instance.
+- `cc_download.py <models>`: pinned snapshots, refused if the disk would drop below 20 GB free.
+
+Before a pre-registered run uses a non-default profile, compare it with `v1` and list it in the manifest deviations:
+
+```bash
+/venv/main/bin/python check_streaming.py        # CPU: stream issues v1's exact requests; crash + resume
+/venv/main/bin/python check_engine_equivalence.py prepare --exp exp02     # smoke requests -> cache/exp02/engine_check/<key>/
+./vllm_python.sh cc_generate.py --exp exp02 --model Qwen3-8B --requests <printed path> --sampling greedy
+./vllm_python.sh cc_generate.py --exp exp02 --model Qwen3-8B --requests <printed path> --sampling greedy --engine stream
+/venv/main/bin/python check_engine_equivalence.py compare --exp exp02 <v1 file> <stream file>
+```
+
+Greedy runs should mostly agree trace for trace; where they diverge, it should be late in the trace (floating-point
+drift from a different batch composition), not at the start.

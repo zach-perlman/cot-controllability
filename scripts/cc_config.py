@@ -67,7 +67,14 @@ PRECISION_CHECK_MODEL = {
                        "family": "qwen3", "gpu_memory_utilization": 0.95},
 }
 PRECISION_CHECK_MAX_MODEL_LEN = 28800
-ALL_MODELS = {**SUBJECTS, **PRECISION_CHECK_MODEL}
+# Not used by exp01/exp02. FP8 weights are 31 GB against 56 GB for bf16, which leaves ~2.5x the KV cache for long
+# traces (Qwen3.6-27B in bf16 decodes only ~6 long traces at a time). A run using it needs a bf16 precision check,
+# as Qwen3-32B has. Download with scripts/cc_download.py.
+EXTRA_SUBJECTS = {
+    "Qwen3.6-27B-FP8": {"repo": "Qwen/Qwen3.6-27B-FP8", "revision": "e89b16ebf1988b3d6befa7de50abc2d76f26eb09",
+                        "family": "qwen3.6", "gpu_memory_utilization": 0.90},
+}
+ALL_MODELS = {**SUBJECTS, **PRECISION_CHECK_MODEL, **EXTRA_SUBJECTS}
 GATE_MODELS = ["Qwen3-8B", "Qwen3-32B"]
 GRID_MODELS = ["Qwen3-8B", "Qwen3-32B", "Qwen3.6-27B"]
 
@@ -118,6 +125,27 @@ FORCED_THINK_CLOSE = "\n</think>\n\n"
 VLLM_MAX_MODEL_LEN = 40960  # Qwen3's max_position_embeddings; longest rendered prompt is checked against it
 VLLM_MAX_NUM_SEQS = 256
 VLLM_ENGINE_SEED = 42
+
+# --- Engine profiles (speed only) -----------------------------------------------------------------------------
+# "v1" is the engine every exp01/exp02 result was generated with, and its output keys are unchanged. The other
+# profiles change only how requests are scheduled on the GPU, never prompts, sampling parameters, seeds or caps; they
+# enter the generation output key. Before a pre-registered run uses one, compare it with v1 on the smoke requests
+# (scripts/check_engine_equivalence.py) and list it in the manifest deviations.
+ENGINE_PROFILES = {
+    "v1": {"scheduler": "batch", "gpu_memory_utilization": None, "speculative": False},
+    # One queue for every request: a trace's answer phase is submitted as soon as its reasoning ends, while the
+    # reasoning's KV blocks are still in the prefix cache (exp02: the separate answer phase took 35-38 min per 1,000
+    # Qwen3-32B requests), and there is no per-chunk wait on the longest trace. Rows are appended as they finish.
+    "stream": {"scheduler": "streaming", "gpu_memory_utilization": 0.95, "speculative": False},
+    # stream + the model's own multi-token-prediction head. Rejection sampling keeps the output distribution, but the
+    # samples differ from v1's; the gain shrinks at long context (vLLM issue #47602), so benchmark it first.
+    "stream_mtp": {"scheduler": "streaming", "gpu_memory_utilization": 0.95, "speculative": True},
+}
+DEFAULT_ENGINE_PROFILE = "v1"
+# Per family; only families whose checkpoints ship a draft head (Qwen3.6: mtp.* weights in both bf16 and FP8).
+SPECULATIVE_CONFIGS = {
+    "qwen3.6": {"method": "mtp", "num_speculative_tokens": 2},
+}
 NEAR_EMPTY_COT_TOKENS = 50
 # A trace with fewer distinct words than this (ignoring the rules' target words "meow" / "safe") is degenerate: in
 # the smoke test a 25k-token "meow meow meow ..." trace passed CoT-Control's meow grader (no content words to check).
