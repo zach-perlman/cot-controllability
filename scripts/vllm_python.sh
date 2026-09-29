@@ -18,4 +18,7 @@ if ((driver_major < MIN_NATIVE_DRIVER_MAJOR)); then
   fi
   export LD_LIBRARY_PATH="${COMPAT_DIR}${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 fi
+# DeepGEMM's FP8 kernels are JIT-compiled and need nvcc >= 12.9; the system toolkit is 12.8 (Qwen3-32B-FP8 failed
+# to start). Without it vLLM uses its precompiled CUTLASS FP8 kernels.
+export VLLM_USE_DEEP_GEMM=0
 exec "${VLLM_VENV}/bin/python" "$@"
