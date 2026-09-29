@@ -11,16 +11,21 @@ without giving up accuracy.
 So what: CoT-Control numbers are used in system cards to argue CoT monitorability; if they are under-elicited at
 matched length, those arguments are weaker than stated.
 Established so far (exp ids): none verified.
-In flight (exp ids): exp02_prompt_grid (launched after the gate). exp01_paper_gate: gate PASS, UNVERIFIED —
+In flight (exp ids): exp02_prompt_grid, finishing on 8x A100-40GB (scripts/exp02_finish_a100.sh; hardware
+deviation in results/exp02_prompt_grid/deviations_a100.json). exp03_abort_survival (human-chosen design: 100 new
+items, primary KM S(1000) macro over the 7 abortable modes, 25% full-trace cells, exp02 pooled as secondary):
+scripts/exp03_chain_a100.sh runs the GPU engine check, writes the manifest, generates, grades, judges, analyzes
+(scripts/cc_survival.py); logs in log/exp03/. exp01_paper_gate: gate PASS, UNVERIFIED —
 Qwen3-32B P1 = 2.0 [0.8, 3.4] vs paper 2.3 (9 of 450 compliant, all read by the agent and genuine; 1 truncated);
 Qwen3-8B P1 = 0.6 [0.0, 1.2]. The CI is wide (50 items), so the gate rules out large setup errors only.
 Current story candidate: none yet. Smoke test (Qwen3-8B, 3 items) showed two ways to "comply" without controlling
 content: empty reasoning under ignore_question (7 of 12) and 25k-token "meow meow ..." traces that pass the meow
 grader; both are now flagged (near-empty, degenerate) and reported next to compliance.
-Next experiment and why: exp01 gate (does the paper's Qwen3-32B 2.3% reproduce under our vLLM setup?), then the
-exp02 prompt grid.
-Kill criteria in force: exp01 gate fails -> exp02 does not start until a human decides.
-Last updated: 2026-09-29 by agent (exp01 gate passed, exp02 launched)
+Next experiment and why: exp03 (exp02's 50 items resolve only large prompt effects; exp03 doubles the items and
+stops traces at the first violation, which in exp02 was followed by 93-96% of the abortable modes' tokens).
+Kill criteria in force: exp03 engine check (results/exp03_abort_survival/engine_check.json) fails -> no exp03
+manifest or generation until a human decides.
+Last updated: 2026-09-29 by agent (exp02 finishing on A100, exp03 chain launched)
 
 ## Roles
 - Agent: implement, run, report in the format below.

@@ -135,9 +135,10 @@ def write_manifest() -> None:
                       "primary outcome. At 3-6% survival the standard error of a prompt - baseline difference is "
                       "about 1.1-1.3 points (independent traces; clustering by item widens it). With Holm over 9 "
                       "contrasts, a 4-5 point difference has about 80% power; 3 points is borderline.",
-        "hardware": "8x A100-SXM4-40GB (PCIe, no NVLink); Qwen3-8B 8 shards x TP 1, Qwen3-32B (FP8 checkpoint; "
-                    "A100 has no FP8 tensor cores, so vLLM runs it with bf16 activations) and Qwen3.6-27B 4 shards "
-                    "x TP 2; judge Qwen3.8-27B TP 4",
+        "hardware": "8x A100-SXM4-40GB (PCIe, no NVLink); Qwen3-8B 4 shards x TP 1 (GPUs 4-7), Qwen3-32B (FP8 "
+                    "checkpoint; A100 has no FP8 tensor cores, so vLLM runs it with bf16 activations) 2 shards x "
+                    "TP 2 (GPUs 4-7), Qwen3.6-27B 2 shards x TP 2 (GPUs 0-3); judge Qwen3.8-27B TP 4 "
+                    "(scripts/a100_lanes.sh)",
         "engine": "streaming queue (one engine loop; a trace's answer phase is enqueued when its reasoning ends); "
                   "aborted traces get no answer phase. Compared with the batch engine on the smoke requests before "
                   "this manifest (results/exp03_abort_survival/engine_check.json).",

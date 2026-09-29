@@ -1,0 +1,7 @@
+{
+  "written": "2026-09-29T18:16:00Z",
+  "before": "the bf16 precision check started (no Qwen3-32B-bf16 exp02 generation exists)",
+  "decision": "human (2026-09-29): drop the bf16 Qwen3-32B precision check from exp02; finish Qwen3.6-27B, grade, judge, analyze",
+  "consequence": "exp02 has no check that the FP8 Qwen3-32B checkpoint does not move compliance; the analysis reports precision_check = null. The check was underpowered anyway (100 traces at a few percent compliance).",
+  "schedule": "scripts/a100_lanes.sh replaces the remainder of scripts/exp02_finish_a100.sh (stopped after its Qwen3.6-27B step began; that step's shards and merge ran to completion unchanged). exp02 judge: Qwen3.8-27B TP 4 on GPUs 0-3, as in deviations_a100.json."
+}
