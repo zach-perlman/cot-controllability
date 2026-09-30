@@ -255,7 +255,8 @@ def grade_file(gen_path: Path, requests: dict, items: dict) -> Path:
 
 def load_requests(exp_key: str) -> dict:
     exp = cfg.EXPERIMENTS[exp_key]
-    paths = [exp.requests, exp.cache / "smoke" / "requests.jsonl"]
+    # exp04 has several request files (requests.jsonl, requests_none.jsonl, requests_repro.jsonl).
+    paths = sorted(exp.cache.glob("requests*.jsonl")) + sorted((exp.cache / "smoke").glob("requests*.jsonl"))
     return {r["request_id"]: r for p in paths if p.exists() for r in map(json.loads, p.open())}
 
 

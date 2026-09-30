@@ -63,17 +63,19 @@ def sampling_for(exp_key: str, family: str, override: str | None) -> tuple[str, 
 
 def check_family_tokens(tokenizer, family: str) -> None:
     fam = cfg.FAMILIES[family]
-    expected = {"think_start": "<think>", "think_end": "</think>", "im_end": "<|im_end|>"}
+    expected = fam.get("token_names", {"think_start": "<think>", "think_end": "</think>", "im_end": "<|im_end|>"})
     for key, text in expected.items():
         got = tokenizer.convert_ids_to_tokens(fam[key])
         if got != text:
             raise RuntimeError(f"{family}: token {fam[key]} is {got!r}, expected {text!r}")
 
 
-def render_prompt_ids(tokenizer, family: str, system: str, user: str) -> list[int]:
+def render_prompt_ids(tokenizer, family: str, system: str, user: str,
+                      template_overrides: dict | None = None) -> list[int]:
+    """template_overrides (exp04 only): chat-template arguments on top of the family's, e.g. enable_thinking."""
     messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
-    text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True,
-                                         **cfg.FAMILIES[family]["chat_template_kwargs"])
+    kwargs = {**cfg.FAMILIES[family]["chat_template_kwargs"], **(template_overrides or {})}
+    text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, **kwargs)
     return tokenizer.encode(text, add_special_tokens=False)
 
 

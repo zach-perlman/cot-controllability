@@ -49,7 +49,51 @@ def output_path(requests_path: Path, model: str, sampling: dict, requests: list[
                 "forced_close": cfg.FORCED_THINK_CLOSE, "engine_seed": cfg.VLLM_ENGINE_SEED,
                 "requests": [[r["request_id"], r["abort_on_violation"]] for r in requests],
                 "abort": abort_key_material()}
-    return requests_path.parent / "generations" / f"{model}__card__{ENGINE}__{cfg.content_key(material)}.jsonl"
+    if any("condition" in r for r in requests):  # exp04: how prompts are completed, and the thinking-off calls
+        fam = cfg.FAMILIES[cfg.ALL_MODELS[model]["family"]]
+        material["exp04"] = {"prompt_code": inspect.getsource(request_prompt_ids),
+                             "letter_code": inspect.getsource(letter_token_ids),
+                             "think_open_text": fam.get("think_open_text"), "family_close": fam.get("forced_close"),
+                             "external_cap": cfg.EXP04_EXTERNAL_CAP_TOKENS,
+                             "necessity_cap": cfg.EXP04_NECESSITY_CAP_TOKENS}
+    stem = requests_path.stem.removeprefix("requests")  # exp04's requests_none / requests_repro -> "_none" / "_repro"
+    return requests_path.parent / "generations" / f"{model}__card__{ENGINE}{stem}__{cfg.content_key(material)}.jsonl"
+
+
+def request_prompt_ids(tokenizer, family: str, request: dict) -> list[int]:
+    """Prompt token ids of one request. exp03 rows: the rendered chat prompt. exp04 rows (they have "condition"):
+    rendered with the request's thinking switch, then
+      thinking on:  the family's reasoning opening (Gemma 4: "<|channel>thought\\n") and the prefill, if any; a
+                    Qwen3 template stops before "<think>", so a prefill is preceded by "<think>\\n"
+      thinking off: the response prefix, if any (necessity: "ANSWER: ")
+    The opening and the prefill are tokenized on their own, so the prefill starts on a token boundary."""
+    fam = cfg.FAMILIES[family]
+    if "condition" not in request:
+        return gen.render_prompt_ids(tokenizer, family, request["system"], request["user"])
+    ids = gen.render_prompt_ids(tokenizer, family, request["system"], request["user"],
+                                {"enable_thinking": request["thinking"]})
+    pieces = []
+    if request["thinking"]:
+        pieces.append(fam.get("think_open_text", ""))
+        if request["prefill"]:
+            if not fam["template_opens_think"]:
+                pieces[0] += tokenizer.convert_ids_to_tokens(fam["think_start"]) + "\n"
+            pieces.append(request["prefill"])
+    elif request["response_prefix"]:
+        pieces.append(request["response_prefix"])
+    for piece in pieces:
+        ids = ids + (tokenizer.encode(piece, add_special_tokens=False) if piece else [])
+    return ids
+
+
+def without_reasoning_block(ids: list[int], fam: dict) -> tuple[list[int], int]:
+    """A thinking-off response with any think_start ... think_end span cut out (to the end if never closed), and
+    the number of tokens cut. Gemma 4 can open a reasoning channel even with thinking off."""
+    if fam["think_start"] not in ids:
+        return ids, 0
+    start = ids.index(fam["think_start"])
+    end = ids.index(fam["think_end"], start) + 1 if fam["think_end"] in ids[start:] else len(ids)
+    return ids[:start] + ids[end:], end - start
 
 
 def reasoning_caps(jobs: list[dict], close_len: int, max_model_len: int) -> list[int]:
@@ -65,21 +109,33 @@ def reasoning_caps(jobs: list[dict], close_len: int, max_model_len: int) -> list
 
 def generate_streaming_abort(llm, tokenizer, family: str, jobs: list[dict], sampling: dict, max_model_len: int,
                              on_result) -> None:
-    """jobs: dicts with prompt_ids, seed, abort (bool), mode, item. on_result(job index, result) once per job, in
-    completion order; result has generate_two_phase's fields plus abort_char and abort_checks."""
+    """jobs: dicts with prompt_ids, seed, abort (bool), mode, item, and (exp04 thinking-off jobs) response_cap.
+    on_result(job index, result) once per job, in completion order; result has generate_two_phase's fields plus
+    abort_char and abort_checks. A job with response_cap is one call of at most that many tokens up to the end of
+    the turn: its result has the response in "answer", think_status "thinking_off" and no reasoning."""
     from tqdm import tqdm
     from vllm import SamplingParams
     from vllm.sampling_params import RequestOutputKind
     fam = cfg.FAMILIES[family]
-    close_ids = tokenizer.encode(cfg.FORCED_THINK_CLOSE, add_special_tokens=False)
+    close_ids = tokenizer.encode(fam.get("forced_close", cfg.FORCED_THINK_CLOSE), add_special_tokens=False)
     caps = reasoning_caps(jobs, len(close_ids), max_model_len)
-    params = [SamplingParams(**sampling, max_tokens=cap, seed=job["seed"],
-                             stop_token_ids=[fam["think_end"], fam["im_end"]], skip_special_tokens=False,
-                             output_kind=RequestOutputKind.DELTA if job["abort"] else RequestOutputKind.FINAL_ONLY)
-              for job, cap in zip(jobs, caps)]
+    params = []
+    for job, cap in zip(jobs, caps):
+        if job.get("response_cap"):
+            params.append(SamplingParams(**sampling, max_tokens=min(job["response_cap"],
+                                                                    max_model_len - len(job["prompt_ids"]) - 1),
+                                         seed=job["seed"], stop_token_ids=[fam["im_end"]], skip_special_tokens=False,
+                                         allowed_token_ids=job.get("allowed_token_ids"),
+                                         output_kind=RequestOutputKind.FINAL_ONLY))
+        else:
+            params.append(SamplingParams(**sampling, max_tokens=cap, seed=job["seed"],
+                                         stop_token_ids=[fam["think_end"], fam["im_end"]], skip_special_tokens=False,
+                                         output_kind=RequestOutputKind.DELTA if job["abort"]
+                                         else RequestOutputKind.FINAL_ONLY))
     request_ids = gen.add_requests(llm, [j["prompt_ids"] for j in jobs], params,
                                    [gen.REASONING_PRIORITY] * len(jobs))
     reasoning_of = dict(zip(request_ids, range(len(jobs))))
+    single_phase = {rid for rid, i in reasoning_of.items() if jobs[i].get("response_cap")}
     streamed = {rid: [] for rid, i in reasoning_of.items() if jobs[i]["abort"]}  # token ids so far
     next_check = {rid: cfg.ABORT_CHECK_MIN_TOKENS for rid in streamed}
     n_checks = {rid: 0 for rid in streamed}
@@ -130,6 +186,18 @@ def generate_streaming_abort(llm, tokenizer, family: str, jobs: list[dict], samp
                 elif not out.finished:
                     continue
                 reasoning_of.pop(rid)
+                if rid in single_phase:
+                    tokens = list(completion.token_ids)
+                    if tokens and tokens[-1] == fam["im_end"]:
+                        tokens = tokens[:-1]
+                    response_ids, cut = without_reasoning_block(tokens, fam)
+                    result = base_result(i, [], "thinking_off")
+                    result.update(answer=tokenizer.decode(response_ids, skip_special_tokens=True).strip(),
+                                  answer_tokens=len(completion.token_ids), answer_finish=completion.finish_reason,
+                                  response_reasoning_tokens_cut=cut)
+                    on_result(i, result)
+                    bar.update()
+                    continue
                 reasoning_ids, phase1_ids, status = gen.split_reasoning(completion, fam)
                 result = base_result(i, reasoning_ids, status)
                 if rid in n_checks:
@@ -170,7 +238,40 @@ def output_row(request: dict, model: str, result: dict) -> dict:
     row = {k: request[k] for k in ("request_id", "item_id", "source", "mode", "prompt", "rollout", "seed",
                                    "abort_on_violation", "full_trace_cell")}
     row.update(model=model, sampling="card", engine=ENGINE)
+    if "condition" in request:
+        row.update(condition=request["condition"], prefill=request["prefill"])
     return {**row, **result}
+
+
+def exp04_result(request: dict, result: dict, tokenizer) -> dict:
+    """What cc_grade grades, per exp04 condition. Prefill rows: "reasoning" is already the continuation (the prefill
+    is in the prompt). external_ceiling: "reasoning" becomes the <output_reasoning> tag content of the response.
+    necessity: the response prefix is put back in front of the answer."""
+    import cc_exp04
+    if request["condition"] == "external_ceiling":
+        content, blocks = cc_exp04.external_reasoning(result["answer"])
+        result = {**result, "reasoning": content, "external_blocks": blocks,
+                  "reasoning_tokens": len(tokenizer.encode(content, add_special_tokens=False)) if content else 0}
+    elif request["condition"] == "necessity":
+        result = {**result, "answer": f"{request['response_prefix']} {result['answer']}"}
+    return result
+
+
+def letter_token_ids(tokenizer, request: dict) -> list[int] | None:
+    """The single-token ids of " A", " B", ... for a necessity request (the only tokens it may sample)."""
+    if not request.get("response_letters"):
+        return None
+    ids = [tokenizer.encode(" " + letter, add_special_tokens=False) for letter in request["response_letters"]]
+    if any(len(i) != 1 for i in ids):
+        raise RuntimeError(f"{request['request_id']}: an option letter is not one token: {ids}")
+    return [i[0] for i in ids]
+
+
+def response_cap(request: dict) -> int | None:
+    """Token cap of a thinking-off exp04 request (one call); None for requests with a reasoning phase."""
+    if request.get("thinking", True):
+        return None
+    return cfg.EXP04_NECESSITY_CAP_TOKENS if request["condition"] == "necessity" else cfg.EXP04_EXTERNAL_CAP_TOKENS
 
 
 def run_shard(llm, tokenizer, family: str, requests: list[dict], items: dict, sampling: dict, max_model_len: int,
@@ -183,11 +284,15 @@ def run_shard(llm, tokenizer, family: str, requests: list[dict], items: dict, sa
           flush=True)
     if not todo:
         return
-    jobs = [{"prompt_ids": gen.render_prompt_ids(tokenizer, family, r["system"], r["user"]), "seed": r["seed"],
-             "abort": r["abort_on_violation"], "mode": r["mode"], "item": items[r["item_id"]]} for r in todo]
+    jobs = [{"prompt_ids": request_prompt_ids(tokenizer, family, r), "seed": r["seed"],
+             "abort": r["abort_on_violation"], "mode": r["mode"], "item": items[r["item_id"]],
+             "response_cap": response_cap(r), "allowed_token_ids": letter_token_ids(tokenizer, r)} for r in todo]
     with path.open("a") as f:
         def write(index: int, result: dict) -> None:
-            f.write(json.dumps(output_row(todo[index], model, result)) + "\n")
+            request = todo[index]
+            if "condition" in request:
+                result = exp04_result(request, result, tokenizer)
+            f.write(json.dumps(output_row(request, model, result)) + "\n")
             f.flush()
         generate_streaming_abort(llm, tokenizer, family, jobs, sampling, max_model_len, write)
 
@@ -209,7 +314,7 @@ def merge(requests: list[dict], parts: Path, n_shards: int) -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exp", choices=["exp03"], required=True)
+    parser.add_argument("--exp", choices=["exp03", "exp04"], required=True)
     parser.add_argument("--model", choices=list(cfg.ALL_MODELS), required=True)
     parser.add_argument("--requests", type=Path, default=None, help="default: cache/<exp>/requests.jsonl")
     parser.add_argument("--items", type=Path, default=None, help="default: cfg.EXP03_ITEMS_PATH")
