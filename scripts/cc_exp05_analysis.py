@@ -11,8 +11,9 @@ for cfg.EXP05_NEW_MODELS, whose d0 is exp05's requests_base rows and which have 
 
 Primary: R_d1 and R_d3 (rule arm - no-rule arm, S(t*) over the 4 opener rules) and R_trend = R_d3 - R_d1; Holm over
 the 3 contrasts x every analyzed model (deviations_one_analysis.json; manifest.json's 9-contrast Holm is kept in
-summary.json as p_holm_manifest). Secondary: rule-arm d3 - d1; lenient grader; the effort check (Qwen3.8 xhigh /
-medium / low on exp04's requests of two arms; Holm over the 4 effort contrasts).
+summary.json as p_holm_manifest). Secondary: rule-arm d3 - d1; lenient grader; answer correctness vs rule-keeping on
+full-trace cells (G5); the effort check (Qwen3.8 xhigh / medium / low on exp04's requests of two arms; Holm over the
+4 effort contrasts).
 
 Outputs (never overwritten): results/exp05_dose/analysis/<run>/ and figures/exp05_dose/<run>/ (--scratch: under
 /tmp/exp05_scratch/<run>/, for tests on partial data).
@@ -349,6 +350,83 @@ def fig_effort(rows: list[dict], fig_dir) -> str:
     return a4.save(fig, fig_dir, "G4_effort", 1200, 520)
 
 
+# --- Secondary: does answer correctness go with rule-keeping? ---------------------------------------------------------
+# Only full-trace cells (exp03's ~25%, the same (item, rule) cells in every arm) run to the end whatever the rule
+# violations, so only there is correctness observed without selecting on compliance. Wrong answers come with longer
+# traces (more room to violate), so the length-matched comparison is the one to read: among rollouts that reached t
+# tokens, the share with no violation in the first t.
+CORRECTNESS_ARMS = {"no opening": ("none", ["d0"]), "rule in prompt": ("prefill_compliant", DOSES),
+                    "no rule (imitation only)": ("prefill_no_rule", DOSES)}
+CORRECTNESS_MIN_N = 10  # rollouts per correct / wrong group, else no estimate
+
+
+def correctness_frame(df: pd.DataFrame) -> pd.DataFrame:
+    """Full-trace rollouts with a graded answer, the 4 opener rules, with obeyed_throughout and clean_first_<t>."""
+    d = df[df["full_trace_cell"].astype(bool) & df["mode"].isin(OPENERS) & df["correct"].notna()].copy()
+    d["correct"] = d["correct"].astype(bool)
+    d["obeyed_throughout"] = d["compliant_final"]
+    for t in (T_SHORT, T_STAR):
+        reached = d["reasoning_tokens"] >= t
+        d[f"clean_first_{t}"] = np.where(reached, (~(d["event"] & (d["time"] < t))).astype(float), np.nan)
+    return d
+
+
+def correctness_table(df: pd.DataFrame, models: list[str], boot: ca.Bootstrap) -> list[dict]:
+    """Per model (and all models pooled) and arm (d1-d3 pooled): right - wrong on each measure, question bootstrap."""
+    d = correctness_frame(df[df["model"].isin(models)])
+    out = []
+    for model in models + ["all models"]:
+        m = d if model == "all models" else d[d["model"] == model]
+        for arm, (condition, doses) in CORRECTNESS_ARMS.items():
+            a = m[(m["condition"] == condition) & m["dose"].isin(doses)]
+            right, wrong = a[a["correct"]], a[~a["correct"]]
+            row = {"model": model, "arm": arm, "n_right": len(right), "n_wrong": len(wrong),
+                   "median_tokens_right": float(right["reasoning_tokens"].median()) if len(right) else None,
+                   "median_tokens_wrong": float(wrong["reasoning_tokens"].median()) if len(wrong) else None}
+            for measure in ["obeyed_throughout", f"clean_first_{T_SHORT}", f"clean_first_{T_STAR}"]:
+                r, w = right[right[measure].notna()], wrong[wrong[measure].notna()]
+                row[f"n_{measure}"] = [len(r), len(w)]
+                if min(len(r), len(w)) < CORRECTNESS_MIN_N:
+                    row[measure] = row[f"{measure}_right_minus_wrong"] = None
+                    continue
+                (pr, dr), (pw, dw) = ca.pooled(r, measure, boot), ca.pooled(w, measure, boot)
+                row[measure] = {"right": ca.stat(pr, dr), "wrong": ca.stat(pw, dw)}
+                row[f"{measure}_right_minus_wrong"] = ca.stat(pr - pw, dr - dw)
+            out.append(row)
+    return out
+
+
+def fig_correctness(rows: list[dict], models: list[str], fig_dir) -> str:
+    """G5: right - wrong, raw (whole trace) vs length-matched (first t* tokens), per model and arm."""
+    panels = [("obeyed_throughout", "raw: obeyed the rule for the whole trace"),
+              (f"clean_first_{T_STAR}", f"length-matched: no violation in the first {T_STAR} tokens<br>"
+                                        f"(rollouts that reached {T_STAR} tokens)")]
+    fig = make_subplots(rows=1, cols=2, shared_yaxes=True, horizontal_spacing=0.04,
+                        subplot_titles=[title for _, title in panels])
+    x_order = models + ["all models"]
+    for col, (measure, _) in enumerate(panels, start=1):
+        for arm, (condition, _) in CORRECTNESS_ARMS.items():
+            pts = {r["model"]: r[f"{measure}_right_minus_wrong"] for r in rows if r["arm"] == arm}
+            xs = [x for x in x_order if pts.get(x)]
+            fig.add_trace(go.Scatter(x=xs, y=[pts[x]["value"] for x in xs], mode="markers", name=arm,
+                                     legendgroup=arm, showlegend=col == 1,
+                                     marker={"color": ARM_STYLE[condition]["color"], "size": 9},
+                                     error_y={"type": "data", "symmetric": False,
+                                              "array": [pts[x]["ci"][1] - pts[x]["value"] for x in xs],
+                                              "arrayminus": [pts[x]["value"] - pts[x]["ci"][0] for x in xs]}),
+                          row=1, col=col)
+        fig.add_hline(y=0, line={"color": "black", "width": 1}, row=1, col=col)
+        fig.update_xaxes(categoryorder="array", categoryarray=x_order, tickangle=-30, row=1, col=col)
+    fig.update_yaxes(title_text="right − wrong answers, % points", col=1)
+    fig.update_layout(scattermode="group",
+                      title="G5. Do rollouts that answer correctly keep the rule more? (full-trace cells only; 95% CIs)"
+                            "<br><sup>Opening doses pooled. Wrong answers come with longer traces, so the raw gap "
+                            "mixes correctness with length; compare the right panel's gaps with the arm gaps in G1. "
+                            "0 with no CI: nobody in either group kept the rule (floor)</sup>",
+                      legend={"orientation": "h", "y": -0.35}, margin={"t": 140, "b": 150})
+    return a4.save(fig, fig_dir, "G5_correctness_check", 1300, 560)
+
+
 # --- Report ----------------------------------------------------------------------------------------------------------
 def report(s: dict, per_rule: pd.DataFrame, figures: list[str], fig_rel: str) -> str:
     f = ca.fmt
@@ -383,6 +461,18 @@ def report(s: dict, per_rule: pd.DataFrame, figures: list[str], fig_rel: str) ->
     lines += ["", "| arm | contrast | difference | p | p (Holm) |", "|---|---|---|---|---|"]
     lines += [f"| {c['arm']} | {c['contrast']} | {f(c['difference'])} | {c['p']:.3f} | {c['p_holm']:.3f} |"
               for c in s["effort_contrasts"]]
+    lines += ["", "## Secondary: answer correctness vs rule-keeping (full-trace cells; opening doses pooled)", "",
+              "Only full-trace cells observe correctness without selecting on compliance. Wrong answers are longer, "
+              f"so read the length-matched column (rollouts that reached {T_STAR} tokens). Right − wrong in % points; "
+              f"n/a: fewer than {CORRECTNESS_MIN_N} rollouts in a group; 0.0 [0.0, 0.0]: nobody in either group kept "
+              "the rule (a floor, not evidence of no link).", "",
+              "| model | arm | n right / wrong | median tokens right / wrong | obeyed throughout: right − wrong | "
+              f"no violation in first {T_SHORT}: right − wrong | no violation in first {T_STAR}: right − wrong "
+              f"(n right / wrong) |", "|---|---|---|---|---|---|---|"]
+    lines += [f"| {r['model']} | {r['arm']} | {r['n_right']} / {r['n_wrong']} | {r['median_tokens_right']} / "
+              f"{r['median_tokens_wrong']} | {f(r['obeyed_throughout_right_minus_wrong'])} | "
+              f"{f(r[f'clean_first_{T_SHORT}_right_minus_wrong'])} | {f(r[f'clean_first_{T_STAR}_right_minus_wrong'])} "
+              f"({' / '.join(map(str, r[f'n_clean_first_{T_STAR}']))}) |" for r in s["correctness"]]
     lines += ["", f"## Per rule S({T_STAR})", "", ca.markdown_table(per_rule.round(1)), "", "## Figures", ""]
     lines += [f"- [{name}]({fig_rel}/{name}.html) ![{name}]({fig_rel}/{name}.png)" for name in figures]
     lines += ["", "## Checks", "", "```", json.dumps(s["checks"], indent=1), "```", "",
@@ -428,12 +518,14 @@ def main() -> None:
     summary = {"exp_id": EXP.exp_id, "run": args.run, "models": models, "skipped_models": skipped,
                "censor_empty": args.censor_empty_traces, "t_star": T_STAR,
                "primary_contrasts": primary_contrasts(draws, models), "dose_effect": dose_effect(draws, models),
-               "cells": cells, "effort": effort_rows, "effort_contrasts": effort_contrasts, "checks": checks(everything)}
+               "cells": cells, "correctness": correctness_table(df, models, boot), "effort": effort_rows,
+               "effort_contrasts": effort_contrasts, "checks": checks(everything)}
     figures = [fig_dose(cells, models, fig_dir, "S_t_star", "G1_dose_response",
                         "Does a longer compliant start help, and is it the rule or copying? 4 opener rules, strict"),
                fig_dose(cells, models, fig_dir, "S_t_star_case_lenient", "G1b_dose_response_case_lenient",
                         "The 2 case rules with notation let through (lenient grader)"),
-               fig_rule_gap(cells, draws, models, fig_dir), fig_per_rule(per_rule, models, fig_dir)]
+               fig_rule_gap(cells, draws, models, fig_dir), fig_per_rule(per_rule, models, fig_dir),
+               fig_correctness(summary["correctness"], models, fig_dir)]
     if effort_rows:
         figures.append(fig_effort(effort_rows, fig_dir))
     per_rule.to_csv(out_dir / "per_cell.csv", index=False)
