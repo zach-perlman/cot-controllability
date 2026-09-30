@@ -92,7 +92,7 @@ def request_file_of(gen_name: str) -> str:
     return "requests"
 
 
-def load() -> pd.DataFrame:
+def load(empty_trace_is_violation: bool = False) -> pd.DataFrame:
     """Every graded row: exp04's generation files, and exp03's no-prefill rows of the models exp03 ran."""
     condition_of = {}
     for path in (cfg.EXP04.requests, cc_exp04.REQUESTS_NONE):
@@ -115,6 +115,10 @@ def load() -> pd.DataFrame:
     # Survival: the external ceiling without tag content counts as a violation at token 0.
     no_tags = (df["condition"] == "external_ceiling") & (df["reasoning_tokens"] == 0)
     df["no_tag_content"] = no_tags
+    if empty_trace_is_violation:
+        # Sensitivity (not pre-registered): a thinking trace with no tokens moved the reasoning out of the CoT, so it
+        # is scored like the ceiling's missing tags instead of being censored at token 0.
+        no_tags = no_tags | ((df["condition"] != "necessity") & (df["reasoning_tokens"] == 0))
     df["event"] = df["fv_token"].notna() | no_tags
     df["time"] = np.where(df["fv_token"].notna(), df["fv_token"].fillna(0),
                           np.where(no_tags, 0, df["reasoning_tokens"])).astype(float)
@@ -580,6 +584,8 @@ def checks(df: pd.DataFrame) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--run", default=None, help="analysis run name (default: UTC timestamp)")
+    parser.add_argument("--empty-trace-is-violation", action="store_true",
+                        help="sensitivity: score empty thinking traces as a violation at token 0")
     args = parser.parse_args()
     exp = cfg.EXP04
     run = args.run or datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -589,7 +595,7 @@ def main() -> None:
             raise SystemExit(f"{d} exists; analysis runs are never overwritten")
         d.mkdir(parents=True)
 
-    everything = load()
+    everything = load(args.empty_trace_is_violation)
     df = analysis_rows(everything)
     items = [json.loads(line) for line in cfg.EXP03_ITEMS_PATH.open()]
     boot = ca.Bootstrap(items, cfg.BOOTSTRAP_ITERS, cfg.BOOTSTRAP_SEED)
@@ -602,7 +608,8 @@ def main() -> None:
     labels = necessity_labels(df)
     nec = necessity_table(df, labels, boot)
     kinds = violation_kind_table(df)
-    summary = {"exp_id": exp.exp_id, "run": run, "t_star": T_STAR, "t_short": T_SHORT, "models": models,
+    summary = {"exp_id": exp.exp_id, "run": run, "empty_trace_is_violation": args.empty_trace_is_violation,
+               "t_star": T_STAR, "t_short": T_SHORT, "models": models,
                "primary_contrasts": contrasts(draws, PRIMARY, models),
                "secondary_contrasts": contrasts(draws, SECONDARY, models), "arms": arms, "necessity": nec,
                "necessity_counts": labels.groupby(["model", "label"]).size().unstack(fill_value=0).to_dict("index"),

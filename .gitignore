@@ -15,3 +15,6 @@ log/setup_a100/downloads*.log
 log/exp03/*.log
 log/exp04/*.log
 !log/exp04/h200_exp04.log
+
+# exp04 auto-reports quote trace words (incl. question text) in the exploratory notation table; kept in the private HF dataset
+results/exp04_prefill/analysis/*/REPORT_auto.md
