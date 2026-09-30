@@ -47,7 +47,8 @@ EXP01 = Exp("exp01_paper_gate", "exp01")
 EXP02 = Exp("exp02_prompt_grid", "exp02")
 EXP03 = Exp("exp03_abort_survival", "exp03")
 EXP04 = Exp("exp04_prefill", "exp04")
-EXPERIMENTS = {"exp01": EXP01, "exp02": EXP02, "exp03": EXP03, "exp04": EXP04}
+EXP05 = Exp("exp05_dose", "exp05")
+EXPERIMENTS = {"exp01": EXP01, "exp02": EXP02, "exp03": EXP03, "exp04": EXP04, "exp05": EXP05}
 ITEMS_PATH = EXP02.cache / "items.jsonl"  # shared by exp01 and exp02; exp03 has its own (EXP03_ITEMS_PATH)
 
 # --- Subject models ----------------------------------------------------------------------------------------
@@ -91,6 +92,12 @@ EXTRA_SUBJECTS = {
                         "family": "gemma4", "gpu_memory_utilization": 0.90},
     "Gemma-4-12B": {"repo": "google/gemma-4-12B-it", "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
                     "family": "gemma4", "gpu_memory_utilization": 0.90},
+    # exp05 effort check: the same Qwen3.8 checkpoint at its other two reasoning efforts (family differs only in the
+    # chat template's reasoning_effort, which prepends one instruction sentence to the system turn).
+    "Qwen3.8-27B-FP8-xhigh": {"repo": "Qwen/Qwen3.8-27B-FP8", "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+                              "family": "qwen3.8-xhigh", "gpu_memory_utilization": 0.90},
+    "Qwen3.8-27B-FP8-low": {"repo": "Qwen/Qwen3.8-27B-FP8", "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+                            "family": "qwen3.8-low", "gpu_memory_utilization": 0.90},
 }
 ALL_MODELS = {**SUBJECTS, **PRECISION_CHECK_MODEL, **EXTRA_SUBJECTS}
 GATE_MODELS = ["Qwen3-8B", "Qwen3-32B"]
@@ -158,6 +165,8 @@ FAMILIES = {
         "chat_template_kwargs": {"enable_thinking": True},
     },
 }
+for _effort in ("xhigh", "low"):
+    FAMILIES[f"qwen3.8-{_effort}"] = {**FAMILIES["qwen3.8"], "chat_template_kwargs": {"reasoning_effort": _effort}}
 # The paper's setting (Appendix G: greedy decoding throughout), used by the exp01 gate.
 GREEDY_SAMPLING = {"temperature": 0.0, "top_p": 1.0, "top_k": -1, "min_p": 0.0,
                    "presence_penalty": 0.0, "repetition_penalty": 1.0}
@@ -421,7 +430,8 @@ MODEL_ORDER = GRID_MODELS
 # and an audit of the abort rule. Primary outcome: Kaplan-Meier S(SURVIVAL_T_STAR). Design chosen by the human on
 # 2026-09-29 (100 items, survival primary, 25% full traces, exp02 pooled only as a secondary analysis).
 EXP03_ITEMS_PATH = EXP03.cache / "items.jsonl"
-ITEMS_BY_EXP = {"exp01": ITEMS_PATH, "exp02": ITEMS_PATH, "exp03": EXP03_ITEMS_PATH, "exp04": EXP03_ITEMS_PATH}
+ITEMS_BY_EXP = {"exp01": ITEMS_PATH, "exp02": ITEMS_PATH, "exp03": EXP03_ITEMS_PATH, "exp04": EXP03_ITEMS_PATH,
+                "exp05": EXP03_ITEMS_PATH}
 EXP03_ITEMS_PER_SOURCE = {"GPQA": 37, "HLE": 38, "MMLU-Pro": 25}  # 100, proportional to 445 / 469 / 300
 EXP03_ITEM_SEED = 20260929
 EXP03_DESIGN = {"prompts": PROMPTS, "models": GRID_MODELS, "sampling": "card", "rollouts": 1,
@@ -510,3 +520,19 @@ CONDITION_STYLE = {  # fixed color per exp04 condition in every figure (Okabe-It
     "prefill_no_rule": {"color": "#56B4E9", "label": "compliant prefill, no rule"},
     "external_ceiling": {"color": "#CC79A7", "label": "thinking off, output reasoning"},
 }
+
+# --- exp05_dose ------------------------------------------------------------------------------------------------------
+# Rule-following or imitation? exp04 started the reasoning with one generic compliant sentence. exp05 starts it with
+# the model's *own* opening (its no-constraint trace for the same item: exp03's for the models exp03 ran, exp04's
+# requests_none otherwise), rewritten to obey the rule, at 3 lengths, with the rule in the prompt (baseline) and
+# without it (CoT-Control's unconstrained prompt). If the continuation keeps the rule because it copies the text so
+# far, the no-rule arm rises with the opening's length as fast as the rule arm. Human go-ahead on 2026-09-30.
+EXP05_MODELS = ["Qwen3-32B", "Qwen3.6-27B-FP8", "Qwen3.8-27B-FP8"]
+EXP05_MODES = EXP04_OPENER_MODES
+# Opening = the shortest prefix of the own trace that ends at a sentence boundary (the end_of_sentence grader's
+# splitter) and has at least this many tokens (model tokenizer, before the rewrite). 1 = the first sentence.
+EXP05_DOSE_MIN_TOKENS = {"d1": 1, "d2": 60, "d3": 150}
+EXP05_CONDITIONS = {"prefill_compliant": "baseline", "prefill_no_rule": NO_CONSTRAINT}  # condition -> prompt
+# Effort check: exp04's requests of two arms, rerun at Qwen3.8's other efforts (exp04 ran medium).
+EXP05_EFFORT_MODELS = ["Qwen3.8-27B-FP8-xhigh", "Qwen3.8-27B-FP8-low"]
+EXP05_EFFORT_ARMS = [("none", "stacked"), ("prefill_compliant", "baseline")]

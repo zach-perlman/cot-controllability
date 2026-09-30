@@ -314,7 +314,7 @@ def merge(requests: list[dict], parts: Path, n_shards: int) -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exp", choices=["exp03", "exp04"], required=True)
+    parser.add_argument("--exp", choices=["exp03", "exp04", "exp05"], required=True)
     parser.add_argument("--model", choices=list(cfg.ALL_MODELS), required=True)
     parser.add_argument("--requests", type=Path, default=None, help="default: cache/<exp>/requests.jsonl")
     parser.add_argument("--items", type=Path, default=None, help="default: cfg.EXP03_ITEMS_PATH")
