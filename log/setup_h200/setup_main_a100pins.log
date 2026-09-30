@@ -1,0 +1,22 @@
+Using Python 3.12.14 environment at: /venv/main
+Resolved 147 packages in 841ms
+Downloading plotly (9.2MiB)
+Downloading openai (2.0MiB)
+Downloading fonttools (5.1MiB)
+ Downloaded openai
+ Downloaded fonttools
+ Downloaded plotly
+Prepared 7 packages in 269ms
+Uninstalled 4 packages in 92ms
+Installed 7 packages in 485ms
+ - fonttools==4.66.0
+ + fonttools==4.66.1
+ + narwhals==2.26.0
+ - openai==3.19.2
+ + openai==3.20.0
+ - peft==0.21.0
+ + peft==0.21.1
+ + plotly==7.1.0
+ + python-dotenv==1.2.3
+ - regex==2026.9.10
+ + regex==2026.9.29
