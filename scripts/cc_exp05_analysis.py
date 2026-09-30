@@ -540,7 +540,7 @@ def main() -> None:
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2, default=str) + "\n")
     text = report(summary, per_rule, figures, os.path.relpath(fig_dir, out_dir))
     (out_dir / "REPORT_auto.md").write_text(text)
-    print(f"wrote {out_dir.relative_to(cfg.REPO_ROOT)}")
+    print(f"wrote {out_dir}")
     print(text)
 
 
