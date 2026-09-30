@@ -355,8 +355,13 @@ def fig_effort(rows: list[dict], fig_dir) -> str:
 # violations, so only there is correctness observed without selecting on compliance. Wrong answers come with longer
 # traces (more room to violate), so the length-matched comparison is the one to read: among rollouts that reached t
 # tokens, the share with no violation in the first t.
-CORRECTNESS_ARMS = {"no opening": ("none", ["d0"]), "rule in prompt": ("prefill_compliant", DOSES),
-                    "no rule (imitation only)": ("prefill_no_rule", DOSES)}
+# arm label -> (plot color, row selector)
+CORRECTNESS_ARMS = {
+    "no opening": (ARM_STYLE["none"]["color"], lambda d: (d["condition"] == "none") & (d["dose"] == "d0")),
+    "rule in prompt": (ARM_STYLE["prefill_compliant"]["color"],
+                       lambda d: (d["condition"] == "prefill_compliant") & d["dose"].isin(DOSES)),
+    "no rule (imitation only)": (ARM_STYLE["prefill_no_rule"]["color"],
+                                 lambda d: (d["condition"] == "prefill_no_rule") & d["dose"].isin(DOSES))}
 CORRECTNESS_MIN_N = 10  # rollouts per correct / wrong group, else no estimate
 
 
@@ -371,14 +376,15 @@ def correctness_frame(df: pd.DataFrame) -> pd.DataFrame:
     return d
 
 
-def correctness_table(df: pd.DataFrame, models: list[str], boot: ca.Bootstrap) -> list[dict]:
-    """Per model (and all models pooled) and arm (d1-d3 pooled): right - wrong on each measure, question bootstrap."""
+def correctness_table(df: pd.DataFrame, models: list[str], boot: ca.Bootstrap,
+                      arms: dict = CORRECTNESS_ARMS) -> list[dict]:
+    """Per model (and all models pooled) and arm: right - wrong on each measure, question bootstrap."""
     d = correctness_frame(df[df["model"].isin(models)])
     out = []
     for model in models + ["all models"]:
         m = d if model == "all models" else d[d["model"] == model]
-        for arm, (condition, doses) in CORRECTNESS_ARMS.items():
-            a = m[(m["condition"] == condition) & m["dose"].isin(doses)]
+        for arm, (_, selects) in arms.items():
+            a = m[selects(m)]
             right, wrong = a[a["correct"]], a[~a["correct"]]
             row = {"model": model, "arm": arm, "n_right": len(right), "n_wrong": len(wrong),
                    "median_tokens_right": float(right["reasoning_tokens"].median()) if len(right) else None,
@@ -396,7 +402,9 @@ def correctness_table(df: pd.DataFrame, models: list[str], boot: ca.Bootstrap) -
     return out
 
 
-def fig_correctness(rows: list[dict], models: list[str], fig_dir) -> str:
+def fig_correctness(rows: list[dict], models: list[str], fig_dir, arms: dict = CORRECTNESS_ARMS,
+                    name: str = "G5_correctness_check",
+                    note: str = "Opening doses pooled; compare the right panel's gaps with the arm gaps in G1.") -> str:
     """G5: right - wrong, raw (whole trace) vs length-matched (first t* tokens), per model and arm."""
     panels = [("obeyed_throughout", "raw: obeyed the rule for the whole trace"),
               (f"clean_first_{T_STAR}", f"length-matched: no violation in the first {T_STAR} tokens<br>"
@@ -405,12 +413,12 @@ def fig_correctness(rows: list[dict], models: list[str], fig_dir) -> str:
                         subplot_titles=[title for _, title in panels])
     x_order = models + ["all models"]
     for col, (measure, _) in enumerate(panels, start=1):
-        for arm, (condition, _) in CORRECTNESS_ARMS.items():
+        for arm, (color, _) in arms.items():
             pts = {r["model"]: r[f"{measure}_right_minus_wrong"] for r in rows if r["arm"] == arm}
             xs = [x for x in x_order if pts.get(x)]
             fig.add_trace(go.Scatter(x=xs, y=[pts[x]["value"] for x in xs], mode="markers", name=arm,
                                      legendgroup=arm, showlegend=col == 1,
-                                     marker={"color": ARM_STYLE[condition]["color"], "size": 9},
+                                     marker={"color": color, "size": 9},
                                      error_y={"type": "data", "symmetric": False,
                                               "array": [pts[x]["ci"][1] - pts[x]["value"] for x in xs],
                                               "arrayminus": [pts[x]["value"] - pts[x]["ci"][0] for x in xs]}),
@@ -419,12 +427,12 @@ def fig_correctness(rows: list[dict], models: list[str], fig_dir) -> str:
         fig.update_xaxes(categoryorder="array", categoryarray=x_order, tickangle=-30, row=1, col=col)
     fig.update_yaxes(title_text="right − wrong answers, % points", col=1)
     fig.update_layout(scattermode="group",
-                      title="G5. Do rollouts that answer correctly keep the rule more? (full-trace cells only; 95% CIs)"
-                            "<br><sup>Opening doses pooled. Wrong answers come with longer traces, so the raw gap "
-                            "mixes correctness with length; compare the right panel's gaps with the arm gaps in G1. "
-                            "0 with no CI: nobody in either group kept the rule (floor)</sup>",
+                      title=f"{name.split('_')[0]}. Do rollouts that answer correctly keep the rule more? "
+                            "(full-trace cells only; 95% CIs)<br><sup>Wrong answers come with longer traces, so the "
+                            f"raw gap mixes correctness with length. {note} 0 with no CI: nobody in either group kept "
+                            "the rule (floor)</sup>",
                       legend={"orientation": "h", "y": -0.35}, margin={"t": 140, "b": 150})
-    return a4.save(fig, fig_dir, "G5_correctness_check", 1300, 560)
+    return a4.save(fig, fig_dir, name, 1300, 560)
 
 
 # --- Report ----------------------------------------------------------------------------------------------------------

@@ -1,0 +1,4363 @@
+[
+  {
+    "model": "Qwen3-32B",
+    "arm": "no prefill",
+    "n_right": 53,
+    "n_wrong": 47,
+    "median_tokens_right": 1115.0,
+    "median_tokens_wrong": 2715.0,
+    "n_obeyed_throughout": [
+      53,
+      47
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 3.7735849056603774,
+        "ci": [
+          0.0,
+          9.615384615384617
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 3.7735849056603774,
+      "ci": [
+        0.0,
+        9.615384615384617
+      ]
+    },
+    "n_clean_first_200": [
+      53,
+      47
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 3.7735849056603774,
+        "ci": [
+          0.0,
+          9.615384615384617
+        ]
+      },
+      "wrong": {
+        "value": 4.25531914893617,
+        "ci": [
+          0.0,
+          11.116352201257833
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -0.4817342432757929,
+      "ci": [
+        -8.625887078922352,
+        6.550042060772686
+      ]
+    },
+    "n_clean_first_1000": [
+      30,
+      34
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 3.3333333333333335,
+        "ci": [
+          0.0,
+          11.11111111111111
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 3.3333333333333335,
+      "ci": [
+        0.0,
+        11.11111111111111
+      ]
+    }
+  },
+  {
+    "model": "Qwen3-32B",
+    "arm": "compliant prefill",
+    "n_right": 48,
+    "n_wrong": 52,
+    "median_tokens_right": 994.0,
+    "median_tokens_wrong": 3031.5,
+    "n_obeyed_throughout": [
+      48,
+      52
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 35.41666666666667,
+        "ci": [
+          23.25581395348837,
+          48.83850129198966
+        ]
+      },
+      "wrong": {
+        "value": 26.923076923076923,
+        "ci": [
+          14.893617021276595,
+          40.38461538461539
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 8.493589743589746,
+      "ci": [
+        -9.294322845417238,
+        26.510772637500747
+      ]
+    },
+    "n_clean_first_200": [
+      48,
+      52
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 52.083333333333336,
+        "ci": [
+          38.63636363636363,
+          67.34804791481808
+        ]
+      },
+      "wrong": {
+        "value": 57.692307692307686,
+        "ci": [
+          43.58695652173913,
+          70.49421407907424
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -5.608974358974351,
+      "ci": [
+        -24.249694074922022,
+        14.52489174207739
+      ]
+    },
+    "n_clean_first_1000": [
+      24,
+      44
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 37.5,
+        "ci": [
+          17.2270114942529,
+          64.28571428571429
+        ]
+      },
+      "wrong": {
+        "value": 34.090909090909086,
+        "ci": [
+          19.148936170212767,
+          48.717948717948715
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 3.409090909090912,
+      "ci": [
+        -20.2629262574595,
+        31.87599681020732
+      ]
+    }
+  },
+  {
+    "model": "Qwen3-32B",
+    "arm": "non-compliant prefill",
+    "n_right": 48,
+    "n_wrong": 52,
+    "median_tokens_right": 794.0,
+    "median_tokens_wrong": 3557.5,
+    "n_obeyed_throughout": [
+      48,
+      52
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      48,
+      52
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      20,
+      41
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3-32B",
+    "arm": "compliant prefill, no rule",
+    "n_right": 50,
+    "n_wrong": 50,
+    "median_tokens_right": 1182.0,
+    "median_tokens_wrong": 6067.5,
+    "n_obeyed_throughout": [
+      50,
+      50
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 4.0,
+        "ci": [
+          0.0,
+          9.803921568627452
+        ]
+      },
+      "wrong": {
+        "value": 4.0,
+        "ci": [
+          0.0,
+          10.416666666666668
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        -8.109487038058464,
+        7.6923076923076925
+      ]
+    },
+    "n_clean_first_200": [
+      50,
+      50
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 12.0,
+        "ci": [
+          3.8443396226415127,
+          21.951219512195124
+        ]
+      },
+      "wrong": {
+        "value": 10.0,
+        "ci": [
+          2.272727272727273,
+          19.148936170212767
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 1.9999999999999991,
+      "ci": [
+        -9.66660864950596,
+        14.550441522139607
+      ]
+    },
+    "n_clean_first_1000": [
+      33,
+      45
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 6.666666666666667,
+        "ci": [
+          0.0,
+          14.705882352941178
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -6.666666666666667,
+      "ci": [
+        -14.705882352941178,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3-32B",
+    "arm": "no prefill, stacked",
+    "n_right": 57,
+    "n_wrong": 43,
+    "median_tokens_right": 750.0,
+    "median_tokens_wrong": 1085.0,
+    "n_obeyed_throughout": [
+      57,
+      43
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 7.017543859649122,
+        "ci": [
+          1.6122631848438311,
+          14.285714285714285
+        ]
+      },
+      "wrong": {
+        "value": 2.3255813953488373,
+        "ci": [
+          0.0,
+          7.894736842105263
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 4.6919624643002855,
+      "ci": [
+        -3.2155075187969904,
+        12.904719235364388
+      ]
+    },
+    "n_clean_first_200": [
+      57,
+      43
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 12.280701754385964,
+        "ci": [
+          4.761904761904762,
+          21.213733075435197
+        ]
+      },
+      "wrong": {
+        "value": 4.651162790697675,
+        "ci": [
+          0.0,
+          11.540697674418594
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 7.62953896368829,
+      "ci": [
+        -2.7086326628352486,
+        18.168054771315635
+      ]
+    },
+    "n_clean_first_1000": [
+      22,
+      24
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 4.545454545454546,
+        "ci": [
+          0.0,
+          15.811403508771809
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 4.545454545454546,
+      "ci": [
+        0.0,
+        15.811403508771809
+      ]
+    }
+  },
+  {
+    "model": "Qwen3-32B",
+    "arm": "compliant prefill, stacked",
+    "n_right": 47,
+    "n_wrong": 53,
+    "median_tokens_right": 1049.0,
+    "median_tokens_wrong": 1539.0,
+    "n_obeyed_throughout": [
+      47,
+      53
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 51.06382978723404,
+        "ci": [
+          37.735075781008355,
+          65.39062499999997
+        ]
+      },
+      "wrong": {
+        "value": 28.30188679245283,
+        "ci": [
+          15.151515151515152,
+          41.521698113207485
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 22.761942994781208,
+      "ci": [
+        3.844017094017101,
+        42.50303234501346
+      ]
+    },
+    "n_clean_first_200": [
+      47,
+      53
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 76.59574468085107,
+        "ci": [
+          63.45663265306123,
+          88.57142857142857
+        ]
+      },
+      "wrong": {
+        "value": 67.9245283018868,
+        "ci": [
+          55.932203389830505,
+          80.43478260869566
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 8.671216378964274,
+      "ci": [
+        -9.342554715712428,
+        25.580190449385498
+      ]
+    },
+    "n_clean_first_1000": [
+      24,
+      40
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 45.83333333333333,
+        "ci": [
+          25.925925925925924,
+          68.18181818181817
+        ]
+      },
+      "wrong": {
+        "value": 37.5,
+        "ci": [
+          21.875,
+          53.84615384615385
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 8.333333333333332,
+      "ci": [
+        -17.392857142857128,
+        34.27061403508771
+      ]
+    }
+  },
+  {
+    "model": "Qwen3-32B",
+    "arm": "non-compliant prefill, stacked",
+    "n_right": 51,
+    "n_wrong": 49,
+    "median_tokens_right": 757.0,
+    "median_tokens_wrong": 1581.0,
+    "n_obeyed_throughout": [
+      51,
+      49
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      51,
+      49
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      21,
+      34
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.6-27B-FP8",
+    "arm": "no prefill",
+    "n_right": 54,
+    "n_wrong": 46,
+    "median_tokens_right": 4239.0,
+    "median_tokens_wrong": 6047.0,
+    "n_obeyed_throughout": [
+      54,
+      46
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      54,
+      46
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      54,
+      46
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.6-27B-FP8",
+    "arm": "compliant prefill",
+    "n_right": 53,
+    "n_wrong": 47,
+    "median_tokens_right": 2638.0,
+    "median_tokens_wrong": 4395.0,
+    "n_obeyed_throughout": [
+      53,
+      47
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 35.84905660377358,
+        "ci": [
+          23.52628285356696,
+          50.84820101100207
+        ]
+      },
+      "wrong": {
+        "value": 19.148936170212767,
+        "ci": [
+          7.839366515837111,
+          31.70731707317073
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 16.700120433560816,
+      "ci": [
+        -0.5830711864087954,
+        34.61538461538461
+      ]
+    },
+    "n_clean_first_200": [
+      53,
+      47
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 77.35849056603774,
+        "ci": [
+          65.71077283372367,
+          89.0909090909091
+        ]
+      },
+      "wrong": {
+        "value": 74.46808510638297,
+        "ci": [
+          60.78256302521008,
+          87.23500967117988
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 2.8904054596547657,
+      "ci": [
+        -14.72238243123336,
+        20.295905171845014
+      ]
+    },
+    "n_clean_first_1000": [
+      43,
+      39
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 44.18604651162791,
+        "ci": [
+          29.542112299465252,
+          59.62499999999995
+        ]
+      },
+      "wrong": {
+        "value": 33.33333333333333,
+        "ci": [
+          18.600061199510414,
+          50.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 10.852713178294577,
+      "ci": [
+        -11.969715250965255,
+        32.55896337444683
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.6-27B-FP8",
+    "arm": "non-compliant prefill",
+    "n_right": 58,
+    "n_wrong": 42,
+    "median_tokens_right": 3184.5,
+    "median_tokens_wrong": 5110.5,
+    "n_obeyed_throughout": [
+      58,
+      42
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 1.7241379310344827,
+        "ci": [
+          0.0,
+          6.12323390894819
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 1.7241379310344827,
+      "ci": [
+        0.0,
+        6.12323390894819
+      ]
+    },
+    "n_clean_first_200": [
+      58,
+      42
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 3.4482758620689653,
+        "ci": [
+          0.0,
+          9.090909090909092
+        ]
+      },
+      "wrong": {
+        "value": 2.380952380952381,
+        "ci": [
+          0.0,
+          8.16326530612245
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 1.0673234811165846,
+      "ci": [
+        -6.0,
+        7.8125
+      ]
+    },
+    "n_clean_first_1000": [
+      43,
+      33
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 2.3255813953488373,
+        "ci": [
+          0.0,
+          7.696078431372529
+        ]
+      },
+      "wrong": {
+        "value": 3.0303030303030303,
+        "ci": [
+          0.0,
+          10.526315789473683
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -0.7047216349541932,
+      "ci": [
+        -9.326636904761902,
+        6.384694577899784
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.6-27B-FP8",
+    "arm": "compliant prefill, no rule",
+    "n_right": 59,
+    "n_wrong": 41,
+    "median_tokens_right": 2949.0,
+    "median_tokens_wrong": 6940.0,
+    "n_obeyed_throughout": [
+      59,
+      41
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 15.254237288135593,
+        "ci": [
+          7.6886792452830255,
+          23.636363636363637
+        ]
+      },
+      "wrong": {
+        "value": 7.317073170731707,
+        "ci": [
+          0.0,
+          20.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 7.937164117403888,
+      "ci": [
+        -6.7655443756449944,
+        19.64420995670995
+      ]
+    },
+    "n_clean_first_200": [
+      59,
+      41
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 37.28813559322034,
+        "ci": [
+          26.31363244176014,
+          49.152542372881356
+        ]
+      },
+      "wrong": {
+        "value": 17.073170731707318,
+        "ci": [
+          5.555555555555555,
+          31.57894736842105
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 20.21496486151302,
+      "ci": [
+        3.071182053494402,
+        37.621967654986506
+      ]
+    },
+    "n_clean_first_1000": [
+      46,
+      39
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 15.217391304347828,
+        "ci": [
+          5.767857142857145,
+          26.82926829268293
+        ]
+      },
+      "wrong": {
+        "value": 12.82051282051282,
+        "ci": [
+          2.3242600422833,
+          27.027027027027028
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 2.3968784838350077,
+      "ci": [
+        -14.912412214945158,
+        18.605660303653735
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.6-27B-FP8",
+    "arm": "no prefill, stacked",
+    "n_right": 56,
+    "n_wrong": 44,
+    "median_tokens_right": 3251.5,
+    "median_tokens_wrong": 4517.5,
+    "n_obeyed_throughout": [
+      56,
+      44
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 12.5,
+        "ci": [
+          3.9196832579185554,
+          22.22222222222222
+        ]
+      },
+      "wrong": {
+        "value": 4.545454545454546,
+        "ci": [
+          0.0,
+          11.91017316017313
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 7.954545454545454,
+      "ci": [
+        -3.431610544371218,
+        18.449074074074062
+      ]
+    },
+    "n_clean_first_200": [
+      56,
+      44
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 17.857142857142858,
+        "ci": [
+          8.16326530612245,
+          28.57142857142857
+        ]
+      },
+      "wrong": {
+        "value": 9.090909090909092,
+        "ci": [
+          2.0408163265306123,
+          18.421052631578945
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 8.766233766233766,
+      "ci": [
+        -4.762321012321012,
+        21.57830859616571
+      ]
+    },
+    "n_clean_first_1000": [
+      48,
+      43
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 2.083333333333333,
+        "ci": [
+          0.0,
+          7.142857142857142
+        ]
+      },
+      "wrong": {
+        "value": 4.651162790697675,
+        "ci": [
+          0.0,
+          12.003030303030286
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -2.567829457364341,
+      "ci": [
+        -10.417239010989011,
+        4.3478260869565215
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.6-27B-FP8",
+    "arm": "compliant prefill, stacked",
+    "n_right": 57,
+    "n_wrong": 43,
+    "median_tokens_right": 1647.0,
+    "median_tokens_wrong": 2070.0,
+    "n_obeyed_throughout": [
+      57,
+      43
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 50.877192982456144,
+        "ci": [
+          38.09285714285714,
+          63.465909090909065
+        ]
+      },
+      "wrong": {
+        "value": 39.53488372093023,
+        "ci": [
+          24.38859591298616,
+          54.05686936936935
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 11.342309261525912,
+      "ci": [
+        -7.502533783783775,
+        30.036749647294403
+      ]
+    },
+    "n_clean_first_200": [
+      57,
+      43
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 87.71929824561403,
+        "ci": [
+          79.41059757236228,
+          95.08196721311475
+        ]
+      },
+      "wrong": {
+        "value": 88.37209302325581,
+        "ci": [
+          78.04878048780488,
+          97.2972972972973
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -0.6527947776417853,
+      "ci": [
+        -9.682204919300776,
+        7.950339970859637
+      ]
+    },
+    "n_clean_first_1000": [
+      33,
+      33
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 60.60606060606061,
+        "ci": [
+          43.47463768115943,
+          76.67307692307689
+        ]
+      },
+      "wrong": {
+        "value": 36.36363636363637,
+        "ci": [
+          19.35483870967742,
+          53.333333333333336
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 24.242424242424242,
+      "ci": [
+        1.3268951173659473,
+        46.31462086300795
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.6-27B-FP8",
+    "arm": "non-compliant prefill, stacked",
+    "n_right": 55,
+    "n_wrong": 45,
+    "median_tokens_right": 1473.0,
+    "median_tokens_wrong": 1672.0,
+    "n_obeyed_throughout": [
+      55,
+      45
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 10.909090909090908,
+        "ci": [
+          3.6363636363636362,
+          20.007812499999957
+        ]
+      },
+      "wrong": {
+        "value": 11.11111111111111,
+        "ci": [
+          2.775900900900904,
+          21.15530303030302
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": -0.20202020202020193,
+      "ci": [
+        -12.567633007323032,
+        12.562662996232968
+      ]
+    },
+    "n_clean_first_200": [
+      54,
+      45
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 18.51851851851852,
+        "ci": [
+          9.090909090909092,
+          28.950956937799027
+        ]
+      },
+      "wrong": {
+        "value": 20.0,
+        "ci": [
+          8.506205673758872,
+          33.34999999999991
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -1.4814814814814836,
+      "ci": [
+        -18.63108167501562,
+        13.678148567119147
+      ]
+    },
+    "n_clean_first_1000": [
+      35,
+      28
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 11.428571428571429,
+        "ci": [
+          2.564102564102564,
+          21.62162162162162
+        ]
+      },
+      "wrong": {
+        "value": 17.857142857142858,
+        "ci": [
+          3.5683497536945863,
+          36.36363636363637
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -6.42857142857143,
+      "ci": [
+        -26.841558441558437,
+        10.70784313725489
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.8-27B-FP8",
+    "arm": "no prefill",
+    "n_right": 62,
+    "n_wrong": 38,
+    "median_tokens_right": 1066.0,
+    "median_tokens_wrong": 1895.0,
+    "n_obeyed_throughout": [
+      62,
+      38
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      62,
+      38
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 2.631578947368421,
+        "ci": [
+          0.0,
+          9.090909090909092
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -2.631578947368421,
+      "ci": [
+        -9.090909090909092,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      32,
+      27
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.8-27B-FP8",
+    "arm": "compliant prefill",
+    "n_right": 54,
+    "n_wrong": 46,
+    "median_tokens_right": 1310.0,
+    "median_tokens_wrong": 3697.0,
+    "n_obeyed_throughout": [
+      54,
+      46
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 24.074074074074073,
+        "ci": [
+          13.79141311697093,
+          35.090155945419085
+        ]
+      },
+      "wrong": {
+        "value": 19.565217391304348,
+        "ci": [
+          9.75609756097561,
+          30.437801932367137
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 4.508856682769724,
+      "ci": [
+        -10.921133787202148,
+        19.104055635612276
+      ]
+    },
+    "n_clean_first_200": [
+      54,
+      46
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 50.0,
+        "ci": [
+          35.482190860215056,
+          64.81481481481481
+        ]
+      },
+      "wrong": {
+        "value": 43.47826086956522,
+        "ci": [
+          30.552536231884066,
+          57.89473684210527
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 6.521739130434784,
+      "ci": [
+        -15.483025746183635,
+        28.025622150455927
+      ]
+    },
+    "n_clean_first_1000": [
+      31,
+      38
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 22.58064516129032,
+        "ci": [
+          10.0,
+          36.11111111111111
+        ]
+      },
+      "wrong": {
+        "value": 13.157894736842104,
+        "ci": [
+          3.7037037037037033,
+          22.5
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 9.422750424448218,
+      "ci": [
+        -6.986943815987931,
+        25.210462563403734
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.8-27B-FP8",
+    "arm": "non-compliant prefill",
+    "n_right": 53,
+    "n_wrong": 47,
+    "median_tokens_right": 1562.0,
+    "median_tokens_wrong": 2098.0,
+    "n_obeyed_throughout": [
+      53,
+      47
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      53,
+      47
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      32,
+      36
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.8-27B-FP8",
+    "arm": "compliant prefill, no rule",
+    "n_right": 55,
+    "n_wrong": 45,
+    "median_tokens_right": 1905.0,
+    "median_tokens_wrong": 5435.0,
+    "n_obeyed_throughout": [
+      55,
+      45
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 5.454545454545454,
+        "ci": [
+          0.0,
+          11.66911764705881
+        ]
+      },
+      "wrong": {
+        "value": 6.666666666666667,
+        "ci": [
+          0.0,
+          15.217391304347828
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": -1.2121212121212124,
+      "ci": [
+        -11.11111111111111,
+        7.781718789727936
+      ]
+    },
+    "n_clean_first_200": [
+      55,
+      45
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 14.545454545454545,
+        "ci": [
+          6.25,
+          23.25581395348837
+        ]
+      },
+      "wrong": {
+        "value": 15.555555555555555,
+        "ci": [
+          6.379654255319155,
+          25.58288610614191
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -1.010101010101011,
+      "ci": [
+        -14.11934424932763,
+        12.081459250366796
+      ]
+    },
+    "n_clean_first_1000": [
+      38,
+      43
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 9.30232558139535,
+        "ci": [
+          2.126551418439718,
+          18.421052631578945
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -9.30232558139535,
+      "ci": [
+        -18.421052631578945,
+        -2.126551418439722
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.8-27B-FP8",
+    "arm": "no prefill, stacked",
+    "n_right": 59,
+    "n_wrong": 41,
+    "median_tokens_right": 823.0,
+    "median_tokens_wrong": 2156.0,
+    "n_obeyed_throughout": [
+      59,
+      41
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 5.084745762711865,
+        "ci": [
+          0.0,
+          11.479222264582518
+        ]
+      },
+      "wrong": {
+        "value": 9.75609756097561,
+        "ci": [
+          2.1739130434782608,
+          19.446138211382106
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": -4.671351798263745,
+      "ci": [
+        -16.072550312148586,
+        6.182718038899699
+      ]
+    },
+    "n_clean_first_200": [
+      58,
+      41
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 20.689655172413794,
+        "ci": [
+          11.106770833333341,
+          31.039870689655142
+        ]
+      },
+      "wrong": {
+        "value": 21.951219512195124,
+        "ci": [
+          10.204081632653061,
+          35.899999999999984
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -1.2615643397813292,
+      "ci": [
+        -18.892857142857135,
+        14.86720890822556
+      ]
+    },
+    "n_clean_first_1000": [
+      28,
+      26
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 7.142857142857142,
+        "ci": [
+          0.0,
+          16.0
+        ]
+      },
+      "wrong": {
+        "value": 11.538461538461538,
+        "ci": [
+          0.0,
+          26.666666666666668
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -4.395604395604397,
+      "ci": [
+        -21.542438111087993,
+        9.880018408134635
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.8-27B-FP8",
+    "arm": "compliant prefill, stacked",
+    "n_right": 54,
+    "n_wrong": 46,
+    "median_tokens_right": 1150.0,
+    "median_tokens_wrong": 2610.0,
+    "n_obeyed_throughout": [
+      54,
+      46
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 27.77777777777778,
+        "ci": [
+          15.908189033189036,
+          40.627893518518505
+        ]
+      },
+      "wrong": {
+        "value": 26.08695652173913,
+        "ci": [
+          13.206305858987092,
+          40.54265202702702
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 1.6908212560386493,
+      "ci": [
+        -17.559655880842318,
+        20.771966803613797
+      ]
+    },
+    "n_clean_first_200": [
+      54,
+      46
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 61.111111111111114,
+        "ci": [
+          45.899931693989075,
+          75.43942403177756
+        ]
+      },
+      "wrong": {
+        "value": 69.56521739130434,
+        "ci": [
+          53.12040441176471,
+          85.71428571428571
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -8.45410628019323,
+      "ci": [
+        -30.78020425929357,
+        14.135938015944143
+      ]
+    },
+    "n_clean_first_1000": [
+      28,
+      38
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 21.428571428571427,
+        "ci": [
+          7.6923076923076925,
+          36.0
+        ]
+      },
+      "wrong": {
+        "value": 36.84210526315789,
+        "ci": [
+          21.052631578947366,
+          54.54545454545454
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -15.413533834586465,
+      "ci": [
+        -37.64708660050641,
+        6.764135254988905
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.8-27B-FP8",
+    "arm": "non-compliant prefill, stacked",
+    "n_right": 56,
+    "n_wrong": 44,
+    "median_tokens_right": 979.0,
+    "median_tokens_wrong": 1965.5,
+    "n_obeyed_throughout": [
+      56,
+      44
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 1.7857142857142856,
+        "ci": [
+          0.0,
+          6.522630078403416
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 1.7857142857142856,
+      "ci": [
+        0.0,
+        6.522630078403416
+      ]
+    },
+    "n_clean_first_200": [
+      55,
+      44
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 5.454545454545454,
+        "ci": [
+          0.0,
+          12.5
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 5.454545454545454,
+      "ci": [
+        0.0,
+        12.5
+      ]
+    },
+    "n_clean_first_1000": [
+      27,
+      33
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-31B-FP8",
+    "arm": "no prefill",
+    "n_right": 60,
+    "n_wrong": 40,
+    "median_tokens_right": 2906.0,
+    "median_tokens_wrong": 4395.5,
+    "n_obeyed_throughout": [
+      60,
+      40
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      60,
+      40
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      46,
+      36
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-31B-FP8",
+    "arm": "compliant prefill",
+    "n_right": 64,
+    "n_wrong": 36,
+    "median_tokens_right": 2817.5,
+    "median_tokens_wrong": 4072.0,
+    "n_obeyed_throughout": [
+      64,
+      36
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 6.25,
+        "ci": [
+          1.491988586479369,
+          12.5
+        ]
+      },
+      "wrong": {
+        "value": 2.7777777777777777,
+        "ci": [
+          0.0,
+          9.375
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 3.4722222222222223,
+      "ci": [
+        -4.983695652173912,
+        11.11111111111111
+      ]
+    },
+    "n_clean_first_200": [
+      64,
+      36
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 43.75,
+        "ci": [
+          30.641744122471305,
+          56.928571428571395
+        ]
+      },
+      "wrong": {
+        "value": 41.66666666666667,
+        "ci": [
+          25.566860465116303,
+          58.333333333333336
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 2.0833333333333313,
+      "ci": [
+        -18.840498345740276,
+        22.69310035842294
+      ]
+    },
+    "n_clean_first_1000": [
+      47,
+      32
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 10.638297872340425,
+        "ci": [
+          2.564102564102564,
+          20.930232558139537
+        ]
+      },
+      "wrong": {
+        "value": 12.5,
+        "ci": [
+          0.0,
+          27.27272727272727
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -1.8617021276595744,
+      "ci": [
+        -18.750437675070028,
+        14.118049347398532
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-31B-FP8",
+    "arm": "non-compliant prefill",
+    "n_right": 57,
+    "n_wrong": 43,
+    "median_tokens_right": 2667.0,
+    "median_tokens_wrong": 3786.0,
+    "n_obeyed_throughout": [
+      57,
+      43
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      57,
+      43
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      45,
+      38
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-31B-FP8",
+    "arm": "compliant prefill, no rule",
+    "n_right": 62,
+    "n_wrong": 38,
+    "median_tokens_right": 4136.0,
+    "median_tokens_wrong": 5203.0,
+    "n_obeyed_throughout": [
+      62,
+      38
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      62,
+      38
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      52,
+      35
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-31B-FP8",
+    "arm": "no prefill, stacked",
+    "n_right": 52,
+    "n_wrong": 48,
+    "median_tokens_right": 607.5,
+    "median_tokens_wrong": 667.0,
+    "n_obeyed_throughout": [
+      52,
+      48
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 13.461538461538462,
+        "ci": [
+          5.555555555555555,
+          22.22222222222222
+        ]
+      },
+      "wrong": {
+        "value": 2.083333333333333,
+        "ci": [
+          0.0,
+          6.976744186046512
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 11.378205128205128,
+      "ci": [
+        2.038419511792843,
+        20.907964725643875
+      ]
+    },
+    "n_clean_first_200": [
+      35,
+      27
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 62.857142857142854,
+        "ci": [
+          48.484848484848484,
+          77.77777777777779
+        ]
+      },
+      "wrong": {
+        "value": 37.03703703703704,
+        "ci": [
+          17.857142857142858,
+          55.55555555555556
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 25.82010582010582,
+      "ci": [
+        2.587770740480105,
+        50.2479189435711
+      ]
+    },
+    "n_clean_first_1000": [
+      18,
+      19
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-31B-FP8",
+    "arm": "compliant prefill, stacked",
+    "n_right": 59,
+    "n_wrong": 41,
+    "median_tokens_right": 1121.0,
+    "median_tokens_wrong": 1990.0,
+    "n_obeyed_throughout": [
+      59,
+      41
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 42.3728813559322,
+        "ci": [
+          31.57894736842105,
+          53.57142857142857
+        ]
+      },
+      "wrong": {
+        "value": 24.390243902439025,
+        "ci": [
+          11.11111111111111,
+          38.475609756097484
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 17.982637453493176,
+      "ci": [
+        1.0953793564858962,
+        35.92371758495895
+      ]
+    },
+    "n_clean_first_200": [
+      59,
+      41
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 84.7457627118644,
+        "ci": [
+          75.71332046332047,
+          93.18278120184898
+        ]
+      },
+      "wrong": {
+        "value": 73.17073170731707,
+        "ci": [
+          62.22222222222222,
+          84.84848484848484
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 11.57503100454733,
+      "ci": [
+        -2.5548790769379,
+        25.952609890109883
+      ]
+    },
+    "n_clean_first_1000": [
+      33,
+      32
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 33.33333333333333,
+        "ci": [
+          17.643382352941185,
+          51.515151515151516
+        ]
+      },
+      "wrong": {
+        "value": 40.625,
+        "ci": [
+          26.08695652173913,
+          55.55555555555556
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -7.291666666666669,
+      "ci": [
+        -28.383204633204624,
+        15.03054351912499
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-31B-FP8",
+    "arm": "non-compliant prefill, stacked",
+    "n_right": 57,
+    "n_wrong": 43,
+    "median_tokens_right": 952.0,
+    "median_tokens_wrong": 1394.0,
+    "n_obeyed_throughout": [
+      57,
+      43
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 3.508771929824561,
+        "ci": [
+          0.0,
+          8.977272727272712
+        ]
+      },
+      "wrong": {
+        "value": 4.651162790697675,
+        "ci": [
+          0.0,
+          11.11111111111111
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": -1.142390860873113,
+      "ci": [
+        -9.039199867372261,
+        6.451612903225806
+      ]
+    },
+    "n_clean_first_200": [
+      57,
+      43
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 7.017543859649122,
+        "ci": [
+          1.694915254237288,
+          13.725490196078432
+        ]
+      },
+      "wrong": {
+        "value": 11.627906976744185,
+        "ci": [
+          2.941176470588235,
+          20.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -4.610363117095064,
+      "ci": [
+        -14.34968962259907,
+        6.0376982390102185
+      ]
+    },
+    "n_clean_first_1000": [
+      28,
+      30
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 3.3333333333333335,
+        "ci": [
+          0.0,
+          10.344827586206897
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -3.3333333333333335,
+      "ci": [
+        -10.344827586206897,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-12B",
+    "arm": "no prefill",
+    "n_right": 43,
+    "n_wrong": 57,
+    "median_tokens_right": 5116.0,
+    "median_tokens_wrong": 9652.0,
+    "n_obeyed_throughout": [
+      43,
+      57
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      43,
+      57
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      38,
+      56
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-12B",
+    "arm": "compliant prefill",
+    "n_right": 44,
+    "n_wrong": 56,
+    "median_tokens_right": 4948.5,
+    "median_tokens_wrong": 10175.0,
+    "n_obeyed_throughout": [
+      44,
+      56
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 2.272727272727273,
+        "ci": [
+          0.0,
+          7.317073170731707
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 2.272727272727273,
+      "ci": [
+        0.0,
+        7.317073170731707
+      ]
+    },
+    "n_clean_first_200": [
+      44,
+      56
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 15.909090909090908,
+        "ci": [
+          6.4498970487302705,
+          27.027027027027028
+        ]
+      },
+      "wrong": {
+        "value": 14.285714285714285,
+        "ci": [
+          4.838709677419355,
+          25.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 1.623376623376624,
+      "ci": [
+        -13.453465982028234,
+        16.731509079869724
+      ]
+    },
+    "n_clean_first_1000": [
+      39,
+      55
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 1.8181818181818181,
+        "ci": [
+          0.0,
+          6.666666666666667
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -1.8181818181818181,
+      "ci": [
+        -6.666666666666667,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-12B",
+    "arm": "non-compliant prefill",
+    "n_right": 43,
+    "n_wrong": 57,
+    "median_tokens_right": 4962.0,
+    "median_tokens_wrong": 11963.0,
+    "n_obeyed_throughout": [
+      43,
+      57
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      43,
+      57
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      40,
+      57
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-12B",
+    "arm": "compliant prefill, no rule",
+    "n_right": 48,
+    "n_wrong": 52,
+    "median_tokens_right": 6720.0,
+    "median_tokens_wrong": 12497.5,
+    "n_obeyed_throughout": [
+      48,
+      52
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      48,
+      52
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      46,
+      52
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-12B",
+    "arm": "no prefill, stacked",
+    "n_right": 41,
+    "n_wrong": 59,
+    "median_tokens_right": 1568.0,
+    "median_tokens_wrong": 3664.0,
+    "n_obeyed_throughout": [
+      41,
+      59
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 2.4390243902439024,
+        "ci": [
+          0.0,
+          7.897368421052617
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 2.4390243902439024,
+      "ci": [
+        0.0,
+        7.897368421052617
+      ]
+    },
+    "n_clean_first_200": [
+      31,
+      43
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 3.225806451612903,
+        "ci": [
+          0.0,
+          11.11111111111111
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 3.225806451612903,
+      "ci": [
+        0.0,
+        11.11111111111111
+      ]
+    },
+    "n_clean_first_1000": [
+      23,
+      42
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-12B",
+    "arm": "compliant prefill, stacked",
+    "n_right": 46,
+    "n_wrong": 54,
+    "median_tokens_right": 1209.5,
+    "median_tokens_wrong": 11037.0,
+    "n_obeyed_throughout": [
+      46,
+      54
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 17.391304347826086,
+        "ci": [
+          7.547169811320755,
+          28.206521739130423
+        ]
+      },
+      "wrong": {
+        "value": 7.4074074074074066,
+        "ci": [
+          1.5625,
+          15.002358490566026
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 9.98389694041868,
+      "ci": [
+        -1.9416062565308245,
+        22.61234550489769
+      ]
+    },
+    "n_clean_first_200": [
+      46,
+      54
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 56.52173913043478,
+        "ci": [
+          44.2296511627907,
+          69.76853883282142
+        ]
+      },
+      "wrong": {
+        "value": 61.111111111111114,
+        "ci": [
+          49.056603773584904,
+          74.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -4.589371980676338,
+      "ci": [
+        -21.16672947588126,
+        11.99399867242609
+      ]
+    },
+    "n_clean_first_1000": [
+      28,
+      44
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 7.142857142857142,
+        "ci": [
+          0.0,
+          16.666666666666664
+        ]
+      },
+      "wrong": {
+        "value": 11.363636363636363,
+        "ci": [
+          2.775900900900904,
+          20.930232558139537
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -4.220779220779221,
+      "ci": [
+        -16.666666666666664,
+        8.443961466165408
+      ]
+    }
+  },
+  {
+    "model": "Gemma-4-12B",
+    "arm": "non-compliant prefill, stacked",
+    "n_right": 41,
+    "n_wrong": 59,
+    "median_tokens_right": 1457.0,
+    "median_tokens_wrong": 6503.0,
+    "n_obeyed_throughout": [
+      41,
+      59
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 2.4390243902439024,
+        "ci": [
+          0.0,
+          7.894736842105263
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 2.4390243902439024,
+      "ci": [
+        0.0,
+        7.894736842105263
+      ]
+    },
+    "n_clean_first_200": [
+      41,
+      59
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 2.4390243902439024,
+        "ci": [
+          0.0,
+          7.894736842105263
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 2.4390243902439024,
+      "ci": [
+        0.0,
+        7.894736842105263
+      ]
+    },
+    "n_clean_first_1000": [
+      23,
+      54
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.5-9B",
+    "arm": "no prefill",
+    "n_right": 50,
+    "n_wrong": 50,
+    "median_tokens_right": 7420.0,
+    "median_tokens_wrong": 10125.5,
+    "n_obeyed_throughout": [
+      50,
+      50
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      50,
+      50
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      49,
+      50
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.5-9B",
+    "arm": "compliant prefill",
+    "n_right": 51,
+    "n_wrong": 49,
+    "median_tokens_right": 2322.0,
+    "median_tokens_wrong": 4650.0,
+    "n_obeyed_throughout": [
+      51,
+      49
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 9.803921568627452,
+        "ci": [
+          2.2222222222222223,
+          18.867924528301888
+        ]
+      },
+      "wrong": {
+        "value": 4.081632653061225,
+        "ci": [
+          0.0,
+          10.416666666666668
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 5.722288915566227,
+      "ci": [
+        -4.336768920448322,
+        15.835227272727264
+      ]
+    },
+    "n_clean_first_200": [
+      51,
+      49
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 27.450980392156865,
+        "ci": [
+          15.214315012305175,
+          40.48123486682806
+        ]
+      },
+      "wrong": {
+        "value": 30.612244897959183,
+        "ci": [
+          17.458592132505178,
+          44.829345531315965
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -3.161264505802319,
+      "ci": [
+        -21.940901360544217,
+        14.5981099312095
+      ]
+    },
+    "n_clean_first_1000": [
+      33,
+      41
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 3.0303030303030303,
+        "ci": [
+          0.0,
+          10.0
+        ]
+      },
+      "wrong": {
+        "value": 4.878048780487805,
+        "ci": [
+          0.0,
+          12.19636635141861
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -1.8477457501847747,
+      "ci": [
+        -10.81081081081081,
+        7.432253261486093
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.5-9B",
+    "arm": "non-compliant prefill",
+    "n_right": 49,
+    "n_wrong": 51,
+    "median_tokens_right": 2987.0,
+    "median_tokens_wrong": 3521.0,
+    "n_obeyed_throughout": [
+      49,
+      51
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      49,
+      51
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      30,
+      38
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.5-9B",
+    "arm": "compliant prefill, no rule",
+    "n_right": 47,
+    "n_wrong": 53,
+    "median_tokens_right": 2670.0,
+    "median_tokens_wrong": 6843.0,
+    "n_obeyed_throughout": [
+      47,
+      53
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 6.382978723404255,
+        "ci": [
+          0.0,
+          13.20754716981132
+        ]
+      },
+      "wrong": {
+        "value": 1.8867924528301887,
+        "ci": [
+          0.0,
+          6.898556535685635
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 4.496186270574067,
+      "ci": [
+        -3.175770308123247,
+        12.004505005561711
+      ]
+    },
+    "n_clean_first_200": [
+      47,
+      52
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 21.27659574468085,
+        "ci": [
+          10.416666666666668,
+          32.608695652173914
+        ]
+      },
+      "wrong": {
+        "value": 21.153846153846153,
+        "ci": [
+          10.869565217391305,
+          34.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.12274959083469761,
+      "ci": [
+        -16.666666666666664,
+        15.502997781224561
+      ]
+    },
+    "n_clean_first_1000": [
+      39,
+      48
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 7.6923076923076925,
+        "ci": [
+          0.0,
+          16.666666666666664
+        ]
+      },
+      "wrong": {
+        "value": 6.25,
+        "ci": [
+          0.0,
+          13.88888888888889
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 1.4423076923076927,
+      "ci": [
+        -9.035760605807045,
+        11.772214319582739
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.5-9B",
+    "arm": "no prefill, stacked",
+    "n_right": 50,
+    "n_wrong": 50,
+    "median_tokens_right": 7386.0,
+    "median_tokens_wrong": 8326.0,
+    "n_obeyed_throughout": [
+      50,
+      50
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      50,
+      50
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      50,
+      50
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.5-9B",
+    "arm": "compliant prefill, stacked",
+    "n_right": 41,
+    "n_wrong": 59,
+    "median_tokens_right": 1491.0,
+    "median_tokens_wrong": 3158.0,
+    "n_obeyed_throughout": [
+      41,
+      59
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 17.073170731707318,
+        "ci": [
+          4.996951219512201,
+          32.25806451612903
+        ]
+      },
+      "wrong": {
+        "value": 10.16949152542373,
+        "ci": [
+          2.2714646464646484,
+          19.64420995670995
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 6.903679206283589,
+      "ci": [
+        -8.433562770218291,
+        23.93366778149386
+      ]
+    },
+    "n_clean_first_200": [
+      41,
+      59
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 43.90243902439025,
+        "ci": [
+          27.584051724137936,
+          60.526315789473685
+        ]
+      },
+      "wrong": {
+        "value": 40.67796610169492,
+        "ci": [
+          28.07017543859649,
+          54.54545454545454
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 3.224472922695326,
+      "ci": [
+        -18.467188175439762,
+        23.230550284629967
+      ]
+    },
+    "n_clean_first_1000": [
+      23,
+      44
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 6.8181818181818175,
+        "ci": [
+          0.0,
+          14.546401515151508
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -6.8181818181818175,
+      "ci": [
+        -14.546401515151514,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "Qwen3.5-9B",
+    "arm": "non-compliant prefill, stacked",
+    "n_right": 51,
+    "n_wrong": 49,
+    "median_tokens_right": 1692.0,
+    "median_tokens_wrong": 4370.0,
+    "n_obeyed_throughout": [
+      51,
+      49
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_200": [
+      51,
+      49
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    },
+    "n_clean_first_1000": [
+      32,
+      38
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.0,
+      "ci": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  {
+    "model": "all models",
+    "arm": "no prefill",
+    "n_right": 322,
+    "n_wrong": 278,
+    "median_tokens_right": 3219.5,
+    "median_tokens_wrong": 5895.0,
+    "n_obeyed_throughout": [
+      322,
+      278
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.6211180124223602,
+        "ci": [
+          0.0,
+          1.640027322404368
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.6211180124223602,
+      "ci": [
+        0.0,
+        1.640027322404368
+      ]
+    },
+    "n_clean_first_200": [
+      322,
+      278
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.6211180124223602,
+        "ci": [
+          0.0,
+          1.640027322404368
+        ]
+      },
+      "wrong": {
+        "value": 1.079136690647482,
+        "ci": [
+          0.0,
+          2.4694641449960577
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": -0.4580186782251219,
+      "ci": [
+        -2.0100768946384693,
+        0.9338701770963261
+      ]
+    },
+    "n_clean_first_1000": [
+      249,
+      249
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.4016064257028112,
+        "ci": [
+          0.0,
+          1.3159343844191969
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.4016064257028112,
+      "ci": [
+        0.0,
+        1.3159343844191969
+      ]
+    }
+  },
+  {
+    "model": "all models",
+    "arm": "compliant prefill",
+    "n_right": 314,
+    "n_wrong": 286,
+    "median_tokens_right": 1996.0,
+    "median_tokens_wrong": 4585.0,
+    "n_obeyed_throughout": [
+      314,
+      286
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 18.789808917197455,
+        "ci": [
+          13.906577737974594,
+          24.093547285763055
+        ]
+      },
+      "wrong": {
+        "value": 12.237762237762238,
+        "ci": [
+          7.97283114861202,
+          17.220178235630765
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 6.5520466794352155,
+      "ci": [
+        -0.7314916880698362,
+        13.645325208559564
+      ]
+    },
+    "n_clean_first_200": [
+      314,
+      286
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 45.22292993630573,
+        "ci": [
+          38.48712334480242,
+          51.771482094200074
+        ]
+      },
+      "wrong": {
+        "value": 43.00699300699301,
+        "ci": [
+          35.331183059748014,
+          50.44927902858588
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 2.2159369293127282,
+      "ci": [
+        -8.445501207729473,
+        12.78220065301057
+      ]
+    },
+    "n_clean_first_1000": [
+      217,
+      249
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 18.89400921658986,
+        "ci": [
+          13.835393623942746,
+          24.828014564146493
+        ]
+      },
+      "wrong": {
+        "value": 16.06425702811245,
+        "ci": [
+          11.764110502500596,
+          20.83415354330708
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 2.8297521884774106,
+      "ci": [
+        -4.273921275662759,
+        9.913504017333972
+      ]
+    }
+  },
+  {
+    "model": "all models",
+    "arm": "non-compliant prefill",
+    "n_right": 308,
+    "n_wrong": 292,
+    "median_tokens_right": 2236.5,
+    "median_tokens_wrong": 5431.0,
+    "n_obeyed_throughout": [
+      308,
+      292
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 0.3246753246753247,
+        "ci": [
+          0.0,
+          1.1765573486031575
+        ]
+      },
+      "wrong": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.3246753246753247,
+      "ci": [
+        0.0,
+        1.1765573486031575
+      ]
+    },
+    "n_clean_first_200": [
+      308,
+      292
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 0.6493506493506493,
+        "ci": [
+          0.0,
+          1.7623879151435609
+        ]
+      },
+      "wrong": {
+        "value": 0.3424657534246575,
+        "ci": [
+          0.0,
+          1.1858883869753427
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.3068848959259919,
+      "ci": [
+        -0.8234775391638129,
+        1.534179322581921
+      ]
+    },
+    "n_clean_first_1000": [
+      210,
+      243
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 0.4761904761904762,
+        "ci": [
+          0.0,
+          1.6194331983805668
+        ]
+      },
+      "wrong": {
+        "value": 0.411522633744856,
+        "ci": [
+          0.0,
+          1.4423510830324908
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 0.06466784244562024,
+      "ci": [
+        -1.1881218004443153,
+        1.4018691588785046
+      ]
+    }
+  },
+  {
+    "model": "all models",
+    "arm": "compliant prefill, no rule",
+    "n_right": 321,
+    "n_wrong": 279,
+    "median_tokens_right": 2869.0,
+    "median_tokens_wrong": 6432.0,
+    "n_obeyed_throughout": [
+      321,
+      279
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 5.29595015576324,
+        "ci": [
+          2.438812669376694,
+          8.43382906626506
+        ]
+      },
+      "wrong": {
+        "value": 3.225806451612903,
+        "ci": [
+          0.5879802788167294,
+          6.9446743929359815
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 2.0701437041503365,
+      "ci": [
+        -2.479917215730658,
+        6.300900986143522
+      ]
+    },
+    "n_clean_first_200": [
+      321,
+      278
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 14.330218068535824,
+        "ci": [
+          9.970878136200719,
+          19.019135261466545
+        ]
+      },
+      "wrong": {
+        "value": 10.79136690647482,
+        "ci": [
+          6.072838345864662,
+          16.31224143026005
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 3.538851162061005,
+      "ci": [
+        -3.456771425494419,
+        9.875089996265674
+      ]
+    },
+    "n_clean_first_1000": [
+      254,
+      262
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 3.937007874015748,
+        "ci": [
+          1.7604089448974551,
+          6.538636363636363
+        ]
+      },
+      "wrong": {
+        "value": 5.7251908396946565,
+        "ci": [
+          2.5,
+          10.02774551555039
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -1.7881829656789083,
+      "ci": [
+        -6.3247209571352645,
+        2.2270750405425312
+      ]
+    }
+  },
+  {
+    "model": "all models",
+    "arm": "no prefill, stacked",
+    "n_right": 315,
+    "n_wrong": 285,
+    "median_tokens_right": 1861.0,
+    "median_tokens_wrong": 3400.0,
+    "n_obeyed_throughout": [
+      315,
+      285
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 6.984126984126984,
+        "ci": [
+          4.112922072537298,
+          9.894321128116486
+        ]
+      },
+      "wrong": {
+        "value": 2.807017543859649,
+        "ci": [
+          0.7442566361147486,
+          5.432889793912149
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 4.177109440267335,
+      "ci": [
+        0.32665082773241017,
+        7.713567562254211
+      ]
+    },
+    "n_clean_first_200": [
+      287,
+      248
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 18.118466898954704,
+        "ci": [
+          14.477897950566762,
+          22.30572253420865
+        ]
+      },
+      "wrong": {
+        "value": 10.080645161290322,
+        "ci": [
+          6.451036866359448,
+          13.793464146587791
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 8.037821737664382,
+      "ci": [
+        2.2472342634521194,
+        13.604713302270962
+      ]
+    },
+    "n_clean_first_1000": [
+      189,
+      204
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 2.1164021164021163,
+        "ci": [
+          0.5050505050505051,
+          4.138033054478677
+        ]
+      },
+      "wrong": {
+        "value": 2.450980392156863,
+        "ci": [
+          0.5679437531742005,
+          5.050646918624445
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -0.3345782757547464,
+      "ci": [
+        -3.445102121232086,
+        2.4586382393713215
+      ]
+    }
+  },
+  {
+    "model": "all models",
+    "arm": "compliant prefill, stacked",
+    "n_right": 304,
+    "n_wrong": 296,
+    "median_tokens_right": 1149.5,
+    "median_tokens_wrong": 2558.0,
+    "n_obeyed_throughout": [
+      304,
+      296
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 35.526315789473685,
+        "ci": [
+          28.943381180223295,
+          42.760998139287615
+        ]
+      },
+      "wrong": {
+        "value": 21.62162162162162,
+        "ci": [
+          14.649293148982444,
+          28.383384058250176
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 13.90469416785206,
+      "ci": [
+        4.548809275948748,
+        23.519069353488597
+      ]
+    },
+    "n_clean_first_200": [
+      304,
+      296
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 70.06578947368422,
+        "ci": [
+          63.926868389110446,
+          76.03017194959973
+        ]
+      },
+      "wrong": {
+        "value": 65.2027027027027,
+        "ci": [
+          56.85288166134941,
+          73.17096533034295
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 4.863086770981518,
+      "ci": [
+        -5.362628432553246,
+        13.87482022679873
+      ]
+    },
+    "n_clean_first_1000": [
+      169,
+      231
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 29.585798816568047,
+        "ci": [
+          22.346220135504574,
+          38.095238095238095
+        ]
+      },
+      "wrong": {
+        "value": 26.83982683982684,
+        "ci": [
+          19.565217391304348,
+          34.52932134436688
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": 2.745971976741207,
+      "ci": [
+        -6.731285594152086,
+        13.127361923322809
+      ]
+    }
+  },
+  {
+    "model": "all models",
+    "arm": "non-compliant prefill, stacked",
+    "n_right": 311,
+    "n_wrong": 289,
+    "median_tokens_right": 1109.0,
+    "median_tokens_wrong": 2428.0,
+    "n_obeyed_throughout": [
+      311,
+      289
+    ],
+    "obeyed_throughout": {
+      "right": {
+        "value": 3.215434083601286,
+        "ci": [
+          1.3623514801015775,
+          5.3959265020416085
+        ]
+      },
+      "wrong": {
+        "value": 2.422145328719723,
+        "ci": [
+          0.9090909090909091,
+          4.1522491349480966
+        ]
+      }
+    },
+    "obeyed_throughout_right_minus_wrong": {
+      "value": 0.7932887548815628,
+      "ci": [
+        -1.714132110417525,
+        3.7666587885286784
+      ]
+    },
+    "n_clean_first_200": [
+      309,
+      289
+    ],
+    "clean_first_200": {
+      "right": {
+        "value": 5.825242718446602,
+        "ci": [
+          3.582771056305259,
+          8.47457627118644
+        ]
+      },
+      "wrong": {
+        "value": 4.844290657439446,
+        "ci": [
+          2.536231884057971,
+          7.207354895879485
+        ]
+      }
+    },
+    "clean_first_200_right_minus_wrong": {
+      "value": 0.9809520610071558,
+      "ci": [
+        -1.9676495522780735,
+        4.211445314440387
+      ]
+    },
+    "n_clean_first_1000": [
+      166,
+      217
+    ],
+    "clean_first_1000": {
+      "right": {
+        "value": 2.4096385542168677,
+        "ci": [
+          0.5492277992277997,
+          4.591983345062163
+        ]
+      },
+      "wrong": {
+        "value": 2.7649769585253456,
+        "ci": [
+          0.4716981132075472,
+          5.58145437374572
+        ]
+      }
+    },
+    "clean_first_1000_right_minus_wrong": {
+      "value": -0.3553384043084782,
+      "ci": [
+        -3.811531810895118,
+        2.7393453511087387
+      ]
+    }
+  }
+]
