@@ -315,8 +315,16 @@ def repro_check(df: pd.DataFrame) -> list[dict]:
 
 
 # --- Figures (plotly) ------------------------------------------------------------------------------------------------
+SHORT_MODE_LABEL = {"lowercase_thinking": "lowercase", "uppercase_thinking": "uppercase",
+                    "meow_between_words": "meow", "end_of_sentence": "end 'safe'",
+                    "word_suppression": "word supp.<br>(control)"}
+
+
 def save(fig: go.Figure, fig_dir, name: str, width: int, height: int) -> str:
-    fig.update_layout(template="plotly_white", font={"size": 12}, width=width, height=height)
+    fig.update_layout(template="plotly_white", font={"size": 12}, width=width, height=height,
+                      title={"font": {"size": 15}, "x": 0.01, "xanchor": "left"})
+    if fig.layout.margin.t is None:
+        fig.update_layout(margin={"t": 100})
     fig.write_html(fig_dir / f"{name}.html", include_plotlyjs="cdn")
     try:
         fig.write_image(fig_dir / f"{name}.png", scale=2)
@@ -341,10 +349,12 @@ def fig_survival(df: pd.DataFrame, fig_dir, prompt: str) -> str:
                 cell = cell[cell["mode"] == mode]
                 if cell.empty:
                     continue
+                # KM is only defined up to the longest observed trace (the ceiling's texts are a few hundred tokens).
+                x = grid[grid <= cell["time"].max()]
                 s = 100 * kaplan_meier(cell["time"].to_numpy(), cell["event"].to_numpy(),
-                                       np.ones((1, len(cell))), grid)[0]
+                                       np.ones((1, len(cell))), x)[0]
                 style = cfg.CONDITION_STYLE[condition]
-                fig.add_trace(go.Scatter(x=grid, y=s, mode="lines", line={"color": style["color"], "width": 2},
+                fig.add_trace(go.Scatter(x=x, y=s, mode="lines", line={"color": style["color"], "width": 2},
                                          name=style["label"], legendgroup=condition, showlegend=i == 0 and j == 0,
                                          hovertemplate=f"{model} | {mode} | {style['label']}<br>t=%{{x}}: "
                                                        "%{y:.0f}%<extra></extra>"),
@@ -352,11 +362,16 @@ def fig_survival(df: pd.DataFrame, fig_dir, prompt: str) -> str:
             fig.add_vline(x=T_STAR, line={"color": "black", "width": 0.5, "dash": "dot"}, row=i + 1, col=j + 1)
         fig.update_yaxes(title_text=f"<b>{model}</b><br>% no violation yet", row=i + 1, col=1)
     fig.update_xaxes(title_text="tokens into the graded text", row=len(models))
+    fig.update_xaxes(range=[0, grid.max()])
     fig.update_yaxes(range=[0, 101])
-    fig.update_layout(title=f"F1. Survival without a rule violation ({prompt} prompt). Prefill rows are scored from "
-                            f"the first generated token after the prefill; dotted line: t* = {T_STAR}",
-                      legend={"orientation": "h", "y": -0.04})
-    return save(fig, fig_dir, f"F1_survival_{prompt}", 1500, 230 * len(models) + 150)
+    height = 230 * len(models) + 260
+    fig.update_layout(title=f"F1. Share of traces with no rule violation yet ({prompt} prompt; KM)<br><sup>Prefill "
+                            f"rows are scored from the first token generated after the prefill; dotted line: t* = "
+                            f"{T_STAR}; each curve stops at its longest trace</sup>",
+                      legend={"orientation": "h", "y": -110 / (height - 260), "yanchor": "top", "x": 0.5,
+                              "xanchor": "center"},
+                      margin={"t": 110, "b": 130})
+    return save(fig, fig_dir, f"F1_survival_{prompt}", 1500, height)
 
 
 def fig_s_tstar(per_rule: pd.DataFrame, fig_dir) -> str:
@@ -381,14 +396,15 @@ def fig_s_tstar(per_rule: pd.DataFrame, fig_dir) -> str:
                 hovertemplate="%{customdata[0]} (n=%{customdata[1]}): %{y:.1f}%<extra></extra>"), row=1, col=k + 1)
         fig.add_vrect(x0=len(RULES) - 1.5, x1=len(RULES) - 0.5, fillcolor="#eeeeee", line_width=0, layer="below",
                       row=1, col=k + 1)
-        fig.update_xaxes(tickvals=list(range(len(RULES))), ticktext=[MODE_LABEL[m].replace(" (control)", "<br>(control)")
-                                                                     for m in RULES], row=1, col=k + 1)
-    fig.update_yaxes(title_text=f"S({T_STAR}): % with no violation in the first {T_STAR} tokens", range=[-2, 102],
-                     row=1, col=1)
-    fig.update_layout(title=f"F2. Survival to {T_STAR} tokens per rule (baseline prompt; 95% question-level bootstrap "
-                            "CIs). Shaded: word suppression, the control (its prefill cannot show compliance)",
-                      legend={"orientation": "h", "y": -0.25})
-    return save(fig, fig_dir, "F2_S_tstar_per_rule", 330 * len(models) + 100, 520)
+        fig.update_xaxes(tickvals=list(range(len(RULES))), ticktext=[SHORT_MODE_LABEL[m] for m in RULES],
+                         tickangle=0, row=1, col=k + 1)
+    fig.update_yaxes(title_text=f"S({T_STAR}): % with no violation<br>in the first {T_STAR} tokens",
+                     range=[-2, 102], row=1, col=1)
+    fig.update_layout(title=f"F2. Survival to {T_STAR} tokens per rule (baseline prompt)<br><sup>95% question-level "
+                            "bootstrap CIs, 100 questions per point. Shaded: word suppression, the control (its "
+                            "prefill cannot show compliance)</sup>",
+                      legend={"orientation": "h", "y": -0.2})
+    return save(fig, fig_dir, "F2_S_tstar_per_rule", max(1000, 380 * len(models) + 100), 560)
 
 
 def fig_ladder(rows: list[dict], fig_dir) -> str:
@@ -446,11 +462,13 @@ def fig_first_violation(df: pd.DataFrame, fig_dir) -> str:
         fig.add_trace(go.Bar(y=labels, x=ys, name=f"first violation at token {name}" if "none" not in name
                              else f"no violation before token {T_STAR} (or ended earlier)", orientation="h",
                              marker={"color": color}, hovertemplate="%{y}: %{x:.0f}%<extra>" + name + "</extra>"))
-    fig.update_layout(barmode="stack", title="F4. Where the first violation lands (4 opener rules pooled, baseline "
-                                             "prompt; tokens counted from the start of the graded text)",
-                      xaxis_title="% of traces", yaxis={"autorange": "reversed"}, legend={"orientation": "h",
-                                                                                           "y": -0.08})
-    return save(fig, fig_dir, "F4_first_violation_position", 1100, 60 * len(labels) + 200)
+    fig.update_layout(barmode="stack", title="F4. Where the first violation lands<br><sup>4 opener rules pooled, "
+                                             "baseline prompt; tokens counted from the start of the graded text "
+                                             "(after the prefill)</sup>",
+                      xaxis_title="% of traces", yaxis={"autorange": "reversed"},
+                      legend={"orientation": "h", "y": 1.0, "yanchor": "bottom", "traceorder": "normal"},
+                      margin={"t": 150})
+    return save(fig, fig_dir, "F4_first_violation_position", 1100, 55 * len(labels) + 260)
 
 
 def fig_partial(partial: pd.DataFrame, fig_dir) -> str:

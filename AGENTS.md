@@ -34,13 +34,24 @@ Qwen3-8B P1 = 0.6 [0.0, 1.2]. The CI is wide (50 items), so the gate rules out l
 Current story candidate: none yet. Smoke test (Qwen3-8B, 3 items) showed two ways to "comply" without controlling
 content: empty reasoning under ignore_question (7 of 12) and 25k-token "meow meow ..." traces that pass the meow
 grader; both are now flagged (near-empty, degenerate) and reported next to compliance.
-Next experiment and why: exp03 (exp02's 50 items resolve only large prompt effects; exp03 doubles the items and
-stops traces at the first violation, which in exp02 was followed by 93-96% of the abortable modes' tokens).
+exp04_prefill (human-chosen design 2026-09-30; results/exp04_prefill/manifest.json): does a model started in
+compliance keep the rule? One compliant opening sentence written into the reasoning, only the continuation graded;
+controls: non-compliant opening (same words), compliant opening without the rule, word_suppression (can't be shown
+by an opening), thinking-off ceiling (<output_reasoning> tags, CoT-Control's own prompt), CoT-necessity labels
+(5 one-letter direct answers per item). 5 rules x baseline/stacked on exp03's 100 items; no-prefill rows reused
+from exp03 where it ran the model (100 rerun). Models in order Qwen3-32B, Qwen3.6-27B-FP8, Qwen3.8-27B-FP8
+(medium effort), Gemma-4-31B-FP8 (RedHatAI, third party), Gemma-4-12B (dropped if Gemma 31B ends after 14:00 UTC),
+Qwen3.5-9B. Running on the H200 since 05:39 UTC (scripts/h200_exp04.sh, log/exp04/h200_exp04.log); the chain
+grades and runs scripts/cc_exp04_analysis.py --run main at the end. Smoke tests (cache/exp04/smoke_v1, smoke):
+Gemma 4 works in vLLM 0.30 with the forced "<|channel>thought\n" opening; the necessity probe was changed to a
+constrained one-letter answer before the manifest (unconstrained Gemma answers were option text).
+Next experiment and why: exp04 (exp03's first violations are at token < 5 in 53-63% of traces, so its survival
+numbers mostly measure whether the model starts compliant).
 Kill criteria in force: exp03 engine check (results/exp03_abort_survival/engine_check.json) fails -> no exp03
 manifest or generation until a human decides.
 Open issue for the human: three tracked files quote benchmark question text (prompt_examples.md,
 verification_smoke/sheet.md, exp01 read_samples.md) and are in public git history.
-Last updated: 2026-09-30 by agent (exp03 main run complete, UNVERIFIED)
+Last updated: 2026-09-30 by agent (exp04 running; exp03 main run complete, UNVERIFIED)
 
 ## Roles
 - Agent: implement, run, report in the format below.
