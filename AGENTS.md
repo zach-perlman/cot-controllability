@@ -48,7 +48,12 @@ the stacked prompt with no prefill, Gemma skips thinking in 161/500 (31B) and 92
 the answer; main censors those at 0, inflating that arm. Not-pre-registered sensitivity run sens_empty_trace
 (--empty-trace-is-violation) scores them as violations; baseline-prompt contrasts unchanged. Word-suppression
 control moves by up to +11 (baseline) / +22 (Qwen3.6 stacked) points, so part of the start effect is not
-rule-specific; Gemma 31B/12B baseline start effects are within the control's range. Smoke tests (cache/exp04/smoke_v1, smoke):
+rule-specific; Gemma 31B/12B baseline start effects are within the control's range. Analysis v2
+(results/exp04_prefill/deviations_analysis_v2.json, written before it; no new generation): empty-trace sensitivity
+scoring, empty-trace share, a lenient case-rule grader that lets notation through (strict and lenient bracket the
+rate; checked on uncut traces), ceiling among tagged responses, word-suppression breakdown. Checked, not changed:
+the prefill/continuation seam (identical grades in 4800/4800 compliant-prefill traces) and Gemma's forced
+thought opening on no-prefill rows (present; Gemma closes it itself). Smoke tests (cache/exp04/smoke_v1, smoke):
 Gemma 4 works in vLLM 0.30 with the forced "<|channel>thought\n" opening; the necessity probe was changed to a
 constrained one-letter answer before the manifest (unconstrained Gemma answers were option text).
 Next experiment and why: exp04 (exp03's first violations are at token < 5 in 53-63% of traces, so its survival

@@ -16,5 +16,7 @@ log/exp03/*.log
 log/exp04/*.log
 !log/exp04/h200_exp04.log
 
-# exp04 auto-reports quote trace words (incl. question text) in the exploratory notation table; kept in the private HF dataset
-results/exp04_prefill/analysis/*/REPORT_auto.md
+# exp04 main/sens auto-reports and notation examples quote trace words (incl. question text) in the exploratory notation table; kept in the private HF dataset
+results/exp04_prefill/analysis/main/REPORT_auto.md
+results/exp04_prefill/analysis/sens_empty_trace/REPORT_auto.md
+results/exp04_prefill/analysis/*/notation_examples.csv
