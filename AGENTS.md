@@ -41,8 +41,14 @@ by an opening), thinking-off ceiling (<output_reasoning> tags, CoT-Control's own
 (5 one-letter direct answers per item). 5 rules x baseline/stacked on exp03's 100 items; no-prefill rows reused
 from exp03 where it ran the model (100 rerun). Models in order Qwen3-32B, Qwen3.6-27B-FP8, Qwen3.8-27B-FP8
 (medium effort), Gemma-4-31B-FP8 (RedHatAI, third party), Gemma-4-12B (dropped if Gemma 31B ends after 14:00 UTC),
-Qwen3.5-9B. Running on the H200 since 05:39 UTC (scripts/h200_exp04.sh, log/exp04/h200_exp04.log); the chain
-grades and runs scripts/cc_exp04_analysis.py --run main at the end. Smoke tests (cache/exp04/smoke_v1, smoke):
+Qwen3.5-9B. Run complete 10:58 UTC, all 6 models (Gemma 12B made the cutoff); report
+results/exp04_prefill/analysis/main/REPORT_auto.md, UNVERIFIED (reports are gitignored because the exploratory notation
+table quotes trace words incl. question text; copies on the private HF dataset). Confound found after the run: under
+the stacked prompt with no prefill, Gemma skips thinking in 161/500 (31B) and 92/500 (12B) traces and reasons in
+the answer; main censors those at 0, inflating that arm. Not-pre-registered sensitivity run sens_empty_trace
+(--empty-trace-is-violation) scores them as violations; baseline-prompt contrasts unchanged. Word-suppression
+control moves by up to +11 (baseline) / +22 (Qwen3.6 stacked) points, so part of the start effect is not
+rule-specific; Gemma 31B/12B baseline start effects are within the control's range. Smoke tests (cache/exp04/smoke_v1, smoke):
 Gemma 4 works in vLLM 0.30 with the forced "<|channel>thought\n" opening; the necessity probe was changed to a
 constrained one-letter answer before the manifest (unconstrained Gemma answers were option text).
 Next experiment and why: exp04 (exp03's first violations are at token < 5 in 53-63% of traces, so its survival
@@ -51,7 +57,7 @@ Kill criteria in force: exp03 engine check (results/exp03_abort_survival/engine_
 manifest or generation until a human decides.
 Open issue for the human: three tracked files quote benchmark question text (prompt_examples.md,
 verification_smoke/sheet.md, exp01 read_samples.md) and are in public git history.
-Last updated: 2026-09-30 by agent (exp04 running; exp03 main run complete, UNVERIFIED)
+Last updated: 2026-09-30 by agent (exp04 main run complete, UNVERIFIED)
 
 ## Roles
 - Agent: implement, run, report in the format below.
