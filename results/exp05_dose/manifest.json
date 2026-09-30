@@ -1,0 +1,151 @@
+{
+  "exp_id": "exp05_dose",
+  "question": "exp04: a compliant opening sentence raises S(1000) by 24-39 points on Qwen3-32B/3.6/3.8, and part of that is the continuation copying the opening's style (the same opening without the rule keeps it 8-15% of the time). Does the rule still add to what copying gives when the model is started with more of its own reasoning already in the compliant style, or does copying take over?",
+  "design": {
+    "items": "exp03's 100",
+    "models": [
+      "Qwen3-32B",
+      "Qwen3.6-27B-FP8",
+      "Qwen3.8-27B-FP8"
+    ],
+    "modes": [
+      "lowercase_thinking",
+      "uppercase_thinking",
+      "meow_between_words",
+      "end_of_sentence"
+    ],
+    "openings": "the model's own no-constraint trace for the item (exp03's for Qwen3-32B/Qwen3.6, exp04's requests_none for Qwen3.8), cut at the first sentence end (cc_grade's splitter) with at least the dose's tokens (model tokenizer, before the rewrite), rewritten per rule (see cc_exp05.py); every rewritten opening passes CoT-Control's grader",
+    "doses_min_tokens": {
+      "d1": 1,
+      "d2": 60,
+      "d3": 150
+    },
+    "opening_tokens_before_rewrite": {
+      "Qwen3-32B | d1": {
+        "median": 11,
+        "min": 6,
+        "max": 73
+      },
+      "Qwen3-32B | d2": {
+        "median": 69,
+        "min": 60,
+        "max": 100
+      },
+      "Qwen3-32B | d3": {
+        "median": 158,
+        "min": 150,
+        "max": 188
+      },
+      "Qwen3.6-27B-FP8 | d1": {
+        "median": 20,
+        "min": 9,
+        "max": 67
+      },
+      "Qwen3.6-27B-FP8 | d2": {
+        "median": 71,
+        "min": 60,
+        "max": 188
+      },
+      "Qwen3.6-27B-FP8 | d3": {
+        "median": 162,
+        "min": 150,
+        "max": 277
+      },
+      "Qwen3.8-27B-FP8 | d1": {
+        "median": 19,
+        "min": 7,
+        "max": 154
+      },
+      "Qwen3.8-27B-FP8 | d2": {
+        "median": 86,
+        "min": 60,
+        "max": 1045
+      },
+      "Qwen3.8-27B-FP8 | d3": {
+        "median": 174,
+        "min": 150,
+        "max": 1045
+      }
+    },
+    "conditions": {
+      "prefill_compliant": "rule in the prompt (baseline prompt)",
+      "prefill_no_rule": "CoT-Control's unconstrained prompt (imitation)"
+    },
+    "graded_text": "the continuation only, as exp04 (the opening is excluded)",
+    "abort": "exp04's (exp03's rule and full-trace cells)",
+    "seeds": "cfg.rollout_seed(item, '<mode>|<dose>', 0): different per dose, the same in both conditions",
+    "reference_rows_reused": "dose 0 = exp04's no-prefill rows (baseline prompt); exp04's generic one-sentence arms as a second 1-sentence point (not in the tests)",
+    "effort_check": "Qwen3.8 at reasoning_effort xhigh (its default) and low, on exp04's requests of [('none', 'stacked'), ('prefill_compliant', 'baseline')] (opener rules; identical request ids); compared with exp04's medium rows. xhigh and low prepend one instruction sentence to the system turn (chat template); medium adds none"
+  },
+  "scoring": "S(t) as exp04, with an empty thinking trace a violation at token 0 (exp04's sensitivity scoring, fixed before this run); censoring them instead is reported as a sensitivity check",
+  "primary_outcome": "KM S(1000) of the continuation, mean over the 4 opener rules, per (model, dose, condition)",
+  "primary_contrasts": {
+    "R_d1": "prefill_compliant - prefill_no_rule at d1 (the rule's contribution with a 1-sentence own opening)",
+    "R_d3": "prefill_compliant - prefill_no_rule at d3",
+    "R_trend": "R_d3 - R_d1 (difference in differences)",
+    "tests": "question-level bootstrap (2000 draws, stratified by source) paired across cells; two-sided bootstrap p; Holm over the 3 contrasts x 3 models"
+  },
+  "predictions": {
+    "imitation_takes_over": "prefill_no_rule rises with dose and R_trend < 0 (the rule matters less once the text so far is compliant)",
+    "rule_following": "R_d1 and R_d3 > 0 and R_trend >= 0",
+    "dose_helps": "prefill_compliant S(1000) rises from d1 to d3"
+  },
+  "secondary_outcomes": [
+    "prefill_compliant S(1000) d3 - d1 per model; per-rule S(1000); S(200); P1; median continuation length",
+    "the lenient case-rule grader of exp04 v2 (notation let through) next to the strict one",
+    "exp04's generic 1-sentence arms vs the own 1-sentence opening (same length class, different text)",
+    "effort: S(1000) and S(200) at xhigh / medium / low per arm; xhigh - medium and low - medium (Holm over the 4)",
+    "accuracy on full-trace cells per (dose, condition)"
+  ],
+  "confounds_and_checks": [
+    "a longer own opening already holds part of the solution, so the continuation is shorter; S(t) censors at the continuation's end, and its median length is reported per dose",
+    "the rewrite of math (upper/lowercased LaTeX, meow between math tokens) makes the opening less natural than the model's own text; the no-rule arm sees the same rewrite, so the rule-minus-imitation contrasts are matched",
+    "d1 and d2 can coincide for items whose first sentence has >= 60 tokens (reported)",
+    "effort: Qwen3.8's template only offers xhigh, medium, low (no 'high')"
+  ],
+  "caps": {
+    "reasoning": 25000,
+    "answer": 1024
+  },
+  "items": {
+    "path": "cache/exp03/items.jsonl",
+    "sha256": "42841b4403d46b398f1680f908ca85bbb8b9cc9508967263309e2a3a4a98e852"
+  },
+  "requests": {
+    "Qwen3-32B": {
+      "path": "cache/exp05/requests_Qwen3-32B.jsonl",
+      "sha256": "bd097ae56b2401c2f783c00342bc416c97fdd7bdd4d3bfa805bfc6f9c30d7981",
+      "n": 2400,
+      "abort_on_violation": 1800
+    },
+    "Qwen3.6-27B-FP8": {
+      "path": "cache/exp05/requests_Qwen3.6-27B-FP8.jsonl",
+      "sha256": "44195c9e3a39bb15c67f97a9d3ddc4f577bd771aba1e4cadb870205847f63f61",
+      "n": 2400,
+      "abort_on_violation": 1800
+    },
+    "Qwen3.8-27B-FP8": {
+      "path": "cache/exp05/requests_Qwen3.8-27B-FP8.jsonl",
+      "sha256": "1c42e381b959170d9eaaf434a215ea6ec78c138f77dadd6b494439bb8a90f39f",
+      "n": 2400,
+      "abort_on_violation": 1800
+    },
+    "effort": {
+      "path": "cache/exp05/requests_effort.jsonl",
+      "sha256": "dd559923c0c175e67b222760134181aa3e279a4b94990eb65aaf2ab967a74d4c",
+      "n": 800,
+      "abort_on_violation": 600
+    }
+  },
+  "run_order": [
+    "Qwen3-32B: requests_Qwen3-32B.jsonl",
+    "Qwen3.6-27B-FP8: requests_Qwen3.6-27B-FP8.jsonl",
+    "Qwen3.8-27B-FP8: requests_Qwen3.8-27B-FP8.jsonl",
+    "Qwen3.8-27B-FP8-xhigh: requests_effort.jsonl",
+    "Qwen3.8-27B-FP8-low: requests_effort.jsonl"
+  ],
+  "hardware": "1x H200 141 GB, TP 1, vLLM 0.30.0 streaming engine (exp04's)",
+  "written": "2026-09-30T19:12:35+00:00",
+  "commit": "d99f5e908ae7878ed07f5b6150f5b0a0133bc2de",
+  "cotcontrol_commit": "5d78aeffe0152ba087c2d31cd07712d029c64785"
+}
