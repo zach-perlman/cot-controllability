@@ -9,12 +9,18 @@ sentence boundary at 3 lengths (cfg.EXP05_DOSE_MIN_TOKENS) and rewritten to obey
 Every rewritten opening passes CoT-Control's grader (checked when the requests are written). Each opening runs with the
 rule in the prompt (prefill_compliant, baseline prompt) and without it (prefill_no_rule, the unconstrained prompt).
 
-requests_<model>.jsonl   the dose rows of one model (its openings are its own text)
-requests_effort.jsonl    exp04's requests of cfg.EXP05_EFFORT_ARMS (same request ids), for Qwen3.8 at xhigh and low
+requests_<model>.jsonl       the dose rows of one model (its openings are its own text)
+requests_effort.jsonl        exp04's requests of cfg.EXP05_EFFORT_ARMS (same request ids), for Qwen3.8 at xhigh and low
+requests_base_<model>.jsonl  extension models with no exp03/exp04 rows (cfg.EXP05_NEW_MODELS): exp04's requests_none
+                             rows of the no-constraint mode and the opener rules under the baseline prompt (same ids).
+                             Their no-constraint traces give the model's openings; the rule rows are its no-opening
+                             reference (d0). The model's dose rows are written after these are generated.
 
 Graded like exp04: the continuation only. Abortable and full-trace cells are exp03's.
 
-Run: /venv/main/bin/python scripts/cc_exp05.py requests|manifest
+Run: /venv/main/bin/python scripts/cc_exp05.py requests|manifest            (pre-registered models)
+     /venv/main/bin/python scripts/cc_exp05.py requests-extension|manifest-extension
+     /venv/main/bin/python scripts/cc_exp05.py requests-new --model M     (after M's base rows are generated)
 """
 
 from __future__ import annotations
@@ -34,6 +40,7 @@ import cc_prompts
 
 EXP = cfg.EXP05
 REQUESTS_EFFORT = EXP.cache / "requests_effort.jsonl"
+MANIFEST_EXTENSION = EXP.results / "manifest_extension.json"
 SENTENCE_BOUNDARY = re.compile(r"(?<=[.!?])\s+")  # cc_grade._first_sentence_without's splitter
 
 
@@ -41,15 +48,47 @@ def requests_path(model: str):
     return EXP.cache / f"requests_{model}.jsonl"
 
 
+def base_requests_path(model: str):
+    return EXP.cache / f"requests_base_{model}.jsonl"
+
+
+def base_generation(model: str):
+    [path] = glob.glob(str(EXP.generations / f"{model}__card__stream_abort_base_{model}__*.jsonl"))
+    return path
+
+
 # --- The model's own opening ------------------------------------------------------------------------------------------
 def own_traces(model: str) -> dict[str, str]:
-    """item_id -> reasoning of the model's no-constraint trace (exp03's for the models it ran, else exp04's)."""
+    """item_id -> reasoning of the model's no-constraint trace (exp03's for the models it ran, exp05's base rows for
+    the extension models with no earlier rows, else exp04's)."""
     if model in cfg.EXP04_REUSES_EXP03:
         [path] = glob.glob(str(cfg.EXP03.generations / f"{model}__card__stream_abort__*.jsonl"))
+    elif model in cfg.EXP05_NEW_MODELS:
+        path = base_generation(model)
     else:
         [path] = glob.glob(str(cfg.EXP04.generations / f"{model}__card__stream_abort_none__*.jsonl"))
     rows = [json.loads(line) for line in open(path)]
     return {r["item_id"]: r["reasoning"] for r in rows if r["mode"] == cfg.NO_CONSTRAINT}
+
+
+def check_base_gate(model: str) -> dict:
+    """Stops (exit 2) before a new model's dose rows are written if its no-constraint traces do not look like working
+    thinking-mode output (reasoning closed, of a plausible length, followed by an answer): a broken chat-format
+    adapter would otherwise waste the dose run."""
+    rows = [json.loads(line) for line in open(base_generation(model))]
+    nc = [r for r in rows if r["mode"] == cfg.NO_CONSTRAINT]
+    tokens = sorted(r["reasoning_tokens"] for r in nc)
+    stats = {"n": len(nc), "closed_share": sum(r["think_status"] == "closed" for r in nc) / len(nc),
+             "median_reasoning_tokens": tokens[len(tokens) // 2],
+             "answer_share": sum(bool(r["answer"].strip()) for r in nc) / len(nc)}
+    gate = cfg.EXP05_BASE_GATE
+    passed = (stats["closed_share"] >= gate["min_closed_share"]
+              and stats["median_reasoning_tokens"] >= gate["min_median_reasoning_tokens"]
+              and stats["answer_share"] >= gate["min_answer_share"])
+    print(f"{model} base gate {'passed' if passed else 'FAILED'}: {stats} (thresholds {gate})", flush=True)
+    if not passed:
+        raise SystemExit(2)
+    return stats
 
 
 def cut_at_sentence(text: str, min_tokens: int, n_tokens) -> str:
@@ -144,11 +183,58 @@ def effort_rows() -> list[dict]:
     return keep
 
 
+def base_rows() -> list[dict]:
+    """exp04's requests_none rows of the no-constraint mode and of the opener rules under the baseline prompt."""
+    return [r for r in cc_exp04.load_requests(cc_exp04.REQUESTS_NONE)
+            if r["mode"] == cfg.NO_CONSTRAINT or (r["mode"] in cfg.EXP05_MODES and r["prompt"] == "baseline")]
+
+
 def write_requests() -> None:
     items = cc_exp03.load_items()
     for model in cfg.EXP05_MODELS:
         cc_exp04.write_jsonl_once(requests_path(model), dose_rows(model, items))
     cc_exp04.write_jsonl_once(REQUESTS_EFFORT, effort_rows())
+
+
+def write_extension_requests() -> None:
+    """Dose rows of the extension models with earlier no-constraint traces; base rows of the new ones."""
+    items = cc_exp03.load_items()
+    for model in cfg.EXP05_EXTENSION_MODELS:
+        if model in cfg.EXP05_NEW_MODELS:
+            cc_exp04.write_jsonl_once(base_requests_path(model), base_rows())
+        else:
+            cc_exp04.write_jsonl_once(requests_path(model), dose_rows(model, items))
+
+
+def write_new_model_requests(model: str) -> None:
+    if model not in cfg.EXP05_NEW_MODELS:
+        raise SystemExit(f"{model} is not in cfg.EXP05_NEW_MODELS")
+    stats = check_base_gate(model)
+    cc_exp04.write_jsonl_once(requests_path(model), dose_rows(model, cc_exp03.load_items()))
+    # Recorded next to the manifest (written before any extension generation), since this file can only exist after
+    # the base rows are generated.
+    record = {"model": model, "base_gate": stats, "requests": file_record(requests_path(model)),
+              "written": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")}
+    path = EXP.results / f"requests_record_{model}.json"
+    if path.exists():
+        raise SystemExit(f"{path} exists")
+    path.write_text(json.dumps(record, indent=2) + "\n")
+
+
+def file_record(p) -> dict:
+    return {"path": str(p.relative_to(cfg.REPO_ROOT)), "sha256": cc_manifest.sha256_file(p),
+            "n": sum(1 for _ in p.open()),
+            "abort_on_violation": sum(r["abort_on_violation"] for r in cc_exp04.load_requests(p))}
+
+
+def opening_lengths(model: str) -> dict:
+    rows = cc_exp04.load_requests(requests_path(model))
+    out = {}
+    for dose in cfg.EXP05_DOSE_MIN_TOKENS:
+        toks = sorted(r["opening_tokens_original"] for r in rows if r["dose"] == dose
+                      and r["mode"] == cfg.EXP05_MODES[0] and r["condition"] == "prefill_compliant")
+        out[dose] = {"median": toks[len(toks) // 2], "min": toks[0], "max": toks[-1]}
+    return out
 
 
 # --- Manifest -------------------------------------------------------------------------------------------------------
@@ -241,8 +327,77 @@ def write_manifest() -> None:
     print(f"wrote {EXP.manifest.relative_to(cfg.REPO_ROOT)}")
 
 
+def write_manifest_extension() -> None:
+    if MANIFEST_EXTENSION.exists():
+        raise SystemExit(f"{MANIFEST_EXTENSION} exists; manifests are written once, before the run")
+    old = [m for m in cfg.EXP05_EXTENSION_MODELS if m not in cfg.EXP05_NEW_MODELS]
+    manifest = {
+        "exp_id": EXP.exp_id,
+        "extends": "results/exp05_dose/manifest.json (unchanged; its 9 primary contrasts keep their own Holm family)",
+        "why": "human request on 2026-09-30: the same dose design on more models, for breadth (other labs and "
+               "architectures). Written while the pre-registered run was generating Qwen3-32B, before any extension "
+               "row was generated.",
+        "models": {m: cfg.ALL_MODELS[m] for m in cfg.EXP05_EXTENSION_MODELS},
+        "sampling": {m: {"params": cfg.FAMILIES[cfg.ALL_MODELS[m]["family"]]["sampling"],
+                         "chat_template_kwargs": cfg.FAMILIES[cfg.ALL_MODELS[m]["family"]]["chat_template_kwargs"]}
+                     for m in cfg.EXP05_EXTENSION_MODELS},
+        "design": {
+            "same_as_manifest": "items, opener rules, doses, conditions, prompts, seeds, caps, abort rule, graded "
+                                "text and scoring of manifest.json",
+            "openings": {**{m: "own no-constraint trace from %s" % ("exp03" if m in cfg.EXP04_REUSES_EXP03 else "exp04")
+                            for m in old},
+                         **{m: "own no-constraint trace from exp05's requests_base_%s.jsonl" % m
+                            for m in cfg.EXP05_NEW_MODELS}},
+            "reference_points": {**{m: "exp04's no-prefill rows (d0) and generic one-sentence arms" for m in old},
+                                 **{m: "d0 only: requests_base_<model>.jsonl's opener-rule rows (baseline prompt; "
+                                       "exp04 requests_none ids); no generic-sentence arm" for m in cfg.EXP05_NEW_MODELS}},
+            "new_model_procedure": "1) generate requests_base_<model>.jsonl; 2) gate (cfg.EXP05_BASE_GATE, on its "
+                                   "no-constraint traces): closed share >= %.2f, median reasoning tokens >= %d, "
+                                   "non-empty answer share >= %.2f; if it fails, the model is dropped and reported; "
+                                   "3) write requests_<model>.jsonl with cc_exp05.dose_rows (same code as the "
+                                   "pre-registered models), recorded in requests_record_<model>.json; 4) generate it"
+                                   % tuple(cfg.EXP05_BASE_GATE.values()),
+        },
+        "analysis": {
+            "family": "R_d1, R_d3, R_trend per extension model, Holm over those %d contrasts (separate from the "
+                      "pre-registered 9)" % (3 * len(cfg.EXP05_EXTENSION_MODELS)),
+            "runs": "'extension_a' after Qwen3.6-35B-A3B-FP8 (every model but GLM-4.7-Flash), 'extension' after "
+                    "GLM-4.7-Flash (all models); both beside the pre-registered 'main' run, which they do not replace",
+            "status": "exploratory breadth; the pre-registered conclusions rest on the 3 models of manifest.json",
+        },
+        "confounds_and_checks": [
+            "new models: no exp04 generic-sentence arm and no exp03/exp04 history; their d0 is from the same "
+            "request ids as the other models' d0",
+            "Gemma 4: every thinking request starts with '<|channel>thought\\n' (exp04's adapter)",
+            "GLM-4.7-Flash: first use of its chat format in this repo (template ends '<|assistant|><think>'); bf16 "
+            "weights; card sampling T 1.0, top_p 0.95 (no top_k); presence_penalty 0 as for every family here",
+            "Qwen3.6-35B-A3B-FP8: the qwen3.6 family's settings (card thinking settings with presence_penalty 0, the "
+            "human choice of 2026-09-29 for Qwen3.5/3.6)",
+            "models differ in precision (FP8 checkpoints for Gemma-4-31B and Qwen3.6-35B-A3B, bf16 for Gemma-4-12B, "
+            "Qwen3.5-9B, GLM-4.7-Flash); every model's arms share its own precision, so within-model contrasts are "
+            "matched",
+        ],
+        "requests": {**{m: file_record(requests_path(m)) for m in old},
+                     **{f"base_{m}": file_record(base_requests_path(m)) for m in cfg.EXP05_NEW_MODELS}},
+        "opening_tokens_before_rewrite": {m: opening_lengths(m) for m in old},
+        "run_order": [f"{m}: requests_{m}.jsonl" for m in old]
+                     + [f"{m}: requests_base_{m}.jsonl, gate, requests_{m}.jsonl" for m in cfg.EXP05_NEW_MODELS],
+        "hardware": "1x H200 141 GB, TP 1, vLLM 0.30.0 streaming engine (exp04's), after the pre-registered run",
+        "written": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+        "commit": cc_manifest.git_commit(),
+    }
+    MANIFEST_EXTENSION.write_text(json.dumps(manifest, indent=2) + "\n")
+    print(f"wrote {MANIFEST_EXTENSION.relative_to(cfg.REPO_ROOT)}")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("cmd", choices=["requests", "manifest"])
+    parser.add_argument("cmd", choices=["requests", "manifest", "requests-extension", "manifest-extension",
+                                        "requests-new"])
+    parser.add_argument("--model", help="requests-new: the new model whose base rows are generated")
     args = parser.parse_args()
-    {"requests": write_requests, "manifest": write_manifest}[args.cmd]()
+    if args.cmd == "requests-new":
+        write_new_model_requests(args.model)
+    else:
+        {"requests": write_requests, "manifest": write_manifest, "requests-extension": write_extension_requests,
+         "manifest-extension": write_manifest_extension}[args.cmd]()

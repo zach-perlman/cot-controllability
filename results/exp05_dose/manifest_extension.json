@@ -1,0 +1,223 @@
+{
+  "exp_id": "exp05_dose",
+  "extends": "results/exp05_dose/manifest.json (unchanged; its 9 primary contrasts keep their own Holm family)",
+  "why": "human request on 2026-09-30: the same dose design on more models, for breadth (other labs and architectures). Written while the pre-registered run was generating Qwen3-32B, before any extension row was generated.",
+  "models": {
+    "Gemma-4-31B-FP8": {
+      "repo": "RedHatAI/gemma-4-31B-it-FP8-block",
+      "revision": "d7242548c457ab4b45bd3adb8937f2659af4739d",
+      "family": "gemma4",
+      "gpu_memory_utilization": 0.9
+    },
+    "Qwen3.5-9B": {
+      "repo": "Qwen/Qwen3.5-9B",
+      "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "family": "qwen3.5",
+      "gpu_memory_utilization": 0.9
+    },
+    "Gemma-4-12B": {
+      "repo": "google/gemma-4-12B-it",
+      "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+      "family": "gemma4",
+      "gpu_memory_utilization": 0.9
+    },
+    "Qwen3.6-35B-A3B-FP8": {
+      "repo": "Qwen/Qwen3.6-35B-A3B-FP8",
+      "revision": "95a723d08a9490559dae23d0cff1d9466213d989",
+      "family": "qwen3.6",
+      "gpu_memory_utilization": 0.9
+    },
+    "GLM-4.7-Flash": {
+      "repo": "zai-org/GLM-4.7-Flash",
+      "revision": "7dd20894a642a0aa287e9827cb1a1f7f91386b67",
+      "family": "glm4.7",
+      "gpu_memory_utilization": 0.9
+    }
+  },
+  "sampling": {
+    "Gemma-4-31B-FP8": {
+      "params": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 64,
+        "min_p": 0.0,
+        "presence_penalty": 0.0,
+        "repetition_penalty": 1.0
+      },
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      }
+    },
+    "Qwen3.5-9B": {
+      "params": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 20,
+        "min_p": 0.0,
+        "presence_penalty": 0.0,
+        "repetition_penalty": 1.0
+      },
+      "chat_template_kwargs": {}
+    },
+    "Gemma-4-12B": {
+      "params": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 64,
+        "min_p": 0.0,
+        "presence_penalty": 0.0,
+        "repetition_penalty": 1.0
+      },
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      }
+    },
+    "Qwen3.6-35B-A3B-FP8": {
+      "params": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 20,
+        "min_p": 0.0,
+        "presence_penalty": 0.0,
+        "repetition_penalty": 1.0
+      },
+      "chat_template_kwargs": {}
+    },
+    "GLM-4.7-Flash": {
+      "params": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": -1,
+        "min_p": 0.0,
+        "presence_penalty": 0.0,
+        "repetition_penalty": 1.0
+      },
+      "chat_template_kwargs": {}
+    }
+  },
+  "design": {
+    "same_as_manifest": "items, opener rules, doses, conditions, prompts, seeds, caps, abort rule, graded text and scoring of manifest.json",
+    "openings": {
+      "Gemma-4-31B-FP8": "own no-constraint trace from exp04",
+      "Qwen3.5-9B": "own no-constraint trace from exp03",
+      "Gemma-4-12B": "own no-constraint trace from exp04",
+      "Qwen3.6-35B-A3B-FP8": "own no-constraint trace from exp05's requests_base_Qwen3.6-35B-A3B-FP8.jsonl",
+      "GLM-4.7-Flash": "own no-constraint trace from exp05's requests_base_GLM-4.7-Flash.jsonl"
+    },
+    "reference_points": {
+      "Gemma-4-31B-FP8": "exp04's no-prefill rows (d0) and generic one-sentence arms",
+      "Qwen3.5-9B": "exp04's no-prefill rows (d0) and generic one-sentence arms",
+      "Gemma-4-12B": "exp04's no-prefill rows (d0) and generic one-sentence arms",
+      "Qwen3.6-35B-A3B-FP8": "d0 only: requests_base_<model>.jsonl's opener-rule rows (baseline prompt; exp04 requests_none ids); no generic-sentence arm",
+      "GLM-4.7-Flash": "d0 only: requests_base_<model>.jsonl's opener-rule rows (baseline prompt; exp04 requests_none ids); no generic-sentence arm"
+    },
+    "new_model_procedure": "1) generate requests_base_<model>.jsonl; 2) gate (cfg.EXP05_BASE_GATE, on its no-constraint traces): closed share >= 0.90, median reasoning tokens >= 100, non-empty answer share >= 0.80; if it fails, the model is dropped and reported; 3) write requests_<model>.jsonl with cc_exp05.dose_rows (same code as the pre-registered models), recorded in requests_record_<model>.json; 4) generate it"
+  },
+  "analysis": {
+    "family": "R_d1, R_d3, R_trend per extension model, Holm over those 15 contrasts (separate from the pre-registered 9)",
+    "runs": "'extension_a' after Qwen3.6-35B-A3B-FP8 (every model but GLM-4.7-Flash), 'extension' after GLM-4.7-Flash (all models); both beside the pre-registered 'main' run, which they do not replace",
+    "status": "exploratory breadth; the pre-registered conclusions rest on the 3 models of manifest.json"
+  },
+  "confounds_and_checks": [
+    "new models: no exp04 generic-sentence arm and no exp03/exp04 history; their d0 is from the same request ids as the other models' d0",
+    "Gemma 4: every thinking request starts with '<|channel>thought\\n' (exp04's adapter)",
+    "GLM-4.7-Flash: first use of its chat format in this repo (template ends '<|assistant|><think>'); bf16 weights; card sampling T 1.0, top_p 0.95 (no top_k); presence_penalty 0 as for every family here",
+    "Qwen3.6-35B-A3B-FP8: the qwen3.6 family's settings (card thinking settings with presence_penalty 0, the human choice of 2026-09-29 for Qwen3.5/3.6)",
+    "models differ in precision (FP8 checkpoints for Gemma-4-31B and Qwen3.6-35B-A3B, bf16 for Gemma-4-12B, Qwen3.5-9B, GLM-4.7-Flash); every model's arms share its own precision, so within-model contrasts are matched"
+  ],
+  "requests": {
+    "Gemma-4-31B-FP8": {
+      "path": "cache/exp05/requests_Gemma-4-31B-FP8.jsonl",
+      "sha256": "22f004933543cc7b4c153e304b73ecd47cbcf88f293c59a586fcea7bb92775fa",
+      "n": 2400,
+      "abort_on_violation": 1800
+    },
+    "Qwen3.5-9B": {
+      "path": "cache/exp05/requests_Qwen3.5-9B.jsonl",
+      "sha256": "afc896cbe59e096133364e50d62c6da0ce622fcb4519c98ed770ca0c987b35e3",
+      "n": 2400,
+      "abort_on_violation": 1800
+    },
+    "Gemma-4-12B": {
+      "path": "cache/exp05/requests_Gemma-4-12B.jsonl",
+      "sha256": "14ec50d45a48a84b563c9286369ddb89995a62b3d42601acbb834906bc78bc4d",
+      "n": 2400,
+      "abort_on_violation": 1800
+    },
+    "base_Qwen3.6-35B-A3B-FP8": {
+      "path": "cache/exp05/requests_base_Qwen3.6-35B-A3B-FP8.jsonl",
+      "sha256": "fb996734b29c140296c8f420046ee6ff22cc4a01f6d3423d9828cfdc4a63dafb",
+      "n": 500,
+      "abort_on_violation": 300
+    },
+    "base_GLM-4.7-Flash": {
+      "path": "cache/exp05/requests_base_GLM-4.7-Flash.jsonl",
+      "sha256": "fb996734b29c140296c8f420046ee6ff22cc4a01f6d3423d9828cfdc4a63dafb",
+      "n": 500,
+      "abort_on_violation": 300
+    }
+  },
+  "opening_tokens_before_rewrite": {
+    "Gemma-4-31B-FP8": {
+      "d1": {
+        "median": 24,
+        "min": 5,
+        "max": 904
+      },
+      "d2": {
+        "median": 71,
+        "min": 60,
+        "max": 904
+      },
+      "d3": {
+        "median": 166,
+        "min": 150,
+        "max": 904
+      }
+    },
+    "Qwen3.5-9B": {
+      "d1": {
+        "median": 25,
+        "min": 6,
+        "max": 93
+      },
+      "d2": {
+        "median": 72,
+        "min": 60,
+        "max": 143
+      },
+      "d3": {
+        "median": 161,
+        "min": 150,
+        "max": 222
+      }
+    },
+    "Gemma-4-12B": {
+      "d1": {
+        "median": 24,
+        "min": 5,
+        "max": 477
+      },
+      "d2": {
+        "median": 74,
+        "min": 60,
+        "max": 497
+      },
+      "d3": {
+        "median": 165,
+        "min": 150,
+        "max": 978
+      }
+    }
+  },
+  "run_order": [
+    "Gemma-4-31B-FP8: requests_Gemma-4-31B-FP8.jsonl",
+    "Qwen3.5-9B: requests_Qwen3.5-9B.jsonl",
+    "Gemma-4-12B: requests_Gemma-4-12B.jsonl",
+    "Qwen3.6-35B-A3B-FP8: requests_base_Qwen3.6-35B-A3B-FP8.jsonl, gate, requests_Qwen3.6-35B-A3B-FP8.jsonl",
+    "GLM-4.7-Flash: requests_base_GLM-4.7-Flash.jsonl, gate, requests_GLM-4.7-Flash.jsonl"
+  ],
+  "hardware": "1x H200 141 GB, TP 1, vLLM 0.30.0 streaming engine (exp04's), after the pre-registered run",
+  "written": "2026-09-30T19:45:25+00:00",
+  "commit": "c7ecf89c483ecb4788a6429a243fada12457ffd9-dirty(scripts)"
+}

@@ -98,6 +98,13 @@ EXTRA_SUBJECTS = {
                               "family": "qwen3.8-xhigh", "gpu_memory_utilization": 0.90},
     "Qwen3.8-27B-FP8-low": {"repo": "Qwen/Qwen3.8-27B-FP8", "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
                             "family": "qwen3.8-low", "gpu_memory_utilization": 0.90},
+    # exp05 extension (human choice on 2026-09-30; results/exp05_dose/manifest_extension.json). Qwen's own FP8
+    # checkpoint of the 35B-A3B MoE; GLM-4.7-Flash (31B-A3B MoE) in bf16 (Z.ai publishes no FP8 one; its MLA KV cache
+    # is small, so bf16 weights leave ample room). Revisions pinned on 2026-09-30.
+    "Qwen3.6-35B-A3B-FP8": {"repo": "Qwen/Qwen3.6-35B-A3B-FP8", "revision": "95a723d08a9490559dae23d0cff1d9466213d989",
+                            "family": "qwen3.6", "gpu_memory_utilization": 0.90},
+    "GLM-4.7-Flash": {"repo": "zai-org/GLM-4.7-Flash", "revision": "7dd20894a642a0aa287e9827cb1a1f7f91386b67",
+                      "family": "glm4.7", "gpu_memory_utilization": 0.90},
 }
 ALL_MODELS = {**SUBJECTS, **PRECISION_CHECK_MODEL, **EXTRA_SUBJECTS}
 GATE_MODELS = ["Qwen3-8B", "Qwen3-32B"]
@@ -163,6 +170,17 @@ FAMILIES = {
         "sampling": {"temperature": 1.0, "top_p": 0.95, "top_k": 64, "min_p": 0.0,
                      "presence_penalty": 0.0, "repetition_penalty": 1.0},
         "chat_template_kwargs": {"enable_thinking": True},
+    },
+    "glm4.7": {
+        # The template ends with "<|assistant|><think>" (thinking on) or "<|assistant|></think>" (off). The turn ends
+        # with <|user|>; generation_config.json also lists <|endoftext|> and <|observation|> as EOS (vLLM stops there).
+        "think_start": 154841, "think_end": 154842, "im_end": 154827,
+        "token_names": {"think_start": "<think>", "think_end": "</think>", "im_end": "<|user|>"},
+        "template_opens_think": True,
+        # Model card "default settings (most tasks)": T 1.0, top_p 0.95.
+        "sampling": {"temperature": 1.0, "top_p": 0.95, "top_k": -1, "min_p": 0.0,
+                     "presence_penalty": 0.0, "repetition_penalty": 1.0},
+        "chat_template_kwargs": {},
     },
 }
 for _effort in ("xhigh", "low"):
@@ -536,3 +554,15 @@ EXP05_CONDITIONS = {"prefill_compliant": "baseline", "prefill_no_rule": NO_CONST
 # Effort check: exp04's requests of two arms, rerun at Qwen3.8's other efforts (exp04 ran medium).
 EXP05_EFFORT_MODELS = ["Qwen3.8-27B-FP8-xhigh", "Qwen3.8-27B-FP8-low"]
 EXP05_EFFORT_ARMS = [("none", "stacked"), ("prefill_compliant", "baseline")]
+# Added after the manifest (human choice on 2026-09-30; results/exp05_dose/manifest_extension.json): the same dose
+# design on five more models, analyzed as a separate family with its own Holm correction, so the pre-registered 9
+# primary contrasts keep theirs. The first three have exp04 rows (openings from their exp03/exp04 no-constraint
+# traces, exp04's reference points); the NEW ones have none, so exp05 first generates their no-constraint traces and
+# no-opening reference rows (requests_base_<model>.jsonl: exp04 requests_none rows, same ids), then builds their
+# dose rows from those traces.
+EXP05_EXTENSION_MODELS = ["Gemma-4-31B-FP8", "Qwen3.5-9B", "Gemma-4-12B", "Qwen3.6-35B-A3B-FP8", "GLM-4.7-Flash"]
+EXP05_NEW_MODELS = ["Qwen3.6-35B-A3B-FP8", "GLM-4.7-Flash"]
+EXP05_HOLM_FAMILY = {**{m: "pre-registered" for m in EXP05_MODELS},
+                     **{m: "extension" for m in EXP05_EXTENSION_MODELS}}
+# A new model's dose rows are generated only if its no-constraint traces look like working thinking-mode output.
+EXP05_BASE_GATE = {"min_closed_share": 0.9, "min_median_reasoning_tokens": 100, "min_answer_share": 0.8}
