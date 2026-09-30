@@ -1,22 +1,24 @@
 #!/usr/bin/env bash
-# exp05 extension on 1x H200 (results/exp05_dose/manifest_extension.json run_order), after the pre-registered run
-# (h200_exp05.sh): waits until that run's last generation file exists and the GPU is free, then per model in
-# cfg.EXP05_EXTENSION_MODELS order
+# exp05 part 2 on 1x H200: the dose rows of cfg.EXP05_ADDED_MODELS (results/exp05_dose/manifest_extension.json
+# run_order), after part 1 (h200_exp05.sh: cfg.EXP05_MODELS + the effort check). Waits until part 1's last
+# generation file exists and the GPU is free, then per model
 #   models with exp04 rows:  requests_<model>.jsonl
 #   new models:              requests_base_<model>.jsonl, the base gate + dose requests (cc_exp05.py requests-new),
 #                            then requests_<model>.jsonl
 # Each generation file is graded in the background. A model that fails is reported and skipped; the next one runs.
-# Analysis 'extension_a' runs after Qwen3.6-35B-A3B-FP8 (all models but GLM-4.7-Flash), 'extension' at the end.
-#   nohup scripts/h200_exp05_ext.sh > log/exp05/h200_exp05_ext.log 2>&1 &
+# Analysis (deviations_one_analysis.json): 'interim_without_glm' after Qwen3.6-35B-A3B-FP8, then 'main' over every
+# exp05 model once part 1 has exited and all grading is done. (Part 1's own closing 'main' call exits without
+# writing, since the added models are not generated yet.)
+#   nohup scripts/h200_exp05_part2.sh > log/exp05/h200_exp05_part2.log 2>&1 &
 set -uo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
 py=/venv/main/bin/python
 gens=../cache/exp05/generations
-[[ -f ../results/exp05_dose/manifest_extension.json ]] || { echo "missing manifest_extension.json" >&2; exit 1; }
+[[ -f ../results/exp05_dose/deviations_one_analysis.json ]] || { echo "missing deviations_one_analysis.json" >&2; exit 1; }
 stamp() { echo "$(date -u +%FT%TZ) $*"; }
 grading=()
 
-stamp "waiting for the pre-registered run's last generation (Qwen3.8-27B-FP8-low) and a free GPU"
+stamp "waiting for part 1's last generation (Qwen3.8-27B-FP8-low) and a free GPU"
 until compgen -G "$gens/Qwen3.8-27B-FP8-low__card__stream_abort_effort__*.jsonl" > /dev/null; do sleep 60; done
 until (( $(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | head -1) < 4000 )); do sleep 15; done
 stamp "GPU free"
@@ -35,9 +37,10 @@ generate() {  # model, requests file; grades it in the background
   grading+=($!)
 }
 
-wait_grading() {
+wait_grading() {  # this script's grading jobs, then part 1 (whose last step is grading and its no-op analysis)
   for pid in "${grading[@]}"; do wait "$pid" || stamp "a grading job failed (log/exp05/grade_*.log)"; done
   grading=()
+  while pgrep -f '^bash scripts/h200_exp05\.sh$' > /dev/null; do sleep 30; done
 }
 
 new_model() {  # base rows, gate, dose requests, dose rows
@@ -56,15 +59,15 @@ done
 new_model Qwen3.6-35B-A3B-FP8
 
 wait_grading
-stamp "analysis extension_a"
-$py cc_exp05_analysis.py --run extension_a --models all --skip-models GLM-4.7-Flash \
-  > ../log/exp05/analysis_extension_a.log 2>&1 &
-analysis_a=$!
+stamp "analysis interim_without_glm"
+$py cc_exp05_analysis.py --run interim_without_glm --skip-models GLM-4.7-Flash --skip-missing \
+  > ../log/exp05/analysis_interim_without_glm.log 2>&1 &
+analysis_interim=$!
 
 new_model GLM-4.7-Flash
 wait_grading
-wait "$analysis_a" || stamp "analysis extension_a FAILED (log/exp05/analysis_extension_a.log)"
-stamp "analysis extension"
-$py cc_exp05_analysis.py --run extension --models all --skip-missing > ../log/exp05/analysis_extension.log 2>&1 \
-  || stamp "analysis extension FAILED (log/exp05/analysis_extension.log)"
-stamp "exp05 extension done"
+wait "$analysis_interim" || stamp "analysis interim_without_glm FAILED (log/exp05/analysis_interim_without_glm.log)"
+stamp "analysis main"
+$py cc_exp05_analysis.py --run main --skip-missing > ../log/exp05/analysis_main.log 2>&1 \
+  || stamp "analysis main FAILED (log/exp05/analysis_main.log)"
+stamp "exp05 done"

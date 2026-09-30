@@ -4,22 +4,20 @@ Survival per trace as exp04 (event = first violation in the continuation; an emp
 token 0, the manifest's scoring; --censor-empty-traces gives the censored variant). Estimators, bootstrap, the lenient
 case-rule grader and plotting helpers come from cc_exp04_analysis.
 
-Cells: per model (cfg.EXP05_MODELS), opening dose (d1 / d2 / d3: the model's own opening, rewritten to comply) and
-condition (prefill_compliant: rule in the prompt; prefill_no_rule: no rule). Reference points from exp04 (not in the
-tests): d0 = no opening (baseline prompt), "generic" = exp04's one generic compliant sentence.
+Cells: per model (cfg.EXP05_ALL_MODELS), opening dose (d1 / d2 / d3: the model's own opening, rewritten to comply)
+and condition (prefill_compliant: rule in the prompt; prefill_no_rule: no rule). Reference points (not in the tests):
+d0 = no opening (baseline prompt), "generic" = exp04's one generic compliant sentence. Both come from exp04, except
+for cfg.EXP05_NEW_MODELS, whose d0 is exp05's requests_base rows and which have no generic point.
 
 Primary: R_d1 and R_d3 (rule arm - no-rule arm, S(t*) over the 4 opener rules) and R_trend = R_d3 - R_d1; Holm over
-the 3 contrasts x 3 models. Secondary: rule-arm d3 - d1; lenient grader; the effort check (Qwen3.8 xhigh / medium /
-low on exp04's requests of two arms; Holm over the 4 effort contrasts).
-
-Extension (manifest_extension.json, --models all): the same tables for cfg.EXP05_EXTENSION_MODELS, whose contrasts
-form their own Holm family (cfg.EXP05_HOLM_FAMILY). The new models' d0 comes from exp05's requests_base rows; they
-have no generic-sentence point.
+the 3 contrasts x every analyzed model (deviations_one_analysis.json; manifest.json's 9-contrast Holm is kept in
+summary.json as p_holm_manifest). Secondary: rule-arm d3 - d1; lenient grader; the effort check (Qwen3.8 xhigh /
+medium / low on exp04's requests of two arms; Holm over the 4 effort contrasts).
 
 Outputs (never overwritten): results/exp05_dose/analysis/<run>/ and figures/exp05_dose/<run>/ (--scratch: under
 /tmp/exp05_scratch/<run>/, for tests on partial data).
-Run: /venv/main/bin/python scripts/cc_exp05_analysis.py --run NAME [--models main|all] [--skip-models M ...]
-     [--skip-missing] [--censor-empty-traces] [--scratch]
+Run: /venv/main/bin/python scripts/cc_exp05_analysis.py --run NAME [--skip-models M ...] [--skip-missing]
+     [--censor-empty-traces] [--scratch]
 """
 
 from __future__ import annotations
@@ -53,7 +51,7 @@ ARM_STYLE = {"prefill_compliant": {"color": cfg.CONDITION_STYLE["prefill_complia
              "none": {"color": cfg.CONDITION_STYLE["none"]["color"], "label": "no opening, rule in prompt"}}
 EFFORTS = {"Qwen3.8-27B-FP8-xhigh": "xhigh", "Qwen3.8-27B-FP8": "medium", "Qwen3.8-27B-FP8-low": "low"}
 PRIMARY = [("R_d1", "d1"), ("R_d3", "d3")]
-MODEL_COLORS = dict(zip(cfg.EXP05_MODELS + cfg.EXP05_EXTENSION_MODELS,  # Okabe-Ito
+MODEL_COLORS = dict(zip(cfg.EXP05_ALL_MODELS,  # Okabe-Ito
                         ["#0072B2", "#E69F00", "#009E73", "#D55E00", "#CC79A7", "#56B4E9", "#000000", "#F0E442"]))
 GRID_COLS = 4
 
@@ -148,7 +146,8 @@ def dose_table(df: pd.DataFrame, models: list[str], boot: ca.Bootstrap) -> tuple
 
 
 def primary_contrasts(draws: dict, models: list[str]) -> list[dict]:
-    """R_d1, R_d3, R_trend per model; Holm within each family (pre-registered 9, extension separately)."""
+    """R_d1, R_d3, R_trend per model; Holm over all of them. p_holm_manifest: manifest.json's Holm over the 9
+    contrasts of cfg.EXP05_MODELS (only when all three are analyzed)."""
     out = []
     for model in models:
         diffs = {}
@@ -157,14 +156,15 @@ def primary_contrasts(draws: dict, models: list[str]) -> list[dict]:
             diffs[name] = (pa - pb, da - db)
         diffs["R_trend"] = (diffs["R_d3"][0] - diffs["R_d1"][0], diffs["R_d3"][1] - diffs["R_d1"][1])
         for name, (p, d) in diffs.items():
-            out.append({"model": model, "family": cfg.EXP05_HOLM_FAMILY[model], "contrast": name,
-                        "difference": ca.stat(p, d), "p": bootstrap_p(d)})
-    for family in {c["family"] for c in out}:
-        members = [c for c in out if c["family"] == family]
-        adjusted = holm({(c["model"], c["contrast"]): c["p"] for c in members})
-        for c in members:
-            c["p_holm"] = adjusted[(c["model"], c["contrast"])]
-            c["holm_n"] = len(members)
+            out.append({"model": model, "contrast": name, "difference": ca.stat(p, d), "p": bootstrap_p(d)})
+    adjusted = holm({(c["model"], c["contrast"]): c["p"] for c in out})
+    manifest_family = [c for c in out if c["model"] in cfg.EXP05_MODELS]
+    adjusted_manifest = (holm({(c["model"], c["contrast"]): c["p"] for c in manifest_family})
+                         if set(cfg.EXP05_MODELS) <= set(models) else {})
+    for c in out:
+        c["p_holm"] = adjusted[(c["model"], c["contrast"])]
+        c["holm_n"] = len(out)
+        c["p_holm_manifest"] = adjusted_manifest.get((c["model"], c["contrast"]))
     return out
 
 
@@ -358,11 +358,10 @@ def report(s: dict, per_rule: pd.DataFrame, figures: list[str], fig_rel: str) ->
              f"Scoring: empty thinking traces {'censored' if s['censor_empty'] else 'are violations at token 0 (manifest)'}. "
              "Every number is grader-scored (no LLM judge).", "",
              "## Primary: what the rule adds beyond copying (rule arm - no-rule arm, S(%d), 4 opener rules)" % T_STAR, "",
-             "Holm within each family: pre-registered (manifest.json, 3 models) and extension (manifest_extension.json; "
-             "exploratory).", "",
-             "| model | family | contrast | difference | p | p (Holm) | Holm n |", "|---|---|---|---|---|---|---|"]
-    lines += [f"| {c['model']} | {c['family']} | {c['contrast']} | {f(c['difference'])} | {c['p']:.3f} | "
-              f"{c['p_holm']:.3f} | {c['holm_n']} |" for c in s["primary_contrasts"]]
+             f"Holm over all {len(s['primary_contrasts'])} contrasts (deviations_one_analysis.json).", "",
+             "| model | contrast | difference | p | p (Holm) |", "|---|---|---|---|---|"]
+    lines += [f"| {c['model']} | {c['contrast']} | {f(c['difference'])} | {c['p']:.3f} | {c['p_holm']:.3f} |"
+              for c in s["primary_contrasts"]]
     lines += ["", "## Secondary: d3 - d1 within each arm (no multiplicity correction)", "",
               "| model | condition | d3 - d1 | p |", "|---|---|---|---|"]
     lines += [f"| {c['model']} | {c['condition']} | {f(c['d3_minus_d1'])} | {c['p']:.3f} |" for c in s["dose_effect"]]
@@ -396,8 +395,6 @@ def main() -> None:
     parser.add_argument("--run", required=True, help="analysis run name")
     parser.add_argument("--censor-empty-traces", action="store_true",
                         help="sensitivity: censor empty thinking traces at token 0 instead of scoring a violation")
-    parser.add_argument("--models", choices=["main", "all"], default="main",
-                        help="main: the pre-registered 3; all: plus cfg.EXP05_EXTENSION_MODELS")
     parser.add_argument("--skip-models", nargs="*", default=[], help="leave these models out")
     parser.add_argument("--skip-missing", action="store_true",
                         help="leave out ungraded generation files and models without both dose arms (reported)")
@@ -410,16 +407,17 @@ def main() -> None:
     for d in {out_dir, fig_dir}:
         if d.exists():
             raise SystemExit(f"{d} exists; analysis runs are never overwritten")
-        d.mkdir(parents=True)
 
-    wanted = cfg.EXP05_MODELS + (cfg.EXP05_EXTENSION_MODELS if args.models == "all" else [])
-    wanted = [m for m in wanted if m not in args.skip_models]
+    wanted = [m for m in cfg.EXP05_ALL_MODELS if m not in args.skip_models]
     everything = a4.add_lenient_case_times(load(not args.censor_empty_traces, wanted, args.skip_missing))
     df = dose_rows(everything, wanted)
     have = {m for m in wanted if all(len(cell(df, m, c, dose)) for c in ("prefill_compliant", "prefill_no_rule")
                                      for dose in DOSES)}
     if not args.skip_missing and have != set(wanted):
-        raise SystemExit(f"no complete dose rows for {sorted(set(wanted) - have)} (use --skip-missing to leave out)")
+        raise SystemExit(f"no complete dose rows for {sorted(set(wanted) - have)} (use --skip-missing to leave out); "
+                         "nothing written")
+    for d in {out_dir, fig_dir}:
+        d.mkdir(parents=True)
     models = [m for m in wanted if m in have]
     skipped = [m for m in wanted if m not in have]
     items = [json.loads(line) for line in cfg.EXP03_ITEMS_PATH.open()]

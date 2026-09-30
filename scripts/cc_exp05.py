@@ -11,7 +11,7 @@ rule in the prompt (prefill_compliant, baseline prompt) and without it (prefill_
 
 requests_<model>.jsonl       the dose rows of one model (its openings are its own text)
 requests_effort.jsonl        exp04's requests of cfg.EXP05_EFFORT_ARMS (same request ids), for Qwen3.8 at xhigh and low
-requests_base_<model>.jsonl  extension models with no exp03/exp04 rows (cfg.EXP05_NEW_MODELS): exp04's requests_none
+requests_base_<model>.jsonl  added models with no exp03/exp04 rows (cfg.EXP05_NEW_MODELS): exp04's requests_none
                              rows of the no-constraint mode and the opener rules under the baseline prompt (same ids).
                              Their no-constraint traces give the model's openings; the rule rows are its no-opening
                              reference (d0). The model's dose rows are written after these are generated.
@@ -60,7 +60,7 @@ def base_generation(model: str):
 # --- The model's own opening ------------------------------------------------------------------------------------------
 def own_traces(model: str) -> dict[str, str]:
     """item_id -> reasoning of the model's no-constraint trace (exp03's for the models it ran, exp05's base rows for
-    the extension models with no earlier rows, else exp04's)."""
+    the added models with no earlier rows, else exp04's)."""
     if model in cfg.EXP04_REUSES_EXP03:
         [path] = glob.glob(str(cfg.EXP03.generations / f"{model}__card__stream_abort__*.jsonl"))
     elif model in cfg.EXP05_NEW_MODELS:
@@ -197,9 +197,9 @@ def write_requests() -> None:
 
 
 def write_extension_requests() -> None:
-    """Dose rows of the extension models with earlier no-constraint traces; base rows of the new ones."""
+    """Dose rows of the added models with earlier no-constraint traces; base rows of the new ones."""
     items = cc_exp03.load_items()
-    for model in cfg.EXP05_EXTENSION_MODELS:
+    for model in cfg.EXP05_ADDED_MODELS:
         if model in cfg.EXP05_NEW_MODELS:
             cc_exp04.write_jsonl_once(base_requests_path(model), base_rows())
         else:
@@ -330,17 +330,17 @@ def write_manifest() -> None:
 def write_manifest_extension() -> None:
     if MANIFEST_EXTENSION.exists():
         raise SystemExit(f"{MANIFEST_EXTENSION} exists; manifests are written once, before the run")
-    old = [m for m in cfg.EXP05_EXTENSION_MODELS if m not in cfg.EXP05_NEW_MODELS]
+    old = [m for m in cfg.EXP05_ADDED_MODELS if m not in cfg.EXP05_NEW_MODELS]
     manifest = {
         "exp_id": EXP.exp_id,
         "extends": "results/exp05_dose/manifest.json (unchanged; its 9 primary contrasts keep their own Holm family)",
         "why": "human request on 2026-09-30: the same dose design on more models, for breadth (other labs and "
                "architectures). Written while the pre-registered run was generating Qwen3-32B, before any extension "
                "row was generated.",
-        "models": {m: cfg.ALL_MODELS[m] for m in cfg.EXP05_EXTENSION_MODELS},
+        "models": {m: cfg.ALL_MODELS[m] for m in cfg.EXP05_ADDED_MODELS},
         "sampling": {m: {"params": cfg.FAMILIES[cfg.ALL_MODELS[m]["family"]]["sampling"],
                          "chat_template_kwargs": cfg.FAMILIES[cfg.ALL_MODELS[m]["family"]]["chat_template_kwargs"]}
-                     for m in cfg.EXP05_EXTENSION_MODELS},
+                     for m in cfg.EXP05_ADDED_MODELS},
         "design": {
             "same_as_manifest": "items, opener rules, doses, conditions, prompts, seeds, caps, abort rule, graded "
                                 "text and scoring of manifest.json",
@@ -360,7 +360,7 @@ def write_manifest_extension() -> None:
         },
         "analysis": {
             "family": "R_d1, R_d3, R_trend per extension model, Holm over those %d contrasts (separate from the "
-                      "pre-registered 9)" % (3 * len(cfg.EXP05_EXTENSION_MODELS)),
+                      "pre-registered 9)" % (3 * len(cfg.EXP05_ADDED_MODELS)),
             "runs": "'extension_a' after Qwen3.6-35B-A3B-FP8 (every model but GLM-4.7-Flash), 'extension' after "
                     "GLM-4.7-Flash (all models); both beside the pre-registered 'main' run, which they do not replace",
             "status": "exploratory breadth; the pre-registered conclusions rest on the 3 models of manifest.json",

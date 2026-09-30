@@ -1,0 +1,17 @@
+{
+  "exp_id": "exp05_dose",
+  "written": "2026-09-30T19:55Z",
+  "human_instruction": "this will all be in one exp05 folder right? The extension shouldnt be treated as an extension just one exp05",
+  "state_when_written": "Part 1 (h200_exp05.sh) was generating Qwen3-32B's dose rows; no exp05 generation file was complete and no exp05 row had been graded or analyzed. Part 2 (the added models) had not started.",
+  "supersedes": {
+    "manifest.json": "analysis.primary Holm family (3 contrasts x 3 models = 9)",
+    "manifest_extension.json": "analysis 'family' (a separate Holm family over the added models' 15 contrasts) and 'runs' ('extension_a', 'extension')"
+  },
+  "changes": {
+    "one_experiment": "cfg.EXP05_ALL_MODELS = cfg.EXP05_MODELS + cfg.EXP05_ADDED_MODELS (8 models) are analyzed together; cfg.EXP05_EXTENSION_MODELS is renamed EXP05_ADDED_MODELS and cfg.EXP05_HOLM_FAMILY is removed. Requests, seeds, sampling, prompts and grading are unchanged.",
+    "holm": "Holm over R_d1, R_d3, R_trend x every analyzed model (24 with all 8). For cfg.EXP05_MODELS this is stricter than manifest.json's 9; manifest.json's 9-contrast Holm is kept in summary.json as p_holm_manifest. The effort check keeps its own Holm over 4.",
+    "runs": "'main' = every exp05 model, run by h200_exp05_part2.sh after both parts are graded (--skip-missing: a model that fails its base gate or generation is listed as skipped). 'interim_without_glm' = every model but GLM-4.7-Flash, a checkpoint. h200_exp05.sh (running, not edited) still ends with 'cc_exp05_analysis.py --run main'; that call now exits without writing, because the added models have no rows yet.",
+    "scripts": "h200_exp05_ext.sh renamed h200_exp05_part2.sh (it had not started generating)."
+  },
+  "what_stays_different_across_models": "Openings and d0 reference rows come from exp03/exp04 for 6 models and from exp05's requests_base rows for Qwen3.6-35B-A3B-FP8 and GLM-4.7-Flash (which have no generic-sentence point). Weight precision differs across models (each model's arms share one precision). Cross-model comparisons carry these confounds; within-model contrasts do not."
+}

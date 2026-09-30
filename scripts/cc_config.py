@@ -554,15 +554,14 @@ EXP05_CONDITIONS = {"prefill_compliant": "baseline", "prefill_no_rule": NO_CONST
 # Effort check: exp04's requests of two arms, rerun at Qwen3.8's other efforts (exp04 ran medium).
 EXP05_EFFORT_MODELS = ["Qwen3.8-27B-FP8-xhigh", "Qwen3.8-27B-FP8-low"]
 EXP05_EFFORT_ARMS = [("none", "stacked"), ("prefill_compliant", "baseline")]
-# Added after the manifest (human choice on 2026-09-30; results/exp05_dose/manifest_extension.json): the same dose
-# design on five more models, analyzed as a separate family with its own Holm correction, so the pre-registered 9
-# primary contrasts keep theirs. The first three have exp04 rows (openings from their exp03/exp04 no-constraint
-# traces, exp04's reference points); the NEW ones have none, so exp05 first generates their no-constraint traces and
-# no-opening reference rows (requests_base_<model>.jsonl: exp04 requests_none rows, same ids), then builds their
-# dose rows from those traces.
-EXP05_EXTENSION_MODELS = ["Gemma-4-31B-FP8", "Qwen3.5-9B", "Gemma-4-12B", "Qwen3.6-35B-A3B-FP8", "GLM-4.7-Flash"]
+# Added before any exp05 row was graded (human choice on 2026-09-30; results/exp05_dose/manifest_extension.json,
+# deviations_one_analysis.json): the same dose design on five more models, analyzed together with EXP05_MODELS as one
+# experiment (one Holm family over all primary contrasts). The first three have exp04 rows (openings from their
+# exp03/exp04 no-constraint traces, exp04's reference points); the NEW ones have none, so exp05 first generates their
+# no-constraint traces and no-opening reference rows (requests_base_<model>.jsonl: exp04 requests_none rows, same
+# ids), then builds their dose rows from those traces.
+EXP05_ADDED_MODELS = ["Gemma-4-31B-FP8", "Qwen3.5-9B", "Gemma-4-12B", "Qwen3.6-35B-A3B-FP8", "GLM-4.7-Flash"]
 EXP05_NEW_MODELS = ["Qwen3.6-35B-A3B-FP8", "GLM-4.7-Flash"]
-EXP05_HOLM_FAMILY = {**{m: "pre-registered" for m in EXP05_MODELS},
-                     **{m: "extension" for m in EXP05_EXTENSION_MODELS}}
+EXP05_ALL_MODELS = EXP05_MODELS + EXP05_ADDED_MODELS
 # A new model's dose rows are generated only if its no-constraint traces look like working thinking-mode output.
 EXP05_BASE_GATE = {"min_closed_share": 0.9, "min_median_reasoning_tokens": 100, "min_answer_share": 0.8}
