@@ -17,10 +17,15 @@ exp03_abort_survival (human-chosen design: 100 new items, primary KM S(1000) mac
 25% full-trace cells, exp02 pooled as secondary): engine check PASS, manifest written. Qwen3-8B generated + graded
 on A100. Qwen3-32B and Qwen3.6-27B were partial (2-shard stream files, cache/exp03/generations/*.parts/
 stream.shard{0,1}of2.jsonl) when the human moved to an H200; those rows are archived in cache/exp03/a100_partial/
-and not analyzed. Qwen3-32B is being regenerated from scratch on 1x H200 (scripts/h200_exp03.sh started it);
-then, with FP8 weights by human choice, Qwen3.6-27B-FP8, then the extension models Qwen3.5-9B and Qwen3.5-4B
-(bf16, presence_penalty 0; own Holm family), grading, the FP8 judge on all five models, and
-scripts/cc_survival.py --run main (scripts/h200_exp03_all.sh, log/exp03/h200_exp03_all.log). Records:
+and not analyzed. On 1x H200: Qwen3-32B regenerated from scratch, Qwen3.6-27B-FP8 (FP8 by human choice), and
+the extension models Qwen3.5-9B and Qwen3.5-4B (bf16, presence_penalty 0; own Holm family); all graded, judged
+with Qwen3.8-27B-FP8 (scripts/h200_exp03_all.sh, log/exp03/h200_exp03_all.log). Run complete 2026-09-30;
+report results/exp03_abort_survival/analysis/main/REPORT_auto.md, UNVERIFIED; all dumb checks pass, abort audit
+0 false firings. Headline: stacked raises S(1000) on Qwen3-8B (+5.1 pts, Holm p 0.009) and Qwen3.6-FP8 (+2.4,
+Holm p 0.009); Qwen3-32B effects (repetition +2.9, self_monitor +3.5) do not survive Holm alone but self_monitor
+does when pooled with exp02. Qwen3.5-9B/4B: 0 compliant traces under every prompt; agent check found the
+reasoning parses correctly and 82-87% of traces open with a fixed "Thinking Process:" header, and full-trace
+case letters barely move from the no-constraint reference. Records:
 results/exp03_abort_survival/deviations_h200.json, deviations_h200_fp8.json (no bf16 check of Qwen3.6 yet),
 manifest_extension_qwen35.json. Off-box backup of cache/ and of the files git ignores because
 they quote questions: private HF dataset zachperlman20/cot-controllability-cache. exp01_paper_gate: gate PASS, UNVERIFIED —
@@ -35,7 +40,7 @@ Kill criteria in force: exp03 engine check (results/exp03_abort_survival/engine_
 manifest or generation until a human decides.
 Open issue for the human: three tracked files quote benchmark question text (prompt_examples.md,
 verification_smoke/sheet.md, exp01 read_samples.md) and are in public git history.
-Last updated: 2026-09-29 by agent (exp03 Qwen3-32B / Qwen3.6-27B running on H200)
+Last updated: 2026-09-30 by agent (exp03 main run complete, UNVERIFIED)
 
 ## Roles
 - Agent: implement, run, report in the format below.
