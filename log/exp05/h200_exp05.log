@@ -1,0 +1,15 @@
+2026-09-30T19:12:44Z Qwen3-32B: requests_Qwen3-32B.jsonl
+shard 0/1: GPUs 0 -> ../log/exp05/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp05/generations/Qwen3-32B__card__stream_abort_Qwen3-32B__192802ead6f7.jsonl
+2026-09-30T20:11:35Z Qwen3.6-27B-FP8: requests_Qwen3.6-27B-FP8.jsonl
+shard 0/1: GPUs 0 -> ../log/exp05/generate_Qwen3.6-27B-FP8.shard0of1.log
+wrote ../cache/exp05/generations/Qwen3.6-27B-FP8__card__stream_abort_Qwen3.6-27B-FP8__faf37d246441.jsonl
+2026-09-30T22:23:39Z Qwen3.8-27B-FP8: requests_Qwen3.8-27B-FP8.jsonl
+shard 0/1: GPUs 0 -> ../log/exp05/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp05/generations/Qwen3.8-27B-FP8__card__stream_abort_Qwen3.8-27B-FP8__55f0f9d20301.jsonl
+2026-09-30T23:00:00Z Qwen3.8-27B-FP8-xhigh: requests_effort.jsonl
+shard 0/1: GPUs 0 -> ../log/exp05/generate_Qwen3.8-27B-FP8-xhigh.shard0of1.log
+wrote ../cache/exp05/generations/Qwen3.8-27B-FP8-xhigh__card__stream_abort_effort__39ce97faad9f.jsonl
+2026-09-30T23:21:52Z Qwen3.8-27B-FP8-low: requests_effort.jsonl
+shard 0/1: GPUs 0 -> ../log/exp05/generate_Qwen3.8-27B-FP8-low.shard0of1.log
+wrote ../cache/exp05/generations/Qwen3.8-27B-FP8-low__card__stream_abort_effort__bf0edca26846.jsonl

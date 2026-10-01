@@ -1,0 +1,24 @@
+2026-09-30T19:52:20Z waiting for part 1's last generation (Qwen3.8-27B-FP8-low) and a free GPU
+2026-09-30T23:37:20Z GPU free
+2026-09-30T23:37:20Z Gemma-4-31B-FP8: requests_Gemma-4-31B-FP8.jsonl
+shard 0/1: GPUs 0 -> ../log/exp05/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp05/generations/Gemma-4-31B-FP8__card__stream_abort_Gemma-4-31B-FP8__211b07fd59f9.jsonl
+2026-10-01T00:21:37Z Qwen3.5-9B: requests_Qwen3.5-9B.jsonl
+shard 0/1: GPUs 0 -> ../log/exp05/generate_Qwen3.5-9B.shard0of1.log
+wrote ../cache/exp05/generations/Qwen3.5-9B__card__stream_abort_Qwen3.5-9B__23e3e86181b2.jsonl
+2026-10-01T00:46:34Z Gemma-4-12B: requests_Gemma-4-12B.jsonl
+shard 0/1: GPUs 0 -> ../log/exp05/generate_Gemma-4-12B.shard0of1.log
+wrote ../cache/exp05/generations/Gemma-4-12B__card__stream_abort_Gemma-4-12B__1eb5ba7bb8dd.jsonl
+2026-10-01T01:23:51Z Qwen3.6-35B-A3B-FP8: requests_base_Qwen3.6-35B-A3B-FP8.jsonl
+shard 0/1: GPUs 0 -> ../log/exp05/generate_Qwen3.6-35B-A3B-FP8.shard0of1.log
+wrote ../cache/exp05/generations/Qwen3.6-35B-A3B-FP8__card__stream_abort_base_Qwen3.6-35B-A3B-FP8__d3d0589d7344.jsonl
+Qwen3.6-35B-A3B-FP8 base gate FAILED: {'n': 100, 'closed_share': 0.69, 'median_reasoning_tokens': 16475, 'answer_share': 1.0} (thresholds {'min_closed_share': 0.9, 'min_median_reasoning_tokens': 100, 'min_answer_share': 0.8})
+2026-10-01T01:38:12Z Qwen3.6-35B-A3B-FP8: base gate failed or dose requests not written; skipping its dose rows
+2026-10-01T01:38:21Z analysis interim_without_glm
+2026-10-01T01:38:21Z GLM-4.7-Flash: requests_base_GLM-4.7-Flash.jsonl
+shard 0/1: GPUs 0 -> ../log/exp05/generate_GLM-4.7-Flash.shard0of1.log
+wrote ../cache/exp05/generations/GLM-4.7-Flash__card__stream_abort_base_GLM-4.7-Flash__34969d79a653.jsonl
+GLM-4.7-Flash base gate FAILED: {'n': 100, 'closed_share': 0.84, 'median_reasoning_tokens': 8481, 'answer_share': 1.0} (thresholds {'min_closed_share': 0.9, 'min_median_reasoning_tokens': 100, 'min_answer_share': 0.8})
+2026-10-01T01:56:27Z GLM-4.7-Flash: base gate failed or dose requests not written; skipping its dose rows
+2026-10-01T01:56:38Z analysis main
+2026-10-01T01:57:43Z exp05 done

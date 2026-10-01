@@ -20,3 +20,7 @@ log/exp04/*.log
 results/exp04_prefill/analysis/main/REPORT_auto.md
 results/exp04_prefill/analysis/sens_empty_trace/REPORT_auto.md
 results/exp04_prefill/analysis/*/notation_examples.csv
+log/exp05/*.log
+!log/exp05/h200_exp05.log
+!log/exp05/h200_exp05_part2.log
+!log/exp05/h200_exp05_part3.log

@@ -56,13 +56,36 @@ the prefill/continuation seam (identical grades in 4800/4800 compliant-prefill t
 thought opening on no-prefill rows (present; Gemma closes it itself). Smoke tests (cache/exp04/smoke_v1, smoke):
 Gemma 4 works in vLLM 0.30 with the forced "<|channel>thought\n" opening; the necessity probe was changed to a
 constrained one-letter answer before the manifest (unconstrained Gemma answers were option text).
-Next experiment and why: exp04 (exp03's first violations are at token < 5 in 53-63% of traces, so its survival
-numbers mostly measure whether the model starts compliant).
+exp05_dose (human go-ahead 2026-09-30; results/exp05_dose/manifest.json + manifest_extension.json; one experiment
+over all models per deviations_one_analysis.json): rule-following or imitation as the compliant opening grows? The
+model's own no-rule opening, rewritten to comply, at 3 lengths (1 sentence / >=60 / >=150 tokens), with the rule in
+the prompt vs without it; 4 opener rules x 100 items; plus a Qwen3.8 effort check (xhigh/low vs exp04's medium).
+Run 'main' complete 2026-10-01 01:57 UTC for 6 models (Qwen3-32B, Qwen3.6-27B-FP8, Qwen3.8-27B-FP8, Gemma-4-31B-FP8,
+Qwen3.5-9B, Gemma-4-12B; scripts/h200_exp05.sh + h200_exp05_part2.sh); report
+results/exp05_dose/analysis/main/REPORT_auto.md, UNVERIFIED. Headline: the rule adds beyond copying at every
+length in the 3 pre-registered models (rule - no-rule S(1000), 1 sentence / >=150 tokens: Qwen3-32B +31.7 / +17.2,
+Qwen3.6 +13.8 / +11.7, Qwen3.8 +16.3 / +10.9; Holm over 18); the gap shrinks with length (imitation grows), clearly
+only in Qwen3-32B (-14.6 [-21.2, -8.2]). Gemma-31B, Qwen3.5-9B, Gemma-12B are at the floor at S(1000) (<= 10% in
+both arms), so their near-0 contrasts are uninformative; at S(200) the rule arm is far ahead (exploratory). Effort:
+xhigh helps the compliant-prefill arm (+11.5), medium is best without a prefill; medium rows are exp04's run
+(confound). Answer correctness does not explain arm gaps once length-matched (G5; exp04 ad hoc F7 agrees).
+Fixes: cc_grade places case violations from caseless (CJK) letters as CoT-Control's grader does (1 trace;
+deviations_grading_caseless.json; code key unchanged); the 'prefill_stored_as_requested' check was a NaN artifact
+(fixed in code; 'main' report shows false, data verified). Not run: Qwen3.6-35B-A3B-FP8 and GLM-4.7-Flash failed
+the base gate only on cap truncation (31% / 16% of traces at the 25k cap); dose requests written with
+--gate cap-truncation (deviations_gate_cap_truncation.json); scripts/h200_exp05_part3.sh generates them and writes
+run 'main_8_models'. Its first launch died when the instance restarted (04:03 UTC); the human then cancelled it.
+Ad hoc exp04 figures: F7 correctness check, F1c baseline-vs-stacked overlay (figures/exp04_prefill/adhoc_*).
+Resume on a new instance: clone the repo, then restore the git-ignored files from the private HF dataset
+(`hf download zachperlman20/cot-controllability-cache --repo-type dataset --local-dir .` inside the repo: cache/,
+log/, quoted-question reports); envs as in Environment below; models download from cfg revisions.
+Next experiment and why: not chosen; options for the human: run part 3 (the two gated models), a bf16 check of
+the FP8 models, or a horizon/floor-robust primary for the weak models.
 Kill criteria in force: exp03 engine check (results/exp03_abort_survival/engine_check.json) fails -> no exp03
 manifest or generation until a human decides.
 Open issue for the human: three tracked files quote benchmark question text (prompt_examples.md,
 verification_smoke/sheet.md, exp01 read_samples.md) and are in public git history.
-Last updated: 2026-09-30 by agent (exp04 main run complete, UNVERIFIED)
+Last updated: 2026-10-01 by agent (exp05 main run complete for 6 models, UNVERIFIED)
 
 ## Roles
 - Agent: implement, run, report in the format below.
