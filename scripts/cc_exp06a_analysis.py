@@ -2,7 +2,9 @@
 is its gain specific to the CoT?
 
 Rows (all on exp03's 100 items, same seeds per (item, rule)):
-  exp06a       every harness, thinking on (reasoning trace) and off (<output_reasoning> tag content)
+  exp06a       every harness, thinking on (reasoning trace) and off (<output_reasoning> tag content). Thinking-off
+               estimates and the on-vs-off comparison use cc_exp06a.thinking_off_items() (51 of the 100) for every
+               model (deviations_thinking_off_half.json); Qwen3.8's all-item thinking-off arms are a side table
   references   baseline / stacked, thinking on: exp03's rows (Qwen3-32B) or exp04's requests_none rows (others);
                baseline, thinking off: exp04's external_ceiling rows
   earlier arms (combined figure only) exp04's compliant-prefill arms and exp05's own-opening d3 arm; prefill rows are
@@ -71,15 +73,17 @@ def exp06a_rows(models: list[str], skip_missing: bool) -> tuple[pd.DataFrame, li
     requests = {r["request_id"]: r for p in sorted(EXP.cache.glob("requests_*.jsonl")) for r in cc_exp04.load_requests(p)}
     frames, missing = [], []
     for model in models:
-        paths = [Path(p) for p in glob.glob(str(EXP.generations / f"{model}__card__stream_abort_{model}__*.jsonl"))]
-        if len(paths) != 1 or not a4.grades_path(paths[0]).exists():
-            missing.append(model)
-            continue
-        df = a4.read_run(paths[0], "exp06a")
-        df["arm"] = df["prompt"]
-        df["thinking"] = df["request_id"].map(lambda i: requests[i]["thinking"])
-        df["origin"] = "exp06a"
-        frames.append(df)
+        for part in cc_exp06a.request_parts(model):
+            pattern = f"{model}__card__stream_abort_{model}{part}__*.jsonl"
+            paths = [Path(p) for p in glob.glob(str(EXP.generations / pattern))]
+            if len(paths) != 1 or not a4.grades_path(paths[0]).exists():
+                missing.append(f"{model}{part}")
+                continue
+            df = a4.read_run(paths[0], "exp06a")
+            df["arm"] = df["prompt"]
+            df["thinking"] = df["request_id"].map(lambda i: requests[i]["thinking"])
+            df["origin"] = "exp06a"
+            frames.append(df)
     if missing and not skip_missing:
         raise SystemExit(f"no graded exp06a rows for {missing} (use --skip-missing); nothing written")
     return (pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=COLUMNS)), missing
@@ -131,15 +135,16 @@ def cell(df: pd.DataFrame, model: str, arm: str, thinking: bool) -> pd.DataFrame
     return df[(df["model"] == model) & (df["arm"] == arm) & (df["thinking"] == thinking)]
 
 
-def arm_table(df: pd.DataFrame, models: list[str], boot: ca.Bootstrap) -> tuple[list[dict], dict]:
+def arm_table(df: pd.DataFrame, models: list[str], boot: ca.Bootstrap,
+              arms: list[tuple[str, bool]]) -> tuple[list[dict], dict]:
+    """Per (model, arm, thinking) in arms: S(t) estimates with their bootstrap draws, and descriptive shares."""
     rows, draws = [], {}
-    arms = [(a, True) for a in ON_ARMS + list(EARLIER)] + [(a, False) for a in OFF_ARMS]
     for model in models:
         for arm, thinking in arms:
             d = cell(df, model, arm, thinking)
             if d.empty:
                 continue
-            rec = {"model": model, "arm": arm, "thinking": thinking, "n": len(d),
+            rec = {"model": model, "arm": arm, "thinking": thinking, "n": len(d), "n_items": d["item_id"].nunique(),
                    "origin": "/".join(sorted(set(d["origin"])))}
             for name, modes, t in (("S_t_star", RULES, T_STAR), ("S_t_star_openers", OPENERS, T_STAR),
                                    ("S_short", RULES, T_SHORT), ("S_short_openers", OPENERS, T_SHORT)):
@@ -281,8 +286,9 @@ def fig_combined(rows: list[dict], models: list[str], fig_dir) -> str:
     return a4.save(fig, fig_dir, "H1_combined_S_tstar", 1500, 950)
 
 
-def fig_cot_vs_output(rows: list[dict], models: list[str], fig_dir) -> str:
-    """H2: per harness, S(200) and P1 with thinking on (reasoning trace) and off (reasoning in output tags)."""
+def fig_cot_vs_output(rows: list[dict], models: list[str], n_items: int, fig_dir) -> str:
+    """H2: per harness, S(200) and P1 with thinking on (reasoning trace) and off (reasoning in output tags), both on
+    the thinking-off half of the items."""
     order = OFF_ARMS
     fig = make_subplots(rows=2, cols=len(models), shared_yaxes=True, shared_xaxes=True, horizontal_spacing=0.02,
                         vertical_spacing=0.08, subplot_titles=models + [""] * len(models))
@@ -313,8 +319,9 @@ def fig_cot_vs_output(rows: list[dict], models: list[str], fig_dir) -> str:
     fig.update_yaxes(title_text=f"P1: no violation in the graded<br>text (thinking on: first {STOP} tokens)",
                      range=[-2, 102], row=2, col=1)
     fig.update_layout(title="H2. Is a harness's gain specific to the CoT? The same harness with the reasoning in the "
-                            "thinking trace vs in the output<br><sup>Mean over the 5 rules; 95% CIs. A harness that "
-                            "lifts both by the same amount works through general instruction following</sup>",
+                            f"thinking trace vs in the output<br><sup>Mean over the 5 rules, the same {n_items} "
+                            "questions for both; 95% CIs. A harness that lifts both by the same amount works through "
+                            "general instruction following</sup>",
                       legend={"orientation": "h", "y": 1.1, "x": 1, "xanchor": "right"}, margin={"t": 130, "b": 200})
     return a4.save(fig, fig_dir, "H2_cot_vs_output", 1500, 850)
 
@@ -343,8 +350,10 @@ def report(s: dict, figures: list[str], fig_rel: str) -> str:
         return ca.fmt(x) if x else "n/a"
     lines = [f"# exp06a prompt screen: automatic report (run `{s['run']}`)", "",
              "**UNVERIFIED** until a human adds it to VERIFIED.md. Every number is grader-scored (no LLM judge).", "",
-             f"Models: {', '.join(s['models'])}" + (f"; missing: {', '.join(s['missing_models'])}" if s["missing_models"]
-                                                     else ""), "",
+             f"Models: {', '.join(s['models'])}" + (f"; missing request parts: {', '.join(s['missing_parts'])}"
+                                                     if s["missing_parts"] else ""), "",
+             f"Thinking-on arms use all 100 questions; thinking-off arms and the CoT-specificity comparison use the "
+             f"same {len(s['thinking_off_items'])} of them (deviations_thinking_off_half.json).", "",
              f"## S({T_STAR}), thinking on (mean over the 5 rules; opener-rule mean in brackets)", "",
              "| arm | " + " | ".join(s["models"]) + " |", "|---|" + "---|" * len(s["models"])]
     for arm in ON_ARMS + list(EARLIER):
@@ -370,17 +379,20 @@ def report(s: dict, figures: list[str], fig_rel: str) -> str:
               "| model | harness | difference (pts) | p Holm |", "|---|---|---|---|"]
     for c in s["twins"]:
         lines.append(f"| {c['model']} | {c['a']} | {ca.fmt(c['difference'])} | {c['p_holm']:.3f} |")
-    lines += ["", f"## CoT specificity: gain over baseline at S({T_SHORT}), thinking on vs off", "",
+    lines += ["", f"## CoT specificity: gain over baseline at S({T_SHORT}), thinking on vs off "
+                  f"({len(s['thinking_off_items'])} questions)", "",
               "| model | arm | gain, thinking on | gain, thinking off | on - off |", "|---|---|---|---|---|"]
     for c in s["cot_specificity"]:
         lines.append(f"| {c['model']} | {c['arm']} | {ca.fmt(c['gain_thinking_on'])} | {ca.fmt(c['gain_thinking_off'])} "
                      f"| {ca.fmt(c['on_minus_off'])} |")
     lines += ["", "## Secondary per-arm metrics", "",
-              "| model | arm | thinking | P1 | empty % | median tokens (capped) | meta regex % | starts with sentence % |",
-              "|---|---|---|---|---|---|---|---|"]
-    for x in s["arms"]:
-        lines.append(f"| {x['model']} | {x['arm']} | {'on' if x['thinking'] else 'off'} | {f(x['P1'])} | "
-                     f"{x['empty_share']:.1f} | {x['median_graded_tokens_capped']:.0f} | {x['meta_regex_share']:.1f} | "
+              "| model | arm | thinking | questions | S(200) | P1 | empty % | median tokens (capped) | meta regex % | "
+              "starts with sentence % |", "|---|---|---|---|---|---|---|---|---|---|"]
+    off_half = [x for x in s["arms_half_items"] if not x["thinking"]]
+    for x in s["arms"] + off_half + s["arms_off_all_items"]:
+        lines.append(f"| {x['model']} | {x['arm']} | {'on' if x['thinking'] else 'off'} | {x['n_items']} | "
+                     f"{f(x['S_short'])} | {f(x['P1'])} | {x['empty_share']:.1f} | "
+                     f"{x['median_graded_tokens_capped']:.0f} | {x['meta_regex_share']:.1f} | "
                      f"{x['starts_with_sentence_share']:.1f} |")
     lines += ["", "## Checks", "", "```", json.dumps(s["checks"], indent=1), "```", "", "## Figures", ""]
     lines += [f"- [{name}]({fig_rel}/{name}.html)" for name in figures]
@@ -404,28 +416,41 @@ def main() -> None:
             raise SystemExit(f"{d} exists; analysis runs are never overwritten")
 
     new, missing = exp06a_rows(MODELS, args.skip_missing)
-    models = [m for m in MODELS if m not in missing]
+    # A model is analysed when its thinking-on rows are graded (the first request part holds them).
+    models = [m for m in MODELS if f"{m}{cc_exp06a.request_parts(m)[0]}" not in missing]
     raw = pd.concat([new, reference_rows(models), exp05_rows(models)], ignore_index=True)
     df = score(raw[[c for c in COLUMNS if c in raw.columns]], not args.censor_empty_traces)
     for d in {out_dir, fig_dir}:
         d.mkdir(parents=True)
-    boot = ca.Bootstrap(cc_exp06a.load_items()[0], cfg.BOOTSTRAP_ITERS, cfg.BOOTSTRAP_SEED)
-    arms, draws = arm_table(df, models, boot)
-    per_rule = per_rule_table(df, models, boot)
+    # Thinking on: all 100 items. Thinking off, and every on-vs-off comparison: the half items
+    # (deviations_thinking_off_half.json), with their own bootstrap so on and off draws stay paired.
+    test_items, half_items = cc_exp06a.load_items()[0], cc_exp06a.thinking_off_items()
+    boot = ca.Bootstrap(test_items, cfg.BOOTSTRAP_ITERS, cfg.BOOTSTRAP_SEED)
+    boot_half = ca.Bootstrap(half_items, cfg.BOOTSTRAP_ITERS, cfg.BOOTSTRAP_SEED)
+    df_half = df[df["item_id"].isin({it["item_id"] for it in half_items})]
+    arms, draws = arm_table(df[df["thinking"]], models, boot, [(a, True) for a in ON_ARMS + list(EARLIER)])
+    arms_half, draws_half = arm_table(df_half, models, boot_half,
+                                      [(a, t) for t in (True, False) for a in OFF_ARMS])
+    full_off = [m for m in models if m not in cfg.EXP06A_SPLIT_MODELS]
+    arms_off_all_items, _ = arm_table(df[~df["thinking"]], full_off, boot, [(a, False) for a in OFF_ARMS])
+    per_rule = per_rule_table(df[df["thinking"]], models, boot)
     summary = {
-        "exp_id": EXP.exp_id, "run": args.run, "models": models, "missing_models": missing,
+        "exp_id": EXP.exp_id, "run": args.run, "models": models, "missing_parts": missing,
         "censor_empty": args.censor_empty_traces, "t_star": T_STAR, "t_short": T_SHORT, "stop": STOP,
+        "thinking_off_items": [it["item_id"] for it in half_items],
         "primary": contrast_family(draws, models, [(v, "stacked") for v in VARIANTS], True),
         "primary_vs_rerun": contrast_family(draws, models, [(v, "stacked_rerun") for v in VARIANTS], True),
         "rerun_minus_reused": (contrast_family(draws, models, [(r, ref) for r, ref in cfg.EXP06A_RERUNS.items()], True)
-                               + contrast_family(draws, models, [("baseline_rerun", "baseline")], False, "S_short")),
+                               + contrast_family(draws_half, models, [("baseline_rerun", "baseline")], False,
+                                                 "S_short")),
         "vs_baseline": contrast_family(draws, models, [(h, "baseline") for h in cfg.EXP06A_HARNESSES], True),
         "twins": contrast_family(draws, models, [(h, twin) for twin, h in cfg.EXP06A_NO_RULE_TWINS.items()], True),
-        "cot_specificity": cot_specificity(draws, models),
+        "cot_specificity": cot_specificity(draws_half, models),
         "by_source": by_source_table(df, models, boot),
-        "arms": arms, "checks": checks(df, models),
+        "arms": arms, "arms_half_items": arms_half, "arms_off_all_items": arms_off_all_items,
+        "checks": checks(df, models),
     }
-    figures = [fig_combined(arms, models, fig_dir), fig_cot_vs_output(arms, models, fig_dir),
+    figures = [fig_combined(arms, models, fig_dir), fig_cot_vs_output(arms_half, models, len(half_items), fig_dir),
                fig_per_rule(per_rule, models, fig_dir)]
     per_rule.to_csv(out_dir / "per_cell.csv", index=False)
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2, default=str) + "\n")

@@ -17,7 +17,9 @@ Two harnesses need the model's own text first (requests_prepass.jsonl, the same 
   style_guide_turn1    turn 1 of the style-guide harness (thinking off): per (item, rule, arm) the model writes a
                        short compliant example, which turn 2 has in its history
 requests_<model>.jsonl (written after the model's pre-pass is generated) holds its round-1 rows, including
-in-environment reruns of the reference arms (cfg.EXP06A_RERUNS; deviations_env_and_rerun.json).
+in-environment reruns of the reference arms (cfg.EXP06A_RERUNS; deviations_env_and_rerun.json). For
+cfg.EXP06A_SPLIT_MODELS the same rows go to requests_<model>_thinking_on.jsonl (all items) and
+requests_<model>_thinking_off_half.jsonl (thinking off, thinking_off_items() only; deviations_thinking_off_half.json).
 
 Run: /venv/main/bin/python scripts/cc_exp06a.py items|prepass|manifest
      /venv/main/bin/python scripts/cc_exp06a.py requests --model M      (after M's pre-pass is generated)
@@ -48,8 +50,18 @@ ID_FIELDS = ("item_id", "mode", "prompt", "rollout", "system", "user", "history"
 SENTENCE_END = re.compile(r"(?<=[.!?])\s+")  # cc_grade's sentence splitter
 
 
-def requests_path(model: str):
-    return EXP.cache / f"requests_{model}.jsonl"
+# Round-1 request files per model: one file, or for cfg.EXP06A_SPLIT_MODELS a thinking-on file and a thinking-off
+# file on the half items (deviations_thinking_off_half.json). Suffix -> does a row belong to it?
+SPLIT_PARTS = {"_thinking_on": lambda row, half: row["thinking"],
+               "_thinking_off_half": lambda row, half: not row["thinking"] and row["item_id"] in half}
+
+
+def request_parts(model: str) -> list[str]:
+    return list(SPLIT_PARTS) if model in cfg.EXP06A_SPLIT_MODELS else [""]
+
+
+def requests_path(model: str, part: str = ""):
+    return EXP.cache / f"requests_{model}{part}.jsonl"
 
 
 def record_path(model: str):
@@ -78,6 +90,18 @@ def load_items() -> tuple[list[dict], list[dict]]:
     """(test items in exp03's order, few-shot candidates in draw order)."""
     items = [json.loads(line) for line in cfg.EXP06A_ITEMS_PATH.open()]
     return [it for it in items if not it.get("fewshot_candidate")], [it for it in items if it.get("fewshot_candidate")]
+
+
+def thinking_off_items() -> list[dict]:
+    """The half of the test items every thinking-off estimate uses: per source, ceil(n / 2) items drawn with
+    cfg.EXP06A_THINKING_OFF_HALF_SEED; returned in exp03's order."""
+    test_items, _ = load_items()
+    rng = random.Random(cfg.EXP06A_THINKING_OFF_HALF_SEED)
+    chosen = set()
+    for source in sorted({it["source"] for it in test_items}):
+        ids = [it["item_id"] for it in test_items if it["source"] == source]
+        chosen |= set(rng.sample(ids, -(-len(ids) // 2)))
+    return [it for it in test_items if it["item_id"] in chosen]
 
 
 # --- Prompt pieces --------------------------------------------------------------------------------------------------
@@ -374,7 +398,13 @@ def write_model_requests(model: str) -> None:
     family = cfg.ALL_MODELS[model]["family"]
     check_history_template(AutoTokenizer.from_pretrained(cfg.model_dir(model)), family)
     fewshot = fewshot_examples(model)
-    cc_exp04.write_jsonl_once(requests_path(model), main_rows(model))
+    rows = main_rows(model)
+    if model in cfg.EXP06A_SPLIT_MODELS:
+        half = {it["item_id"] for it in thinking_off_items()}
+        for part, belongs in SPLIT_PARTS.items():
+            cc_exp04.write_jsonl_once(requests_path(model, part), [r for r in rows if belongs(r, half)])
+    else:
+        cc_exp04.write_jsonl_once(requests_path(model), rows)
     import cc_grade
     items = {it["item_id"]: it for it in load_items()[0]}
     style_pass = {}
@@ -383,7 +413,8 @@ def write_model_requests(model: str) -> None:
         score = cc_grade.grade_csv.grade_single_row({"mode": mode, "reasoning": text,
                                                       "question": cc_prompts.cotcontrol_prompt(item, mode)[1]})
         style_pass.setdefault(f"{mode}|thinking_{'on' if thinking else 'off'}", []).append(score)
-    record = {"model": model, "requests": file_record(requests_path(model)),
+    files = {part.lstrip("_") or "all": file_record(requests_path(model, part)) for part in request_parts(model)}
+    record = {"model": model, "requests": files["all"] if list(files) == ["all"] else files,
               "fewshot_items": [ex["item"]["item_id"] for ex in fewshot],
               "fewshot_source_requests": [ex["source_request_id"] for ex in fewshot],
               "style_guide_turn1_grader_pass_rate": {k: sum(v) / len(v) for k, v in sorted(style_pass.items())},

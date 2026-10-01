@@ -585,6 +585,11 @@ EXP06A_NO_RULE_TWINS = {"start_with_no_rule": "start_with", "fewshot_no_rule": "
 # In-environment reruns of the reused reference rows (deviations_env_and_rerun.json): same prompts and seeds.
 EXP06A_RERUNS = {"baseline_rerun": "baseline", "stacked_rerun": "stacked"}  # stacked_rerun: thinking on only
 EXP06A_DIAGNOSTIC = ["meta_allowed"]  # not eligible as a winner
+# deviations_thinking_off_half.json: these models' round-1 rows are split into a thinking-on file (all 100 items) and
+# a thinking-off file on a fixed half of the items (per source, ceil(n / 2) drawn with this seed). Every thinking-off
+# estimate, for all models, uses that half.
+EXP06A_SPLIT_MODELS = ["Gemma-4-31B-FP8", "Qwen3-32B"]
+EXP06A_THINKING_OFF_HALF_SEED = 20261002
 # {channel}: how the harness refers to the graded text in each arm.
 EXP06A_CHANNEL = {True: "your reasoning stage", False: "the content inside the <output_reasoning> tags"}
 EXP06A_NO_MENTION = {

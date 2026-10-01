@@ -1,0 +1,20 @@
+{
+  "written": "2026-10-01T21:08Z, before Gemma-4-31B-FP8's or Qwen3-32B's round-1 requests were written and before any exp06a row was graded or analysed",
+  "approved": "human, 2026-10-01 (chat: cut the thinking-off rows; thinking-on rows first)",
+  "what": {
+    "Qwen3.8-27B-FP8": "unchanged: requests_Qwen3.8-27B-FP8.jsonl (all 10,000 rows) was already generating",
+    "Gemma-4-31B-FP8, Qwen3-32B (cfg.EXP06A_SPLIT_MODELS)": "the same round-1 rows, split into requests_<model>_thinking_on.jsonl (all 100 items, 5,500 rows) and requests_<model>_thinking_off_half.jsonl (thinking off on cc_exp06a.thinking_off_items() only: 51 items x 5 rules x 9 arms = 2,295 rows instead of 4,500). The thinking-off rows are generated after the thinking-on rows and after round 2 has priority on the GPU",
+    "thinking_off_items": "per source, ceil(n / 2) of exp03's items drawn with random.Random(cfg.EXP06A_THINKING_OFF_HALF_SEED = 20261002): 19 GPQA, 19 HLE, 13 MMLU-Pro",
+    "run chain": "scripts/h200_exp06a.sh was stopped by hand (its Qwen3.8 generation left running); scripts/h200_exp06a_split.sh runs the rest"
+  },
+  "why": {
+    "cost": "In Qwen3.8's first 3,766 finished rows (token counts only; no row graded), thinking-off rows averaged 3,317 tokens (median 1,737; 3 of 1,484 hit the 16,384 cap) against 512 for thinking-on rows: about 84% of round 1's generated tokens for a secondary outcome, and round 1 would have ended around 21:00 EDT instead of 19:30",
+    "selection is unaffected": "selection_for_exp06 and the primary contrasts use thinking-on rows only, which keep all 100 items",
+    "precision": "log/exp06a/power_check_thinking_off_half.py on the reused rows (exp04's thinking-off baseline): the single-arm SE of thinking-off S(200) rises from 1.8-2.5 to 2.5-3.5 points at half the items; the CoT-specificity contrast's SE from about 4 to about 5 points. Thinking-on harness gains of the size stacked shows at S(200) (22-27 points on Qwen3.8 and Gemma) remain resolvable; differences under about 10 points are not"
+  },
+  "analysis": {
+    "thinking off": "every thinking-off estimate (all models, including exp04's reused baseline rows and Qwen3.8's) and the CoT-specificity comparison use the 51 items, with thinking-on rows restricted to the same items and one bootstrap over them, so on and off draws stay paired",
+    "Qwen3.8 all items": "Qwen3.8's thinking-off arms on all 100 items are reported as a side table (arms_off_all_items)",
+    "manifest secondary outcome": "'CoT specificity ... at S(200) and P1' is now on 51 items, not 100"
+  }
+}

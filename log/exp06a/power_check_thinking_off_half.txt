@@ -1,0 +1,10 @@
+
+== 100 items ==
+Qwen3.8-27B-FP8    on S1000 stacked-baseline  12.0 (SE 1.5) | on S200 stacked-baseline  21.8 (SE 1.8) | off S200  39.9 (SE 2.5) | off P1  25.8 (SE 2.1)
+Gemma-4-31B-FP8    on S1000 stacked-baseline   9.4 (SE 1.7) | on S200 stacked-baseline  27.4 (SE 1.8) | off S200  78.4 (SE 2.2) | off P1  71.2 (SE 2.5)
+Qwen3-32B          on S1000 stacked-baseline   0.9 (SE 1.4) | on S200 stacked-baseline   4.8 (SE 1.4) | off S200  56.7 (SE 1.8) | off P1  55.2 (SE 1.8)
+
+== 50 items ==
+Qwen3.8-27B-FP8    on S1000 stacked-baseline  13.1 (SE 2.2) | on S200 stacked-baseline  24.9 (SE 2.6) | off S200  41.3 (SE 3.5) | off P1  27.3 (SE 2.6)
+Gemma-4-31B-FP8    on S1000 stacked-baseline   8.6 (SE 2.1) | on S200 stacked-baseline  29.3 (SE 2.3) | off S200  80.5 (SE 3.1) | off P1  76.3 (SE 3.4)
+Qwen3-32B          on S1000 stacked-baseline   1.9 (SE 2.2) | on S200 stacked-baseline   6.5 (SE 2.3) | off S200  53.8 (SE 2.5) | off P1  55.1 (SE 2.5)
