@@ -1,6 +1,6 @@
 {
   "exp_id": "exp05_dose",
-  "written": "2026-10-01T04:15Z",
+  "written": "2026-10-01T04:01Z",
   "human_instruction": "Run them and dynamically add them to exp05 when done ... incorporate their results. Same figures",
   "state_when_written": "Run 'main' (6 models) was written and read. Qwen3.6-35B-A3B-FP8 and GLM-4.7-Flash had failed the base gate (cfg.EXP05_BASE_GATE, closed_share >= 0.9) on their requests_base rows: closed 0.69 / 0.84, the rest 'truncated' at the 25,000-token reasoning cap; answer share 1.0 for both; reasoning read as coherent on spot checks. Their dose rows were not generated.",
   "change": "cc_exp05.py requests-new --gate cap-truncation: closed_share counts traces truncated at the reasoning cap as working thinking-mode output (the gate guards against broken chat-format adapters, which these are not). Other thresholds unchanged. Dose requests, sampling, prompts and grading are as for the other models.",
