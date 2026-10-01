@@ -1,0 +1,12 @@
+{
+  "written": "2026-10-01T20:12Z, before any exp06a row was generated (the first launch failed at vLLM import)",
+  "environment": {
+    "what": "The first launch failed: this instance's vLLM env had torchaudio==2.11.0 (CUDA 13.0 build) next to torch 2.13.0+cu132, and transformers imports torchaudio. Replaced with torchaudio==2.11.0+cpu (uv, --no-deps, PyTorch CPU index).",
+    "result": "uv pip freeze of /workspace/.venv-vllm is now identical to log/setup_h200/freeze_vllm.txt, the env exp04 and exp05 were generated with."
+  },
+  "added_arms": {
+    "what": "In-environment reruns of the reference arms, in every model's requests_<model>.jsonl: baseline_rerun and stacked_rerun with thinking on (exp06a's stop and abort), baseline_rerun with thinking off. Same prompts and seeds as the reused rows.",
+    "why": "The reused baseline/stacked rows come from another H200 host and ran without exp06a's 1200-token stop. A harness-vs-reference gap could otherwise partly be host or engine drift; the reruns check that.",
+    "analysis": "Primary contrasts stay as in manifest.json (against the reused rows). Reported next to them: the same contrasts against the reruns, and rerun minus reused per reference arm (S(1000), 5-rule mean). If any rerun-minus-reused difference has a 95% CI excluding 0, the report says so and gives both versions of every primary contrast."
+  }
+}

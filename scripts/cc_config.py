@@ -582,6 +582,8 @@ EXP06A_REFERENCES = ["baseline", "stacked"]
 EXP06A_HARNESSES = ["start_with", "warmup", "fewshot", "style_guide", "failure_guide", "monitor_stealth",
                     "meta_allowed"]
 EXP06A_NO_RULE_TWINS = {"start_with_no_rule": "start_with", "fewshot_no_rule": "fewshot"}  # thinking on only
+# In-environment reruns of the reused reference rows (deviations_env_and_rerun.json): same prompts and seeds.
+EXP06A_RERUNS = {"baseline_rerun": "baseline", "stacked_rerun": "stacked"}  # stacked_rerun: thinking on only
 EXP06A_DIAGNOSTIC = ["meta_allowed"]  # not eligible as a winner
 # {channel}: how the harness refers to the graded text in each arm.
 EXP06A_CHANNEL = {True: "your reasoning stage", False: "the content inside the <output_reasoning> tags"}
@@ -666,4 +668,6 @@ HARNESS_STYLE = {  # fixed color per exp06a arm in every figure (Okabe-Ito + gre
     "meta_allowed": {"color": "#000000", "label": "V7 meta allowed (diagnostic)"},
     "start_with_no_rule": {"color": "#E69F00", "label": "V1 twin: no rule"},
     "fewshot_no_rule": {"color": "#0072B2", "label": "V3 twin: no rule"},
+    "baseline_rerun": {"color": "#999999", "label": "R0 baseline, rerun here"},
+    "stacked_rerun": {"color": "#009E73", "label": "R1 stacked, rerun here"},
 }

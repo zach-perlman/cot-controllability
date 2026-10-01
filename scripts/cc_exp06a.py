@@ -16,7 +16,8 @@ Two harnesses need the model's own text first (requests_prepass.jsonl, the same 
                        per model the first cfg.EXP06A_FEWSHOTS that closed and answered correctly are the examples
   style_guide_turn1    turn 1 of the style-guide harness (thinking off): per (item, rule, arm) the model writes a
                        short compliant example, which turn 2 has in its history
-requests_<model>.jsonl (written after the model's pre-pass is generated) holds its round-1 rows.
+requests_<model>.jsonl (written after the model's pre-pass is generated) holds its round-1 rows, including
+in-environment reruns of the reference arms (cfg.EXP06A_RERUNS; deviations_env_and_rerun.json).
 
 Run: /venv/main/bin/python scripts/cc_exp06a.py items|prepass|manifest
      /venv/main/bin/python scripts/cc_exp06a.py requests --model M      (after M's pre-pass is generated)
@@ -142,6 +143,9 @@ def harness_prompt(item: dict, mode: str, prompt: str, thinking: bool, fewshot: 
     (None: the turn has no reasoning) and answer."""
     channel = cfg.EXP06A_CHANNEL[thinking]
     base = base_user(item, mode, thinking)
+    prompt = cfg.EXP06A_RERUNS.get(prompt, prompt)
+    if prompt == "baseline":
+        return "", base, []
     if prompt == "stacked":
         return (*stacked_prompt(item, mode, thinking), [])
     appended = {
@@ -341,8 +345,8 @@ def main_rows(model: str) -> list[dict]:
     for item in test_items:
         for mode in cfg.EXP06A_MODES:
             for thinking in (True, False):
-                prompts = (cfg.EXP06A_HARNESSES + list(cfg.EXP06A_NO_RULE_TWINS) if thinking
-                           else ["stacked"] + cfg.EXP06A_HARNESSES)
+                prompts = (list(cfg.EXP06A_RERUNS) + cfg.EXP06A_HARNESSES + list(cfg.EXP06A_NO_RULE_TWINS)
+                           if thinking else ["baseline_rerun", "stacked"] + cfg.EXP06A_HARNESSES)
                 for prompt in prompts:
                     system, user, history = harness_prompt(item, mode, prompt, thinking, fewshot,
                                                            style[(item["item_id"], mode, thinking)])
