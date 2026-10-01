@@ -56,6 +56,12 @@ def output_path(requests_path: Path, model: str, sampling: dict, requests: list[
                              "think_open_text": fam.get("think_open_text"), "family_close": fam.get("forced_close"),
                              "external_cap": cfg.EXP04_EXTERNAL_CAP_TOKENS,
                              "necessity_cap": cfg.EXP04_NECESSITY_CAP_TOKENS}
+    if any("history" in r for r in requests):  # exp06a: its own prompt rendering, stops and graded text
+        import cc_exp06a
+        material["exp06a"] = {"prompt_code": inspect.getsource(cc_exp06a.prompt_ids),
+                              "result_code": inspect.getsource(cc_exp06a.generation_result),
+                              "history_formats": cfg.EXP06A_HISTORY_REASONING,
+                              "job_code": inspect.getsource(job_of)}
     stem = requests_path.stem.removeprefix("requests")  # exp04's requests_none / requests_repro -> "_none" / "_repro"
     return requests_path.parent / "generations" / f"{model}__card__{ENGINE}{stem}__{cfg.content_key(material)}.jsonl"
 
@@ -99,7 +105,7 @@ def without_reasoning_block(ids: list[int], fam: dict) -> tuple[list[int], int]:
 def reasoning_caps(jobs: list[dict], close_len: int, max_model_len: int) -> list[int]:
     caps = []
     for job in jobs:
-        cap = min(cfg.REASONING_CAP_TOKENS,
+        cap = min(job.get("reasoning_cap") or cfg.REASONING_CAP_TOKENS,
                   max_model_len - len(job["prompt_ids"]) - cfg.ANSWER_CAP_TOKENS - close_len - 1)
         if cap < 1:
             raise RuntimeError(f"prompt of {len(job['prompt_ids'])} tokens leaves no room for reasoning")
@@ -112,7 +118,9 @@ def generate_streaming_abort(llm, tokenizer, family: str, jobs: list[dict], samp
     """jobs: dicts with prompt_ids, seed, abort (bool), mode, item, and (exp04 thinking-off jobs) response_cap.
     on_result(job index, result) once per job, in completion order; result has generate_two_phase's fields plus
     abort_char and abort_checks. A job with response_cap is one call of at most that many tokens up to the end of
-    the turn: its result has the response in "answer", think_status "thinking_off" and no reasoning."""
+    the turn: its result has the response in "answer", think_status "thinking_off" and no reasoning.
+    exp06a jobs may set reasoning_cap (instead of cfg.REASONING_CAP_TOKENS) and answer_phase=False (the result is
+    the reasoning alone)."""
     from tqdm import tqdm
     from vllm import SamplingParams
     from vllm.sampling_params import RequestOutputKind
@@ -202,7 +210,7 @@ def generate_streaming_abort(llm, tokenizer, family: str, jobs: list[dict], samp
                 result = base_result(i, reasoning_ids, status)
                 if rid in n_checks:
                     result["abort_checks"] = n_checks.pop(rid)
-                if status == "no_think_close":
+                if status == "no_think_close" or not jobs[i].get("answer_phase", True):
                     on_result(i, result)
                     bar.update()
                     continue
@@ -271,7 +279,22 @@ def response_cap(request: dict) -> int | None:
     """Token cap of a thinking-off exp04 request (one call); None for requests with a reasoning phase."""
     if request.get("thinking", True):
         return None
+    if request.get("response_cap_tokens"):  # exp06a
+        return request["response_cap_tokens"]
     return cfg.EXP04_NECESSITY_CAP_TOKENS if request["condition"] == "necessity" else cfg.EXP04_EXTERNAL_CAP_TOKENS
+
+
+def job_of(tokenizer, family: str, request: dict, items: dict) -> dict:
+    """The engine job of one request. exp06a rows (they have "history") are rendered by cc_exp06a.prompt_ids."""
+    if "history" in request:
+        import cc_exp06a
+        ids = cc_exp06a.prompt_ids(tokenizer, family, request)
+    else:
+        ids = request_prompt_ids(tokenizer, family, request)
+    return {"prompt_ids": ids, "seed": request["seed"], "abort": request["abort_on_violation"],
+            "mode": request["mode"], "item": items[request["item_id"]], "response_cap": response_cap(request),
+            "allowed_token_ids": letter_token_ids(tokenizer, request),
+            "reasoning_cap": request.get("reasoning_stop_tokens"), "answer_phase": request.get("answer_phase", True)}
 
 
 def run_shard(llm, tokenizer, family: str, requests: list[dict], items: dict, sampling: dict, max_model_len: int,
@@ -284,13 +307,17 @@ def run_shard(llm, tokenizer, family: str, requests: list[dict], items: dict, sa
           flush=True)
     if not todo:
         return
-    jobs = [{"prompt_ids": request_prompt_ids(tokenizer, family, r), "seed": r["seed"],
-             "abort": r["abort_on_violation"], "mode": r["mode"], "item": items[r["item_id"]],
-             "response_cap": response_cap(r), "allowed_token_ids": letter_token_ids(tokenizer, r)} for r in todo]
+    if any("history" in r for r in todo):
+        import cc_exp06a
+        cc_exp06a.check_history_template(tokenizer, family)
+    jobs = [job_of(tokenizer, family, r, items) for r in todo]
     with path.open("a") as f:
         def write(index: int, result: dict) -> None:
             request = todo[index]
-            if "condition" in request:
+            if "history" in request:
+                import cc_exp06a
+                result = cc_exp06a.generation_result(request, result, tokenizer)
+            elif "condition" in request:
                 result = exp04_result(request, result, tokenizer)
             f.write(json.dumps(output_row(request, model, result)) + "\n")
             f.flush()
@@ -314,10 +341,10 @@ def merge(requests: list[dict], parts: Path, n_shards: int) -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exp", choices=["exp03", "exp04", "exp05"], required=True)
+    parser.add_argument("--exp", choices=["exp03", "exp04", "exp05", "exp06a"], required=True)
     parser.add_argument("--model", choices=list(cfg.ALL_MODELS), required=True)
     parser.add_argument("--requests", type=Path, default=None, help="default: cache/<exp>/requests.jsonl")
-    parser.add_argument("--items", type=Path, default=None, help="default: cfg.EXP03_ITEMS_PATH")
+    parser.add_argument("--items", type=Path, default=None, help="default: the experiment's items (cfg.ITEMS_BY_EXP)")
     parser.add_argument("--sampling", choices=["card", "greedy"], default="card",
                         help="greedy only for the engine check against the batch engine")
     group = parser.add_mutually_exclusive_group(required=True)
@@ -329,7 +356,7 @@ def main() -> None:
     family = spec["family"]
     requests_path = args.requests or cfg.EXPERIMENTS[args.exp].requests
     requests = [json.loads(line) for line in requests_path.open()]
-    items = {it["item_id"]: it for it in map(json.loads, (args.items or cfg.EXP03_ITEMS_PATH).open())}
+    items = {it["item_id"]: it for it in map(json.loads, (args.items or cfg.ITEMS_BY_EXP[args.exp]).open())}
     sampling = cfg.GREEDY_SAMPLING if args.sampling == "greedy" else cfg.FAMILIES[family]["sampling"]
     out = output_path(requests_path, args.model, sampling, requests)
     if args.sampling == "greedy":
