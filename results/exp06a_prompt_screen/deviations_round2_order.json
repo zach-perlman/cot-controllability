@@ -1,0 +1,9 @@
+{
+  "written": "2026-10-01T22:44Z",
+  "approved": "human, 2026-10-01 (chat: 'Do the backfill BEFORE round 2. Then using that extra data determine the best round 2 plan')",
+  "what": {
+    "order": "Round 2 (deviations_round2.json) was stopped about 2 minutes after it started, partway through Qwen3.8; nothing from it was graded or read. The thinking-off backfill (deviations_thinking_off_half.json) runs first, to completion",
+    "round 2 design reopened": "after the backfill is graded, the round-2 arms are re-decided with the thinking-off data in hand. The decision and its reason go into a new dated deviation file before any further round-2 generation. If the 5 arms stay, requests_<model>_round2.jsonl are used as written (finished rows resume); if they change, new request files get a new suffix, and the unused round-2 files and partial rows stay on disk, unanalysed, and are listed in that deviation file"
+  },
+  "logs": "log/exp06a/generate_Qwen3.8-27B-FP8_round2_stopped.log, log/exp06a/h200_exp06a_round2.log"
+}
