@@ -91,7 +91,8 @@ def load(empty_is_violation: bool, models: list[str], skip_ungraded: bool) -> pd
     new["dose"] = new["request_id"].map(lambda i: requests[i].get("dose") or
                                         ("d0" if requests[i]["condition"] == "none" else None))
     new["opening_tokens_original"] = new["request_id"].map(lambda i: requests[i].get("opening_tokens_original"))
-    new["prefill_matches_request"] = [p == requests[i]["prefill"] for i, p in zip(new["request_id"], new["prefill"])]
+    new["prefill_matches_request"] = [(p if isinstance(p, str) else None) == requests[i]["prefill"]  # no prefill: NaN
+                                      for i, p in zip(new["request_id"], new["prefill"])]
     new = score(new, empty_is_violation)
     new["effort"] = new["model"].map(EFFORTS)
 
