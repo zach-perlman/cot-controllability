@@ -1,0 +1,9 @@
+Qwen3.8-27B-FP8: _round2 rebuilt 2500 rows, identical to file: True
+  _round2_added 500 rows, _round2_thinking_off_half 1530 rows (51 items)
+  thinking-off rows checked against round 1: 1530
+Gemma-4-31B-FP8: _round2 rebuilt 2500 rows, identical to file: True
+  _round2_added 500 rows, _round2_thinking_off_half 1530 rows (51 items)
+  thinking-off rows checked against round 1: 1530
+Qwen3-32B: _round2 rebuilt 2500 rows, identical to file: True
+  _round2_added 500 rows, _round2_thinking_off_half 1530 rows (51 items)
+  thinking-off rows checked against round 1: 1530

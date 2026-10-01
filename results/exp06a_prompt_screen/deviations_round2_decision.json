@@ -1,0 +1,24 @@
+{
+  "written": "2026-10-01T23:30Z",
+  "follows": "deviations_round2_order.json (round 2 re-decided after the thinking-off backfill was graded)",
+  "approved": "human, 2026-10-01 (chat: 'using that extra data determine the best round 2 plan'; 'take the CoT on and CoT-off evidence together to come to a conclusion about which arms would be best for our purposes here'). Arm choice delegated to the agent",
+  "evidence": {
+    "analysis run": "results/exp06a_prompt_screen/analysis/round1_with_thinking_off (CoT specificity table: KM S(200) gain over baseline, thinking on vs off, 51 questions)",
+    "length check": "log/exp06a/clean_through_200_check.{py,txt}: share of ALL rows whose graded text reaches 200 tokens with no violation (a short clean text counts as a failure), gain over the in-environment baseline rerun, 51 questions, 5-rule mean",
+    "findings": [
+      "Thinking-off KM S(200) and P1 are inflated by short outputs for the style guide: its tag content has a median of 61-102 tokens, and only 4-9% of its rows reach 200 clean tokens (baseline 31-47%). Its large thinking-off 'gain' is brevity, not compliance",
+      "Few-shot is the only harness that raises the thinking-on rate on all 3 models (clean-through-200 gain +13 / +8 / +20 points for Qwen3.8 / Gemma / Qwen3-32B), but it raises the thinking-off rate more (+32 / +20 / +32): part of its effect is general instruction following",
+      "The failure guide is the most CoT-specific: thinking-on gain +11 / 0 / +20 against thinking-off +15 / +3 / +9",
+      "Start-with helps thinking-on only on Qwen3-32B (+16; -2 on Gemma, +4 on Qwen3.8) and raises thinking-off more on every model (+15 / +12 / +22)",
+      "Warm-up and the style guide raise thinking-off but not thinking-on; monitor+stealth and meta-allowed do neither"
+    ]
+  },
+  "decision": {
+    "the 5 arms of deviations_round2.json stay": "requests_<model>_round2.jsonl are used as written; Qwen3.8's partial rows from the stopped run resume",
+    "added arm, thinking on": "stacked_fewshot_failure_guide = stacked + V3's 3 example turns + the failure guide (no start-with), in requests_<model>_round2_added.jsonl (100 items x 5 rules, round 1's seeds, stop and abort). Reason: few-shot and the failure guide are the two components with the best thinking-on evidence; together with stacked_all (the same plus start-with) it measures start-with's marginal effect in the full combination",
+    "added thinking-off rows": "every round-2 arm (the 5 plus the added one) with thinking off on the 51 thinking_off_items(), in requests_<model>_round2_thinking_off_half.jsonl: the thinking-off form of each piece (CoT-Control's external-CoT prompt, the stacked thinking-off prompt, {channel} = the tag content, example turns with the reasoning in <output_reasoning> tags), one call with exp04's external cap, graded on the tag content, round 1's seeds. Reason: the CoT-specificity of a combination cannot be read off its pieces",
+    "order": "thinking-on parts for all 3 models first (round2, then round2_added), then the thinking-off parts"
+  },
+  "analysis plan": "unchanged from deviations_round2.json for the thinking-on contrasts (exploratory; Holm over the round-2 arms x models), with stacked_fewshot_failure_guide added to that family. CoT specificity for round-2 arms as in round 1 (51 questions), reported with BOTH the KM S(200) gain and the clean-through-200 gain; the clean-through-200 rate is added to the analysis as the length-robust thinking-off check for every arm. Exploratory, as all of round 2",
+  "not changed": "no round-1 request file, generation or grade; HARNESS.md text; the 5 round-2 arms' prompts"
+}

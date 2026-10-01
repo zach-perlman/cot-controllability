@@ -1,0 +1,13 @@
+{
+  "model": "Qwen3.8-27B-FP8",
+  "requests": {
+    "path": "cache/exp06a/requests_Qwen3.8-27B-FP8_round2_added.jsonl",
+    "sha256": "1312c3939bdd43d677e4efcf10a2aae3cff4ae511f1570e96fbfac3fa7319170",
+    "n": 500,
+    "per_prompt_thinking": {
+      "stacked_fewshot_failure_guide|True": 500
+    }
+  },
+  "deviation": "deviations_round2_decision.json",
+  "written": "2026-10-01T23:16:24+00:00"
+}

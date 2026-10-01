@@ -600,6 +600,10 @@ EXP06A_ROUND2 = {
     "stacked_all": ("stacked", True, ["failure_guide", "start_with"]),
     "fewshot_failure_guide": ("baseline", True, ["failure_guide"]),
 }
+# deviations_round2_decision.json: one more thinking-on arm (its own request file), and every round-2 arm with
+# thinking off on thinking_off_items().
+EXP06A_ROUND2_ADDED = {"stacked_fewshot_failure_guide": ("stacked", True, ["failure_guide"])}
+EXP06A_ROUND2_ARMS = {**EXP06A_ROUND2, **EXP06A_ROUND2_ADDED}
 # {channel}: how the harness refers to the graded text in each arm.
 EXP06A_CHANNEL = {True: "your reasoning stage", False: "the content inside the <output_reasoning> tags"}
 EXP06A_NO_MENTION = {
@@ -690,4 +694,5 @@ HARNESS_STYLE = {  # fixed color per exp06a arm in every figure (Okabe-Ito + gre
     "stacked_start_with": {"color": "#8A5F00", "label": "R2c stacked + start-with"},
     "stacked_all": {"color": "#6A3D9A", "label": "R2d stacked + 3-shot + guide + start-with"},
     "fewshot_failure_guide": {"color": "#5A6B8C", "label": "R2e 3-shot + failure guide (no stacked)"},
+    "stacked_fewshot_failure_guide": {"color": "#B15928", "label": "R2f stacked + 3-shot + guide"},
 }

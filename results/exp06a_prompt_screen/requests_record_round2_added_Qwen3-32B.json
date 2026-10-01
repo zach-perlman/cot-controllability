@@ -1,0 +1,13 @@
+{
+  "model": "Qwen3-32B",
+  "requests": {
+    "path": "cache/exp06a/requests_Qwen3-32B_round2_added.jsonl",
+    "sha256": "043ba347b1e2dbfdded78351daec282deffae3730191cdd71c7734a16e4301a6",
+    "n": 500,
+    "per_prompt_thinking": {
+      "stacked_fewshot_failure_guide|True": 500
+    }
+  },
+  "deviation": "deviations_round2_decision.json",
+  "written": "2026-10-01T23:16:29+00:00"
+}

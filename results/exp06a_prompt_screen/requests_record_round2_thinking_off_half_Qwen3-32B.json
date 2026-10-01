@@ -1,0 +1,18 @@
+{
+  "model": "Qwen3-32B",
+  "requests": {
+    "path": "cache/exp06a/requests_Qwen3-32B_round2_thinking_off_half.jsonl",
+    "sha256": "1ac5c9f75aa7ab4c813b2655dd7a9b1542df6905f456346d09b2781cd631e96f",
+    "n": 1530,
+    "per_prompt_thinking": {
+      "stacked_failure_guide|False": 255,
+      "stacked_fewshot|False": 255,
+      "stacked_start_with|False": 255,
+      "stacked_all|False": 255,
+      "fewshot_failure_guide|False": 255,
+      "stacked_fewshot_failure_guide|False": 255
+    }
+  },
+  "deviation": "deviations_round2_decision.json",
+  "written": "2026-10-01T23:16:30+00:00"
+}

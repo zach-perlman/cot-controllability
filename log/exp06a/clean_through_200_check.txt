@@ -1,0 +1,48 @@
+
+Qwen3.8-27B-FP8 (% of rows clean through 200 tokens; gain vs baseline_rerun)
+thinking             off    on  gain_on  gain_off
+arm                                              
+baseline_rerun      31.4   5.5      0.0       0.0
+failure_guide       46.7  16.9     11.4      15.3
+fewshot             63.5  18.4     12.9      32.2
+fewshot_no_rule      NaN   9.0      3.5       NaN
+meta_allowed        25.9   7.1      1.6      -5.5
+monitor_stealth     36.9   6.3      0.8       5.5
+stacked             56.9   NaN      NaN      25.5
+stacked_rerun        NaN  25.5     20.0       NaN
+start_with          46.7   9.8      4.3      15.3
+start_with_no_rule   NaN   2.7     -2.7       NaN
+style_guide          4.7   9.8      4.3     -26.7
+warmup              56.5  11.4      5.9      25.1
+
+Gemma-4-31B-FP8 (% of rows clean through 200 tokens; gain vs baseline_rerun)
+thinking             off    on  gain_on  gain_off
+arm                                              
+baseline_rerun      47.1  15.7      0.0       0.0
+failure_guide       50.2  16.1      0.4       3.1
+fewshot             66.7  23.1      7.5      19.6
+fewshot_no_rule      NaN   3.5    -12.2       NaN
+meta_allowed        38.8  14.9     -0.8      -8.2
+monitor_stealth     48.2  16.1      0.4       1.2
+stacked             47.5   NaN      NaN       0.4
+stacked_rerun        NaN  39.6     23.9       NaN
+start_with          58.8  13.7     -2.0      11.8
+start_with_no_rule   NaN   4.3    -11.4       NaN
+style_guide          3.9  17.3      1.6     -43.1
+warmup              93.3   9.0     -6.7      46.3
+
+Qwen3-32B (% of rows clean through 200 tokens; gain vs baseline_rerun)
+thinking             off    on  gain_on  gain_off
+arm                                              
+baseline_rerun      34.5  11.8      0.0       0.0
+failure_guide       43.1  31.8     20.0       8.6
+fewshot             66.7  31.4     19.6      32.2
+fewshot_no_rule      NaN  14.1      2.4       NaN
+meta_allowed        32.2   9.4     -2.4      -2.4
+monitor_stealth     31.4  12.2      0.4      -3.1
+stacked             52.5   NaN      NaN      18.0
+stacked_rerun        NaN  14.1      2.4       NaN
+start_with          56.5  27.8     16.1      22.0
+start_with_no_rule   NaN   4.3     -7.5       NaN
+style_guide          8.6  10.2     -1.6     -25.9
+warmup              37.6  12.5      0.8       3.1

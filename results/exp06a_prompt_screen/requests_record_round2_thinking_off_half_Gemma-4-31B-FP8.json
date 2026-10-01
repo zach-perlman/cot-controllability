@@ -1,0 +1,18 @@
+{
+  "model": "Gemma-4-31B-FP8",
+  "requests": {
+    "path": "cache/exp06a/requests_Gemma-4-31B-FP8_round2_thinking_off_half.jsonl",
+    "sha256": "deb456cb1c6b86508d8dc985045f2a81b4a5afba27d6f9d03a691cec5a4d1ff9",
+    "n": 1530,
+    "per_prompt_thinking": {
+      "stacked_failure_guide|False": 255,
+      "stacked_fewshot|False": 255,
+      "stacked_start_with|False": 255,
+      "stacked_all|False": 255,
+      "fewshot_failure_guide|False": 255,
+      "stacked_fewshot_failure_guide|False": 255
+    }
+  },
+  "deviation": "deviations_round2_decision.json",
+  "written": "2026-10-01T23:16:28+00:00"
+}

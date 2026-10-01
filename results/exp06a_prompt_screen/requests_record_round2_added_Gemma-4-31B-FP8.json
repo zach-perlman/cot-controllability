@@ -1,0 +1,13 @@
+{
+  "model": "Gemma-4-31B-FP8",
+  "requests": {
+    "path": "cache/exp06a/requests_Gemma-4-31B-FP8_round2_added.jsonl",
+    "sha256": "93938902b4f2ac71a85bebe55fb6f151e30532312d892b0ea10030f14441b2f0",
+    "n": 500,
+    "per_prompt_thinking": {
+      "stacked_fewshot_failure_guide|True": 500
+    }
+  },
+  "deviation": "deviations_round2_decision.json",
+  "written": "2026-10-01T23:16:26+00:00"
+}

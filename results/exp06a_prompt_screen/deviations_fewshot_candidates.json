@@ -1,0 +1,6 @@
+{
+  "written": "2026-10-01T23:30Z",
+  "what": "HARNESS.md says the few-shot examples are the first 3 of 6 pre-drawn candidates; the code drew cfg.EXP06A_FEWSHOT_CANDIDATES = 8",
+  "effect": "every model used the first 3 of the 8 candidates (MMLU-Pro:69, 103, 118: all closed and correct; requests_record_<model>.json fewshot_items), so no model needed a 7th or 8th. A draw of 6 with the same seed is not guaranteed to give the same items (random.sample with a different k), so the examples could have differed under the documented draw; the examples actually used are fixed and recorded",
+  "action": "HARNESS.md stays frozen as signed off; this note records the difference"
+}

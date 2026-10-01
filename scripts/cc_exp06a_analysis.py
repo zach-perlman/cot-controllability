@@ -12,7 +12,9 @@ Rows (all on exp03's 100 items, same seeds per (item, rule)):
 Scoring: KM S(t) with event = first violation; an empty graded text (empty thinking trace, no tag content) is a
 violation at token 0 (manifest; --censor-empty-traces gives the sensitivity variant for thinking-on rows). P1 for
 thinking on is "no violation before the stop" (cfg.EXP06A_REASONING_STOP_TOKENS), the same for reused rows that ran
-longer; for thinking off it is the whole tag content.
+longer; for thinking off it is the whole tag content. Length-robust check: the share of rows whose graded text
+reaches T_SHORT tokens with no violation (clean_short; a short clean text counts as a failure, so brevity cannot
+raise it), because KM censors a clean text at its end and short thinking-off outputs then look compliant.
 
 Primary: S(t*) thinking on, mean over the 5 rules; each non-diagnostic harness minus stacked per model, Holm over
 harnesses x models. Secondary: harness minus baseline; the no-rule twins; the CoT-vs-output comparison at S(200).
@@ -49,10 +51,12 @@ OPENERS = cfg.EXP04_OPENER_MODES
 MODELS = cfg.EXP06A_MODELS
 STOP = cfg.EXP06A_REASONING_STOP_TOKENS
 VARIANTS = [h for h in cfg.EXP06A_HARNESSES if h not in cfg.EXP06A_DIAGNOSTIC]
-ROUND2 = list(cfg.EXP06A_ROUND2)  # deviations_round2.json: exploratory, thinking on only
+# Round 2 (deviations_round2.json, deviations_round2_decision.json): exploratory; thinking on (all items) and off
+# (the half items).
+ROUND2 = list(cfg.EXP06A_ROUND2_ARMS)
 ON_ARMS = (cfg.EXP06A_REFERENCES + list(cfg.EXP06A_RERUNS) + cfg.EXP06A_HARNESSES + list(cfg.EXP06A_NO_RULE_TWINS)
            + ROUND2)
-OFF_ARMS = ["baseline", "baseline_rerun", "stacked"] + cfg.EXP06A_HARNESSES
+OFF_ARMS = ["baseline", "baseline_rerun", "stacked"] + cfg.EXP06A_HARNESSES + ROUND2
 # Earlier experiments' arms on the same items (thinking on), for the combined figure.
 EARLIER = {
     "exp04_prefill": {"label": "exp04 compliant prefill (scored after it)", "color": "#666666"},
@@ -75,7 +79,7 @@ def exp06a_rows(models: list[str], skip_missing: bool) -> tuple[pd.DataFrame, li
     requests = {r["request_id"]: r for p in sorted(EXP.cache.glob("requests_*.jsonl")) for r in cc_exp04.load_requests(p)}
     frames, missing = [], []
     for model in models:
-        for part in cc_exp06a.request_parts(model) + ["_round2"]:
+        for part in cc_exp06a.request_parts(model) + list(cc_exp06a.ROUND2_PARTS):
             pattern = f"{model}__card__stream_abort_{model}{part}__*.jsonl"
             paths = [Path(p) for p in glob.glob(str(EXP.generations / pattern))]
             if len(paths) != 1 or not a4.grades_path(paths[0]).exists():
@@ -125,6 +129,7 @@ def score(df: pd.DataFrame, empty_is_violation: bool) -> pd.DataFrame:
     within_stop = ~(df["event"] & (df["time"] < STOP))
     off_compliant = np.where(df["event_at_0"], 0.0, pd.to_numeric(df["compliant"], errors="coerce"))
     df["P1"] = np.where(df["thinking"].astype(bool), within_stop.astype(float), off_compliant)
+    df["clean_short"] = ((df["reasoning_tokens"] >= T_SHORT) & ~(df["event"] & (df["time"] < T_SHORT))).astype(float)
     df["graded_tokens_capped"] = np.minimum(df["reasoning_tokens"], STOP)
     starts = {m: cc_exp06a.start_sentence(m) for m in RULES}
     df["starts_with_sentence"] = [str(r).lstrip().startswith(starts[m]) for r, m in zip(df["reasoning"], df["mode"])]
@@ -153,7 +158,10 @@ def arm_table(df: pd.DataFrame, models: list[str], boot: ca.Bootstrap,
                 est = a4.macro_km(d, modes, t, boot)
                 draws[(model, arm, thinking, name)] = est
                 rec[name] = ca.stat(*est) if est else None
-            rec["P1"] = ca.stat(*ca.pooled(d, "P1", boot)) if set(RULES) <= set(d["mode"]) else None
+            for name in ("P1", "clean_short"):
+                est = ca.pooled(d, name, boot) if set(RULES) <= set(d["mode"]) else None
+                draws[(model, arm, thinking, name)] = est
+                rec[name] = ca.stat(*est) if est else None
             rec.update(empty_share=float(d["empty"].mean() * 100),
                        median_graded_tokens_capped=float(d["graded_tokens_capped"].median()),
                        meta_regex_share=float(d["meta_regex"].mean() * 100),
@@ -183,7 +191,7 @@ def cot_specificity(draws: dict, models: list[str], metric: str = "S_short") -> 
     """Per harness: its gain over baseline with thinking on, with thinking off, and on - off (paired draws)."""
     out = []
     for model in models:
-        for arm in ["stacked"] + cfg.EXP06A_HARNESSES:
+        for arm in ["stacked"] + cfg.EXP06A_HARNESSES + ROUND2:
             keys = [(model, arm, True, metric), (model, "baseline", True, metric),
                     (model, arm, False, metric), (model, "baseline", False, metric)]
             if any(draws.get(k) is None for k in keys):
@@ -242,35 +250,41 @@ def checks(df: pd.DataFrame, models: list[str]) -> dict:
 
 
 # --- Figures ------------------------------------------------------------------------------------------------------------
-def fig_combined(rows: list[dict], models: list[str], fig_dir) -> str:
-    """H1: every arm, thinking on, S(t*) per model. Top: the 5 rules; bottom: the 4 opener rules (where exp05 has data)."""
+def fig_combined(rows_on: list[dict], rows_off: list[dict], models: list[str], n_half: int, fig_dir) -> str:
+    """H1: every arm, S(t*) per model, thinking on (filled; all 100 questions) and off (open; the half items). Top:
+    the 5 rules; bottom: the 4 opener rules (where exp05 has data)."""
+    present = {r["arm"] for r in rows_on + rows_off}
     order = (cfg.EXP06A_REFERENCES + list(EARLIER) + list(cfg.EXP06A_RERUNS) + VARIANTS + cfg.EXP06A_DIAGNOSTIC
-             + list(cfg.EXP06A_NO_RULE_TWINS) + [a for a in ROUND2 if any(r["arm"] == a for r in rows)])
+             + list(cfg.EXP06A_NO_RULE_TWINS) + [a for a in ROUND2 if a in present])
     labels = [style(a)["label"] for a in order]
     fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.06,
                         subplot_titles=[f"S({T_STAR}), mean over the 5 rules", f"S({T_STAR}), mean over the 4 opener "
                                         "rules (lowercase, uppercase, meow, end 'safe')"])
     markers = ["circle", "diamond", "square"]
-    offsets = np.linspace(-0.25, 0.25, len(models))
+    offsets = np.linspace(-0.36, 0.36, 2 * len(models))
     for k, model in enumerate(models):
-        for r, metric in ((1, "S_t_star"), (2, "S_t_star_openers")):
-            ys, lo, hi, colors = [], [], [], []
-            for arm in order:
-                rec = next((x for x in rows if (x["model"], x["arm"], x["thinking"]) == (model, arm, True)), None)
-                s = rec[metric] if rec else None
-                ys.append(s["value"] if s else None)
-                lo.append(s["value"] - s["ci"][0] if s else None)
-                hi.append(s["ci"][1] - s["value"] if s else None)
-                colors.append(style(arm)["color"])
-            fig.add_trace(go.Scatter(
-                x=np.arange(len(order)) + offsets[k], y=ys, mode="markers", name=model, legendgroup=model,
-                showlegend=r == 1, marker={"symbol": markers[k], "size": 10, "color": colors,
-                                           "line": {"color": "black", "width": 0.8}},
-                error_y={"type": "data", "symmetric": False, "array": hi, "arrayminus": lo, "thickness": 1,
-                         "color": "#555555"},
-                customdata=labels, hovertemplate=f"{model}<br>%{{customdata}}: %{{y:.1f}}%<extra></extra>"),
-                row=r, col=1)
-    stacked = [x for x in rows if x["arm"] == "stacked" and x["thinking"]]
+        for j, (thinking, rows, suffix, name) in enumerate(
+                ((True, rows_on, "", f"{model}, thinking on"),
+                 (False, rows_off, "-open", f"{model}, thinking off ({n_half} questions)"))):
+            for r, metric in ((1, "S_t_star"), (2, "S_t_star_openers")):
+                ys, lo, hi = [], [], []
+                for arm in order:
+                    rec = next((x for x in rows if (x["model"], x["arm"], x["thinking"]) == (model, arm, thinking)),
+                               None)
+                    s = rec[metric] if rec else None
+                    ys.append(s["value"] if s else None)
+                    lo.append(s["value"] - s["ci"][0] if s else None)
+                    hi.append(s["ci"][1] - s["value"] if s else None)
+                fig.add_trace(go.Scatter(
+                    x=np.arange(len(order)) + offsets[2 * k + j], y=ys, mode="markers", name=name, legendgroup=name,
+                    showlegend=r == 1, marker={"symbol": markers[k] + suffix, "size": 9,
+                                               "color": [style(a)["color"] for a in order],
+                                               "line": {"color": "black", "width": 0.8 if thinking else 1.6}},
+                    error_y={"type": "data", "symmetric": False, "array": hi, "arrayminus": lo, "thickness": 1,
+                             "color": "#555555"},
+                    customdata=labels, hovertemplate=f"{name}<br>%{{customdata}}: %{{y:.1f}}%<extra></extra>"),
+                    row=r, col=1)
+    stacked = [x for x in rows_on if x["arm"] == "stacked" and x["thinking"]]
     for r, metric in ((1, "S_t_star"), (2, "S_t_star_openers")):
         mean_stacked = np.mean([x[metric]["value"] for x in stacked if x["model"] in models and x[metric]])
         fig.add_hline(y=mean_stacked, line={"color": cfg.HARNESS_STYLE["stacked"]["color"], "dash": "dot", "width": 1},
@@ -280,22 +294,27 @@ def fig_combined(rows: list[dict], models: list[str], fig_dir) -> str:
         fig.update_yaxes(title_text=f"% with no violation<br>in the first {T_STAR} tokens", range=[-2, 102], row=r, col=1)
     fig.update_xaxes(tickvals=list(range(len(order))), ticktext=[l.replace(" (", "<br>(") for l in labels],
                      tickangle=-40, row=2, col=1)
-    fig.update_layout(title=f"H1. Every prompt harness next to earlier experiments' arms (thinking on, same 100 "
-                            f"questions)<br><sup>Shaded: references and exp03-exp05 arms. Marker = model, colour = arm; "
-                            f"95% question-level bootstrap CIs. Dotted: stacked, mean over models. Prefill arms are "
-                            f"scored after the prefill; harness arms on the whole trace</sup>",
-                      legend={"orientation": "h", "y": 1.08, "x": 1, "xanchor": "right"}, margin={"t": 140, "b": 220})
-    return a4.save(fig, fig_dir, "H1_combined_S_tstar", 1500, 950)
+    fig.update_layout(title=f"H1. Every prompt harness next to earlier experiments' arms<br><sup>Filled: thinking on "
+                            f"(rule on the reasoning trace, 100 questions). Open: thinking off (rule on the "
+                            f"&lt;output_reasoning&gt; tag content, {n_half} of the questions). Most thinking-off "
+                            f"outputs end before {T_STAR} tokens,<br>so their S({T_STAR}) rests on fewer texts and "
+                            f"flatters short outputs (H2 bottom row is length-robust). Shaded: references and "
+                            f"exp03-exp05 arms (prefill arms: thinking on only, scored after the prefill).<br>Marker "
+                            f"= model, colour = arm; 95% question-level bootstrap CIs. Dotted: stacked thinking on, "
+                            f"mean over models</sup>",
+                      legend={"orientation": "h", "y": -0.32, "x": 0.5, "xanchor": "center"},
+                      margin={"t": 150, "b": 300})
+    return a4.save(fig, fig_dir, "H1_combined_S_tstar", 1700, 1000)
 
 
 def fig_cot_vs_output(rows: list[dict], models: list[str], n_items: int, fig_dir) -> str:
     """H2: per harness, S(200) and P1 with thinking on (reasoning trace) and off (reasoning in output tags), both on
-    the thinking-off half of the items."""
-    order = OFF_ARMS
-    fig = make_subplots(rows=2, cols=len(models), shared_yaxes=True, shared_xaxes=True, horizontal_spacing=0.02,
-                        vertical_spacing=0.08, subplot_titles=models + [""] * len(models))
+    the thinking-off half of the items; bottom row the length-robust share that reaches T_SHORT clean tokens."""
+    order = [a for a in OFF_ARMS if any(x["arm"] == a for x in rows)]
+    fig = make_subplots(rows=3, cols=len(models), shared_yaxes=True, shared_xaxes=True, horizontal_spacing=0.02,
+                        vertical_spacing=0.06, subplot_titles=models + [""] * 2 * len(models))
     for k, model in enumerate(models):
-        for r, metric in ((1, "S_short"), (2, "P1")):
+        for r, metric in ((1, "S_short"), (2, "P1"), (3, "clean_short")):
             for thinking, off, symbol, name in ((True, -0.15, "circle", "thinking on: rule on the reasoning trace"),
                                                 (False, 0.15, "circle-open", "thinking off: rule on <output_reasoning> "
                                                                              "tag content")):
@@ -315,36 +334,47 @@ def fig_cot_vs_output(rows: list[dict], models: list[str], n_items: int, fig_dir
                              "color": "#555555"},
                     hovertemplate=f"{model} | {name}<br>%{{x}}: %{{y:.1f}}%<extra></extra>"), row=r, col=k + 1)
             fig.update_xaxes(tickvals=list(range(len(order))), ticktext=[style(a)["label"].split(" (")[0] for a in order],
-                             tickangle=-50, row=2, col=k + 1)
+                             tickangle=-50, row=3, col=k + 1)
     fig.update_yaxes(title_text=f"S({T_SHORT}): no violation<br>in the first {T_SHORT} tokens", range=[-2, 102],
                      row=1, col=1)
     fig.update_yaxes(title_text=f"P1: no violation in the graded<br>text (thinking on: first {STOP} tokens)",
                      range=[-2, 102], row=2, col=1)
+    fig.update_yaxes(title_text=f"% of all texts reaching {T_SHORT}<br>tokens with no violation (short "
+                                f"= fail)", range=[-2, 102], row=3, col=1)
     fig.update_layout(title="H2. Is a harness's gain specific to the CoT? The same harness with the reasoning in the "
                             f"thinking trace vs in the output<br><sup>Mean over the 5 rules, the same {n_items} "
                             "questions for both; 95% CIs. A harness that lifts both by the same amount works through "
-                            "general instruction following</sup>",
-                      legend={"orientation": "h", "y": 1.1, "x": 1, "xanchor": "right"}, margin={"t": 130, "b": 200})
-    return a4.save(fig, fig_dir, "H2_cot_vs_output", 1500, 850)
+                            "general instruction following.<br>Rows 1-2 count a short clean text as compliant; row 3 "
+                            "does not, so brevity cannot raise it</sup>",
+                      legend={"orientation": "h", "y": -0.2, "x": 0.5, "xanchor": "center"},
+                      margin={"t": 120, "b": 260})
+    return a4.save(fig, fig_dir, "H2_cot_vs_output", 1600, 1150)
 
 
-def fig_per_rule(per_rule: pd.DataFrame, models: list[str], fig_dir) -> str:
-    """H3: S(t*) per (arm, rule), thinking on, one heatmap per model."""
-    d = per_rule[(per_rule["t"] == T_STAR) & per_rule["thinking"]]
+def fig_per_rule(per_rule: pd.DataFrame, models: list[str], n_half: int, fig_dir) -> str:
+    """H3: S(t*) per (arm, rule), one heatmap per model; top row thinking on (100 questions), bottom row thinking off
+    (the half items). An empty row: the arm has no rows with that thinking setting."""
+    d = per_rule[per_rule["t"] == T_STAR]
     order = (cfg.EXP06A_REFERENCES + cfg.EXP06A_HARNESSES + list(cfg.EXP06A_NO_RULE_TWINS)
              + [a for a in ROUND2 if a in set(d["arm"])])
-    fig = make_subplots(rows=1, cols=len(models), shared_yaxes=True, subplot_titles=models, horizontal_spacing=0.02)
-    for k, model in enumerate(models):
-        m = d[d["model"] == model].pivot(index="arm", columns="mode", values="S").reindex(index=order, columns=RULES)
-        fig.add_trace(go.Heatmap(z=m.to_numpy(), x=[a4.MODE_LABEL[r].split(" (")[0] for r in RULES],
-                                 y=[style(a)["label"] for a in order], zmin=0, zmax=100, colorscale="Viridis",
-                                 showscale=k == len(models) - 1, text=np.round(m.to_numpy()).astype("float"),
-                                 texttemplate="%{text:.0f}", hovertemplate="%{y} | %{x}: %{z:.1f}%<extra></extra>"),
-                      row=1, col=k + 1)
+    fig = make_subplots(rows=2, cols=len(models), shared_yaxes=True, horizontal_spacing=0.02, vertical_spacing=0.1,
+                        subplot_titles=[f"{m}, thinking on" for m in models]
+                                       + [f"{m}, thinking off ({n_half} questions)" for m in models])
+    for r, thinking in ((1, True), (2, False)):
+        for k, model in enumerate(models):
+            m = (d[(d["model"] == model) & (d["thinking"] == thinking)]
+                 .pivot(index="arm", columns="mode", values="S").reindex(index=order, columns=RULES))
+            fig.add_trace(go.Heatmap(z=m.to_numpy(), x=[a4.MODE_LABEL[x].split(" (")[0] for x in RULES],
+                                     y=[style(a)["label"] for a in order], zmin=0, zmax=100, colorscale="Viridis",
+                                     showscale=r == 1 and k == len(models) - 1,
+                                     text=m.map(lambda v: "" if pd.isna(v) else f"{v:.0f}").to_numpy(),
+                                     texttemplate="%{text}", hovertemplate="%{y} | %{x}: %{z:.1f}%<extra></extra>"),
+                          row=r, col=k + 1)
     fig.update_yaxes(autorange="reversed")
-    fig.update_layout(title=f"H3. S({T_STAR}) per rule and harness (thinking on), % of 100 questions",
+    fig.update_layout(title=f"H3. S({T_STAR}) per rule and harness, thinking on (top) and off (bottom), % of "
+                            f"questions",
                       margin={"l": 260, "t": 90})
-    return a4.save(fig, fig_dir, "H3_per_rule", 1500, 620)
+    return a4.save(fig, fig_dir, "H3_per_rule", 1500, 1150)
 
 
 # --- Report ---------------------------------------------------------------------------------------------------------------
@@ -390,19 +420,22 @@ def report(s: dict, figures: list[str], fig_rel: str) -> str:
             for c in s[key]:
                 lines.append(f"| {c['model']} | {c['a']} | {ca.fmt(c['difference'])} | {c['p']:.3f} | "
                              f"{c['p_holm']:.3f} |")
-    lines += ["", f"## CoT specificity: gain over baseline at S({T_SHORT}), thinking on vs off "
-                  f"({len(s['thinking_off_items'])} questions)", "",
-              "| model | arm | gain, thinking on | gain, thinking off | on - off |", "|---|---|---|---|---|"]
-    for c in s["cot_specificity"]:
-        lines.append(f"| {c['model']} | {c['arm']} | {ca.fmt(c['gain_thinking_on'])} | {ca.fmt(c['gain_thinking_off'])} "
-                     f"| {ca.fmt(c['on_minus_off'])} |")
+    for key, what in (("cot_specificity", f"S({T_SHORT})"),
+                      ("cot_specificity_clean_short", f"% of texts reaching {T_SHORT} tokens with no violation "
+                                                       f"(length-robust)")):
+        lines += ["", f"## CoT specificity: gain over baseline in {what}, thinking on vs off "
+                      f"({len(s['thinking_off_items'])} questions)", "",
+                  "| model | arm | gain, thinking on | gain, thinking off | on - off |", "|---|---|---|---|---|"]
+        for c in s[key]:
+            lines.append(f"| {c['model']} | {c['arm']} | {ca.fmt(c['gain_thinking_on'])} | "
+                         f"{ca.fmt(c['gain_thinking_off'])} | {ca.fmt(c['on_minus_off'])} |")
     lines += ["", "## Secondary per-arm metrics", "",
-              "| model | arm | thinking | questions | S(200) | P1 | empty % | median tokens (capped) | meta regex % | "
-              "starts with sentence % |", "|---|---|---|---|---|---|---|---|---|---|"]
+              f"| model | arm | thinking | questions | S(200) | P1 | clean through {T_SHORT} % | empty % | "
+              "median tokens (capped) | meta regex % | starts with sentence % |", "|---|---|---|---|---|---|---|---|---|---|---|"]
     off_half = [x for x in s["arms_half_items"] if not x["thinking"]]
     for x in s["arms"] + off_half + s["arms_off_all_items"]:
         lines.append(f"| {x['model']} | {x['arm']} | {'on' if x['thinking'] else 'off'} | {x['n_items']} | "
-                     f"{f(x['S_short'])} | {f(x['P1'])} | {x['empty_share']:.1f} | "
+                     f"{f(x['S_short'])} | {f(x['P1'])} | {f(x['clean_short'])} | {x['empty_share']:.1f} | "
                      f"{x['median_graded_tokens_capped']:.0f} | {x['meta_regex_share']:.1f} | "
                      f"{x['starts_with_sentence_share']:.1f} |")
     lines += ["", "## Checks", "", "```", json.dumps(s["checks"], indent=1), "```", "", "## Figures", ""]
@@ -444,7 +477,8 @@ def main() -> None:
                                       [(a, t) for t in (True, False) for a in OFF_ARMS])
     full_off = [m for m in models if m not in cfg.EXP06A_SPLIT_MODELS]
     arms_off_all_items, _ = arm_table(df[~df["thinking"]], full_off, boot, [(a, False) for a in OFF_ARMS])
-    per_rule = per_rule_table(df[df["thinking"]], models, boot)
+    per_rule = pd.concat([per_rule_table(df[df["thinking"]], models, boot),
+                          per_rule_table(df_half[~df_half["thinking"]], models, boot_half)], ignore_index=True)
     summary = {
         "exp_id": EXP.exp_id, "run": args.run, "models": models, "missing_parts": missing,
         "censor_empty": args.censor_empty_traces, "t_star": T_STAR, "t_short": T_SHORT, "stop": STOP,
@@ -459,12 +493,15 @@ def main() -> None:
         "round2_vs_stacked": contrast_family(draws, models, [(a, "stacked") for a in ROUND2], True),
         "round2_vs_stacked_rerun": contrast_family(draws, models, [(a, "stacked_rerun") for a in ROUND2], True),
         "cot_specificity": cot_specificity(draws_half, models),
+        "cot_specificity_clean_short": cot_specificity(draws_half, models, "clean_short"),
         "by_source": by_source_table(df, models, boot),
         "arms": arms, "arms_half_items": arms_half, "arms_off_all_items": arms_off_all_items,
         "checks": checks(df, models),
     }
-    figures = [fig_combined(arms, models, fig_dir), fig_cot_vs_output(arms_half, models, len(half_items), fig_dir),
-               fig_per_rule(per_rule, models, fig_dir)]
+    off_half = [r for r in arms_half if not r["thinking"]]
+    figures = [fig_combined(arms, off_half, models, len(half_items), fig_dir),
+               fig_cot_vs_output(arms_half, models, len(half_items), fig_dir),
+               fig_per_rule(per_rule, models, len(half_items), fig_dir)]
     per_rule.to_csv(out_dir / "per_cell.csv", index=False)
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2, default=str) + "\n")
     text = report(summary, figures, os.path.relpath(fig_dir, out_dir))
