@@ -1,0 +1,17 @@
+{
+  "model": "Gemma-4-31B-FP8",
+  "requests": {
+    "path": "cache/exp06a/requests_Gemma-4-31B-FP8_round2.jsonl",
+    "sha256": "f6c044c783e9793423cf28fb39dc304d2eca675e7f9fbb76b2826af87ad3bae1",
+    "n": 2500,
+    "per_prompt_thinking": {
+      "stacked_failure_guide|True": 500,
+      "stacked_fewshot|True": 500,
+      "stacked_start_with|True": 500,
+      "stacked_all|True": 500,
+      "fewshot_failure_guide|True": 500
+    }
+  },
+  "deviation": "deviations_round2.json",
+  "written": "2026-10-01T22:37:03+00:00"
+}

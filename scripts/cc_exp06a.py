@@ -21,8 +21,11 @@ in-environment reruns of the reference arms (cfg.EXP06A_RERUNS; deviations_env_a
 cfg.EXP06A_SPLIT_MODELS the same rows go to requests_<model>_thinking_on.jsonl (all items) and
 requests_<model>_thinking_off_half.jsonl (thinking off, thinking_off_items() only; deviations_thinking_off_half.json).
 
+Round 2 (deviations_round2.json): requests_<model>_round2.jsonl, combinations of round-1 pieces (cfg.EXP06A_ROUND2).
+
 Run: /venv/main/bin/python scripts/cc_exp06a.py items|prepass|manifest
      /venv/main/bin/python scripts/cc_exp06a.py requests --model M      (after M's pre-pass is generated)
+     /venv/main/bin/python scripts/cc_exp06a.py round2 --model M
 """
 
 from __future__ import annotations
@@ -206,6 +209,22 @@ def harness_prompt(item: dict, mode: str, prompt: str, thinking: bool, fewshot: 
     raise ValueError(f"unknown exp06a prompt {prompt!r}")
 
 
+def round2_prompt(item: dict, mode: str, prompt: str, fewshot: list[dict]) -> tuple[str, str, list[dict]]:
+    """(system, final user message, earlier turns) of a round-2 arm (cfg.EXP06A_ROUND2), thinking on: the base
+    prompt, optionally V3's example turns (user = the base prompt's message for the example item), then the appended
+    round-1 blocks, each after one blank line."""
+    base, with_examples, blocks = cfg.EXP06A_ROUND2[prompt]
+    system, user, _ = harness_prompt(item, mode, base, True)
+    block_text = {"failure_guide": lambda: failure_guide(item, mode),
+                  "start_with": lambda: cfg.EXP06A_START_WITH.format(channel=cfg.EXP06A_CHANNEL[True],
+                                                                     start_sentence=start_sentence(mode))}
+    for block in blocks:
+        user += "\n\n" + block_text[block]()
+    history = [{"user": harness_prompt(ex["item"], mode, base, True)[1], "reasoning": ex["reasoning"][mode],
+                "answer": ex["answer"]} for ex in fewshot] if with_examples else []
+    return system, user, history
+
+
 def style_guide_turn1(item: dict, mode: str, thinking: bool) -> str:
     return cfg.EXP06A_STYLE_GUIDE_TURN1.format(channel=cfg.EXP06A_CHANNEL[thinking],
                                                constraint=constraint(item, mode, thinking))
@@ -387,6 +406,37 @@ def main_rows(model: str) -> list[dict]:
     return rows
 
 
+def round2_rows(model: str) -> list[dict]:
+    """Round 2 (deviations_round2.json): every cfg.EXP06A_ROUND2 arm, thinking on, on the 100 test items x 5 rules,
+    with round 1's seeds, stop and abort."""
+    fewshot = fewshot_examples(model)
+    rows = []
+    for item in load_items()[0]:
+        for mode in cfg.EXP06A_MODES:
+            for prompt in cfg.EXP06A_ROUND2:
+                system, user, history = round2_prompt(item, mode, prompt, fewshot)
+                rows.append(with_ids({
+                    "item_id": item["item_id"], "source": item["source"], "mode": mode, "prompt": prompt,
+                    "rollout": 0, "condition": "harness", "thinking": True, "system": system, "user": user,
+                    "history": history, "grading_prompt": cc_prompts.cotcontrol_prompt(item, mode)[1],
+                    "seed": cfg.rollout_seed(item["item_id"], mode, 0), "full_trace_cell": False,
+                    "abort_on_violation": True, "answer_phase": False,
+                    "reasoning_stop_tokens": cfg.EXP06A_REASONING_STOP_TOKENS}))
+    return rows
+
+
+def write_round2_requests(model: str) -> None:
+    path = requests_path(model, "_round2")
+    record_file = EXP.results / f"requests_record_round2_{model}.json"
+    if record_file.exists():
+        raise SystemExit(f"{record_file} exists")
+    cc_exp04.write_jsonl_once(path, round2_rows(model))
+    record = {"model": model, "requests": file_record(path), "deviation": "deviations_round2.json",
+              "written": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")}
+    record_file.write_text(json.dumps(record, indent=2) + "\n")
+    print(f"wrote {record_file.relative_to(cfg.REPO_ROOT)}")
+
+
 def file_record(p) -> dict:
     rows = cc_exp04.load_requests(p)
     return {"path": str(p.relative_to(cfg.REPO_ROOT)), "sha256": cc_manifest.sha256_file(p), "n": len(rows),
@@ -547,11 +597,14 @@ def write_manifest() -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("cmd", choices=["items", "prepass", "manifest", "requests"])
-    parser.add_argument("--model", choices=cfg.EXP06A_MODELS, help="requests: the model whose pre-pass is generated")
+    parser.add_argument("cmd", choices=["items", "prepass", "manifest", "requests", "round2"])
+    parser.add_argument("--model", choices=cfg.EXP06A_MODELS,
+                        help="requests / round2: the model whose pre-pass is generated")
     args = parser.parse_args()
     if args.cmd == "requests":
         write_model_requests(args.model)
+    elif args.cmd == "round2":
+        write_round2_requests(args.model)
     else:
         {"items": draw_items, "prepass": lambda: cc_exp04.write_jsonl_once(REQUESTS_PREPASS, prepass_rows()),
          "manifest": write_manifest}[args.cmd]()

@@ -49,7 +49,9 @@ OPENERS = cfg.EXP04_OPENER_MODES
 MODELS = cfg.EXP06A_MODELS
 STOP = cfg.EXP06A_REASONING_STOP_TOKENS
 VARIANTS = [h for h in cfg.EXP06A_HARNESSES if h not in cfg.EXP06A_DIAGNOSTIC]
-ON_ARMS = cfg.EXP06A_REFERENCES + list(cfg.EXP06A_RERUNS) + cfg.EXP06A_HARNESSES + list(cfg.EXP06A_NO_RULE_TWINS)
+ROUND2 = list(cfg.EXP06A_ROUND2)  # deviations_round2.json: exploratory, thinking on only
+ON_ARMS = (cfg.EXP06A_REFERENCES + list(cfg.EXP06A_RERUNS) + cfg.EXP06A_HARNESSES + list(cfg.EXP06A_NO_RULE_TWINS)
+           + ROUND2)
 OFF_ARMS = ["baseline", "baseline_rerun", "stacked"] + cfg.EXP06A_HARNESSES
 # Earlier experiments' arms on the same items (thinking on), for the combined figure.
 EARLIER = {
@@ -73,7 +75,7 @@ def exp06a_rows(models: list[str], skip_missing: bool) -> tuple[pd.DataFrame, li
     requests = {r["request_id"]: r for p in sorted(EXP.cache.glob("requests_*.jsonl")) for r in cc_exp04.load_requests(p)}
     frames, missing = [], []
     for model in models:
-        for part in cc_exp06a.request_parts(model):
+        for part in cc_exp06a.request_parts(model) + ["_round2"]:
             pattern = f"{model}__card__stream_abort_{model}{part}__*.jsonl"
             paths = [Path(p) for p in glob.glob(str(EXP.generations / pattern))]
             if len(paths) != 1 or not a4.grades_path(paths[0]).exists():
@@ -243,7 +245,7 @@ def checks(df: pd.DataFrame, models: list[str]) -> dict:
 def fig_combined(rows: list[dict], models: list[str], fig_dir) -> str:
     """H1: every arm, thinking on, S(t*) per model. Top: the 5 rules; bottom: the 4 opener rules (where exp05 has data)."""
     order = (cfg.EXP06A_REFERENCES + list(EARLIER) + list(cfg.EXP06A_RERUNS) + VARIANTS + cfg.EXP06A_DIAGNOSTIC
-             + list(cfg.EXP06A_NO_RULE_TWINS))
+             + list(cfg.EXP06A_NO_RULE_TWINS) + [a for a in ROUND2 if any(r["arm"] == a for r in rows)])
     labels = [style(a)["label"] for a in order]
     fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.06,
                         subplot_titles=[f"S({T_STAR}), mean over the 5 rules", f"S({T_STAR}), mean over the 4 opener "
@@ -275,7 +277,7 @@ def fig_combined(rows: list[dict], models: list[str], fig_dir) -> str:
                       row=r, col=1)
         n_ref = len(cfg.EXP06A_REFERENCES) + len(EARLIER)
         fig.add_vrect(x0=-0.5, x1=n_ref - 0.5, fillcolor="#f2f2f2", line_width=0, layer="below", row=r, col=1)
-        fig.update_yaxes(title_text="% with no violation<br>in the first %d tokens" % T_STAR, range=[-2, 102], row=r, col=1)
+        fig.update_yaxes(title_text=f"% with no violation<br>in the first {T_STAR} tokens", range=[-2, 102], row=r, col=1)
     fig.update_xaxes(tickvals=list(range(len(order))), ticktext=[l.replace(" (", "<br>(") for l in labels],
                      tickangle=-40, row=2, col=1)
     fig.update_layout(title=f"H1. Every prompt harness next to earlier experiments' arms (thinking on, same 100 "
@@ -328,9 +330,10 @@ def fig_cot_vs_output(rows: list[dict], models: list[str], n_items: int, fig_dir
 
 def fig_per_rule(per_rule: pd.DataFrame, models: list[str], fig_dir) -> str:
     """H3: S(t*) per (arm, rule), thinking on, one heatmap per model."""
-    order = cfg.EXP06A_REFERENCES + cfg.EXP06A_HARNESSES + list(cfg.EXP06A_NO_RULE_TWINS)
-    fig = make_subplots(rows=1, cols=len(models), shared_yaxes=True, subplot_titles=models, horizontal_spacing=0.02)
     d = per_rule[(per_rule["t"] == T_STAR) & per_rule["thinking"]]
+    order = (cfg.EXP06A_REFERENCES + cfg.EXP06A_HARNESSES + list(cfg.EXP06A_NO_RULE_TWINS)
+             + [a for a in ROUND2 if a in set(d["arm"])])
+    fig = make_subplots(rows=1, cols=len(models), shared_yaxes=True, subplot_titles=models, horizontal_spacing=0.02)
     for k, model in enumerate(models):
         m = d[d["model"] == model].pivot(index="arm", columns="mode", values="S").reindex(index=order, columns=RULES)
         fig.add_trace(go.Heatmap(z=m.to_numpy(), x=[a4.MODE_LABEL[r].split(" (")[0] for r in RULES],
@@ -379,6 +382,14 @@ def report(s: dict, figures: list[str], fig_rel: str) -> str:
               "| model | harness | difference (pts) | p Holm |", "|---|---|---|---|"]
     for c in s["twins"]:
         lines.append(f"| {c['model']} | {c['a']} | {ca.fmt(c['difference'])} | {c['p_holm']:.3f} |")
+    for key, ref in (("round2_vs_stacked", "stacked (reused rows)"), ("round2_vs_stacked_rerun", "stacked rerun")):
+        if s[key]:
+            lines += ["", f"## Round 2 (exploratory, deviations_round2.json): arm - {ref}, S({T_STAR}) thinking on "
+                          f"(Holm over {len(ROUND2)} x models)", "",
+                      "| model | arm | difference (pts) | p | p Holm |", "|---|---|---|---|---|"]
+            for c in s[key]:
+                lines.append(f"| {c['model']} | {c['a']} | {ca.fmt(c['difference'])} | {c['p']:.3f} | "
+                             f"{c['p_holm']:.3f} |")
     lines += ["", f"## CoT specificity: gain over baseline at S({T_SHORT}), thinking on vs off "
                   f"({len(s['thinking_off_items'])} questions)", "",
               "| model | arm | gain, thinking on | gain, thinking off | on - off |", "|---|---|---|---|---|"]
@@ -445,6 +456,8 @@ def main() -> None:
                                                  "S_short")),
         "vs_baseline": contrast_family(draws, models, [(h, "baseline") for h in cfg.EXP06A_HARNESSES], True),
         "twins": contrast_family(draws, models, [(h, twin) for twin, h in cfg.EXP06A_NO_RULE_TWINS.items()], True),
+        "round2_vs_stacked": contrast_family(draws, models, [(a, "stacked") for a in ROUND2], True),
+        "round2_vs_stacked_rerun": contrast_family(draws, models, [(a, "stacked_rerun") for a in ROUND2], True),
         "cot_specificity": cot_specificity(draws_half, models),
         "by_source": by_source_table(df, models, boot),
         "arms": arms, "arms_half_items": arms_half, "arms_off_all_items": arms_off_all_items,

@@ -590,6 +590,16 @@ EXP06A_DIAGNOSTIC = ["meta_allowed"]  # not eligible as a winner
 # estimate, for all models, uses that half.
 EXP06A_SPLIT_MODELS = ["Gemma-4-31B-FP8", "Qwen3-32B"]
 EXP06A_THINKING_OFF_HALF_SEED = 20261002
+# Round 2 (deviations_round2.json; exploratory, thinking on only, same items and seeds): combinations of round-1 pieces.
+# arm -> (base prompt, with V3's 3 example turns?, blocks appended to the final user message in this order). Example
+# user turns are the base prompt's user message for the example item, without the appended blocks.
+EXP06A_ROUND2 = {
+    "stacked_failure_guide": ("stacked", False, ["failure_guide"]),
+    "stacked_fewshot": ("stacked", True, []),
+    "stacked_start_with": ("stacked", False, ["start_with"]),
+    "stacked_all": ("stacked", True, ["failure_guide", "start_with"]),
+    "fewshot_failure_guide": ("baseline", True, ["failure_guide"]),
+}
 # {channel}: how the harness refers to the graded text in each arm.
 EXP06A_CHANNEL = {True: "your reasoning stage", False: "the content inside the <output_reasoning> tags"}
 EXP06A_NO_MENTION = {
@@ -675,4 +685,9 @@ HARNESS_STYLE = {  # fixed color per exp06a arm in every figure (Okabe-Ito + gre
     "fewshot_no_rule": {"color": "#0072B2", "label": "V3 twin: no rule"},
     "baseline_rerun": {"color": "#999999", "label": "R0 baseline, rerun here"},
     "stacked_rerun": {"color": "#009E73", "label": "R1 stacked, rerun here"},
+    "stacked_failure_guide": {"color": "#8C3B00", "label": "R2a stacked + failure guide"},
+    "stacked_fewshot": {"color": "#003F66", "label": "R2b stacked + 3-shot"},
+    "stacked_start_with": {"color": "#8A5F00", "label": "R2c stacked + start-with"},
+    "stacked_all": {"color": "#6A3D9A", "label": "R2d stacked + 3-shot + guide + start-with"},
+    "fewshot_failure_guide": {"color": "#5A6B8C", "label": "R2e 3-shot + failure guide (no stacked)"},
 }

@@ -1,0 +1,26 @@
+{
+  "written": "2026-10-01T22:36Z, before any round-2 request file was written",
+  "approved": "human, 2026-10-01 (chat: 'Lets do your recommended 5 arms')",
+  "status": "exploratory (manifest.json round_2): designed after reading round 1, on the same items, so estimates of the winners are optimistic",
+  "round_1_reading_that_motivated_it": {
+    "source": "analysis/round1_thinking_on (all 3 models, thinking on)",
+    "finding": "No single harness beats stacked on Qwen3.8 or Gemma-31B (all 12 contrasts negative, Holm p <= 0.012). On Qwen3-32B, where stacked is weak (S(1000) 5.1), start_with, fewshot and failure_guide each beat it by 13-16 points; their cross-model means (10.9-12.0) tie stacked's (12.0). Every round-1 harness is appended to R0, so these contrasts compare one ingredient with the stacked recipe. Round 2 asks whether the three tied ingredients add to stacked",
+    "length check": "Qwen3-32B's gains are not from shorter traces: the share reaching the 1200-token stop with no violation is 8.6-10.8% for the three harnesses vs 2.6% for stacked"
+  },
+  "arms": {
+    "definition": "cfg.EXP06A_ROUND2 and cc_exp06a.round2_prompt. No new text: every piece is HARNESS.md's frozen round-1 text. Blocks are appended to the final user message after one blank line, in the listed order. Example turns are V3's (the same 3 compliant examples per model and rule); their user turns are the base prompt's message for the example item, without the appended blocks",
+    "stacked_failure_guide": "R1 stacked (system + user) + V5 failure-targeted guide",
+    "stacked_fewshot": "R1 stacked + V3's 3 example turns (example user turns: the stacked user message for the example item; system: the stacked system prompt)",
+    "stacked_start_with": "R1 stacked + V1 start-with sentence instruction",
+    "stacked_all": "R1 stacked + V3's example turns + V5 guide + V1 start-with",
+    "fewshot_failure_guide": "R0 + V3's example turns + V5 guide (no stacked): are the two Qwen3-32B ingredients additive on their own"
+  },
+  "rows": "thinking on only, exp03's 100 items x 5 rules, seed rollout_seed(item, mode, 0), abort at the first violation, stop at 1200 tokens, no answer phase: 2,500 rows per model in requests_<model>_round2.jsonl",
+  "analysis": {
+    "contrasts": "each round-2 arm minus stacked (reused) and minus stacked_rerun, S(1000) 5-rule mean, per model, Holm over 5 arms x 3 models; reported as exploratory",
+    "also": "per-rule S(1000) (round 1 showed gains concentrated in meow and lowercase on Qwen3-32B and in word suppression on Gemma); share reaching the stop with no violation (length check); stacked_start_with's share of traces that begin with the sentence; empty-trace share (Gemma skips thinking in 32% of stacked rows)",
+    "comparison": "stacked_start_with vs exp04's compliant prefill + stacked: the same sentence asked for vs written into the trace (prefill rows are scored after the sentence, so not the same estimand)",
+    "selection_for_exp06": "unchanged from manifest.json: top 2 non-diagnostic arms over rounds 1 and 2 by S(1000), mean over the 3 models; exp06 confirms on new items"
+  },
+  "gpu_order": "the thinking-off backfill (deviations_thinking_off_half.json) is paused (log/exp06a/hold_thinking_off) while round 2 generates, then resumes from its finished rows"
+}
