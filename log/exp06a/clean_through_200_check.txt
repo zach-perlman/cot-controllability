@@ -1,19 +1,24 @@
 
 Qwen3.8-27B-FP8 (% of rows clean through 200 tokens; gain vs baseline_rerun)
-thinking             off    on  gain_on  gain_off
-arm                                              
-baseline_rerun      31.4   5.5      0.0       0.0
-failure_guide       46.7  16.9     11.4      15.3
-fewshot             63.5  18.4     12.9      32.2
-fewshot_no_rule      NaN   9.0      3.5       NaN
-meta_allowed        25.9   7.1      1.6      -5.5
-monitor_stealth     36.9   6.3      0.8       5.5
-stacked             56.9   NaN      NaN      25.5
-stacked_rerun        NaN  25.5     20.0       NaN
-start_with          46.7   9.8      4.3      15.3
-start_with_no_rule   NaN   2.7     -2.7       NaN
-style_guide          4.7   9.8      4.3     -26.7
-warmup              56.5  11.4      5.9      25.1
+thinking                off    on  gain_on  gain_off
+arm                                                 
+baseline_rerun         31.4   5.5      0.0       0.0
+failure_guide          46.7  16.9     11.4      15.3
+fewshot                63.5  18.4     12.9      32.2
+fewshot_failure_guide   NaN  39.6     34.1       NaN
+fewshot_no_rule         NaN   9.0      3.5       NaN
+meta_allowed           25.9   7.1      1.6      -5.5
+monitor_stealth        36.9   6.3      0.8       5.5
+stacked                56.9   NaN      NaN      25.5
+stacked_all             NaN  63.5     58.0       NaN
+stacked_failure_guide   NaN  31.4     25.9       NaN
+stacked_fewshot         NaN  48.6     43.1       NaN
+stacked_rerun           NaN  25.5     20.0       NaN
+stacked_start_with      NaN  36.1     30.6       NaN
+start_with             46.7   9.8      4.3      15.3
+start_with_no_rule      NaN   2.7     -2.7       NaN
+style_guide             4.7   9.8      4.3     -26.7
+warmup                 56.5  11.4      5.9      25.1
 
 Gemma-4-31B-FP8 (% of rows clean through 200 tokens; gain vs baseline_rerun)
 thinking             off    on  gain_on  gain_off
@@ -46,3 +51,42 @@ start_with          56.5  27.8     16.1      22.0
 start_with_no_rule   NaN   4.3     -7.5       NaN
 style_guide          8.6  10.2     -1.6     -25.9
 warmup              37.6  12.5      0.8       3.1
+
+Qwen3.8-27B-FP8, thinking off: no-tag share and clean-through-200 among tagged rows
+                 no_tag_%  clean_200_tagged_only  gain_tagged_only
+arm                                                               
+baseline_rerun       32.2                   46.3               0.0
+failure_guide        16.5                   55.0               8.7
+fewshot               1.6                   64.5              18.2
+meta_allowed         25.1                   35.0             -11.3
+monitor_stealth      19.2                   44.5              -1.8
+stacked               9.0                   62.7              16.4
+start_with           13.3                   53.9               7.6
+style_guide          11.4                    5.4             -40.9
+warmup                7.5                   62.0              15.7
+
+Gemma-4-31B-FP8, thinking off: no-tag share and clean-through-200 among tagged rows
+                 no_tag_%  clean_200_tagged_only  gain_tagged_only
+arm                                                               
+baseline_rerun        0.0                   47.1               0.0
+failure_guide         0.0                   50.2               3.1
+fewshot               0.0                   66.7              19.6
+meta_allowed          0.4                   39.0              -8.1
+monitor_stealth       0.0                   48.2               1.2
+stacked               0.0                   47.5               0.4
+start_with            0.0                   58.8              11.8
+style_guide           0.0                    3.9             -43.1
+warmup                0.0                   93.3              46.3
+
+Qwen3-32B, thinking off: no-tag share and clean-through-200 among tagged rows
+                 no_tag_%  clean_200_tagged_only  gain_tagged_only
+arm                                                               
+baseline_rerun        9.8                   37.1               0.0
+failure_guide         5.1                   45.1               8.0
+fewshot               3.1                   69.1              32.0
+meta_allowed         12.5                   34.7              -2.4
+monitor_stealth      13.7                   36.6              -0.4
+stacked               3.9                   55.2              18.1
+start_with            3.9                   58.8              21.7
+style_guide           2.7                    8.8             -28.3
+warmup               23.1                   48.8              11.7

@@ -7,6 +7,7 @@ import sys
 sys.path.insert(0, "scripts")
 import cc_exp06a
 import cc_exp06a_analysis as an
+import pandas as pd
 
 ARMS = ["stacked_rerun", "start_with", "warmup", "fewshot", "style_guide", "failure_guide", "monitor_stealth", "meta_allowed"]
 MODELS = ["Qwen3.8-27B-FP8", "Gemma-4-31B-FP8", "Qwen3-32B"]
@@ -23,4 +24,15 @@ for m in MODELS:
     t["gain_on"] = t["on"] - t.loc["baseline_rerun", "on"]
     t["gain_off"] = t["off"] - t.loc["baseline_rerun", "off"]
     print(f"\n{m} (% of rows clean through 200 tokens; gain vs baseline_rerun)")
+    print(t.round(1).to_string())
+
+# Confound: a thinking-off row with no <output_reasoning> tag content is a violation at token 0, and harnesses change
+# how often the tags are used. Same rate among rows with tag content only (thinking off), next to the no-tag share.
+off = df[~df["thinking"].astype(bool)]
+tagged = off[~off["empty"]].groupby(["model", "arm", "mode"])["clean_200"].mean().groupby(["model", "arm"]).mean() * 100
+no_tag = off.groupby(["model", "arm"])["empty"].mean() * 100
+for m in MODELS:
+    t = pd.DataFrame({"no_tag_%": no_tag.loc[m], "clean_200_tagged_only": tagged.loc[m]})
+    t["gain_tagged_only"] = t["clean_200_tagged_only"] - t.loc["baseline_rerun", "clean_200_tagged_only"]
+    print(f"\n{m}, thinking off: no-tag share and clean-through-200 among tagged rows")
     print(t.round(1).to_string())
