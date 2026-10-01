@@ -1,0 +1,17 @@
+{
+  "model": "Qwen3.6-35B-A3B-FP8",
+  "base_gate": {
+    "n": 100,
+    "closed_share": 1.0,
+    "allow_cap_truncation": true,
+    "median_reasoning_tokens": 16475,
+    "answer_share": 1.0
+  },
+  "requests": {
+    "path": "cache/exp05/requests_Qwen3.6-35B-A3B-FP8.jsonl",
+    "sha256": "6fef63860103323e4244e555d9fee2cb090a31f42629b81b3c4d75cad80cda29",
+    "n": 2400,
+    "abort_on_violation": 1800
+  },
+  "written": "2026-10-01T04:01:52+00:00"
+}

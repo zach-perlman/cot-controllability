@@ -71,14 +71,20 @@ def own_traces(model: str) -> dict[str, str]:
     return {r["item_id"]: r["reasoning"] for r in rows if r["mode"] == cfg.NO_CONSTRAINT}
 
 
-def check_base_gate(model: str) -> dict:
+GATE_CAP_TRUNCATION_DEVIATION = EXP.results / "deviations_gate_cap_truncation.json"
+
+
+def check_base_gate(model: str, allow_cap_truncation: bool = False) -> dict:
     """Stops (exit 2) before a new model's dose rows are written if its no-constraint traces do not look like working
     thinking-mode output (reasoning closed, of a plausible length, followed by an answer): a broken chat-format
-    adapter would otherwise waste the dose run."""
+    adapter would otherwise waste the dose run. allow_cap_truncation (deviations_gate_cap_truncation.json): a trace
+    cut at the reasoning cap also counts as closed."""
     rows = [json.loads(line) for line in open(base_generation(model))]
     nc = [r for r in rows if r["mode"] == cfg.NO_CONSTRAINT]
     tokens = sorted(r["reasoning_tokens"] for r in nc)
-    stats = {"n": len(nc), "closed_share": sum(r["think_status"] == "closed" for r in nc) / len(nc),
+    working = {"closed", "truncated"} if allow_cap_truncation else {"closed"}
+    stats = {"n": len(nc), "closed_share": sum(r["think_status"] in working for r in nc) / len(nc),
+             "allow_cap_truncation": allow_cap_truncation,
              "median_reasoning_tokens": tokens[len(tokens) // 2],
              "answer_share": sum(bool(r["answer"].strip()) for r in nc) / len(nc)}
     gate = cfg.EXP05_BASE_GATE
@@ -206,10 +212,12 @@ def write_extension_requests() -> None:
             cc_exp04.write_jsonl_once(requests_path(model), dose_rows(model, items))
 
 
-def write_new_model_requests(model: str) -> None:
+def write_new_model_requests(model: str, gate: str) -> None:
     if model not in cfg.EXP05_NEW_MODELS:
         raise SystemExit(f"{model} is not in cfg.EXP05_NEW_MODELS")
-    stats = check_base_gate(model)
+    if gate == "cap-truncation" and not GATE_CAP_TRUNCATION_DEVIATION.exists():
+        raise SystemExit(f"--gate cap-truncation needs {GATE_CAP_TRUNCATION_DEVIATION.name} (written before the run)")
+    stats = check_base_gate(model, allow_cap_truncation=gate == "cap-truncation")
     cc_exp04.write_jsonl_once(requests_path(model), dose_rows(model, cc_exp03.load_items()))
     # Recorded next to the manifest (written before any extension generation), since this file can only exist after
     # the base rows are generated.
@@ -395,9 +403,12 @@ if __name__ == "__main__":
     parser.add_argument("cmd", choices=["requests", "manifest", "requests-extension", "manifest-extension",
                                         "requests-new"])
     parser.add_argument("--model", help="requests-new: the new model whose base rows are generated")
+    parser.add_argument("--gate", choices=["pre-registered", "cap-truncation"], default="pre-registered",
+                        help="requests-new: cap-truncation also counts traces cut at the reasoning cap as closed "
+                             "(deviations_gate_cap_truncation.json)")
     args = parser.parse_args()
     if args.cmd == "requests-new":
-        write_new_model_requests(args.model)
+        write_new_model_requests(args.model, args.gate)
     else:
         {"requests": write_requests, "manifest": write_manifest, "requests-extension": write_extension_requests,
          "manifest-extension": write_manifest_extension}[args.cmd]()

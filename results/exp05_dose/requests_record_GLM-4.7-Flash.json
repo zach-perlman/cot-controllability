@@ -1,0 +1,17 @@
+{
+  "model": "GLM-4.7-Flash",
+  "base_gate": {
+    "n": 100,
+    "closed_share": 1.0,
+    "allow_cap_truncation": true,
+    "median_reasoning_tokens": 8481,
+    "answer_share": 1.0
+  },
+  "requests": {
+    "path": "cache/exp05/requests_GLM-4.7-Flash.jsonl",
+    "sha256": "d57c05cbce0ea2ca849714357c9f54c1ba0b688ac8098ddce4f200ae8181fa50",
+    "n": 2400,
+    "abort_on_violation": 1800
+  },
+  "written": "2026-10-01T04:01:58+00:00"
+}
