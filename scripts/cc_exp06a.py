@@ -416,7 +416,7 @@ def write_manifest() -> None:
                                                      "generations (Qwen3.8-27B-FP8, Gemma-4-31B-FP8): same items, "
                                                      "prompts and seeds",
                 "thinking off, baseline": "exp04's external_ceiling rows (same prompt)",
-                "difference": "the reused thinking-on rows ran to the end in exp03's full-trace cells (25%) and are "
+                "difference": "the reused thinking-on rows ran to the end in exp03's full-trace cells (25%%) and are "
                               "otherwise aborted at the first violation; the new rows stop at %d tokens. S(t) for "
                               "t <= %d is the same estimand." % (cfg.EXP06A_REASONING_STOP_TOKENS,
                                                                  cfg.EXP06A_REASONING_STOP_TOKENS),
