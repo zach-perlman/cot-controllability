@@ -1,0 +1,48 @@
+{
+  "model": "Gemma-4-31B-FP8",
+  "requests": {
+    "main": {
+      "path": "cache/exp06/requests_Gemma-4-31B-FP8_main.jsonl",
+      "sha256": "e4e4c901543bac2857f4d368b89491ec919704626ef7ebf8ac0b737207f079df",
+      "n": 4700,
+      "per_cell": {
+        "baseline|none|on": 500,
+        "baseline|prefill_compliant|on": 500,
+        "baseline|prefill_noncompliant|on": 400,
+        "stacked|none|on": 500,
+        "stacked|prefill_compliant|on": 500,
+        "stacked|prefill_noncompliant|on": 400,
+        "upgraded|none|on": 500,
+        "upgraded|prefill_compliant|on": 500,
+        "upgraded|prefill_noncompliant|on": 400,
+        "no_rule|prefill_compliant|on": 500
+      }
+    },
+    "thinking_off": {
+      "path": "cache/exp06/requests_Gemma-4-31B-FP8_thinking_off.jsonl",
+      "sha256": "58af5df0f39571bce70f4e45595e25cf0afe8c9eb1bca2c4e186e11f07d290f6",
+      "n": 1500,
+      "per_cell": {
+        "baseline|none|off": 500,
+        "stacked|none|off": 500,
+        "upgraded|none|off": 500
+      }
+    }
+  },
+  "fewshot_items": [
+    "MMLU-Pro:69",
+    "MMLU-Pro:103",
+    "MMLU-Pro:118"
+  ],
+  "fewshot_source_requests": [
+    "399655a2eaa7",
+    "b705601976f3",
+    "7a979475fe36"
+  ],
+  "rendering_checks": {
+    "same_as_exp06a": 163,
+    "prefill_appended": 116,
+    "longest_prompt_tokens": 10433
+  },
+  "written": "2026-10-02T04:23:19+00:00"
+}

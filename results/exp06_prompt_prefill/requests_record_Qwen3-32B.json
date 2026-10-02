@@ -1,0 +1,48 @@
+{
+  "model": "Qwen3-32B",
+  "requests": {
+    "main": {
+      "path": "cache/exp06/requests_Qwen3-32B_main.jsonl",
+      "sha256": "c4b130d5ee5e58acf2260bcc49d8f48c1ffff7a5cb611eb9af029dacfad86f17",
+      "n": 4700,
+      "per_cell": {
+        "baseline|none|on": 500,
+        "baseline|prefill_compliant|on": 500,
+        "baseline|prefill_noncompliant|on": 400,
+        "stacked|none|on": 500,
+        "stacked|prefill_compliant|on": 500,
+        "stacked|prefill_noncompliant|on": 400,
+        "upgraded|none|on": 500,
+        "upgraded|prefill_compliant|on": 500,
+        "upgraded|prefill_noncompliant|on": 400,
+        "no_rule|prefill_compliant|on": 500
+      }
+    },
+    "thinking_off": {
+      "path": "cache/exp06/requests_Qwen3-32B_thinking_off.jsonl",
+      "sha256": "2e44ff87c5cef704538508c2ce7a34f4544f821969dadc325f166fc064c2c1a8",
+      "n": 1500,
+      "per_cell": {
+        "baseline|none|off": 500,
+        "stacked|none|off": 500,
+        "upgraded|none|off": 500
+      }
+    }
+  },
+  "fewshot_items": [
+    "MMLU-Pro:69",
+    "MMLU-Pro:103",
+    "MMLU-Pro:118"
+  ],
+  "fewshot_source_requests": [
+    "399655a2eaa7",
+    "b705601976f3",
+    "7a979475fe36"
+  ],
+  "rendering_checks": {
+    "same_as_exp06a": 163,
+    "prefill_appended": 116,
+    "longest_prompt_tokens": 9193
+  },
+  "written": "2026-10-02T04:23:38+00:00"
+}

@@ -1,0 +1,2 @@
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3.6-27B-FP8.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3.6-27B-FP8__card__stream_abort_prepass__9f4be390d2e5.jsonl
