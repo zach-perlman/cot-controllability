@@ -125,6 +125,34 @@ def guide_in_system(ctx: Context) -> Prompt:
     return Prompt(prompt.system + "\n\n" + failure_guide(ctx), prompt.user, prompt.history)
 
 
+# Round 1. Round 0 (both search models): no candidate beat upgraded on the mean (all within about +-5 points);
+# guide_in_system was the only one up on both models, long_examples next; opening helped Gemma and hurt Qwen3.8.
+def guide_in_system_long(ctx: Context) -> Prompt:
+    """guide_in_system with long_examples' 2500-character example reasoning."""
+    prompt = guided(ctx, max_chars=2500)
+    return Prompt(prompt.system + "\n\n" + failure_guide(ctx), prompt.user, prompt.history)
+
+
+def short_sentences(ctx: Context) -> Prompt:
+    """upgraded, plus: reason in short, simple sentences."""
+    return guided(ctx, extra=(
+        f"Reason in short, simple sentences with plain words: the requirement is easier to keep in every sentence "
+        f"of {CHANNEL} when each sentence is short."))
+
+
+def examples_with_guide(ctx: Context) -> Prompt:
+    """upgraded, with the failure guide also in each example turn's user message (as in the final one)."""
+    system, user = stacked(ctx)
+    history = example_turns(ctx, lambda c: stacked(c)[1] + "\n\n" + failure_guide(c), 3,
+                            cfg.EXP06A_FEWSHOT_MAX_CHARS)
+    return Prompt(system, user + "\n\n" + failure_guide(ctx), history)
+
+
+def rule_last(ctx: Context) -> Prompt:
+    """upgraded, with the rule line once more at the very end of the user message."""
+    return guided(ctx, extra=rule_lines(ctx.rule, 1))
+
+
 CANDIDATES: dict[str, Callable[[Context], Prompt]] = {
     "baseline": baseline,
     "upgraded": upgraded,
@@ -132,6 +160,10 @@ CANDIDATES: dict[str, Callable[[Context], Prompt]] = {
     "six_examples": six_examples,
     "long_examples": long_examples,
     "guide_in_system": guide_in_system,
+    "guide_in_system_long": guide_in_system_long,
+    "short_sentences": short_sentences,
+    "examples_with_guide": examples_with_guide,
+    "rule_last": rule_last,
 }
 N_EXAMPLES_NEEDED = 6  # examples prepared per (model, rule); a candidate uses up to this many
 
