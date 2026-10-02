@@ -594,51 +594,74 @@ def fig_survival_and_ends(df: pd.DataFrame, rows: list[dict], models: list[str],
     return a4.save(fig, fig_dir, "E3_survival_and_ends", 1600, height)
 
 
+E4_LEVERS = [  # (kind, prompt): panel title
+    (("prompt", "upgraded"), "upgraded prompt<br>vs CoT-Control's prompt"),
+    (("prompt", "stacked"), "stacked prompt<br>vs CoT-Control's prompt"),
+    (("opening", "baseline"), "compliant opening vs none<br>(CoT-Control's prompt)"),
+    (("opening", "upgraded"), "compliant opening vs none<br>(upgraded prompt)"),
+]
+E4_CHANNELS = [("on", True, "thinking on: rule applied to the thinking trace"),
+               ("off", False, "thinking off: rule applied to the reasoning written in the answer "
+                              "(&lt;output_reasoning&gt; tags)")]
+
+
 def fig_cot_vs_output(spec: list[dict], opening_spec: list[dict], models: list[str], fig_dir) -> str:
-    """E4. Gain with thinking on vs off, of each prompt over the CoT-Control prompt (circles) and of the compliant
-    opening over none under a prompt (triangles); points (left), % of headroom (right)."""
-    fig = make_subplots(rows=1, cols=2, horizontal_spacing=0.1,
-                        subplot_titles=["gain in points", "gain as % of the room left (100 - the cell it is over)"])
-    lever = {("prompt", "stacked"): ("circle-open", "stacked prompt over CoT-Control's"),
-             ("prompt", "upgraded"): ("circle", "upgraded prompt over CoT-Control's"),
-             ("opening", "baseline"): ("triangle-up-open", "compliant opening over none, CoT-Control's prompt"),
-             ("opening", "upgraded"): ("triangle-up", "compliant opening over none, upgraded prompt")}
-    gains = [("prompt", r) for r in spec] + [("opening", r) for r in opening_spec]
-    for c, unit in enumerate(("points", "headroom"), 1):
-        for model in models:
-            color, _ = MODEL_STYLE[model]
-            pts = [(kind, r) for kind, r in gains if r["model"] == model]
-            fig.add_trace(go.Scatter(
-                x=[r[f"on_{unit}"]["value"] for _, r in pts], y=[r[f"off_{unit}"]["value"] for _, r in pts],
-                mode="markers", name=model_name(model), legendgroup=model, showlegend=c == 1,
-                marker={"color": color, "size": 12, "symbol": [lever[(kind, r["prompt"])][0] for kind, r in pts],
-                        "line": {"color": color, "width": 2}},
-                error_x={**ci_bars([r[f"on_{unit}"] for _, r in pts]), "color": color},
-                error_y={**ci_bars([r[f"off_{unit}"] for _, r in pts]), "color": color},
-                hovertemplate=[f"{lever[(kind, r['prompt'])][1]}: on {r[f'on_{unit}']['value']:+.1f}, off "
-                               f"{r[f'off_{unit}']['value']:+.1f}; on - off {r[f'on_minus_off_{unit}']['value']:+.1f} "
-                               f"[{r[f'on_minus_off_{unit}']['ci'][0]:+.1f}, {r[f'on_minus_off_{unit}']['ci'][1]:+.1f}]"
-                               f"<extra>{model}</extra>" for kind, r in pts]), row=1, col=c)
-        fig.add_trace(go.Scatter(x=[-100, 100], y=[-100, 100], mode="lines", showlegend=False, hoverinfo="skip",
-                                 line={"color": "#999999", "dash": "dot", "width": 1}), row=1, col=c)
-        lows = [s["ci"][0] for _, r in gains for s in (r[f"on_{unit}"], r[f"off_{unit}"]) if np.isfinite(s["ci"][0])]
-        lo = min([-10] + [v - 5 for v in lows])
-        fig.update_xaxes(range=[lo, 100], title_text=f"gain with thinking on ({unit})", row=1, col=c)
-        fig.update_yaxes(range=[lo, 100], title_text=f"gain with thinking off ({unit})", row=1, col=c)
-    for symbol, label in lever.values():  # symbol legend
-        fig.add_trace(go.Scatter(x=[None], y=[None], mode="markers", name=label,
-                                 marker={"symbol": symbol, "color": "#555555", "size": 11}), row=1, col=1)
-    fig.update_layout(title="E4. Is the gain specific to the CoT? Rule on the thinking trace vs on the "
-                            "&lt;output_reasoning&gt; tag content (100 new questions)"
-                            f"<br><sup>Metric: share of ALL texts reaching {T_SHORT} tokens with no violation (a short "
-                            "or missing text counts as a failure). Dotted: equal gain; below it = more specific to the "
-                            "CoT. Circles: a prompt's gain (no opening); triangles:<br>a compliant opening's gain "
-                            "(thinking off: prefilled after the opening tag, which the no-opening cell may never "
-                            "write). Right: gain / room left, since thinking-off cells start higher. Hover for on - off "
-                            "with its CI</sup>",
-                      legend={"orientation": "h", "y": -0.18, "x": 0.5, "xanchor": "center"},
-                      margin={"t": 125, "b": 150})
-    return a4.save(fig, fig_dir, "E4_cot_vs_output", 1400, 700)
+    """E4. Per lever (column) and model (row): the lever's gain with thinking on (filled dot) and off (open dot),
+    joined by a line, with the on - off difference written beside the pair; top row in points, bottom row as % of
+    the room left."""
+    records = ({("prompt", r["prompt"], r["model"]): r for r in spec}
+               | {("opening", r["prompt"], r["model"]): r for r in opening_spec})
+    y_of = {m: len(models) - 1 - i for i, m in enumerate(models)}  # first model on top
+    units = [("points", "gain (points)"), ("headroom", "gain (% of room left)")]
+    fig = make_subplots(rows=len(units), cols=len(E4_LEVERS), shared_yaxes=True, horizontal_spacing=0.025,
+                        vertical_spacing=0.1, subplot_titles=[t for _, t in E4_LEVERS] + [""] * len(E4_LEVERS),
+                        row_titles=[label for _, label in units])
+    for r, (unit, label) in enumerate(units, 1):
+        stats = [rec[f"{ch}_{unit}"] for rec in records.values() for ch, _, _ in E4_CHANNELS]
+        lo = min([-10] + [s["ci"][0] - 5 for s in stats if np.isfinite(s["ci"][0])])
+        hi = max([60] + [s["ci"][1] + 14 for s in stats if np.isfinite(s["ci"][1])])
+        for c, ((kind, prompt), _) in enumerate(E4_LEVERS, 1):
+            for model in models:
+                color, y, rec = MODEL_STYLE[model][0], y_of[model], records.get((kind, prompt, model))
+                if rec is None:
+                    fig.add_annotation(x=0, y=y, text="not run", showarrow=False, xanchor="left",
+                                       font={"size": 11, "color": "#999999"}, row=r, col=c)
+                    continue
+                on, off, diff = rec[f"on_{unit}"], rec[f"off_{unit}"], rec[f"on_minus_off_{unit}"]
+                fig.add_trace(go.Scatter(x=[on["value"], off["value"]], y=[y, y], mode="lines", showlegend=False,
+                                         hoverinfo="skip", line={"color": color, "width": 2}), row=r, col=c)
+                for ch, filled, ch_label in E4_CHANNELS:
+                    s = rec[f"{ch}_{unit}"]
+                    fig.add_trace(go.Scatter(
+                        x=[s["value"]], y=[y], mode="markers", showlegend=False,
+                        marker={"color": color if filled else "white", "size": 11, "line": {"color": color, "width": 2}},
+                        error_x={**ci_bars([s]), "color": color},
+                        hovertemplate=f"{ch_label}: {s['value']:+.1f} [{s['ci'][0]:+.1f}, {s['ci'][1]:+.1f}]"
+                                      f"<extra>{model}</extra>"), row=r, col=c)
+                excludes_zero = diff["ci"][0] > 0 or diff["ci"][1] < 0
+                right = max(x for x in (on["ci"][1], off["ci"][1], on["value"], off["value"]) if np.isfinite(x))
+                fig.add_annotation(x=right + 2, y=y, xanchor="left", showarrow=False,
+                                   text=f"{diff['value']:+.0f}{'*' if excludes_zero else ''}",
+                                   font={"size": 11, "color": color}, row=r, col=c)
+            fig.add_vline(x=0, line={"color": "#999999", "width": 1}, row=r, col=c)
+            fig.update_xaxes(range=[lo, hi], row=r, col=c)
+        fig.update_yaxes(tickvals=list(y_of.values()), ticktext=[model_name(m) for m in y_of],
+                         range=[-0.6, len(models) - 0.4], row=r, col=1)
+    for ch, filled, ch_label in E4_CHANNELS:  # legend: filled vs open dot
+        fig.add_trace(go.Scatter(x=[None], y=[None], mode="markers", name=ch_label,
+                                 marker={"color": "#555555" if filled else "white", "size": 11,
+                                         "line": {"color": "#555555", "width": 2}}), row=1, col=1)
+    fig.update_layout(
+        title="E4. Does each lever help the thinking trace more than reasoning written in the answer? "
+              "(100 new questions)"
+              f"<br><sup>Each pair: one lever's gain on one model, with thinking on (filled) and off (open), 95% CIs. "
+              f"Filled dot further right = the lever helps the CoT more. Number beside a pair: on - off (* = its 95% "
+              f"CI excludes 0).<br>Metric: share of all texts reaching {T_SHORT} tokens with no violation; a shorter "
+              "or missing text counts as a failure, so the metric also rewards longer texts (a prefilled opening "
+              "lengthens thinking-off answers). Bottom: gain / (100 - the cell it is over).</sup>",
+        legend={"orientation": "h", "y": -0.08, "x": 0.5, "xanchor": "center"},
+        margin={"l": 210, "t": 150, "b": 90, "r": 120})
+    return a4.save(fig, fig_dir, "E4_cot_vs_output", 1600, 820)
 
 
 def fig_per_rule(per_rule: pd.DataFrame, models: list[str], fig_dir) -> str:
