@@ -60,6 +60,8 @@ PRIMARY = {"C1 upgraded vs stacked (no opening)": (("upgraded", "none"), ("stack
 MODEL_STYLE = {"Qwen3.8-27B-FP8": ("#0072B2", "circle"), "Gemma-4-31B-FP8": ("#D55E00", "diamond"),
                "Qwen3-32B": ("#009E73", "square"), "Qwen3.6-27B-FP8": ("#CC79A7", "star")}
 PROMPT_LABEL = {p: s["label"] for p, s in cfg.EXP06_STYLE.items()}
+CUT_MARGIN = 50
+SHORT_PROMPT = {"baseline": "CoT-Control", "stacked": "stacked", "upgraded": "upgraded", "no_rule": "no rule"}
 OPENING_LABEL = {o: s["label"] for o, s in cfg.EXP06_OPENING_STYLE.items()}
 COLUMNS = ["model", "item_id", "source", "mode", "prompt", "opening", "thinking", "reasoning", "reasoning_tokens",
            "fv_token", "compliant", "correct", "think_status", "meta_regex", "full_trace_cell", "external_blocks"]
@@ -386,7 +388,8 @@ def fig_levers(secondary: list[dict], primary: list[dict], models: list[str], fi
                          "arrayminus": [s["value"] - s["ci"][0] for s in stats], "color": color, "thickness": 1.5},
                 hovertemplate=[h + f"<extra>{model}</extra>" for h in hover]), row=1, col=c + 1)
         fig.add_vline(x=0, line={"color": "#555555", "width": 1}, row=1, col=c + 1)
-        fig.update_yaxes(tickvals=list(range(len(labels))), ticktext=labels, autorange="reversed", row=1, col=c + 1)
+        fig.update_yaxes(tickvals=list(range(len(labels))), ticktext=[label.split(" (")[0] for label in labels],
+                         range=[len(labels) - 0.5, -0.5], row=1, col=c + 1)
         fig.update_xaxes(title_text="difference in S(1000), points", range=[-40, 90], row=1, col=c + 1)
     fig.update_layout(title="E2. What each lever adds (thinking on, 100 new questions)<br><sup>Paired differences in "
                             "S(1000) with 95% bootstrap CIs. Filled markers: pre-registered primary contrasts (hover "
@@ -397,15 +400,18 @@ def fig_levers(secondary: list[dict], primary: list[dict], models: list[str], fi
     return a4.save(fig, fig_dir, "E2_what_each_lever_adds", 1900, 520)
 
 
-END_STYLE = {"violation": ("#D55E00", f"violation before token {T_STAR}"),
-             "ended_clean_early": ("#BBBBBB", f"no violation, but the text ended before token {T_STAR}"),
-             "clean_through": ("#009E73", f"no violation through token {T_STAR}")}
+# Neutral colours, so the bars cannot be read as prompts.
+END_STYLE = {"violation": ("#4D4D4D", f"bars: violation before token {T_STAR}"),
+             "ended_clean_early": ("#C8C8C8", f"bars: no violation, but the text ended before token {T_STAR}"),
+             "clean_through": ("#F0E442", f"bars: no violation through token {T_STAR}")}
 
 
 def fig_survival_and_ends(df: pd.DataFrame, rows: list[dict], models: list[str], fig_dir) -> str:
     """E3. Per (model, opening): KM S(t) per prompt, mean over the 4 opener rules; under it, one bar per prompt with
     how the traces ended (so a high S(t) from short traces is visible)."""
-    grid = np.arange(0, STOP + 1, 10, dtype=float)
+    # The cut at the stop can split a word or sentence, which the grader scores as a violation (tokens ~1198), so
+    # the curves end CUT_MARGIN tokens before it. Estimates at t* are unaffected.
+    grid = np.arange(0, STOP - CUT_MARGIN + 1, 10, dtype=float)
     est = {(r["model"], r["prompt"], r["opening"]): r for r in rows if r["thinking"]}
     specs_rows = []
     for _ in models:
@@ -413,8 +419,8 @@ def fig_survival_and_ends(df: pd.DataFrame, rows: list[dict], models: list[str],
     titles = []
     for m in models:
         titles += [f"{model_name(m)} | {OPENING_LABEL[o]}" for o in OPENINGS] + [""] * len(OPENINGS)
-    fig = make_subplots(rows=2 * len(models), cols=len(OPENINGS), row_heights=specs_rows, vertical_spacing=0.035,
-                        horizontal_spacing=0.035, subplot_titles=titles)
+    fig = make_subplots(rows=2 * len(models), cols=len(OPENINGS), row_heights=specs_rows, vertical_spacing=0.05,
+                        horizontal_spacing=0.06, subplot_titles=titles)
     for i, model in enumerate(models):
         r_curve, r_bar = 2 * i + 1, 2 * i + 2
         for j, opening in enumerate(OPENINGS):
@@ -437,26 +443,32 @@ def fig_survival_and_ends(df: pd.DataFrame, rows: list[dict], models: list[str],
                               row=r_curve, col=j + 1)
             fig.add_vline(x=T_STAR, line={"color": "black", "width": 0.6, "dash": "dot"}, row=r_curve, col=j + 1)
             fig.update_yaxes(range=[0, 101], row=r_curve, col=j + 1, showticklabels=j == 0)
-            fig.update_xaxes(range=[0, STOP], row=r_curve, col=j + 1, showticklabels=False)
+            fig.update_xaxes(range=[0, STOP - CUT_MARGIN], row=r_curve, col=j + 1, tickfont={"size": 9})
             for end, (color, label) in END_STYLE.items():
                 ys = [p for p in prompts if (model, p, opening) in est]
                 fig.add_trace(go.Bar(
-                    y=[PROMPT_LABEL[p].split(" (")[0] for p in ys],
+                    y=[SHORT_PROMPT[p] for p in ys],
                     x=[est[(model, p, opening)]["end_shares_openers"][end] for p in ys], orientation="h",
-                    marker={"color": color}, name=label, legendgroup=end, showlegend=i == 0 and j == 0,
+                    marker={"color": color, "line": {"color": "#888888", "width": 0.5}}, name=label,
+                    legendgroup=end, showlegend=i == 0 and j == 0,
                     hovertemplate="%{y}: %{x:.0f}%<extra>" + label + "</extra>"), row=r_bar, col=j + 1)
-            fig.update_xaxes(range=[0, 100], row=r_bar, col=j + 1, showticklabels=i == len(models) - 1)
-            fig.update_yaxes(tickfont={"size": 9}, row=r_bar, col=j + 1, showticklabels=j == 0)
+            fig.update_xaxes(range=[0, 100], row=r_bar, col=j + 1, showticklabels=i == len(models) - 1,
+                             title_text="% of traces" if i == len(models) - 1 else None)
+            fig.update_yaxes(tickfont={"size": 9}, row=r_bar, col=j + 1)
         fig.update_yaxes(title_text="% no violation yet", row=r_curve, col=1)
-    fig.update_layout(barmode="stack", height=None,
+    height, top, bottom = 330 * len(models) + 310, 170, 140
+    fig.update_layout(barmode="stack",
                       title="E3. When violations happen, and how traces end (thinking on, 4 opener rules, 100 new "
-                            "questions)<br><sup>Curves: KM share of traces with no violation yet, by tokens into the "
-                            "graded text (after the opening). Bars: % of traces that violated before token 1000 / "
-                            "ended clean but shorter than 1000 tokens / were clean through 1000.<br>A grey bar means "
-                            "part of S(1000) rests on short texts. Rows stop at 1200 tokens (dotted line: 1000)</sup>",
-                      legend={"orientation": "h", "y": -0.04, "x": 0.5, "xanchor": "center"},
-                      margin={"l": 90, "t": 130, "b": 110})
-    return a4.save(fig, fig_dir, "E3_survival_and_ends", 1600, 330 * len(models) + 250)
+                            "questions)<br><sup>Curves: KM share of traces with no violation yet (y) by tokens into "
+                            "the graded text, after the opening (x; dotted line: 1000; rows stop at 1200,<br>curves "
+                            "end at 1150 because the cut at the stop can split a word). Bars: % of traces that "
+                            "violated before token 1000 / ended clean but shorter than 1000 tokens / were clean "
+                            "through 1000.<br>A long light-grey segment means part of S(1000) rests on short "
+                            "texts</sup>",
+                      legend={"orientation": "h", "y": -70 / (height - top - bottom), "yanchor": "top", "x": 0.5,
+                              "xanchor": "center"},
+                      margin={"l": 90, "t": top, "b": bottom})
+    return a4.save(fig, fig_dir, "E3_survival_and_ends", 1600, height)
 
 
 def fig_cot_vs_output(spec: list[dict], models: list[str], fig_dir) -> str:
@@ -577,9 +589,9 @@ def fig_replication(rows: list[dict], screen: dict, models: list[str], fig_dir) 
     fig.update_yaxes(range=[0, 100], title_text="S(1000) on exp06's 100 new questions, %")
     fig.update_layout(title="E7. Do the screen's numbers hold on new questions? Same cell, same model<br><sup>The "
                             "upgraded prompt (★) was chosen on exp03's questions, so it should sit a little below the "
-                            "diagonal if the screen overfit them. Held-out model not shown (no screen numbers). "
-                            "exp04's rows ran in an earlier environment</sup>",
-                      margin={"t": 100})
+                            "diagonal if the screen overfit them.<br>Held-out model not shown (no screen numbers). "
+                            "exp04's prefill rows ran in an earlier environment. 95% CIs on both axes</sup>",
+                      margin={"t": 120})
     return a4.save(fig, fig_dir, "E7_replication", 1000, 760), data
 
 
