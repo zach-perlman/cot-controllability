@@ -34,10 +34,10 @@ from cc_survival import kaplan_meier
 
 MODELS = cfg.EXP06_MODELS
 SHORT_MODEL = {"Qwen3.8-27B-FP8": "Qwen3.8-27B", "Gemma-4-31B-FP8": "Gemma-4-31B", "Qwen3-32B": "Qwen3-32B",
-               "Qwen3.6-27B-FP8": "Qwen3.6-27B*"}
+               "Qwen3.6-27B-FP8": "Qwen3.6-27B*", "Qwen3.5-9B": "Qwen3.5-9B*"}
 MODEL_COLOR = {"Qwen3.8-27B-FP8": "#0072B2", "Gemma-4-31B-FP8": "#D55E00", "Qwen3-32B": "#009E73",
-               "Qwen3.6-27B-FP8": "#CC79A7"}
-HELD_OUT_NOTE = "*Qwen3.6-27B was not used to choose the prompt (held out)."
+               "Qwen3.6-27B-FP8": "#CC79A7", "Qwen3.5-9B": "#E69F00"}
+HELD_OUT_NOTE = "*Held out: not used to choose the prompt."
 # Interventions, in plain words, with one colour each across all figures.
 ARM = {
     ("baseline", "none"): ("CoT-Control's prompt", "#9E9E9E"),

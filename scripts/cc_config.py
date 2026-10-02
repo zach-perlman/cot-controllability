@@ -706,8 +706,10 @@ EXP06 = Exp("exp06_prompt_prefill", "exp06")
 EXPERIMENTS["exp06"] = EXP06
 EXP06_ITEMS_PATH = EXP06.cache / "items.jsonl"
 ITEMS_BY_EXP["exp06"] = EXP06_ITEMS_PATH
-EXP06_MODELS = ["Qwen3.8-27B-FP8", "Gemma-4-31B-FP8", "Qwen3-32B", "Qwen3.6-27B-FP8"]  # run order
-EXP06_HELD_OUT_MODELS = ["Qwen3.6-27B-FP8"]  # not in the exp06a screen: the prompt's transfer to a fourth model
+# Run order. Qwen3.5-9B added after the main run (manifest_extension_qwen35.json), as a second held-out model.
+EXP06_MODELS = ["Qwen3.8-27B-FP8", "Gemma-4-31B-FP8", "Qwen3-32B", "Qwen3.6-27B-FP8", "Qwen3.5-9B"]
+# Not in the exp06a screen: the prompt's transfer to other models; each is its own Holm family.
+EXP06_HELD_OUT_MODELS = ["Qwen3.6-27B-FP8", "Qwen3.5-9B"]
 EXP06_ITEMS_PER_SOURCE = EXP03_ITEMS_PER_SOURCE
 EXP06_ITEM_SEED = 20261003
 EXP06_MODES = EXP04_MODES
@@ -719,8 +721,9 @@ EXP06_STOP_TOKENS = EXP06A_REASONING_STOP_TOKENS
 # word_suppression's compliant opening when exp04's sentence contains one of the item's banned words (exp04's items
 # had none such; on exp06's items the banned words can include "question").
 EXP06_WORD_SUPPRESSION_FALLBACK_PREFILL = "Okay, let me work through this carefully."
-# exp06a's history formats plus the held-out model's (its template drops an earlier turn's reasoning, as Qwen3's).
-EXP06_HISTORY_REASONING = {**EXP06A_HISTORY_REASONING, "qwen3.6": "<think>\n{reasoning}\n</think>\n\n{answer}"}
+# exp06a's history formats plus the held-out models' (their templates drop an earlier turn's reasoning, as Qwen3's).
+EXP06_HISTORY_REASONING = {**EXP06A_HISTORY_REASONING, "qwen3.6": "<think>\n{reasoning}\n</think>\n\n{answer}",
+                           "qwen3.5": "<think>\n{reasoning}\n</think>\n\n{answer}"}
 EXP06_STYLE = {  # fixed color per prompt, line style per opening, in every exp06 figure
     "baseline": {"color": "#999999", "label": "CoT-Control prompt"},
     "stacked": {"color": "#009E73", "label": "stacked"},

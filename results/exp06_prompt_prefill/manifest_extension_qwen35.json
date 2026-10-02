@@ -1,0 +1,37 @@
+{
+  "exp_id": "exp06_prompt_prefill",
+  "extension": "Qwen3.5-9B as a second held-out model (human request 2026-10-02 13:05 EDT)",
+  "why": "Does the upgraded prompt transfer to a smaller model of another Qwen generation that was at the floor in exp03-exp05 (0 compliant traces under every prompt in exp03; <= 10% S(1000) in exp05)?",
+  "unchanged": "manifest.json's design, items, cells, prompts, openings, seeds, stop, scoring, primary contrasts and secondary outcomes; requests_prepass.jsonl (the same 8 few-shot source rows, reused); the 4 models' request files, generations, grades and the 'overnight' analysis run",
+  "model": {
+    "Qwen3.5-9B": {
+      "repo": "Qwen/Qwen3.5-9B",
+      "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "family": "qwen3.5",
+      "gpu_memory_utilization": 0.9
+    },
+    "sampling": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "repetition_penalty": 1.0
+    },
+    "chat_template_kwargs": {},
+    "precision": "bf16 (as in exp03-exp05)"
+  },
+  "fewshot": "held-out rule (manifest.json): exp06a's selection on its own generation of requests_prepass.jsonl",
+  "changes": {
+    "history_format": "cfg.EXP06_HISTORY_REASONING gains 'qwen3.5' = Qwen3.6's format: probed 2026-10-02, Qwen3.5's template drops an earlier turn's reasoning_content and renders the probe identically to Qwen3.6's. This dict is part of the exp06 generation key, so exp06 generation files written from now on (any model) get new names; existing files and grades are unaffected",
+    "holm": "each held-out model is its own Holm family (3 contrasts); with one held-out model this equals manifest.json's rule, so Qwen3.6's adjusted p-values are unchanged",
+    "analysis": "new analysis run 'with_qwen35' (all 5 models) and story figures figures/story/v2; 'overnight' and figures/story/v1 are kept"
+  },
+  "predictions": {
+    "baseline_and_stacked": "near the floor (S(1000) <= 5) as in exp03-exp05",
+    "upgraded": "uncertain; a lift above the floor would extend the transfer claim to a small model; a null would bound it",
+    "risk": "exp03: 82-87% of Qwen3.5-9B traces open with a fixed 'Thinking Process:' header, which breaks lowercase/meow/end-with-'safe' at the first tokens"
+  },
+  "written": "2026-10-02T17:07:59+00:00",
+  "commit": "3f29882fc79a4624135f204874b4ae1af8e0e324-dirty(scripts)"
+}

@@ -10,7 +10,7 @@ no violation (a text that ends earlier counts as not reaching t).
 
 Primary (manifest): S(1000), 5-rule mean, thinking on; C1 upgraded|none - stacked|none, C2 upgraded|compliant -
 upgraded|none, C3 upgraded|compliant - no_rule|compliant; Holm over the 3 contrasts x the 3 screened models, and
-separately over the held-out model's 3.
+separately over each held-out model's 3.
 
 Figures (figures/exp06_prompt_prefill/<run>/):
   E1_prefill_comparison   S(1000) per opening, one line per prompt (top: the 4 opener rules; bottom: word
@@ -58,7 +58,8 @@ PRIMARY = {"C1 upgraded vs stacked (no opening)": (("upgraded", "none"), ("stack
            "C3 rule beyond copying (compliant opening)": (("upgraded", "prefill_compliant"),
                                                           ("no_rule", "prefill_compliant"))}
 MODEL_STYLE = {"Qwen3.8-27B-FP8": ("#0072B2", "circle"), "Gemma-4-31B-FP8": ("#D55E00", "diamond"),
-               "Qwen3-32B": ("#009E73", "square"), "Qwen3.6-27B-FP8": ("#CC79A7", "star")}
+               "Qwen3-32B": ("#009E73", "square"), "Qwen3.6-27B-FP8": ("#CC79A7", "star"),
+               "Qwen3.5-9B": ("#E69F00", "triangle-up")}
 PROMPT_LABEL = {p: s["label"] for p, s in cfg.EXP06_STYLE.items()}
 CUT_MARGIN = 50
 SHORT_PROMPT = {"baseline": "CoT-Control", "stacked": "stacked", "upgraded": "upgraded", "no_rule": "no rule"}
@@ -171,8 +172,9 @@ def difference(draws: dict, model: str, a: tuple, b: tuple, metric: str = "S_100
 
 def primary_contrasts(draws: dict, models: list[str]) -> list[dict]:
     out = []
-    for family in ("screened", "held_out"):
-        fam_models = [m for m in models if (m in HELD_OUT) == (family == "held_out")]
+    families = {"screened": [m for m in models if m not in HELD_OUT]}
+    families.update({f"held_out:{m}": [m] for m in models if m in HELD_OUT})
+    for family, fam_models in families.items():
         rows = []
         for model in fam_models:
             for name, (a, b) in PRIMARY.items():
@@ -604,7 +606,7 @@ def report(s: dict, figures: list[str], fig_rel: str) -> str:
              f"Models: {', '.join(model_name(m) for m in s['models'])}. Missing parts: {s['missing_parts'] or 'none'}.",
              "100 new questions x 5 rules per cell; thinking on unless stated. S(1000) = KM % of traces with no "
              "violation in the first 1000 graded tokens (prefill rows: after the prefill).", "",
-             "## Primary contrasts: S(1000), 5-rule mean (Holm within the screened and the held-out family)", "",
+             "## Primary contrasts: S(1000), 5-rule mean (Holm within the screened family and within each held-out model)", "",
              "| model | contrast | difference (pts) | p | p Holm |", "|---|---|---|---|---|"]
     for r in s["primary"]:
         lines.append(f"| {model_name(r['model'])} | {r['contrast']} | {fmt(r['difference'])} | {r['p']:.3f} | "
