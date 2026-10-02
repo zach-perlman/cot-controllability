@@ -696,3 +696,39 @@ HARNESS_STYLE = {  # fixed color per exp06a arm in every figure (Okabe-Ito + gre
     "fewshot_failure_guide": {"color": "#5A6B8C", "label": "R2e 3-shot + failure guide (no stacked)"},
     "stacked_fewshot_failure_guide": {"color": "#B15928", "label": "R2f stacked + 3-shot + guide"},
 }
+
+# --- exp06_prompt_prefill -----------------------------------------------------------------------------------------
+# exp04's prefill design with exp06a's upgraded prompt, on 100 new items (none of exp01-exp06a's, nor the few-shot
+# candidates), so the prompt chosen on exp03's 100 items is tested on items it was not chosen on. Thinking on:
+# prompt x opening (cc_exp06.CELLS); thinking off: each prompt on the <output_reasoning> tag content. Design agreed
+# with the human on 2026-10-01/02 (results/exp06_prompt_prefill/manifest.json).
+EXP06 = Exp("exp06_prompt_prefill", "exp06")
+EXPERIMENTS["exp06"] = EXP06
+EXP06_ITEMS_PATH = EXP06.cache / "items.jsonl"
+ITEMS_BY_EXP["exp06"] = EXP06_ITEMS_PATH
+EXP06_MODELS = ["Qwen3.8-27B-FP8", "Gemma-4-31B-FP8", "Qwen3-32B", "Qwen3.6-27B-FP8"]  # run order
+EXP06_HELD_OUT_MODELS = ["Qwen3.6-27B-FP8"]  # not in the exp06a screen: the prompt's transfer to a fourth model
+EXP06_ITEMS_PER_SOURCE = EXP03_ITEMS_PER_SOURCE
+EXP06_ITEM_SEED = 20261003
+EXP06_MODES = EXP04_MODES
+EXP06_OPENER_MODES = EXP04_OPENER_MODES
+# prompt -> how it is built: CoT-Control's prompt, Jozdien's stacked prompt, and exp06a's round-2 arm R2f (stacked +
+# the model's 3 on-policy example turns + the failure-targeted guide; human choice on 2026-10-01: no start-with).
+EXP06_PROMPTS = {"baseline": "baseline", "stacked": "stacked", "upgraded": "stacked_fewshot_failure_guide"}
+EXP06_STOP_TOKENS = EXP06A_REASONING_STOP_TOKENS
+# word_suppression's compliant opening when exp04's sentence contains one of the item's banned words (exp04's items
+# had none such; on exp06's items the banned words can include "question").
+EXP06_WORD_SUPPRESSION_FALLBACK_PREFILL = "Okay, let me work through this carefully."
+# exp06a's history formats plus the held-out model's (its template drops an earlier turn's reasoning, as Qwen3's).
+EXP06_HISTORY_REASONING = {**EXP06A_HISTORY_REASONING, "qwen3.6": "<think>\n{reasoning}\n</think>\n\n{answer}"}
+EXP06_STYLE = {  # fixed color per prompt, line style per opening, in every exp06 figure
+    "baseline": {"color": "#999999", "label": "CoT-Control prompt"},
+    "stacked": {"color": "#009E73", "label": "stacked"},
+    "upgraded": {"color": "#B15928", "label": "upgraded (stacked + 3-shot + guide)"},
+    "no_rule": {"color": "#000000", "label": "no rule (copying control)"},
+}
+EXP06_OPENING_STYLE = {
+    "none": {"dash": "solid", "symbol": "circle", "label": "no opening"},
+    "prefill_compliant": {"dash": "dash", "symbol": "triangle-up", "label": "compliant opening"},
+    "prefill_noncompliant": {"dash": "dot", "symbol": "x", "label": "non-compliant opening"},
+}

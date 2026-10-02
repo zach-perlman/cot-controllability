@@ -62,6 +62,12 @@ def output_path(requests_path: Path, model: str, sampling: dict, requests: list[
                               "result_code": inspect.getsource(cc_exp06a.generation_result),
                               "history_formats": cfg.EXP06A_HISTORY_REASONING,
                               "job_code": inspect.getsource(job_of)}
+    if any("exp06_cell" in r for r in requests):  # exp06: its renderer (exp06a's + prefill), jobs and graded text
+        import cc_exp06
+        material["exp06"] = {"prompt_code": inspect.getsource(cc_exp06.prompt_ids),
+                             "result_code": inspect.getsource(cc_exp06.generation_result),
+                             "job_code": inspect.getsource(cc_exp06.job),
+                             "history_formats": cfg.EXP06_HISTORY_REASONING}
     stem = requests_path.stem.removeprefix("requests")  # exp04's requests_none / requests_repro -> "_none" / "_repro"
     return requests_path.parent / "generations" / f"{model}__card__{ENGINE}{stem}__{cfg.content_key(material)}.jsonl"
 
@@ -307,14 +313,20 @@ def run_shard(llm, tokenizer, family: str, requests: list[dict], items: dict, sa
           flush=True)
     if not todo:
         return
-    if any("history" in r for r in todo):
+    exp06 = any("exp06_cell" in r for r in todo)
+    if exp06:
+        import cc_exp06
+        cc_exp06.check_history_template(tokenizer, family)
+    elif any("history" in r for r in todo):
         import cc_exp06a
         cc_exp06a.check_history_template(tokenizer, family)
-    jobs = [job_of(tokenizer, family, r, items) for r in todo]
+    jobs = [cc_exp06.job(tokenizer, family, r, items) if exp06 else job_of(tokenizer, family, r, items) for r in todo]
     with path.open("a") as f:
         def write(index: int, result: dict) -> None:
             request = todo[index]
-            if "history" in request:
+            if exp06:
+                result = cc_exp06.generation_result(request, result, tokenizer)
+            elif "history" in request:
                 import cc_exp06a
                 result = cc_exp06a.generation_result(request, result, tokenizer)
             elif "condition" in request:
@@ -341,7 +353,7 @@ def merge(requests: list[dict], parts: Path, n_shards: int) -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exp", choices=["exp03", "exp04", "exp05", "exp06a"], required=True)
+    parser.add_argument("--exp", choices=["exp03", "exp04", "exp05", "exp06a", "exp06"], required=True)
     parser.add_argument("--model", choices=list(cfg.ALL_MODELS), required=True)
     parser.add_argument("--requests", type=Path, default=None, help="default: cache/<exp>/requests.jsonl")
     parser.add_argument("--items", type=Path, default=None, help="default: the experiment's items (cfg.ITEMS_BY_EXP)")

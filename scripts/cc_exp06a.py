@@ -363,12 +363,14 @@ def compliant_rewrite(item: dict, mode: str, text: str) -> str:
     return out
 
 
-def fewshot_examples(model: str) -> list[dict]:
+def fewshot_examples(model: str, prepass_rows: list[dict] | None = None) -> list[dict]:
     """The model's first cfg.EXP06A_FEWSHOTS candidates (draw order) whose unconstrained trace closed and answered
-    correctly: reasoning cut and rewritten per rule (each passes the grader), and the model's own answer."""
+    correctly: reasoning cut and rewritten per rule (each passes the grader), and the model's own answer.
+    prepass_rows: the model's few-shot source generations (default: its exp06a pre-pass)."""
     import cc_grade
     _, candidates = load_items()
-    by_item = {r["item_id"]: r for r in prepass_generation(model) if r["condition"] == "fewshot_source"}
+    rows = prepass_generation(model) if prepass_rows is None else prepass_rows
+    by_item = {r["item_id"]: r for r in rows if r["condition"] == "fewshot_source"}
     examples = []
     for item in candidates:
         row = by_item[item["item_id"]]
