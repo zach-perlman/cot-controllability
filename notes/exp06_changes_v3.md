@@ -47,13 +47,15 @@ Sources (all UNVERIFIED):
 
 ## A. Changes to exp04/exp05 for exp06
 
-**Models**
+**Models** (human decision, 2026-10-01: exp06 runs exp06a's three models, Qwen3.8-27B-FP8, Gemma-4-31B-FP8 and
+Qwen3-32B, and no others for now)
 
-1. **Drop Gemma-4-12B and Qwen3.5-9B. Kept.**
-2. **Add GPT-OSS-120B. Kept, more useful.** Effects differ by model, and in kind (point 5), so a fourth family tests
-   whether any harness generalizes. Jozdien's 5.5% -> 15% prompt gain is on this model. Same adapter risk.
-3. **GLM-4.7-Flash optional; Qwen3.6-35B-A3B dropped. Kept.**
-4. **Keep Qwen3.6-27B, with the caps in 5. Kept.**
+1. **Drop Gemma-4-12B and Qwen3.5-9B. Kept** (covered by the decision).
+2. **Add GPT-OSS-120B. Dropped** (human decision). Cost: no fourth model family to test whether a harness
+   generalizes, and no direct comparison with Jozdien's GPT-OSS numbers.
+3. **GLM-4.7-Flash and Qwen3.6-35B-A3B. Dropped** (covered by the decision).
+4. **Qwen3.6-27B. Dropped** (covered by the decision). Cost: its exp05 recovery from a non-compliant start (29% under
+   stacked) was the strongest non-copying evidence; item 22 now relies on the three models.
 
 **Compute**
 
@@ -90,7 +92,7 @@ Sources (all UNVERIFIED):
     - Primary thinking-off metric: the clean-200 rate (item 27) next to S(200), not P1 or S(1000).
     - Stopping thinking-off rows at the first violation inside the tags would cut cost, but needs tag-aware streaming
       grading.
-17. **Drop or move the effort check. Kept.**
+17. **Drop the effort check. Revised:** with no GPT-OSS there is nowhere to move it.
 18. **Drop correctness figures; keep accuracy. Kept.**
 
 **Diagnostics**
@@ -170,7 +172,8 @@ Sources (all UNVERIFIED):
 
 ## D. Default selection for exp06 (v3)
 
-1, 2, 5, 6, 7, 9 (with the fix), 11, 13, 14, 15, 16 (revised: length-robust), 17, 18, 19, 21, 22, 25, 26 (revised
-rule), 27, 28, 29, 30, 31, 33, 34.
+Models: Qwen3.8-27B-FP8, Gemma-4-31B-FP8, Qwen3-32B (items 1-4). Items: 5, 6, 7, 9 (with the fix), 11, 13, 14, 15,
+16 (revised: length-robust), 17 (drop), 18, 19, 21, 22, 25, 26 (revised rule), 27, 28, 29, 30, 31, 33, 34.
 
-Changes from v2: 33 and 34 join; 16, 26 and 27 revised. Items 21 and 26 still depend on round 2's result.
+Changes from v2: GPT-OSS (2) and Qwen3.6-27B (4) leave by human decision; 33 and 34 join; 16, 17, 26 and 27
+revised. Items 21 and 26 still depend on round 2's result.
