@@ -155,6 +155,10 @@ Qwen3-32B, and no others for now)
       - Alternative: stacked_all for all 3 (one prompt, simpler to report), costing about 9 points on Qwen3-32B.
     - **Human decision (2026-10-01): one prompt for all 3, stacked_all.** The rule's per-model choice for Qwen3-32B
       (stacked + start-with) is reported as a round-2 result, not carried.
+    - **Superseded (human decision, 2026-10-02): drop start-with; carry stacked + few-shot + failure guide
+      (`stacked_fewshot_failure_guide`, "upgraded") for all 4 models.** It ties stacked_all on S(1000), is at least as
+      CoT-specific (Qwen3.8 on - off +14.9 vs +9.8; Gemma +47.5 vs +43.5), and keeps the compliant-prefill comparison
+      clean: start-with would have written the opening itself, so prefill on top of it would test nothing new.
 27. **Length-robust co-primary: share of texts reaching t tokens with no violation. Done in the exp06a analysis**
     (`clean_short`, t = 200; H2's bottom row). It is required for thinking off (point 8) and useful for thinking on.
     For exp06: report it at 200 and 1000 next to S(t).
@@ -213,6 +217,16 @@ Models: Qwen3.8-27B-FP8, Gemma-4-31B-FP8, Qwen3-32B (items 1-4). Items: 5, 6, 7,
 16 (revised: length-robust), 17 (drop), 18, 19, 21, 22, 25, 26 (revised rule), 27, 28, 29, 30, 31, 33, 34.
 
 Carried prompt arms (item 26, human decision): stacked and stacked_all, for all 3 models.
+
+**As run (2026-10-02; results/exp06_prompt_prefill/manifest.json, which is authoritative):**
+- Prompts: baseline, stacked, upgraded (= stacked + 3-shot + failure guide; start-with dropped, item 26).
+- Openings (thinking on): none / compliant prefill / non-compliant prefill (4 opener rules), plus no rule + compliant
+  prefill (the copying control). Thinking off: the 3 prompts, no opening.
+- 100 NEW items (seed 20261003; none of exp02/exp03/exp06a's), so the prompt is not scored on the questions it was
+  chosen on. 100 questions in every cell, thinking off included (no half split).
+- Models: the 3 screened ones, plus Qwen3.6-27B-FP8 as a held-out model (its own Holm family; its 3-shot examples come
+  from an exp06 pre-pass on the same 8 candidates).
+- Analysis: scripts/cc_exp06_analysis.py (figures E1-E7).
 
 Changes from v2: GPT-OSS (2) leaves and Qwen3.6-27B (4) is deferred, by human decision; 33 and 34 join; 16, 17, 26 and 27
 revised. Round 2 revised 1, 10, 21, 26 and 29.
