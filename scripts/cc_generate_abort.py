@@ -68,6 +68,11 @@ def output_path(requests_path: Path, model: str, sampling: dict, requests: list[
                              "result_code": inspect.getsource(cc_exp06.generation_result),
                              "job_code": inspect.getsource(cc_exp06.job),
                              "history_formats": cfg.EXP06_HISTORY_REASONING}
+    if any("exp07_cell" in r for r in requests):  # exp07: its renderer and jobs (graded text as generated)
+        import cc_exp07
+        material["exp07"] = {"prompt_code": inspect.getsource(cc_exp07.prompt_ids),
+                             "job_code": inspect.getsource(cc_exp07.job),
+                             "history_formats": [cc_exp07.HISTORY_REASONING, cc_exp07.HISTORY_EMPTY_THINK]}
     stem = requests_path.stem.removeprefix("requests")  # exp04's requests_none / requests_repro -> "_none" / "_repro"
     return requests_path.parent / "generations" / f"{model}__card__{ENGINE}{stem}__{cfg.content_key(material)}.jsonl"
 
@@ -313,18 +318,27 @@ def run_shard(llm, tokenizer, family: str, requests: list[dict], items: dict, sa
           flush=True)
     if not todo:
         return
+    exp07 = any("exp07_cell" in r for r in todo)
     exp06 = any("exp06_cell" in r for r in todo)
-    if exp06:
+    if exp07:
+        import cc_exp07
+        cc_exp07.check_history_template(tokenizer, family)
+        jobs = [cc_exp07.job(tokenizer, family, r, items) for r in todo]
+    elif exp06:
         import cc_exp06
         cc_exp06.check_history_template(tokenizer, family)
     elif any("history" in r for r in todo):
         import cc_exp06a
         cc_exp06a.check_history_template(tokenizer, family)
-    jobs = [cc_exp06.job(tokenizer, family, r, items) if exp06 else job_of(tokenizer, family, r, items) for r in todo]
+    if not exp07:
+        jobs = [cc_exp06.job(tokenizer, family, r, items) if exp06 else job_of(tokenizer, family, r, items)
+                for r in todo]
     with path.open("a") as f:
         def write(index: int, result: dict) -> None:
             request = todo[index]
-            if exp06:
+            if exp07:
+                pass  # graded as generated
+            elif exp06:
                 result = cc_exp06.generation_result(request, result, tokenizer)
             elif "history" in request:
                 import cc_exp06a
@@ -353,7 +367,7 @@ def merge(requests: list[dict], parts: Path, n_shards: int) -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exp", choices=["exp03", "exp04", "exp05", "exp06a", "exp06"], required=True)
+    parser.add_argument("--exp", choices=["exp03", "exp04", "exp05", "exp06a", "exp06", "exp07"], required=True)
     parser.add_argument("--model", choices=list(cfg.ALL_MODELS), required=True)
     parser.add_argument("--requests", type=Path, default=None, help="default: cache/<exp>/requests.jsonl")
     parser.add_argument("--items", type=Path, default=None, help="default: the experiment's items (cfg.ITEMS_BY_EXP)")
