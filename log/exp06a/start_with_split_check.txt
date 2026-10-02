@@ -1,0 +1,36 @@
+
+Qwen3.8-27B-FP8: starts with sentence 58.0%; clean through 1000 by group
+        mean  size
+starts            
+False   11.9   210
+True    31.4   290
+by rule (share starting / clean_1000 if starts / if not):
+  end_of_sentence          13%    0.0    4.6
+  lowercase_thinking       82%   26.8   11.1
+  meow_between_words       94%   41.5    0.0
+  uppercase_thinking       89%   28.1   45.5
+  word_suppression         12%   41.7   15.9
+
+Gemma-4-31B-FP8: starts with sentence 99.8%; clean through 1000 by group
+        mean  size
+starts            
+False    0.0     1
+True    36.7   499
+by rule (share starting / clean_1000 if starts / if not):
+  end_of_sentence         100%   39.0    nan
+  lowercase_thinking       99%   44.4    0.0
+  meow_between_words      100%   51.0    nan
+  uppercase_thinking      100%   19.0    nan
+  word_suppression        100%   30.0    nan
+
+Qwen3-32B: starts with sentence 74.0%; clean through 1000 by group
+        mean  size
+starts            
+False    0.0   130
+True    29.2   370
+by rule (share starting / clean_1000 if starts / if not):
+  end_of_sentence         100%   17.0    nan
+  lowercase_thinking       70%   21.4    0.0
+  meow_between_words      100%   66.0    nan
+  uppercase_thinking        0%    nan    0.0
+  word_suppression        100%   10.0    nan

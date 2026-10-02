@@ -153,6 +153,8 @@ Qwen3-32B, and no others for now)
       - Qwen3-32B: stacked + start-with (+46.1 vs stacked_all +37.2, CIs [41.7, 50.4] vs [32.5, 42.0]). Flag: mostly
         general instruction following.
       - Alternative: stacked_all for all 3 (one prompt, simpler to report), costing about 9 points on Qwen3-32B.
+    - **Human decision (2026-10-01): one prompt for all 3, stacked_all.** The rule's per-model choice for Qwen3-32B
+      (stacked + start-with) is reported as a round-2 result, not carried.
 27. **Length-robust co-primary: share of texts reaching t tokens with no violation. Done in the exp06a analysis**
     (`clean_short`, t = 200; H2's bottom row). It is required for thinking off (point 8) and useful for thinking on.
     For exp06: report it at 200 and 1000 next to S(t).
@@ -210,8 +212,7 @@ Qwen3-32B, and no others for now)
 Models: Qwen3.8-27B-FP8, Gemma-4-31B-FP8, Qwen3-32B (items 1-4). Items: 5, 6, 7, 9 (with the fix), 11, 13, 14, 15,
 16 (revised: length-robust), 17 (drop), 18, 19, 21, 22, 25, 26 (revised rule), 27, 28, 29, 30, 31, 33, 34.
 
-Carried prompt arms (item 26, pending sign-off): stacked for all 3, plus stacked_all (Qwen3.8, Gemma) and stacked +
-start-with (Qwen3-32B).
+Carried prompt arms (item 26, human decision): stacked and stacked_all, for all 3 models.
 
 Changes from v2: GPT-OSS (2) leaves and Qwen3.6-27B (4) is deferred, by human decision; 33 and 34 join; 16, 17, 26 and 27
 revised. Round 2 revised 1, 10, 21, 26 and 29.
