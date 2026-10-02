@@ -12,6 +12,10 @@ exp04's prefill design with exp06a's upgraded prompt, on 100 new items. Per mode
     an answer (accuracy; compliance over the whole trace).
   thinking off (requests_<model>_thinking_off.jsonl): each rule-bearing prompt with the rule on the
     <output_reasoning> tag content (exp06a's thinking-off versions), one call of exp04's external cap.
+  thinking off with an opening (requests_<model>_thinking_off_prefill.jsonl; added 2026-10-02,
+    manifest_extension_off_prefill.json): the cells of CELLS_OFF_PREFILL, each its thinking-off twin with the
+    response prefilled as "<output_reasoning>\\n" + the opening sentence. The no-rule copying control has no exp06a
+    thinking-off prompt: CoT-Control's no-rule non-reasoning prompt + its <output_reasoning> instruction line.
 Prefill rows are graded on the generated continuation only (exp04). Every row of an item and rule has the same seed
 (cfg.rollout_seed(item, mode, 0)), so cells are paired.
 
@@ -21,6 +25,7 @@ items, prompt and seeds), selected by exp06a's rule.
 
 Run: /venv/main/bin/python scripts/cc_exp06.py items|prepass|manifest
      /venv/main/bin/python scripts/cc_exp06.py requests --model M   (held-out M: after its pre-pass is generated)
+     /venv/main/bin/python scripts/cc_exp06.py requests-off-prefill --model M   (after M's requests)
 """
 
 from __future__ import annotations
@@ -47,14 +52,17 @@ OPENINGS = ["none", "prefill_compliant", "prefill_noncompliant"]
 RULE_PROMPTS = list(cfg.EXP06_PROMPTS)  # baseline, stacked, upgraded
 CELLS = [(p, o) for p in RULE_PROMPTS for o in OPENINGS] + [("no_rule", "prefill_compliant")]
 PARTS = ["_main", "_thinking_off"]
+OFF_PREFILL_PART = "_thinking_off_prefill"
+CELLS_OFF_PREFILL = [("baseline", "prefill_compliant"), ("upgraded", "prefill_compliant"),
+                     ("upgraded", "prefill_noncompliant"), ("no_rule", "prefill_compliant")]
 
 
 def requests_path(model: str, part: str):
     return EXP.cache / f"requests_{model}{part}.jsonl"
 
 
-def record_path(model: str):
-    return EXP.results / f"requests_record_{model}.json"
+def record_path(model: str, part: str = ""):
+    return EXP.results / f"requests_record_{model}{part}.json"
 
 
 # --- Items ----------------------------------------------------------------------------------------------------------
@@ -89,11 +97,25 @@ def prompt_messages(item: dict, mode: str, prompt: str, thinking: bool, fewshot:
     """(system, final user message, earlier turns), built by exp06a's code so each prompt is exactly the screened
     one."""
     if prompt == "no_rule":
+        if not thinking:
+            return "", no_rule_off_user(item, mode), []
         system, user = cc_prompts.cotcontrol_prompt(item, "baseline")
         return system, user, []
     if prompt == "upgraded":
         return cc_exp06a.round2_prompt(item, mode, cfg.EXP06_PROMPTS["upgraded"], fewshot, thinking)
     return cc_exp06a.harness_prompt(item, mode, prompt, thinking)
+
+
+def no_rule_off_user(item: dict, mode: str) -> str:
+    """Thinking-off copying control: CoT-Control's no-rule non-reasoning prompt (which asks for no tags), then
+    CoT-Control's <output_reasoning> instruction line, as exp06a's stacked thinking-off prompt adds it."""
+    system, user = _cotcontrol.module("run_cceval").create_prompt_for_sample(
+        cc_prompts.cotcontrol_sample(item, "baseline"), "baseline", cc_prompts.MODEL_NAME_FOR_TEMPLATES,
+        non_reasoning=True, adversarial_pressure="none", output_no_letter_no_grading=False, monitor_aware=False,
+        eval_aware=False)
+    if system or "Requirement" in user or cfg.EXP04_EXTERNAL_TAG in user:
+        raise ValueError(f"{item['item_id']}: CoT-Control's no-rule prompt is not rule- and tag-free")
+    return user + "\n" + cc_exp06a.tag_instruction(cc_exp06a.base_user(item, mode, False))
 
 
 def prefill_for(item: dict, mode: str, opening: str, grading_prompt: str) -> str:
@@ -123,7 +145,8 @@ def fewshot_examples(model: str) -> list[dict]:
 def prompt_ids(tokenizer, family: str, request: dict) -> list[int]:
     """exp06a's rendering (system, earlier turns, final user message; a thinking request then gets the family's
     reasoning opening) with cfg.EXP06_HISTORY_REASONING, then exp04's prefill: a template that does not open the
-    reasoning itself (Qwen3) gets "<think>\\n" first; the prefill is tokenized on its own."""
+    reasoning itself (Qwen3) gets "<think>\\n" first; a thinking-off prefill follows the opening tag
+    "<output_reasoning>\\n" in the response. The opening and the prefill are tokenized on their own."""
     fam = cfg.FAMILIES[family]
     history_format = cfg.EXP06_HISTORY_REASONING[family.split("-")[0]]
     messages = [{"role": "system", "content": request["system"]}] if request["system"] else []
@@ -149,7 +172,9 @@ def prompt_ids(tokenizer, family: str, request: dict) -> list[int]:
     if request["thinking"] and fam.get("think_open_text"):
         ids = ids + tokenizer.encode(fam["think_open_text"], add_special_tokens=False)
     if request["prefill"]:
-        if not fam["template_opens_think"]:
+        if not request["thinking"]:
+            ids = ids + tokenizer.encode(f"<{cfg.EXP04_EXTERNAL_TAG}>\n", add_special_tokens=False)
+        elif not fam["template_opens_think"]:
             ids = ids + tokenizer.encode(tokenizer.convert_ids_to_tokens(fam["think_start"]) + "\n",
                                          add_special_tokens=False)
         ids = ids + tokenizer.encode(request["prefill"], add_special_tokens=False)
@@ -180,9 +205,17 @@ def job(tokenizer, family: str, request: dict, items: dict) -> dict:
 
 def generation_result(request: dict, result: dict, tokenizer) -> dict:
     """What cc_grade grades: thinking-off rows, their <output_reasoning> tag content (no tags -> empty, a violation
-    at token 0); prefill rows, the continuation (the prefill is in the prompt); every other row as generated."""
+    at token 0); prefill rows, the continuation (the prefill is in the prompt); every other row as generated.
+    A thinking-off prefill row's response continues "<output_reasoning>\\n" + prefill, so both are put back before
+    the tags are read, and the prefill is then cut from the content (a tag closed right after it -> empty)."""
     if not request["thinking"]:
-        content, blocks = cc_exp04.external_reasoning(result["answer"])
+        prefill = request["prefill"] or ""
+        response = f"<{cfg.EXP04_EXTERNAL_TAG}>\n{prefill}{result['answer']}" if prefill else result["answer"]
+        content, blocks = cc_exp04.external_reasoning(response)
+        if prefill and blocks:
+            if not content.startswith(prefill):
+                raise RuntimeError(f"{request['request_id']}: tag content does not start with the prefill")
+            content = content[len(prefill):]
         return {**result, "reasoning": content, "external_blocks": blocks,
                 "reasoning_tokens": len(tokenizer.encode(content, add_special_tokens=False)) if content else 0}
     return result
@@ -243,6 +276,30 @@ def model_rows(model: str) -> dict[str, list[dict]]:
     return parts
 
 
+def off_prefill_rows(model: str) -> list[dict]:
+    """Thinking-off rows with an opening (CELLS_OFF_PREFILL): as model_rows' thinking-off rows (same prompts, seeds
+    and cap), with the thinking-on cells' opening sentence as the prefill."""
+    test_items, _ = load_items()
+    fewshot = fewshot_examples(model)
+    rows = []
+    for item in test_items:
+        for mode in cfg.EXP06_MODES:
+            grading_prompt = cc_prompts.cotcontrol_prompt(item, mode)[1]
+            for prompt, opening in CELLS_OFF_PREFILL:
+                if opening == "prefill_noncompliant" and mode not in cfg.EXP06_OPENER_MODES:
+                    continue
+                system, user, history = prompt_messages(item, mode, prompt, False, fewshot)
+                rows.append(with_ids({
+                    "item_id": item["item_id"], "source": item["source"], "mode": mode, "rollout": 0,
+                    "grading_prompt": grading_prompt, "seed": cfg.rollout_seed(item["item_id"], mode, 0),
+                    "prompt": prompt, "condition": opening, "exp06_cell": f"{prompt}|{opening}|off",
+                    "thinking": False, "system": system, "user": user, "history": history,
+                    "prefill": prefill_for(item, mode, opening, grading_prompt),
+                    "full_trace_cell": False, "abort_on_violation": False, "answer_phase": True,
+                    "reasoning_stop_tokens": None, "response_cap_tokens": cfg.EXP04_EXTERNAL_CAP_TOKENS}))
+    return rows
+
+
 def check_rendering(model: str, rows: list[dict]) -> dict:
     """Falsification checks before anything is generated, on the model's tokenizer:
     - a screened model's no-prefill rows render exactly as exp06a's renderer renders them;
@@ -273,6 +330,49 @@ def check_rendering(model: str, rows: list[dict]) -> dict:
     if longest + cfg.REASONING_CAP_TOKENS + cfg.ANSWER_CAP_TOKENS > cfg.VLLM_MAX_MODEL_LEN:
         print(f"{model}: longest prompt {longest} tokens; full-trace rows get a smaller reasoning cap")
     return {**checked, "longest_prompt_tokens": longest}
+
+
+def check_off_prefill_rendering(model: str, rows: list[dict]) -> dict:
+    """Falsification checks before the thinking-off prefill rows are generated, on the model's tokenizer:
+    - the rebuilt thinking-off rows are exactly the generated part's request file (same twins, same seeds);
+    - every prefill row renders as its no-prefill twin's prompt + "<output_reasoning>\\n" + the prefill (no_rule:
+      the same row without the prefill);
+    - generation_result cuts the prefill: a made-up continuation comes back unchanged, an immediate close is empty."""
+    from transformers import AutoTokenizer
+    tokenizer = AutoTokenizer.from_pretrained(cfg.model_dir(model))
+    family = cfg.ALL_MODELS[model]["family"]
+    twins = model_rows(model)["_thinking_off"]
+    on_disk = cc_exp04.load_requests(requests_path(model, "_thinking_off"))
+    if [r["request_id"] for r in twins] != [r["request_id"] for r in on_disk]:
+        raise RuntimeError(f"{model}: rebuilt thinking-off rows differ from {requests_path(model, '_thinking_off')}")
+    by_cell = {(r["item_id"], r["mode"], r["prompt"]): r for r in twins}
+    tag = f"<{cfg.EXP04_EXTERNAL_TAG}>"
+    checked = {"twins_match_request_file": len(twins), "prefill_appended": 0, "graded_text_cut": 0}
+    for r in random.Random(0).sample(rows, min(300, len(rows))):
+        twin = by_cell.get((r["item_id"], r["mode"], r["prompt"])) or {**r, "prefill": None}
+        ids, twin_ids = prompt_ids(tokenizer, family, r), prompt_ids(tokenizer, family, twin)
+        if ids[:len(twin_ids)] != twin_ids or tokenizer.decode(ids[len(twin_ids):]) != f"{tag}\n{r['prefill']}":
+            raise RuntimeError(f"{r['request_id']}: prefill does not render as twin + {tag!r} + prefill")
+        checked["prefill_appended"] += 1
+        for answer, graded in ((" next step.\n</output_reasoning>\n\nANSWER: A", " next step."),
+                               (f"</{cfg.EXP04_EXTERNAL_TAG}>\n\nANSWER: A", "")):
+            if generation_result(r, {"answer": answer}, tokenizer)["reasoning"] != graded:
+                raise RuntimeError(f"{r['request_id']}: generation_result does not cut the prefill")
+        checked["graded_text_cut"] += 1
+    return checked
+
+
+def write_off_prefill_requests(model: str) -> None:
+    path, record = requests_path(model, OFF_PREFILL_PART), record_path(model, OFF_PREFILL_PART)
+    if record.exists():
+        raise SystemExit(f"{record} exists")
+    rows = off_prefill_rows(model)
+    checks = check_off_prefill_rendering(model, rows)
+    cc_exp04.write_jsonl_once(path, rows)
+    record.write_text(json.dumps({"model": model, "requests": file_record(path), "rendering_checks": checks,
+                                  "written": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")},
+                                 indent=2) + "\n")
+    print(f"wrote {record.relative_to(cfg.REPO_ROOT)}: {json.dumps(checks)}")
 
 
 def file_record(p) -> dict:
@@ -430,11 +530,13 @@ def write_manifest() -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("cmd", choices=["items", "prepass", "manifest", "requests"])
+    parser.add_argument("cmd", choices=["items", "prepass", "manifest", "requests", "requests-off-prefill"])
     parser.add_argument("--model", choices=cfg.EXP06_MODELS, help="requests: the model")
     args = parser.parse_args()
     if args.cmd == "requests":
         write_model_requests(args.model)
+    elif args.cmd == "requests-off-prefill":
+        write_off_prefill_requests(args.model)
     else:
         {"items": draw_items, "prepass": lambda: cc_exp04.write_jsonl_once(REQUESTS_PREPASS, prepass_rows()),
          "manifest": write_manifest}[args.cmd]()

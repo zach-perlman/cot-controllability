@@ -11,6 +11,7 @@ Toy text in S0 is invented (no benchmark question text).
   S4_over_the_trace   how compliance decays through the trace, and that a bad start is not recovered
   S5_cot_vs_output    the same rule on the reasoning trace vs on reasoning written in the answer (raw, and as a
                       share of the room left to improve)
+  S5b_opening_on_vs_off  the same for a compliant first sentence (thinking off: prefilled after the opening tag)
   S6_per_rule         which rules move (word suppression, the content rule, barely does)
   S7_cost_and_check   accuracy is unchanged, and the screen's numbers replicate on new questions
 
@@ -68,8 +69,9 @@ def title(main: str, sub: str) -> str:
     return f"<b>{main}</b><br><span style='font-size:13px;color:#555555'>{sub}</span>"
 
 
-def cells(summary: dict) -> dict:
-    return {(r["model"], r["prompt"], r["opening"]): r for r in summary["cells"]}
+def cells(summary: dict, thinking: bool = True) -> dict:
+    """(model, prompt, opening) -> the analysis's estimates, for one channel (thinking on, or off)."""
+    return {(r["model"], r["prompt"], r["opening"]): r for r in summary["cells"] if r["thinking"] == thinking}
 
 
 # --- S0, S1: text figures -----------------------------------------------------------------------------------------
@@ -106,7 +108,34 @@ def fig_task(fig_dir) -> str:
     return save(fig, fig_dir, "S0_task", 1300, 470)
 
 
-def fig_project(fig_dir) -> str:
+FLOOR = 5  # % whole-trace compliance under the upgraded prompt below which a model counts as not lifted
+
+
+def whole_trace_lift(c: dict) -> tuple[list[str], list[str], float, float]:
+    """(models the upgraded prompt lifts above FLOOR, models it does not, lowest and highest lifted value)."""
+    up = {m: c[(m, "upgraded", "none")]["whole_trace_compliant"]["value"] for m in MODELS}
+    lifted = [m for m in MODELS if up[m] >= FLOOR]
+    return lifted, [m for m in MODELS if up[m] < FLOOR], min(up[m] for m in lifted), max(up[m] for m in lifted)
+
+
+def cot_specific_models(summary: dict) -> list[str]:
+    """Models whose upgraded-prompt gain, as a share of the room left, is larger on the trace (95% CI above 0)."""
+    return [r["model"] for r in summary["cot_specificity"]
+            if r["prompt"] == "upgraded" and r["on_minus_off_headroom"]["ci"][0] > 0]
+
+
+def short_names(models: list[str]) -> str:
+    return ", ".join(SHORT_MODEL[m].rstrip("*") for m in models)
+
+
+def fig_project(c: dict, summary: dict, fig_dir) -> str:
+    lifted, floor, lo, hi = whole_trace_lift(c)
+    held_out = len(cfg.EXP06_HELD_OUT_MODELS)
+    exp06_answer = (f"<b>Yes for {len(lifted)} of {len(MODELS)} models. Whole-trace compliance goes from 2-3% to "
+                    f"{lo:.0f}-{hi:.0f}%, with no detectable accuracy cost.</b><br>"
+                    + (f"{short_names(floor)} stays near 0. " if floor else "")
+                    + "Control fades over long traces and a slip is never recovered.<br>The gain is CoT-specific "
+                    f"for only {len(cot_specific_models(summary))} of {len(MODELS)} models.")
     rows = [
         ("exp01", "Does our setup reproduce the paper?",
          "Yes: Qwen3-32B whole-trace compliance 2.0% (paper: 2.3%)."),
@@ -120,16 +149,13 @@ def fig_project(fig_dir) -> str:
         ("exp06a", "Which prompt components help? (screen)",
          "Single components help little; repeated rule + the model's own example traces + a failure list "
          "helps a lot."),
-        ("<b>exp06</b>", "<b>Does it hold on new questions and an unseen model?</b>",
-         "<b>Yes. Whole-trace compliance goes from 2-3% to 13-46%, with no detectable accuracy cost.</b><br>"
-         "But control fades over long traces, a slip is never recovered, and the gain is CoT-specific "
-         "for only 2 of 4 models."),
+        ("<b>exp06</b>", f"<b>Does it hold on new questions and {held_out} unseen models?</b>", exp06_answer),
     ]
     fig = go.Figure(go.Table(
         columnwidth=[0.55, 1.6, 3.4],
         header={"values": ["<b>Experiment</b>", "<b>Question</b>", "<b>Answer (all results unverified)</b>"],
                 "fill_color": "#EFEFEF", "align": "left", "font": {"size": 14}, "height": 34},
-        cells={"values": [list(c) for c in zip(*rows)], "align": "left", "height": 46, "font": {"size": 13},
+        cells={"values": [list(col) for col in zip(*rows)], "align": "left", "height": 46, "font": {"size": 13},
                "fill_color": [["white"] * 5 + ["#FFF4E5"]]}))
     fig.update_layout(title=title("What we did, in order",
                                   "Open reasoning models, 100 questions (GPQA, HLE, MMLU-Pro) x 5 rules per "
@@ -148,6 +174,7 @@ def error(stats: list[dict]) -> dict:
 
 def fig_headline(c: dict, fig_dir) -> str:
     prompts = [("baseline", "none"), ("stacked", "none"), ("upgraded", "none")]
+    lifted, floor, lo, hi = whole_trace_lift(c)
     fig = go.Figure()
     for p in prompts:
         label, color = ARM[p]
@@ -161,8 +188,10 @@ def fig_headline(c: dict, fig_dir) -> str:
                        xanchor="left", yanchor="middle", align="left", font={"size": 12, "color": "#555555"})
     fig.update_layout(
         barmode="group", bargap=0.25,
-        title=title("A better prompt lifts whole-trace compliance from ~2% to 13-46%",
-                    f"% of complete reasoning traces that follow the rule from start to finish.<br>Upgraded prompt = "
+        title=title(f"A better prompt lifts whole-trace compliance from ~2% to {lo:.0f}-{hi:.0f}%"
+                    + (f" in {len(lifted)} of {len(MODELS)} models" if floor else ""),
+                    "% of complete reasoning traces that follow the rule from start to finish"
+                    + (f"; {short_names(floor)} stays near 0" if floor else "") + ".<br>Upgraded prompt = "
                     f"{UPGRADED_DEF}.<br>125 traces per bar (25 questions x 5 rules); 95% bootstrap CIs. "
                     f"{HELD_OUT_NOTE}"),
         yaxis={"title": "whole trace follows the rule (%)", "range": [0, 60]},
@@ -195,9 +224,13 @@ def fig_ladder(c: dict, fig_dir) -> str:
                      showline=False, ticks="")
     fig.update_xaxes(title_text="% of traces with no violation in the first 1000 tokens, S(1000)", range=[0, 80],
                      showgrid=True, gridcolor="#EEEEEE")
+    beats = sum(c[(m, "upgraded", "none")]["S_1000"]["value"] > c[(m, "baseline", "prefill_compliant")]["S_1000"]["value"]
+                for m in MODELS)
     fig.update_layout(
-        title=title("The prompt alone beats writing the first sentence for the model (3 of 4 models)",
-                    "Dots: one per model, 95% CIs. Bars and grey numbers: mean over the 4 models. Mean over 5 rules, "
+        title=title(f"The prompt alone beats writing the first sentence for the model ({beats} of {len(MODELS)} "
+                    "models)",
+                    f"Dots: one per model, 95% CIs. Bars and grey numbers: mean over the {len(MODELS)} models. Mean "
+                    "over 5 rules, "
                     "100 new questions, thinking on.<br>A 'first sentence' is written into the reasoning for the "
                     "model; only what it writes afterwards is scored. Grey band: control. " + HELD_OUT_NOTE),
         legend={"orientation": "h", "y": -0.16, "x": 0.5, "xanchor": "center"},
@@ -237,8 +270,8 @@ def fig_over_the_trace(df: pd.DataFrame, fig_dir) -> str:
 
 
 def headroom_verdict(spec: dict) -> str:
-    """Which models' upgraded-prompt gain, as a share of the room left, is larger on the trace than in the answer
-    (95% CI of the difference above 0), larger in the answer (below 0), or neither."""
+    """Which models' gain, as a share of the room left, is larger on the trace than in the answer (95% CI of the
+    difference above 0), larger in the answer (below 0), or neither."""
     groups = {"trace": [], "answer": [], "neither": []}
     for m in MODELS:
         lo, hi = spec[m]["on_minus_off_headroom"]["ci"]
@@ -250,33 +283,42 @@ def headroom_verdict(spec: dict) -> str:
     return "; ".join(parts)
 
 
-def fig_cot_vs_output(c: dict, summary: dict, fig_dir) -> str:
-    """Thinking on vs off, both without an opening sentence (thinking-off rows have no prefill)."""
-    channels = [("thinking trace", "none", "on"), ("reasoning written in the answer", "thinking_off", "off")]
-    spec = {r["model"]: r for r in summary["cot_specificity"] if r["prompt"] == "upgraded"}
-    rows = [(m, label, opening, key) for m in MODELS for label, opening, key in channels]
+CHANNELS = [("thinking trace", True, "on"), ("reasoning written in the answer", False, "off")]
+
+
+def fig_channels(c_on: dict, c_off: dict, spec: dict, before: dict, after: dict, labels: tuple[str, str],
+                 copying: tuple | None, name: str, main: str, sub: str, fig_dir) -> str:
+    """One row per (model, channel): left, the clean-at-200 rate of the `before` cell (open circle) and the `after`
+    cell (filled), with the gain in points (and, if given, the `copying` cell as a black x); right, the gain as a
+    share of the room left (spec: per model, cc_exp06_analysis's on/off headroom stats)."""
+    rows = [(m, label, thinking, key) for m in MODELS for label, thinking, key in CHANNELS]
     fig = make_subplots(rows=1, cols=2, shared_yaxes=True, horizontal_spacing=0.05, column_widths=[0.55, 0.45],
-                        subplot_titles=["Raw: % compliant, before and after the upgrade",
-                                        "Gain as a share of the room left to improve"])
-    for i, (m, label, opening, key) in enumerate(rows):
-        color, on_trace = MODEL_COLOR[m], key == "on"
-        lo = c[(m, "baseline", opening)]["clean_200"]["value"]
-        hi = c[(m, "upgraded", opening)]["clean_200"]["value"]
+                        subplot_titles=["Raw: % compliant, before and after", "Gain as a share of the room left to improve"])
+    for i, (m, label, thinking, key) in enumerate(rows):
+        c = c_on if thinking else c_off
+        color = MODEL_COLOR[m]
+        lo, hi = (c[(m, *cell[key])]["clean_200"]["value"] for cell in (before, after))
         fig.add_trace(go.Scatter(x=[lo, hi], y=[i, i], mode="lines", showlegend=False, hoverinfo="skip",
-                                 line={"color": color, "width": 4 if on_trace else 2,
-                                       "dash": "solid" if on_trace else "dot"}), row=1, col=1)
+                                 line={"color": color, "width": 4 if thinking else 2,
+                                       "dash": "solid" if thinking else "dot"}), row=1, col=1)
         fig.add_trace(go.Scatter(x=[lo], y=[i], mode="markers", showlegend=False,
                                  marker={"color": "white", "size": 11, "line": {"color": color, "width": 2}},
-                                 hovertemplate=f"CoT-Control prompt: {lo:.0f}%<extra></extra>"), row=1, col=1)
-        fig.add_trace(go.Scatter(x=[hi], y=[i], mode="markers+text", showlegend=False, text=[f"+{hi - lo:.0f}"],
+                                 hovertemplate=f"{labels[0]}: {lo:.0f}%<extra></extra>"), row=1, col=1)
+        fig.add_trace(go.Scatter(x=[hi], y=[i], mode="markers+text", showlegend=False, text=[f"{hi - lo:+.0f}"],
                                  textposition="middle right", textfont={"color": color, "size": 13},
                                  marker={"color": color, "size": 12},
-                                 hovertemplate=f"upgraded prompt: {hi:.0f}%<extra></extra>"), row=1, col=1)
+                                 hovertemplate=f"{labels[1]}: {hi:.0f}%<extra></extra>"), row=1, col=1)
+        if copying:
+            x = c[(m, *copying)]["clean_200"]["value"]
+            fig.add_trace(go.Scatter(x=[x], y=[i], mode="markers", showlegend=False,
+                                     marker={"color": "black", "size": 10, "symbol": "x-thin",
+                                             "line": {"color": "black", "width": 2}},
+                                     hovertemplate=f"{ARM[copying][0]}: {x:.0f}%<extra></extra>"), row=1, col=1)
         share = spec[m][f"{key}_headroom"]
         fig.add_trace(go.Scatter(
             x=[share["value"]], y=[i], mode="markers+text", showlegend=False, text=[f"{share['value']:.0f}%"],
             textposition="top center", textfont={"color": color, "size": 12},
-            marker={"color": color if on_trace else "white", "size": 12, "line": {"color": color, "width": 2}},
+            marker={"color": color if thinking else "white", "size": 12, "line": {"color": color, "width": 2}},
             error_x={**error([share]), "color": color},
             hovertemplate=f"gain = {share['value']:.0f}% of the room left [{share['ci'][0]:.0f}, "
                           f"{share['ci'][1]:.0f}]<extra></extra>"), row=1, col=2)
@@ -290,17 +332,45 @@ def fig_cot_vs_output(c: dict, summary: dict, fig_dir) -> str:
     fig.update_xaxes(title_text="% of texts reaching 200 tokens with no violation", range=[0, 100], showgrid=True,
                      gridcolor="#EEEEEE", row=1, col=1)
     lowest = min(spec[m][f"{key}_headroom"]["ci"][0] for m in MODELS for key in ("on", "off"))
-    fig.update_xaxes(title_text="gain / (100 - CoT-Control prompt's %), with 95% CI", range=[min(0, lowest - 5), 100],
+    fig.update_xaxes(title_text="gain / (100 - the open circle's %), with 95% CI", range=[min(0, lowest - 5), 100],
                      showgrid=True, gridcolor="#EEEEEE", row=1, col=2)
-    fig.update_layout(
-        title=title("Is the gain about the chain of thought, or about following instructions in general?",
-                    "Same rule on the thinking trace (solid) or, with thinking off, on reasoning written in the answer "
-                    "(dotted); no opening sentence in either.<br>Left: open circle = CoT-Control's prompt, filled = "
-                    "upgraded, number = gain in points (texts under 200 tokens count as failures).<br>Right: each "
-                    "gain divided by the room it had, because the answer channel starts higher. On that scale (95% CI "
-                    f"of the difference),<br>the gain is {headroom_verdict(spec)}. " + HELD_OUT_NOTE),
-        margin={"t": 230, "l": 330, "b": 70}, title_y=0.955, title_yanchor="top")
-    return save(fig, fig_dir, "S5_cot_vs_output", 1400, 230 + 70 * len(rows) + 70)
+    sub += (". On that scale (95% CI of the difference),<br>the gain is " + headroom_verdict(spec) + ". "
+            + HELD_OUT_NOTE)
+    top = 130 + 20 * (sub.count("<br>") + 1)
+    fig.update_layout(title=title(main, sub), margin={"t": top, "l": 330, "b": 70}, title_y=0.955,
+                      title_yanchor="top")
+    return save(fig, fig_dir, name, 1400, top + 70 * len(rows) + 70)
+
+
+def fig_cot_vs_output(c_on: dict, c_off: dict, summary: dict, fig_dir) -> str:
+    """The upgraded prompt's gain, thinking on vs off, both without an opening sentence."""
+    return fig_channels(
+        c_on, c_off, {r["model"]: r for r in summary["cot_specificity"] if r["prompt"] == "upgraded"},
+        before={"on": ("baseline", "none"), "off": ("baseline", "thinking_off")},
+        after={"on": ("upgraded", "none"), "off": ("upgraded", "thinking_off")},
+        labels=("CoT-Control's prompt", "upgraded prompt"), copying=None, name="S5_cot_vs_output",
+        main="Is the gain about the chain of thought, or about following instructions in general?",
+        sub="Same rule on the thinking trace (solid) or, with thinking off, on reasoning written in the answer "
+            "(dotted); no opening sentence in either.<br>Left: open circle = CoT-Control's prompt, filled = upgraded, "
+            "number = gain in points (texts under 200 tokens count as failures).<br>Right: each gain divided by the "
+            "room it had, because the answer channel starts higher", fig_dir=fig_dir)
+
+
+def fig_opening_on_vs_off(c_on: dict, c_off: dict, summary: dict, fig_dir) -> str:
+    """The compliant opening sentence's gain under the upgraded prompt, thinking on vs off."""
+    return fig_channels(
+        c_on, c_off, {r["model"]: r for r in summary["opening_specificity"] if r["prompt"] == "upgraded"},
+        before={"on": ("upgraded", "none"), "off": ("upgraded", "thinking_off")},
+        after={"on": ("upgraded", "prefill_compliant"), "off": ("upgraded", "prefill_compliant")},
+        labels=("upgraded prompt", "upgraded prompt + compliant first sentence"), copying=("no_rule", "prefill_compliant"),
+        name="S5b_opening_on_vs_off",
+        main="Does writing a compliant first sentence help the same way in the answer?",
+        sub="Upgraded prompt; the first sentence written for the model into its thinking trace (solid) or, with "
+            "thinking off, right after &lt;output_reasoning&gt; (dotted).<br>Left: open circle = no first sentence, "
+            "filled = compliant first sentence, number = gain in points, × = the sentence with no rule given "
+            "(copying).<br>Graded on what the model writes after the sentence. Thinking off, every first sentence "
+            "also opens the tag, which some models otherwise skip.<br>Right: each gain divided by the room it had",
+        fig_dir=fig_dir)
 
 
 def fig_per_rule(per_rule: pd.DataFrame, fig_dir) -> str:
@@ -369,9 +439,9 @@ def fig_cost_and_check(summary: dict, fig_dir) -> str:
     fig.update_layout(
         title=title("No detectable cost to accuracy, and no sign of overfitting the prompt to its questions",
                     "Left: paired differences with 95% CIs (CIs are wide: about +/-8 points). Right: same "
-                    "condition, same model; ★ = upgraded prompt; dotted line = equal.<br>The held-out model has no "
-                    "screen numbers, so it appears only on the left. " + HELD_OUT_NOTE),
-        legend={"orientation": "h", "y": -0.2, "x": 0.78, "xanchor": "center"}, margin={"t": 150, "b": 110})
+                    "condition, same model; ★ = upgraded prompt; dotted line = equal.<br>The held-out models have no "
+                    "screen numbers, so they appear only on the left. " + HELD_OUT_NOTE),
+        legend={"orientation": "h", "y": -0.2, "x": 0.78, "xanchor": "center"}, margin={"t": 170, "b": 110})
     return save(fig, fig_dir, "S7_cost_and_check", 1400, 600)
 
 
@@ -388,12 +458,17 @@ def main() -> None:
     analysis = cfg.EXP06.results / "analysis" / args.analysis_run
     summary = json.loads((analysis / "summary.json").read_text())
     per_rule = pd.read_csv(analysis / "per_rule.csv")
-    df = an.score(an.load(skip_missing=False)[0])
+    raw, missing = an.load(skip_missing=True)  # S4 reads only the thinking-on rows
+    if [p for p in missing if p.endswith("_main")]:
+        raise SystemExit(f"no graded thinking-on rows for {missing}")
+    df = an.score(raw)
     fig_dir.mkdir(parents=True)
-    c = cells(summary)
-    names = [fig_task(fig_dir), fig_project(fig_dir), fig_headline(c, fig_dir), fig_ladder(c, fig_dir),
-             fig_over_the_trace(df, fig_dir), fig_cot_vs_output(c, summary, fig_dir), fig_per_rule(per_rule, fig_dir),
-             fig_cost_and_check(summary, fig_dir)]
+    c, c_off = cells(summary), cells(summary, thinking=False)
+    names = [fig_task(fig_dir), fig_project(c, summary, fig_dir), fig_headline(c, fig_dir), fig_ladder(c, fig_dir),
+             fig_over_the_trace(df, fig_dir), fig_cot_vs_output(c, c_off, summary, fig_dir)]
+    if "opening_specificity" in summary:  # analysis runs from the thinking-off prefill extension on
+        names.append(fig_opening_on_vs_off(c, c_off, summary, fig_dir))
+    names += [fig_per_rule(per_rule, fig_dir), fig_cost_and_check(summary, fig_dir)]
     print("\n".join(str(fig_dir / f"{n}.png") for n in names))
 
 
