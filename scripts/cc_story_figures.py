@@ -9,7 +9,8 @@ Toy text in S0 is invented (no benchmark question text).
   S2_headline         the paper's metric (whole reasoning trace follows the rule) under 3 prompts
   S3_ladder           every lever on one axis: S(1000) per intervention, one dot per model
   S4_over_the_trace   how compliance decays through the trace, and that a bad start is not recovered
-  S5_cot_vs_output    the same rule on the reasoning trace vs on reasoning written in the answer
+  S5_cot_vs_output    the same rule on the reasoning trace vs on reasoning written in the answer (raw, and as a
+                      share of the room left to improve)
   S6_per_rule         which rules move (word suppression, the content rule, barely does)
   S7_cost_and_check   accuracy is unchanged, and the screen's numbers replicate on new questions
 
@@ -235,45 +236,71 @@ def fig_over_the_trace(df: pd.DataFrame, fig_dir) -> str:
     return save(fig, fig_dir, "S4_over_the_trace", 1500, 590)
 
 
-def fig_cot_vs_output(c: dict, fig_dir) -> str:
-    channels = [("thinking trace", "none", True), ("reasoning written in the answer", "thinking_off", False)]
-    fig = go.Figure()
-    rows = []
+def headroom_verdict(spec: dict) -> str:
+    """Which models' upgraded-prompt gain, as a share of the room left, is larger on the trace than in the answer
+    (95% CI of the difference above 0), larger in the answer (below 0), or neither."""
+    groups = {"trace": [], "answer": [], "neither": []}
     for m in MODELS:
-        for label, opening, _ in channels:
-            rows.append((m, label, opening))
-    ys = list(range(len(rows)))
-    for i, (m, label, opening) in enumerate(rows):
+        lo, hi = spec[m]["on_minus_off_headroom"]["ci"]
+        groups["trace" if lo > 0 else "answer" if hi < 0 else "neither"].append(SHORT_MODEL[m].rstrip("*"))
+    parts = [f"larger on the thinking trace for {', '.join(groups['trace']) or 'no model'}",
+             f"larger in the answer for {', '.join(groups['answer']) or 'no model'}"]
+    if groups["neither"]:
+        parts.append(f"no clear difference for {', '.join(groups['neither'])}")
+    return "; ".join(parts)
+
+
+def fig_cot_vs_output(c: dict, summary: dict, fig_dir) -> str:
+    """Thinking on vs off, both without an opening sentence (thinking-off rows have no prefill)."""
+    channels = [("thinking trace", "none", "on"), ("reasoning written in the answer", "thinking_off", "off")]
+    spec = {r["model"]: r for r in summary["cot_specificity"] if r["prompt"] == "upgraded"}
+    rows = [(m, label, opening, key) for m in MODELS for label, opening, key in channels]
+    fig = make_subplots(rows=1, cols=2, shared_yaxes=True, horizontal_spacing=0.05, column_widths=[0.55, 0.45],
+                        subplot_titles=["Raw: % compliant, before and after the upgrade",
+                                        "Gain as a share of the room left to improve"])
+    for i, (m, label, opening, key) in enumerate(rows):
+        color, on_trace = MODEL_COLOR[m], key == "on"
         lo = c[(m, "baseline", opening)]["clean_200"]["value"]
         hi = c[(m, "upgraded", opening)]["clean_200"]["value"]
-        color = MODEL_COLOR[m]
         fig.add_trace(go.Scatter(x=[lo, hi], y=[i, i], mode="lines", showlegend=False, hoverinfo="skip",
-                                 line={"color": color, "width": 4 if opening == "none" else 2,
-                                       "dash": "solid" if opening == "none" else "dot"}))
+                                 line={"color": color, "width": 4 if on_trace else 2,
+                                       "dash": "solid" if on_trace else "dot"}), row=1, col=1)
         fig.add_trace(go.Scatter(x=[lo], y=[i], mode="markers", showlegend=False,
                                  marker={"color": "white", "size": 11, "line": {"color": color, "width": 2}},
-                                 hovertemplate=f"CoT-Control prompt: {lo:.0f}%<extra></extra>"))
+                                 hovertemplate=f"CoT-Control prompt: {lo:.0f}%<extra></extra>"), row=1, col=1)
         fig.add_trace(go.Scatter(x=[hi], y=[i], mode="markers+text", showlegend=False, text=[f"+{hi - lo:.0f}"],
                                  textposition="middle right", textfont={"color": color, "size": 13},
                                  marker={"color": color, "size": 12},
-                                 hovertemplate=f"upgraded prompt: {hi:.0f}%<extra></extra>"))
-    for k, m in enumerate(MODELS):
-        if k:
-            fig.add_hline(y=2 * k - 0.5, line={"color": "#DDDDDD", "width": 1})
-    fig.update_yaxes(tickvals=ys, ticktext=[f"<b>{SHORT_MODEL[m]}</b>  {label}" if label.startswith("thinking")
-                                            else label for m, label, _ in rows],
-                     autorange="reversed", showline=False, ticks="")
-    fig.update_xaxes(title_text="% of texts reaching 200 tokens with no violation (shorter texts count as failures)",
-                     range=[0, 100], showgrid=True, gridcolor="#EEEEEE")
+                                 hovertemplate=f"upgraded prompt: {hi:.0f}%<extra></extra>"), row=1, col=1)
+        share = spec[m][f"{key}_headroom"]
+        fig.add_trace(go.Scatter(
+            x=[share["value"]], y=[i], mode="markers+text", showlegend=False, text=[f"{share['value']:.0f}%"],
+            textposition="top center", textfont={"color": color, "size": 12},
+            marker={"color": color if on_trace else "white", "size": 12, "line": {"color": color, "width": 2}},
+            error_x={**error([share]), "color": color},
+            hovertemplate=f"gain = {share['value']:.0f}% of the room left [{share['ci'][0]:.0f}, "
+                          f"{share['ci'][1]:.0f}]<extra></extra>"), row=1, col=2)
+    for k in range(1, len(MODELS)):
+        for col in (1, 2):
+            fig.add_hline(y=2 * k - 0.5, line={"color": "#DDDDDD", "width": 1}, row=1, col=col)
+    fig.update_yaxes(tickvals=list(range(len(rows))),
+                     ticktext=[f"<b>{SHORT_MODEL[m]}</b>  {label}" if key == "on" else label
+                               for m, label, _, key in rows],
+                     range=[len(rows) - 0.5, -0.7], showline=False, ticks="")
+    fig.update_xaxes(title_text="% of texts reaching 200 tokens with no violation", range=[0, 100], showgrid=True,
+                     gridcolor="#EEEEEE", row=1, col=1)
+    lowest = min(spec[m][f"{key}_headroom"]["ci"][0] for m in MODELS for key in ("on", "off"))
+    fig.update_xaxes(title_text="gain / (100 - CoT-Control prompt's %), with 95% CI", range=[min(0, lowest - 5), 100],
+                     showgrid=True, gridcolor="#EEEEEE", row=1, col=2)
     fig.update_layout(
         title=title("Is the gain about the chain of thought, or about following instructions in general?",
-                    "Same rule, applied either to the model's thinking trace (solid) or, with thinking switched off, "
-                    "to reasoning it writes inside its answer (dotted).<br>Open circle: CoT-Control's prompt; filled: "
-                    "upgraded prompt; number: gain. The answer channel starts higher. Relative to the room left to "
-                    "improve,<br>the gain favours the thinking trace for Gemma and Qwen3.6, but not for Qwen3.8 or "
-                    "Qwen3-32B. " + HELD_OUT_NOTE),
-        margin={"t": 160, "l": 330, "b": 70})
-    return save(fig, fig_dir, "S5_cot_vs_output", 1200, 640)
+                    "Same rule on the thinking trace (solid) or, with thinking off, on reasoning written in the answer "
+                    "(dotted); no opening sentence in either.<br>Left: open circle = CoT-Control's prompt, filled = "
+                    "upgraded, number = gain in points (texts under 200 tokens count as failures).<br>Right: each "
+                    "gain divided by the room it had, because the answer channel starts higher. On that scale (95% CI "
+                    f"of the difference),<br>the gain is {headroom_verdict(spec)}. " + HELD_OUT_NOTE),
+        margin={"t": 230, "l": 330, "b": 70}, title_y=0.955, title_yanchor="top")
+    return save(fig, fig_dir, "S5_cot_vs_output", 1400, 230 + 70 * len(rows) + 70)
 
 
 def fig_per_rule(per_rule: pd.DataFrame, fig_dir) -> str:
@@ -365,7 +392,7 @@ def main() -> None:
     fig_dir.mkdir(parents=True)
     c = cells(summary)
     names = [fig_task(fig_dir), fig_project(fig_dir), fig_headline(c, fig_dir), fig_ladder(c, fig_dir),
-             fig_over_the_trace(df, fig_dir), fig_cot_vs_output(c, fig_dir), fig_per_rule(per_rule, fig_dir),
+             fig_over_the_trace(df, fig_dir), fig_cot_vs_output(c, summary, fig_dir), fig_per_rule(per_rule, fig_dir),
              fig_cost_and_check(summary, fig_dir)]
     print("\n".join(str(fig_dir / f"{n}.png") for n in names))
 
