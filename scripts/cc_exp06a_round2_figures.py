@@ -191,47 +191,66 @@ def fig_per_rule(df: pd.DataFrame, models: list[str], boot: ca.Bootstrap, fig_di
     return a4.save(fig, fig_dir, "R2_3_per_rule", 1500, 620), d.to_dict("records")
 
 
+def gain(arm_est, base_est, normalize: bool) -> dict:
+    """Gain over baseline in points, or as % of the baseline's headroom (100 - baseline), with paired draws."""
+    point, draws = arm_est[0] - base_est[0], arm_est[1] - base_est[1]
+    if normalize:
+        point, draws = point / (1 - base_est[0]), draws / (1 - base_est[1])
+    return ca.stat(point, draws)
+
+
 def fig_cot_vs_output(draws_half: dict, models: list[str], n_half: int, fig_dir) -> tuple[str, list[dict]]:
-    fig = make_subplots(rows=1, cols=len(models), horizontal_spacing=0.05, subplot_titles=models)
+    """Top row: gain in points. Bottom row: gain as % of the headroom above baseline, because thinking-on baselines
+    are lower (5-16%) than thinking-off ones (31-47%), so raw points favour thinking on."""
+    fig = make_subplots(rows=2, cols=len(models), horizontal_spacing=0.05, vertical_spacing=0.14,
+                        subplot_titles=[f"{m}: gain in points" for m in models]
+                                       + [f"{m}: gain as % of headroom" for m in models])
     data = []
     for k, model in enumerate(models):
         color, _ = MODEL_STYLE[model]
         base_on = draws_half.get((model, "baseline_rerun", True, "clean_short"))
         base_off = draws_half.get((model, "baseline_rerun", False, "clean_short"))
-        pts = []
-        for arm in COT_VS_OUTPUT_ARMS:
-            on_arm = "stacked_rerun" if arm == "stacked" else arm
-            on, off = draws_half.get((model, on_arm, True, "clean_short")), draws_half.get((model, arm, False,
-                                                                                               "clean_short"))
-            if not (on and off and base_on and base_off):
-                continue
-            g_on, g_off = ca.stat(on[0] - base_on[0], on[1] - base_on[1]), ca.stat(off[0] - base_off[0],
-                                                                                   off[1] - base_off[1])
-            pts.append((arm, g_on, g_off))
-            data.append({"model": model, "arm": arm, "gain_thinking_on": g_on, "gain_thinking_off": g_off})
-        round2 = [arm in an.ROUND2 for arm, _, _ in pts]
-        fig.add_trace(go.Scatter(
-            x=[p[1]["value"] for p in pts], y=[p[2]["value"] for p in pts], mode="markers+text", showlegend=False,
-            marker={"color": [color if r2 else "white" for r2 in round2], "size": 10,
-                    "line": {"color": color, "width": 1.5}},
-            text=[SHORT[p[0]] for p in pts], textposition="top center", textfont={"size": 10},
-            hovertemplate=[f"{SHORT[a]}: on {on['value']:+.1f}, off {off['value']:+.1f}<extra>{model}</extra>"
-                           for a, on, off in pts]), row=1, col=k + 1)
-        fig.add_trace(go.Scatter(x=[-50, 100], y=[-50, 100], mode="lines", showlegend=False, hoverinfo="skip",
-                                 line={"color": "#999999", "dash": "dot", "width": 1}), row=1, col=k + 1)
-        fig.update_xaxes(range=[-15, 85], title_text="gain with thinking on (points)", row=1, col=k + 1)
-        fig.update_yaxes(range=[-50, 85], row=1, col=k + 1)
-    fig.update_yaxes(title_text="gain with thinking off (points)", row=1, col=1)
+        for r, normalize in ((1, False), (2, True)):
+            pts = []
+            for arm in COT_VS_OUTPUT_ARMS:
+                on_arm = "stacked_rerun" if arm == "stacked" else arm
+                on = draws_half.get((model, on_arm, True, "clean_short"))
+                off = draws_half.get((model, arm, False, "clean_short"))
+                if not (on and off and base_on and base_off):
+                    continue
+                g_on, g_off = gain(on, base_on, normalize), gain(off, base_off, normalize)
+                pts.append((arm, g_on, g_off))
+                data.append({"model": model, "arm": arm, "normalized_by_headroom": normalize,
+                             "gain_thinking_on": g_on, "gain_thinking_off": g_off})
+            round2 = [arm in an.ROUND2 for arm, _, _ in pts]
+            unit = "% of headroom" if normalize else "points"
+            fig.add_trace(go.Scatter(
+                x=[p[1]["value"] for p in pts], y=[p[2]["value"] for p in pts], mode="markers+text",
+                showlegend=False,
+                marker={"color": [color if r2 else "white" for r2 in round2], "size": 10,
+                        "line": {"color": color, "width": 1.5}},
+                text=[SHORT[p[0]] for p in pts], textposition="top center", textfont={"size": 10},
+                hovertemplate=[f"{SHORT[a]}: on {on['value']:+.1f}, off {off['value']:+.1f} {unit}"
+                               f"<extra>{model}</extra>" for a, on, off in pts]), row=r, col=k + 1)
+            fig.add_trace(go.Scatter(x=[-100, 100], y=[-100, 100], mode="lines", showlegend=False,
+                                     hoverinfo="skip", line={"color": "#999999", "dash": "dot", "width": 1}),
+                          row=r, col=k + 1)
+            lo = -110 if normalize else -50
+            fig.update_xaxes(range=[-15, 100 if normalize else 85], title_text=f"gain with thinking on ({unit})",
+                             row=r, col=k + 1)
+            fig.update_yaxes(range=[lo, 100 if normalize else 85], row=r, col=k + 1)
+        fig.update_yaxes(title_text="gain with thinking off (points)", row=1, col=1)
+        fig.update_yaxes(title_text="gain with thinking off (% of headroom)", row=2, col=1)
     fig.update_layout(title=f"R2-4. Is the gain specific to the CoT? Gain over baseline with the rule on the thinking "
                             f"trace vs on the &lt;output_reasoning&gt; tag content ({n_half} questions)"
                             f"<br><sup>Metric: share of ALL texts reaching {an.T_SHORT} tokens with no violation (a "
                             f"short or missing text counts as a failure). Dotted: equal gain. Below the line = more "
-                            f"specific to the CoT; above = general instruction following.<br>Open: round-1 arms; "
-                            f"filled: round-2 arms (shown once their thinking-off rows are graded). Qwen3.8's "
-                            f"thinking-off gains include using the tags at all (notes/exp06_changes_v3.md, item 33)"
-                            f"</sup>",
+                            f"specific to the CoT; above = general instruction following. Bottom row: gain / "
+                            f"(100 - baseline),<br>since thinking-off baselines start higher. Open: round-1 arms; "
+                            f"filled: round-2 arms. Qwen3.8's thinking-off gains include using the tags at all "
+                            f"(notes/exp06_changes_v3.md, item 33)</sup>",
                       margin={"t": 130})
-    return a4.save(fig, fig_dir, "R2_4_cot_vs_output", 1600, 600), data
+    return a4.save(fig, fig_dir, "R2_4_cot_vs_output", 1600, 1100), data
 
 
 def main() -> None:
