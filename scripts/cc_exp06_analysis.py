@@ -494,8 +494,10 @@ def fig_cot_vs_output(spec: list[dict], models: list[str], fig_dir) -> str:
                                f"<extra>{model}</extra>" for r in pts]), row=1, col=c)
         fig.add_trace(go.Scatter(x=[-100, 100], y=[-100, 100], mode="lines", showlegend=False, hoverinfo="skip",
                                  line={"color": "#999999", "dash": "dot", "width": 1}), row=1, col=c)
-        fig.update_xaxes(range=[-10, 100], title_text=f"gain with thinking on ({unit})", row=1, col=c)
-        fig.update_yaxes(range=[-10, 100], title_text=f"gain with thinking off ({unit})", row=1, col=c)
+        lows = [s["ci"][0] for r in spec for s in (r[f"on_{unit}"], r[f"off_{unit}"]) if np.isfinite(s["ci"][0])]
+        lo = min([-10] + [v - 5 for v in lows])
+        fig.update_xaxes(range=[lo, 100], title_text=f"gain with thinking on ({unit})", row=1, col=c)
+        fig.update_yaxes(range=[lo, 100], title_text=f"gain with thinking off ({unit})", row=1, col=c)
     fig.update_layout(title="E4. Is the gain specific to the CoT? Gain over the CoT-Control prompt, rule on the "
                             "thinking trace vs on the &lt;output_reasoning&gt; tag content (100 new questions)"
                             f"<br><sup>Metric: share of ALL texts reaching {T_SHORT} tokens with no violation (a short "
