@@ -54,8 +54,9 @@ Qwen3-32B, and no others for now)
 2. **Add GPT-OSS-120B. Dropped** (human decision). Cost: no fourth model family to test whether a harness
    generalizes, and no direct comparison with Jozdien's GPT-OSS numbers.
 3. **GLM-4.7-Flash and Qwen3.6-35B-A3B. Dropped** (covered by the decision).
-4. **Qwen3.6-27B. Dropped** (covered by the decision). Cost: its exp05 recovery from a non-compliant start (29% under
-   stacked) was the strongest non-copying evidence; item 22 now relies on the three models.
+4. **Qwen3.6-27B. Deferred, not dropped** (human decision: not in exp06 now, may be added later). Its exp05 recovery
+   from a non-compliant start (29% under stacked) is the strongest non-copying evidence, so it is the first candidate
+   to add, with the caps in 5. Until then item 22 relies on the three models.
 
 **Compute**
 
@@ -175,5 +176,5 @@ Qwen3-32B, and no others for now)
 Models: Qwen3.8-27B-FP8, Gemma-4-31B-FP8, Qwen3-32B (items 1-4). Items: 5, 6, 7, 9 (with the fix), 11, 13, 14, 15,
 16 (revised: length-robust), 17 (drop), 18, 19, 21, 22, 25, 26 (revised rule), 27, 28, 29, 30, 31, 33, 34.
 
-Changes from v2: GPT-OSS (2) and Qwen3.6-27B (4) leave by human decision; 33 and 34 join; 16, 17, 26 and 27
+Changes from v2: GPT-OSS (2) leaves and Qwen3.6-27B (4) is deferred, by human decision; 33 and 34 join; 16, 17, 26 and 27
 revised. Items 21 and 26 still depend on round 2's result.
