@@ -71,7 +71,7 @@ SHORT_PROMPT = {"baseline": "CoT-Control", "stacked": "stacked", "upgraded": "up
 OPENING_LABEL = {o: s["label"] for o, s in cfg.EXP06_OPENING_STYLE.items()}
 COLUMNS = ["model", "item_id", "source", "mode", "prompt", "opening", "thinking", "reasoning", "reasoning_tokens",
            "fv_token", "compliant", "correct", "think_status", "meta_regex", "full_trace_cell", "external_blocks",
-           "think_close_no_tag"]
+           "think_close_no_tag", "lenient_rescored", "lenient_tokens", "lenient_fv_token"]
 
 
 def model_name(model: str) -> str:
@@ -79,6 +79,58 @@ def model_name(model: str) -> str:
 
 
 # --- Loading and scoring --------------------------------------------------------------------------------------------
+LENIENT_CLOSE = "</think>"
+
+
+def lenient_content(answer: str, prefill: str | None) -> str | None:
+    """Sensitivity reading of a thinking-off response with no closed <output_reasoning> block: the text from the
+    opening tag (prefill rows: the prefilled one) to the first </think> after it, minus the prefill, as
+    cc_exp06.generation_result reads a closed block. None if the response has no such span."""
+    tag = f"<{cfg.EXP04_EXTERNAL_TAG}>"
+    text = f"{tag}\n{prefill}{answer}" if prefill else answer
+    start = text.find(tag)
+    end = text.find(LENIENT_CLOSE, start) if start >= 0 else -1
+    if end < 0:
+        return None
+    content = text[start + len(tag):end].strip()
+    if not prefill:
+        return content
+    return content[len(prefill):] if content.startswith(prefill) else None
+
+
+def lenient_grades(df: pd.DataFrame, gen_path: Path, model: str, requests: dict) -> pd.DataFrame:
+    """Columns lenient_tokens / lenient_fv_token: the graded length and first violation with </think> accepted as
+    the closing tag (cc_grade's own grade_row, on the lenient text); every other row keeps its grade. Stored grades
+    are not changed."""
+    import cc_grade
+    from transformers import AutoTokenizer
+    df["lenient_tokens"], df["lenient_fv_token"] = df["reasoning_tokens"], df["fv_token"]
+    content = {rid: lenient_content(a or "", p if isinstance(p, str) else None) for rid, a, p, hit in
+               zip(df["request_id"], df["answer"], df["prefill"], df["think_close_no_tag"]) if hit}
+    content = {rid: c for rid, c in content.items() if c is not None}
+    df["lenient_rescored"] = df["request_id"].isin(list(content))
+    if not content:
+        return df
+    tokenizer = AutoTokenizer.from_pretrained(cfg.model_dir(model))
+    items = {it["item_id"]: it for group in cc_exp06.load_items() for it in group}
+    gens = [{**g, "reasoning": content[g["request_id"]],
+             "reasoning_tokens": len(tokenizer.encode(content[g["request_id"]], add_special_tokens=False))}
+            for g in map(json.loads, gen_path.open()) if g["request_id"] in content]
+
+    def offsets_of(text: str) -> list[int]:
+        return [s for s, _ in tokenizer(text, add_special_tokens=False, return_offsets_mapping=True)["offset_mapping"]]
+
+    rows = [cc_grade.grade_row(g, requests[g["request_id"]], items[g["item_id"]], offsets_of) for g in gens]
+    cc_grade.place_caseless_violations(rows, gens, items, offsets_of)
+    if any(r["locator_agrees"] is False for r in rows):
+        raise RuntimeError(f"{model}: first-violation locator disagrees with the grader on a lenient text")
+    graded = {r["request_id"]: r for r in rows}
+    hit = df["lenient_rescored"]
+    df.loc[hit, "lenient_tokens"] = df.loc[hit, "request_id"].map(lambda i: graded[i]["reasoning_tokens"])
+    df.loc[hit, "lenient_fv_token"] = df.loc[hit, "request_id"].map(lambda i: graded[i]["fv_token"])
+    return df
+
+
 def load(skip_missing: bool) -> tuple[pd.DataFrame, list[str]]:
     frames, missing = [], []
     for model in MODELS:
@@ -94,8 +146,8 @@ def load(skip_missing: bool) -> tuple[pd.DataFrame, list[str]]:
             # thinking off: no <output_reasoning> block, but the response closes with </think> (scored as no tags)
             blocks = df["external_blocks"] if "external_blocks" in df else pd.Series(0, index=df.index)
             df["think_close_no_tag"] = (~df["thinking"].astype(bool) & (blocks.fillna(0) == 0)
-                                        & df["answer"].fillna("").str.contains("</think>", regex=False))
-            frames.append(df)
+                                        & df["answer"].fillna("").str.contains(LENIENT_CLOSE, regex=False))
+            frames.append(lenient_grades(df, paths[0], model, requests))
     if missing and not skip_missing:
         raise SystemExit(f"no graded rows for {missing} (use --skip-missing); nothing written")
     if not frames:
@@ -104,15 +156,28 @@ def load(skip_missing: bool) -> tuple[pd.DataFrame, list[str]]:
     return df[[c for c in COLUMNS if c in df.columns]], missing
 
 
+def survival_columns(tokens: pd.Series, fv_token: pd.Series) -> tuple[pd.Series, pd.Series, np.ndarray]:
+    """(empty, event, time) of graded texts: an empty text is a violation at token 0; a clean text is censored at
+    its length."""
+    empty = tokens == 0
+    event = fv_token.notna() | empty
+    time = np.where(fv_token.notna(), fv_token.fillna(0), np.where(empty, 0, tokens)).astype(float)
+    return empty, event, time
+
+
+def clean_at(tokens: pd.Series, event: pd.Series, time: np.ndarray, t: int) -> pd.Series:
+    """Reached t graded tokens with no violation before t."""
+    return ((tokens >= t) & ~(event & (time < t))).astype(float)
+
+
 def score(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     df["thinking"] = df["thinking"].astype(bool)
-    df["empty"] = df["reasoning_tokens"] == 0
-    df["event"] = df["fv_token"].notna() | df["empty"]
-    df["time"] = np.where(df["fv_token"].notna(), df["fv_token"].fillna(0),
-                          np.where(df["empty"], 0, df["reasoning_tokens"])).astype(float)
+    df["empty"], df["event"], df["time"] = survival_columns(df["reasoning_tokens"], df["fv_token"])
     for t in (T_SHORT, T_STAR):
-        df[f"clean_{t}"] = ((df["reasoning_tokens"] >= t) & ~(df["event"] & (df["time"] < t))).astype(float)
+        df[f"clean_{t}"] = clean_at(df["reasoning_tokens"], df["event"], df["time"], t)
+    _, lenient_event, lenient_time = survival_columns(df["lenient_tokens"], df["lenient_fv_token"])
+    df[f"clean_{T_SHORT}_lenient"] = clean_at(df["lenient_tokens"], lenient_event, lenient_time, T_SHORT)
     # How each trace ended, at t*: violated before t*; no violation but the text ended before t*; clean through t*.
     df["end"] = np.where(df["event"] & (df["time"] < T_STAR), "violation",
                          np.where(df["reasoning_tokens"] < T_STAR, "ended_clean_early", "clean_through"))
@@ -156,6 +221,11 @@ def estimates(df: pd.DataFrame, models: list[str], boot: ca.Bootstrap) -> tuple[
                 draws[(model, prompt, opening, thinking, "clean_200_tagged")] = est
                 rec["clean_200_tagged"] = ca.stat(*est) if est else None
                 rec["think_close_no_tag_share"] = float(d["think_close_no_tag"].mean() * 100)
+                rec["lenient_rescored_share"] = float(d["lenient_rescored"].mean() * 100)
+                for suffix, sub in (("", d), ("_openers", d[d["mode"].isin(OPENERS)])):
+                    est = ca.pooled(sub, "clean_200_lenient", boot) if len(sub) else None
+                    draws[(model, prompt, opening, thinking, "clean_200_lenient" + suffix)] = est
+                    rec["clean_200_lenient" + suffix] = ca.stat(*est) if est else None
             full = d[d["full_trace_cell"].fillna(False).astype(bool)]
             for name in ("correct", "whole_trace_compliant"):
                 est = ca.pooled(full, name, boot) if len(full) else None
@@ -259,17 +329,17 @@ def gain(arm, base, normalize: bool) -> tuple[float, np.ndarray]:
     return point, draws
 
 
-def cot_specificity(draws: dict, models: list[str]) -> list[dict]:
-    """Per prompt: gain over baseline in clean_200 with thinking on (no opening) and off, raw and as % of headroom;
-    and the tags-only version of the thinking-off gain."""
+def cot_specificity(draws: dict, models: list[str], off_metric: str = "clean_200") -> list[dict]:
+    """Per prompt: gain over baseline in clean_200 with thinking on (no opening) and off (off_metric: clean_200, or
+    clean_200_lenient), raw and as % of headroom; and the tags-only version of the thinking-off gain."""
     out = []
     for model in models:
         base_on = draws.get((model, "baseline", "none", True, "clean_200"))
-        base_off = draws.get((model, "baseline", "thinking_off", False, "clean_200"))
+        base_off = draws.get((model, "baseline", "thinking_off", False, off_metric))
         base_tag = draws.get((model, "baseline", "thinking_off", False, "clean_200_tagged"))
         for prompt in ("stacked", "upgraded"):
             on = draws.get((model, prompt, "none", True, "clean_200"))
-            off = draws.get((model, prompt, "thinking_off", False, "clean_200"))
+            off = draws.get((model, prompt, "thinking_off", False, off_metric))
             tag = draws.get((model, prompt, "thinking_off", False, "clean_200_tagged"))
             if not all((base_on, base_off, on, off)):
                 continue
@@ -288,14 +358,14 @@ def cot_specificity(draws: dict, models: list[str]) -> list[dict]:
     return out
 
 
-def opening_specificity(draws: dict, models: list[str]) -> list[dict]:
+def opening_specificity(draws: dict, models: list[str], off_metric: str = "clean_200") -> list[dict]:
     """Per prompt (baseline, upgraded): the compliant opening's gain over no opening in clean_200, with thinking on
-    vs off, raw and as % of headroom (as cot_specificity, with the opening in place of the prompt)."""
+    vs off (off_metric), raw and as % of headroom (as cot_specificity, with the opening in place of the prompt)."""
     out = []
     for model in models:
         for prompt in OFF_PREFILL_PROMPTS:
             on, base_on = (draws.get((model, prompt, o, True, "clean_200")) for o in ("prefill_compliant", "none"))
-            off, base_off = (draws.get((model, prompt, o, False, "clean_200")) for o in ("prefill_compliant", OFF))
+            off, base_off = (draws.get((model, prompt, o, False, off_metric)) for o in ("prefill_compliant", OFF))
             if not all((on, base_on, off, base_off)):
                 continue
             rec = {"model": model, "prompt": prompt}
@@ -747,6 +817,23 @@ def report(s: dict, figures: list[str], fig_rel: str) -> str:
         lines.append(f"| {model_name(r['model'])} | {r['prompt']} | {fmt(r['on_points'])} | {fmt(r['off_points'])} | "
                      f"{fmt(r['on_minus_off_points'])} | {fmt(r.get('on_minus_off_points_tagged_only'))} | "
                      f"{fmt(r['on_headroom'])} | {fmt(r['off_headroom'])} | {fmt(r['on_minus_off_headroom'])} |")
+    lines += ["", "## Sensitivity (post hoc): </think> accepted as the closing tag", "",
+              "Thinking-off rows with no closed <output_reasoning> block whose reasoning runs from the opening tag to "
+              "a </think> are graded on that text (cc_grade.grade_row); every other row as above.", "",
+              "| model | prompt | opening | clean at 200 % (strict) | clean at 200 % (lenient) | rescored % of rows |",
+              "|---|---|---|---|---|---|"]
+    for r in s["cells"]:
+        if not r["thinking"]:
+            lines.append(f"| {model_name(r['model'])} | {r['prompt']} | {r['opening']} | {fmt(r['clean_200'])} | "
+                         f"{fmt(r['clean_200_lenient'])} | {r['lenient_rescored_share']:.1f} |")
+    lines += ["", "| model | gain | on - off, % headroom (strict) | on - off, % headroom (lenient) |",
+              "|---|---|---|---|"]
+    for key, what in (("cot_specificity", "upgraded prompt"), ("opening_specificity", "compliant opening, upgraded")):
+        strict = {r["model"]: r for r in s[key] if r["prompt"] == "upgraded"}
+        for r in s[f"{key}_lenient"]:
+            if r["prompt"] == "upgraded":
+                lines.append(f"| {model_name(r['model'])} | {what} | "
+                             f"{fmt(strict[r['model']]['on_minus_off_headroom'])} | {fmt(r['on_minus_off_headroom'])} |")
     lines += ["", "## Accuracy and whole-trace compliance (full-trace cells, no opening): paired differences", "",
               "| model | a - b | metric | difference (pts) | p |", "|---|---|---|---|---|"]
     for r in s["accuracy"]:
@@ -782,7 +869,10 @@ def main() -> None:
                "t_star": T_STAR, "t_short": T_SHORT, "stop": STOP,
                "primary": primary_contrasts(draws, models), "secondary": secondary_contrasts(draws, models),
                "cot_specificity": cot_specificity(draws, models),
-               "opening_specificity": opening_specificity(draws, models), "accuracy": accuracy_contrasts(draws, models),
+               "opening_specificity": opening_specificity(draws, models),
+               "cot_specificity_lenient": cot_specificity(draws, models, "clean_200_lenient"),
+               "opening_specificity_lenient": opening_specificity(draws, models, "clean_200_lenient"),
+               "accuracy": accuracy_contrasts(draws, models),
                "cells": rows, "checks": checks(df, models)}
     screened = [m for m in models if m not in HELD_OUT]
     figures = [fig_prefill_comparison(rows, models, fig_dir),

@@ -284,14 +284,23 @@ def headroom_verdict(spec: dict) -> str:
 
 
 CHANNELS = [("thinking trace", True, "on"), ("reasoning written in the answer", False, "off")]
+LENIENT_SHOWN = 5  # % of a model's thinking-off rows rescored (closed by </think>) before its lenient values are drawn
+
+
+def lenient_marker(x: float, y: int, color: str, hover: str) -> go.Scatter:
+    return go.Scatter(x=[x], y=[y], mode="markers", showlegend=False, hovertemplate=hover + "<extra></extra>",
+                      marker={"color": color, "size": 12, "symbol": "diamond-open", "line": {"width": 2}})
 
 
 def fig_channels(c_on: dict, c_off: dict, spec: dict, before: dict, after: dict, labels: tuple[str, str],
-                 copying: tuple | None, name: str, main: str, sub: str, fig_dir) -> str:
+                 copying: tuple | None, name: str, main: str, sub: str, fig_dir, lenient_spec: dict | None = None) -> str:
     """One row per (model, channel): left, the clean-at-200 rate of the `before` cell (open circle) and the `after`
     cell (filled), with the gain in points (and, if given, the `copying` cell as a black x); right, the gain as a
-    share of the room left (spec: per model, cc_exp06_analysis's on/off headroom stats)."""
+    share of the room left (spec: per model, cc_exp06_analysis's on/off headroom stats). With lenient_spec (the same
+    stats with </think> accepted as the closing tag), thinking-off values it moves by over LENIENT_SHOWN points get a
+    hollow diamond."""
     rows = [(m, label, thinking, key) for m in MODELS for label, thinking, key in CHANNELS]
+    lenient_models = []
     fig = make_subplots(rows=1, cols=2, shared_yaxes=True, horizontal_spacing=0.05, column_widths=[0.55, 0.45],
                         subplot_titles=["Raw: % compliant, before and after", "Gain as a share of the room left to improve"])
     for i, (m, label, thinking, key) in enumerate(rows):
@@ -322,6 +331,15 @@ def fig_channels(c_on: dict, c_off: dict, spec: dict, before: dict, after: dict,
             error_x={**error([share]), "color": color},
             hovertemplate=f"gain = {share['value']:.0f}% of the room left [{share['ci'][0]:.0f}, "
                           f"{share['ci'][1]:.0f}]<extra></extra>"), row=1, col=2)
+        off_cells = [c[(m, *cell[key])] for cell in (before, after)]
+        if lenient_spec and not thinking and max(r["lenient_rescored_share"] for r in off_cells) > LENIENT_SHOWN:
+            lenient_models.append(SHORT_MODEL[m].rstrip("*"))
+            for r, what in zip(off_cells, labels):
+                x = r["clean_200_lenient"]["value"]
+                fig.add_trace(lenient_marker(x, i, color, f"{what}, &lt;/think&gt; counted: {x:.0f}%"), row=1, col=1)
+            x = lenient_spec[m]["off_headroom"]["value"]
+            fig.add_trace(lenient_marker(x, i, color, f"&lt;/think&gt; counted: {x:.0f}% of the room left"),
+                          row=1, col=2)
     for k in range(1, len(MODELS)):
         for col in (1, 2):
             fig.add_hline(y=2 * k - 0.5, line={"color": "#DDDDDD", "width": 1}, row=1, col=col)
@@ -336,10 +354,18 @@ def fig_channels(c_on: dict, c_off: dict, spec: dict, before: dict, after: dict,
                      showgrid=True, gridcolor="#EEEEEE", row=1, col=2)
     sub += (". On that scale (95% CI of the difference),<br>the gain is " + headroom_verdict(spec) + ". "
             + HELD_OUT_NOTE)
+    if lenient_models:
+        sub += (f"<br>◇ = {', '.join(lenient_models)} with thinking off, if reasoning closed by &lt;/think&gt; instead "
+                f"of the tag counted (over {LENIENT_SHOWN}% of its rows; graded as no reasoning, so a failure)")
     top = 130 + 20 * (sub.count("<br>") + 1)
     fig.update_layout(title=title(main, sub), margin={"t": top, "l": 330, "b": 70}, title_y=0.955,
                       title_yanchor="top")
     return save(fig, fig_dir, name, 1400, top + 70 * len(rows) + 70)
+
+
+def upgraded_rows(summary: dict, key: str) -> dict | None:
+    """Per model, the upgraded-prompt row of a specificity table (None for analysis runs without it)."""
+    return {r["model"]: r for r in summary[key] if r["prompt"] == "upgraded"} if key in summary else None
 
 
 def fig_cot_vs_output(c_on: dict, c_off: dict, summary: dict, fig_dir) -> str:
@@ -353,7 +379,8 @@ def fig_cot_vs_output(c_on: dict, c_off: dict, summary: dict, fig_dir) -> str:
         sub="Same rule on the thinking trace (solid) or, with thinking off, on reasoning written in the answer "
             "(dotted); no opening sentence in either.<br>Left: open circle = CoT-Control's prompt, filled = upgraded, "
             "number = gain in points (texts under 200 tokens count as failures).<br>Right: each gain divided by the "
-            "room it had, because the answer channel starts higher", fig_dir=fig_dir)
+            "room it had, because the answer channel starts higher", fig_dir=fig_dir,
+        lenient_spec=upgraded_rows(summary, "cot_specificity_lenient"))
 
 
 def fig_opening_on_vs_off(c_on: dict, c_off: dict, summary: dict, fig_dir) -> str:
@@ -370,7 +397,7 @@ def fig_opening_on_vs_off(c_on: dict, c_off: dict, summary: dict, fig_dir) -> st
             "filled = compliant first sentence, number = gain in points, × = the sentence with no rule given "
             "(copying).<br>Graded on what the model writes after the sentence. Thinking off, every first sentence "
             "also opens the tag, which some models otherwise skip.<br>Right: each gain divided by the room it had",
-        fig_dir=fig_dir)
+        fig_dir=fig_dir, lenient_spec=upgraded_rows(summary, "opening_specificity_lenient"))
 
 
 def fig_per_rule(per_rule: pd.DataFrame, fig_dir) -> str:
@@ -466,7 +493,7 @@ def main() -> None:
     c, c_off = cells(summary), cells(summary, thinking=False)
     names = [fig_task(fig_dir), fig_project(c, summary, fig_dir), fig_headline(c, fig_dir), fig_ladder(c, fig_dir),
              fig_over_the_trace(df, fig_dir), fig_cot_vs_output(c, c_off, summary, fig_dir)]
-    if "opening_specificity" in summary:  # analysis runs from the thinking-off prefill extension on
+    if set(MODELS) <= set((upgraded_rows(summary, "opening_specificity") or {})):  # thinking-off prefill data in
         names.append(fig_opening_on_vs_off(c, c_off, summary, fig_dir))
     names += [fig_per_rule(per_rule, fig_dir), fig_cost_and_check(summary, fig_dir)]
     print("\n".join(str(fig_dir / f"{n}.png") for n in names))
