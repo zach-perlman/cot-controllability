@@ -261,7 +261,7 @@ def primary_contrasts(draws: dict, models: list[str]) -> list[dict]:
             for name, (a, b) in PRIMARY.items():
                 d = difference(draws, model, a, b)
                 if d:
-                    rows.append({"model": model, "contrast": name, "a": "|".join(a), "b": "|".join(b),
+                    rows.append({"model": model, "contrast": name, "a": "|".join(map(str, a)), "b": "|".join(map(str, b)),
                                  "family": family, **d})
         adjusted = holm({(r["model"], r["contrast"]): r["p"] for r in rows})
         for r in rows:
@@ -306,7 +306,7 @@ def secondary_contrasts(draws: dict, models: list[str]) -> list[dict]:
             for label, a, b, metric in rows:
                 d = difference(draws, model, a, b, metric)
                 if d:
-                    out.append({"family": name, "row": label, "model": model, "a": "|".join(a), "b": "|".join(b),
+                    out.append({"family": name, "row": label, "model": model, "a": "|".join(map(str, a)), "b": "|".join(map(str, b)),
                                 "metric": metric, **d})
     # Does a compliant opening add less under the upgraded prompt? (upgraded gain) - (stacked gain), paired.
     for model in models:
@@ -705,7 +705,7 @@ def fig_replication(rows: list[dict], screen: dict, models: list[str], fig_dir) 
         color, _ = MODEL_STYLE[model]
         pts = [(c, screen.get((model, *c)), est.get((model, *c))) for c in cells]
         pts = [(c, a, b) for c, a, b in pts if a and b]
-        data += [{"model": model, "cell": "|".join(c), "exp03_items": a, "new_items": b} for c, a, b in pts]
+        data += [{"model": model, "cell": "|".join(map(str, c)), "exp03_items": a, "new_items": b} for c, a, b in pts]
         fig.add_trace(go.Scatter(
             x=[a["value"] for _, a, _ in pts], y=[b["value"] for _, _, b in pts], mode="markers", name=model,
             marker={"color": color, "size": 12, "symbol": [symbol[c] for c, _, _ in pts],
@@ -715,7 +715,7 @@ def fig_replication(rows: list[dict], screen: dict, models: list[str], fig_dir) 
             hovertemplate=[f"{'|'.join(c)}: exp03 items {a['value']:.1f}, new items {b['value']:.1f}<extra>{model}"
                            f"</extra>" for c, a, b in pts]))
     for c in cells:  # symbol legend
-        fig.add_trace(go.Scatter(x=[None], y=[None], mode="markers", name="|".join(c),
+        fig.add_trace(go.Scatter(x=[None], y=[None], mode="markers", name="|".join(map(str, c)),
                                  marker={"symbol": symbol[c], "color": "#555555", "size": 10}))
     fig.add_trace(go.Scatter(x=[0, 100], y=[0, 100], mode="lines", showlegend=False, hoverinfo="skip",
                              line={"color": "#999999", "dash": "dot", "width": 1}))
