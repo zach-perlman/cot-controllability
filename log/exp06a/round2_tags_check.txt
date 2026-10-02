@@ -1,0 +1,36 @@
+
+Qwen3.8-27B-FP8: clean through 200 tokens, 51 questions
+                                 on  off_all  off_tagged  no_tag_%  gain_on  gain_off_all  gain_off_tagged  on_minus_off_tagged
+arm                                                                                                                            
+baseline_rerun                  5.5     31.4        46.3      32.2      0.0           0.0              0.0                  0.0
+fewshot_failure_guide          39.6     71.0        73.9       3.9     34.1          39.6             27.6                  6.5
+stacked                        25.5     56.9        62.7       9.0     20.0          25.5             16.4                  3.6
+stacked_all                    63.5     77.3        81.0       5.1     58.0          45.9             34.7                 23.3
+stacked_failure_guide          31.4     64.7        69.7       7.5     25.9          33.3             23.4                  2.5
+stacked_fewshot                48.6     69.0        71.5       3.5     43.1          37.6             25.2                 18.0
+stacked_fewshot_failure_guide  61.6     70.2        75.9       7.5     56.1          38.8             29.6                 26.4
+stacked_start_with             36.1     62.4        70.1      11.4     30.6          31.0             23.8                  6.8
+
+Gemma-4-31B-FP8: clean through 200 tokens, 51 questions
+                                 on  off_all  off_tagged  no_tag_%  gain_on  gain_off_all  gain_off_tagged  on_minus_off_tagged
+arm                                                                                                                            
+baseline_rerun                 15.7     47.1        47.1       0.0      0.0           0.0              0.0                  0.0
+fewshot_failure_guide          29.8     64.3        64.3       0.0     14.1          17.3             17.3                 -3.1
+stacked                        39.6     47.5        47.5       0.0     23.9           0.4              0.4                 23.5
+stacked_all                    92.9     77.6        77.6       0.0     77.3          30.6             30.6                 46.7
+stacked_failure_guide          54.1     51.8        51.8       0.0     38.4           4.7              4.7                 33.7
+stacked_fewshot                52.5     71.8        71.8       0.0     36.9          24.7             24.7                 12.2
+stacked_fewshot_failure_guide  86.3     67.1        67.1       0.0     70.6          20.0             20.0                 50.6
+stacked_start_with             31.0     63.1        63.1       0.0     15.3          16.1             16.1                 -0.8
+
+Qwen3-32B: clean through 200 tokens, 51 questions
+                                 on  off_all  off_tagged  no_tag_%  gain_on  gain_off_all  gain_off_tagged  on_minus_off_tagged
+arm                                                                                                                            
+baseline_rerun                 11.8     34.5        37.1       9.8      0.0           0.0              0.0                  0.0
+fewshot_failure_guide          54.5     71.0        71.7       0.8     42.7          36.5             34.7                  8.1
+stacked                        14.1     52.5        55.2       3.9      2.4          18.0             18.1                -15.7
+stacked_all                    63.5     83.1        85.3       2.4     51.8          48.6             48.2                  3.6
+stacked_failure_guide          20.4     49.0        50.1       2.7      8.6          14.5             13.0                 -4.4
+stacked_fewshot                50.6     75.7        76.6       1.2     38.8          41.2             39.5                 -0.7
+stacked_fewshot_failure_guide  59.6     75.3        76.5       1.6     47.8          40.8             39.4                  8.4
+stacked_start_with             58.8     74.9        76.6       2.4     47.1          40.4             39.5                  7.5

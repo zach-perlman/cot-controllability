@@ -1,10 +1,15 @@
 # exp06 change list, v3 (after exp06a round 1, thinking on and off)
 
 Draft for the human's choice; not a result. v1: 2026-10-01, before exp06a. v2 (`exp06_changes_v2.md`): after round 1
-thinking on. v3 adds round 1's thinking-off rows for all 3 models and the round-2 plan. Same numbering (1-32, P1-P13);
-each item is **kept**, **revised**, **done in exp06a**, **evidence against** or **dropped**; new items 33-34.
+thinking on. v3 adds round 1's thinking-off rows for all 3 models and, in its 2026-10-01 late update, round 2's
+results (point 9; items 1, 10, 21, 26, 29 revised). Same numbering (1-32, P1-P13); each item is **kept**,
+**revised**, **done in exp06a**, **evidence against** or **dropped**; new items 33-34.
 
 Sources (all UNVERIFIED):
+- `results/exp06a_prompt_screen/analysis/round2_complete_report` (all rows, rounds 1-2) and
+  `figures/exp06a_prompt_screen/round2_complete` (R2-1 to R2-4).
+- `log/exp06a/round2_tags_check.txt`: round 2's thinking-off gains among rows with tag content only (item 33).
+- `log/exp06a/round2_copying_check.txt`: few-shot copying in round 2.
 - `results/exp06a_prompt_screen/analysis/round1_on_off_figures`: thinking on on 100 questions, thinking off on the
   fixed 51-question half; S(t) = share with no violation in the first t tokens, 5-rule mean unless stated.
 - `log/exp06a/clean_through_200_check.txt`: the length-robust rate, i.e. the share of ALL texts that reach 200 tokens
@@ -14,9 +19,10 @@ Sources (all UNVERIFIED):
 
 ## What exp06a round 1 changed
 
-1. **Prompt-only elicitation is weak next to text in the trace.** The best harness's S(1000) mean over the 3 models
-   is 12.0 (failure-targeted guide), equal to stacked (12.0). exp04's compliant prefill + stacked is 31-41. Prompt
-   arms are a minor axis for exp06; prefill and its interaction with the prompt are the main one.
+1. **Revised by round 2: single prompt pieces are weak, combinations are not.** In round 1 the best single harness's
+   S(1000) mean over the 3 models is 12.0 (failure-targeted guide), equal to stacked (12.0), next to exp04's compliant
+   prefill + stacked at 31-41. In round 2 the best combination per model reaches 40-71 (point 9), above prefill +
+   stacked. The prompt is therefore a main axis for exp06 too, not a minor one. Caveat: chosen on these items.
 2. **Harness effects depend on the model.** On Qwen3.8 and Gemma every single harness loses to stacked (Holm p <=
    0.012). On Qwen3-32B, where stacked barely helps, start-with, few-shot and the failure guide reach S(1000) 18.5-21.0.
 3. **Means over rules hide most of the signal.** Qwen3-32B's gains sit in meow and lowercase. Uppercase and
@@ -44,6 +50,26 @@ Sources (all UNVERIFIED):
 8. **New: thinking-off survival scores flatter short outputs.** KM censors a clean text at its end, and P1 scores a
    short text as compliant. The style guide's thinking-off S(200) of 78-99 is brevity: its tag content has a median of
    61-102 tokens, and only 4-9% of its rows reach 200 clean tokens (baseline 31-47%).
+9. **New: round 2's results.** Thinking-on S(1000), 100 questions (stacked rerun 11.7 / 18.9 / 6.8; exp04 prefill +
+   stacked 30.8 / 41.1 / 34.8), for Qwen3.8 / Gemma / Qwen3-32B:
+   - stacked + few-shot + guide + start-with ("stacked_all"): 39.6 / 71.4 / 42.3.
+   - stacked + few-shot + guide: 36.8 / 53.5 / 40.9.
+   - stacked + start-with: 16.9 / 14.0 / 51.3 (Gemma: 69% empty traces).
+   - stacked + few-shot 24.6 / 19.4 / 29.3; stacked + guide 17.0 / 28.9 / 11.3; few-shot + guide 21.0 / 11.0 / 32.1.
+   - Interactions, as stacked_all's gain over the stacked rerun vs the sum of the three single additions to stacked:
+     - Gemma: strongly superadditive (+53 vs +6).
+     - Qwen3.8: about additive (+28 vs +23).
+     - Qwen3-32B: subadditive (+36 vs +71), because start-with alone carries it.
+   - Not long-trace or empty-trace artifacts: Gemma stacked_all is 95% clean through 200 tokens, median 825 tokens,
+     0.2% empty, 99.8% start with the requested sentence.
+   - Little copying: at most 0.4% of 8-grams appear in the examples; at least 98.6% of 8-grams are distinct.
+   - **CoT specificity** (clean-200 gain, thinking on minus off, 51 questions) depends on the model:
+     - Gemma: CoT-specific on every check. stacked_all +44 points [37, 50]; +3-shot + guide +48 [38, 57]; 92% vs 58%
+       of headroom.
+     - Qwen3.8: depends on scaling. Raw points: +10 [-1, 20], rising to +23 when thinking off is scored on tagged rows
+       only (item 33). As a share of headroom: about equal (61% vs 65-67%).
+     - Qwen3-32B: general instruction following. On minus off is +4 to +8 points (CIs include 0), and below 0 as a
+       share of headroom (stacked_all 59% vs 74%). The failure guide alone is its only CoT-specific piece (+12).
 
 ## A. Changes to exp04/exp05 for exp06
 
@@ -73,9 +99,9 @@ Qwen3-32B, and no others for now)
 8. **Opening lengths: keep 1 sentence and >= 150 tokens. Kept.**
 9. **No-rule twin for every elicitation arm. Kept, with v2's fix.** Report twin contrasts on the opener rules only, or
    use a word-suppression twin that keeps the ban but drops the demonstration.
-10. **On-policy few-shot. Done in exp06a.** It beats baseline on all 3 models with thinking on, but loses to stacked on
-    Qwen3.8 and Gemma, and is the least CoT-specific of the useful harnesses (point 5). It enters exp06 only through
-    round 2. Out-of-distribution few-shot is still untested.
+10. **On-policy few-shot. Done in exp06a.** Alone it is mostly general instruction following (point 5), but it is
+    in every top round-2 combination (point 9). It enters exp06 through the carried arms. Out-of-distribution
+    few-shot is still untested, and exp06 needs few-shot examples drawn without its own test items.
 11. **Prefill that states the rule vs demonstrates it. Kept.**
 12. **Periodic reinsertion. Kept.**
 13. **Resample at the violation. Kept.**
@@ -103,9 +129,10 @@ Qwen3-32B, and no others for now)
 ## B. Larger additions
 
 20. **Engineered-necessity task. Kept (own mini-project).**
-21. **Best prompt crossed with prefill. Kept, the top addition.** Round 2 now has the prompt-only counterpart
-    (stacked + start-with) with thinking on and off, so exp06 can compare "asked to start compliant" and "forced to"
-    on both channels.
+21. **Best prompt crossed with prefill. Kept, still the top addition.** Each model's carried arm (item 26) alone
+    beats exp04's prefill + stacked (point 9), so the open question is whether a prefill adds anything on top. Cross
+    {stacked, carried arm} with {no prefill, compliant prefill}. "Asked to start compliant" (start-with) vs "forced
+    to" (prefill) is in that cross.
 22. **Recovery as a primary outcome. Kept.**
 23. **Cross-model openings. Kept.** Point 4 sharpens it: Gemma ignores requested openings in the trace but follows them
     in the output, and responds to prefilled ones (exp04).
@@ -120,12 +147,19 @@ Qwen3-32B, and no others for now)
     - Flag an arm whose gain is mostly general instruction following.
     - Carry stacked plus the best round-2 arm per model.
     - Optimistic, since it is selected on these items; exp06 confirms on new items.
+    - **Applied to round 2 (needs human sign-off):**
+      - Qwen3.8 and Gemma: stacked_all. On Qwen3.8 it ties stacked + few-shot + guide (+26.4 vs +23.7 over stacked).
+        Flag: specificity depends on the scaling on Qwen3.8 (point 9).
+      - Qwen3-32B: stacked + start-with (+46.1 vs stacked_all +37.2, CIs [41.7, 50.4] vs [32.5, 42.0]). Flag: mostly
+        general instruction following.
+      - Alternative: stacked_all for all 3 (one prompt, simpler to report), costing about 9 points on Qwen3-32B.
 27. **Length-robust co-primary: share of texts reaching t tokens with no violation. Done in the exp06a analysis**
     (`clean_short`, t = 200; H2's bottom row). It is required for thinking off (point 8) and useful for thinking on.
     For exp06: report it at 200 and 1000 next to S(t).
 28. **An "instruction executed" check for every harness. Kept.** Point 4's Gemma result (0% in the trace, 100% in the
     output) is exactly what it catches.
-29. **Empty traces as a reported outcome. Kept.**
+29. **Empty traces as a reported outcome. Kept, stronger.** Gemma leaves the trace empty in 32% of stacked rows and
+    69% of stacked + start-with rows, but 0-0.2% under the few-shot combinations.
 30. **Report word suppression separately from the opener rules. Kept.**
 31. **Drop warm-up, the style guide, monitor + stealth and meta-allowed. Kept, stronger.** The style guide's thinking-off
     score is brevity (point 8). Warm-up helps the output and not the CoT (point 5).
@@ -164,7 +198,7 @@ Qwen3-32B, and no others for now)
 - **P12. LLM-driven prompt iteration. Partly done** (rounds 1-2). Further iteration needs new items.
 - **P13. Loophole guard. Kept;** items 29 and 33 cover empty traces and missing tags.
 
-## Round 2 (running; deviations_round2_decision.json)
+## Round 2 (done 2026-10-02 02:12 UTC; deviations_round2_decision.json; results in point 9)
 
 - **The original 5 arms**, thinking on, 100 questions: stacked + failure guide, stacked + few-shot, stacked +
   start-with, stacked + few-shot + guide + start-with, few-shot + failure guide.
@@ -176,5 +210,8 @@ Qwen3-32B, and no others for now)
 Models: Qwen3.8-27B-FP8, Gemma-4-31B-FP8, Qwen3-32B (items 1-4). Items: 5, 6, 7, 9 (with the fix), 11, 13, 14, 15,
 16 (revised: length-robust), 17 (drop), 18, 19, 21, 22, 25, 26 (revised rule), 27, 28, 29, 30, 31, 33, 34.
 
+Carried prompt arms (item 26, pending sign-off): stacked for all 3, plus stacked_all (Qwen3.8, Gemma) and stacked +
+start-with (Qwen3-32B).
+
 Changes from v2: GPT-OSS (2) leaves and Qwen3.6-27B (4) is deferred, by human decision; 33 and 34 join; 16, 17, 26 and 27
-revised. Items 21 and 26 still depend on round 2's result.
+revised. Round 2 revised 1, 10, 21, 26 and 29.
