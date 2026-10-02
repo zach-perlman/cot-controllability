@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# exp07 round 0 (results/exp07_prompt_search/manifest.json), after the exp06 off-prefill run frees the GPU.
+# exp07 round 0 (results/exp07_prompt_search/manifest.json), once the GPU is free.
 #   1) search models: pre-pass (own traces on the example pool), then round 0 on the search split, graded and
 #      scored into search_log.jsonl
 #   2) held-out models: pre-pass only (their few-shot examples for the test run)
@@ -16,7 +16,6 @@ candidates=baseline,upgraded,opening,six_examples,long_examples,guide_in_system
 stamp() { echo "$(date -u +%FT%TZ) $*"; }
 mkdir -p "$logs"
 
-until grep -q "generation and grading done" ../log/exp06/h200_exp06_off_prefill.log; do sleep 60; done
 until (( $(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | head -1) < 2000 )); do sleep 30; done
 stamp "GPU free"
 
