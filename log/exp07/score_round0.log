@@ -1,0 +1,40 @@
+                 S_1000  clean_200  ended_clean_early  empty  degenerate  meta
+prompt                                                                        
+long_examples      50.3       76.7                0.7    0.0         0.8  11.5
+guide_in_system    49.7       74.2                1.0    0.0         1.0   8.2
+opening            49.3       76.2                1.7    0.0         0.8   9.3
+upgraded           47.2       75.2                1.2    0.0         1.5  11.3
+six_examples       47.0       77.8                1.5    0.0         0.7  11.0
+baseline            5.3       10.0                0.0    0.0         4.2   5.3
+model                               Gemma-4-31B-FP8  Qwen3.8-27B-FP8
+prompt          mode                                                
+baseline        end_of_sentence                 1.7              0.0
+                lowercase_thinking              0.0              1.7
+                meow_between_words              0.0              0.0
+                uppercase_thinking              0.0              0.0
+                word_suppression               40.0             10.0
+guide_in_system end_of_sentence                49.5             17.0
+                lowercase_thinking             71.5             68.2
+                meow_between_words             45.9             56.7
+                uppercase_thinking             21.4             57.3
+                word_suppression               83.4             26.1
+long_examples   end_of_sentence                71.2             10.9
+                lowercase_thinking             66.6             58.5
+                meow_between_words             68.0             53.4
+                uppercase_thinking             34.4             57.8
+                word_suppression               51.9             29.8
+opening         end_of_sentence                69.1              8.9
+                lowercase_thinking             66.6             46.0
+                meow_between_words             69.8             47.2
+                uppercase_thinking             32.3             46.3
+                word_suppression               73.8             32.5
+six_examples    end_of_sentence                69.1             16.4
+                lowercase_thinking             68.0             45.7
+                meow_between_words             52.9             46.7
+                uppercase_thinking             30.8             47.0
+                word_suppression               56.8             36.6
+upgraded        end_of_sentence                56.6             18.0
+                lowercase_thinking             71.1             57.5
+                meow_between_words             58.2             46.3
+                uppercase_thinking             19.3             57.4
+                word_suppression               54.0             33.6

@@ -1,0 +1,27 @@
+2026-10-02T19:44:14Z GPU free
+2026-10-02T19:44:14Z Qwen3.8-27B-FP8 prepass (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Qwen3.8-27B-FP8__card__stream_abort_prepass_Qwen3.8-27B-FP8__20d8e3140c23.jsonl
+2026-10-02T19:49:18Z Qwen3.8-27B-FP8 round0 (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Qwen3.8-27B-FP8__card__stream_abort_round0_Qwen3.8-27B-FP8__4abefe7dbe3d.jsonl
+2026-10-02T20:11:32Z Gemma-4-31B-FP8 prepass (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Gemma-4-31B-FP8__card__stream_abort_prepass_Gemma-4-31B-FP8__6a41f59831c4.jsonl
+2026-10-02T20:19:06Z Gemma-4-31B-FP8 round0 (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Gemma-4-31B-FP8__card__stream_abort_round0_Gemma-4-31B-FP8__5c9053393dd1.jsonl
+2026-10-02T20:54:59Z round scored (../log/exp07/score_round0.log)
+2026-10-02T20:54:59Z Qwen3.6-27B-FP8 prepass (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Qwen3.6-27B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Qwen3.6-27B-FP8__card__stream_abort_prepass_Qwen3.6-27B-FP8__b0a70d90b3dd.jsonl
+2026-10-02T21:04:37Z GLM-4.7-Flash prepass (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_GLM-4.7-Flash.shard0of1.log
+wrote ../cache/exp07/generations/GLM-4.7-Flash__card__stream_abort_prepass_GLM-4.7-Flash__1940da474ed8.jsonl
+2026-10-02T21:11:05Z Qwen3.6-35B-A3B-FP8 prepass (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Qwen3.6-35B-A3B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Qwen3.6-35B-A3B-FP8__card__stream_abort_prepass_Qwen3.6-35B-A3B-FP8__7b84d43bb4d4.jsonl
+2026-10-02T21:16:44Z Gemma-4-12B prepass (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Gemma-4-12B.shard0of1.log
+wrote ../cache/exp07/generations/Gemma-4-12B__card__stream_abort_prepass_Gemma-4-12B__208b66e4fc13.jsonl
+2026-10-02T21:26:46Z done

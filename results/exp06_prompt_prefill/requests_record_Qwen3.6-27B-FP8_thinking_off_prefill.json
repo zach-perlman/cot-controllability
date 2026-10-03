@@ -1,0 +1,20 @@
+{
+  "model": "Qwen3.6-27B-FP8",
+  "requests": {
+    "path": "cache/exp06/requests_Qwen3.6-27B-FP8_thinking_off_prefill.jsonl",
+    "sha256": "6a39e34ce54ec745e3f9e63d3e65b14ea651c8f651d8041b66de36e0ce90c3be",
+    "n": 1900,
+    "per_cell": {
+      "baseline|prefill_compliant|off": 500,
+      "upgraded|prefill_compliant|off": 500,
+      "upgraded|prefill_noncompliant|off": 400,
+      "no_rule|prefill_compliant|off": 500
+    }
+  },
+  "rendering_checks": {
+    "twins_match_request_file": 1500,
+    "prefill_appended": 300,
+    "graded_text_cut": 300
+  },
+  "written": "2026-10-02T17:49:28+00:00"
+}

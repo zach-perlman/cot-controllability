@@ -1,0 +1,29 @@
+2026-10-01T23:17:04Z Qwen3.8-27B-FP8_round2 (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp06a/generations/Qwen3.8-27B-FP8__card__stream_abort_Qwen3.8-27B-FP8_round2__112686f73be8.jsonl
+2026-10-01T23:30:57Z Qwen3.8-27B-FP8_round2_added (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp06a/generations/Qwen3.8-27B-FP8__card__stream_abort_Qwen3.8-27B-FP8_round2_added__da2fc8938e15.jsonl
+2026-10-01T23:37:54Z Gemma-4-31B-FP8_round2 (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp06a/generations/Gemma-4-31B-FP8__card__stream_abort_Gemma-4-31B-FP8_round2__c73e8f814d3d.jsonl
+2026-10-02T00:12:08Z Gemma-4-31B-FP8_round2_added (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp06a/generations/Gemma-4-31B-FP8__card__stream_abort_Gemma-4-31B-FP8_round2_added__e8236c0ebe48.jsonl
+2026-10-02T00:28:05Z Qwen3-32B_round2 (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp06a/generations/Qwen3-32B__card__stream_abort_Qwen3-32B_round2__14558c992a47.jsonl
+2026-10-02T00:42:06Z Qwen3-32B_round2_added (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp06a/generations/Qwen3-32B__card__stream_abort_Qwen3-32B_round2_added__e95a624b7ca6.jsonl
+2026-10-02T00:48:22Z round 2 thinking-on rows done
+2026-10-02T00:48:22Z Qwen3.8-27B-FP8_round2_thinking_off_half (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp06a/generations/Qwen3.8-27B-FP8__card__stream_abort_Qwen3.8-27B-FP8_round2_thinking_off_half__0b0abc8fd841.jsonl
+2026-10-02T01:25:56Z Gemma-4-31B-FP8_round2_thinking_off_half (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp06a/generations/Gemma-4-31B-FP8__card__stream_abort_Gemma-4-31B-FP8_round2_thinking_off_half__0948e82206b2.jsonl
+2026-10-02T01:51:50Z Qwen3-32B_round2_thinking_off_half (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp06a/generations/Qwen3-32B__card__stream_abort_Qwen3-32B_round2_thinking_off_half__6c88bee9c2b0.jsonl
+2026-10-02T02:12:12Z exp06a round 2 done

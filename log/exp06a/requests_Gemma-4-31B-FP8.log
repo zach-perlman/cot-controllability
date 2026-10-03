@@ -1,0 +1,3 @@
+wrote 5500 requests to cache/exp06a/requests_Gemma-4-31B-FP8_thinking_on.jsonl
+wrote 2295 requests to cache/exp06a/requests_Gemma-4-31B-FP8_thinking_off_half.jsonl
+wrote results/exp06a_prompt_screen/requests_record_Gemma-4-31B-FP8.json

@@ -1,0 +1,9 @@
+2026-10-02T17:49:37Z request files written
+2026-10-02T17:49:37Z Qwen3.8-27B-FP8_thinking_off_prefill (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3.8-27B-FP8__card__stream_abort_Qwen3.8-27B-FP8_thinking_off_prefill__4dd0707b1c44.jsonl
+2026-10-02T18:48:55Z Gemma-4-31B-FP8_thinking_off_prefill (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp06/generations/Gemma-4-31B-FP8__card__stream_abort_Gemma-4-31B-FP8_thinking_off_prefill__008f2e67b663.jsonl
+2026-10-02T19:28:53Z Qwen3-32B_thinking_off_prefill (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3-32B.shard0of1.log

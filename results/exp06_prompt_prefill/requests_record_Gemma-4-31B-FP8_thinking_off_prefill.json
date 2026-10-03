@@ -1,0 +1,20 @@
+{
+  "model": "Gemma-4-31B-FP8",
+  "requests": {
+    "path": "cache/exp06/requests_Gemma-4-31B-FP8_thinking_off_prefill.jsonl",
+    "sha256": "80728f880c57a29f842879e39116d3ffac035d737382d6b0c13de6b244af4faf",
+    "n": 1900,
+    "per_cell": {
+      "baseline|prefill_compliant|off": 500,
+      "upgraded|prefill_compliant|off": 500,
+      "upgraded|prefill_noncompliant|off": 400,
+      "no_rule|prefill_compliant|off": 500
+    }
+  },
+  "rendering_checks": {
+    "twins_match_request_file": 1500,
+    "prefill_appended": 300,
+    "graded_text_cut": 300
+  },
+  "written": "2026-10-02T17:49:11+00:00"
+}

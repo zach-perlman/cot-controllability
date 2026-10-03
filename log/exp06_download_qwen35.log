@@ -1,0 +1,3 @@
+Qwen3.5-9B: downloading 19.3 GB (7 files) of Qwen/Qwen3.5-9B@c202236235762e1c871ad0ccb60c8ee5ba337b9a
+Fetching 16 files:   0%|          | 0/16 [00:00<?, ?it/s]Fetching 16 files:  62%|██████▎   | 10/16 [00:00<00:00, 16.77it/s]Fetching 16 files:  75%|███████▌  | 12/16 [00:19<00:00, 16.77it/s]Fetching 16 files:  81%|████████▏ | 13/16 [02:17<00:41, 13.77s/it]Fetching 16 files:  88%|████████▊ | 14/16 [02:27<00:26, 13.21s/it]Fetching 16 files:  94%|█████████▍| 15/16 [02:27<00:11, 11.24s/it]Fetching 16 files: 100%|██████████| 16/16 [02:31<00:00,  9.96s/it]Fetching 16 files: 100%|██████████| 16/16 [02:31<00:00,  9.46s/it]
+Qwen3.5-9B: done -> /workspace/.hf_home/hub/models--Qwen--Qwen3.5-9B/snapshots/c202236235762e1c871ad0ccb60c8ee5ba337b9a

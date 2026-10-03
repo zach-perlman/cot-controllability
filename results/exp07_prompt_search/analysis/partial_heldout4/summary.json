@@ -1,0 +1,1081 @@
+{
+ "exp_id": "exp07_prompt_search",
+ "run": "partial_heldout4",
+ "winner": "rule_last",
+ "models": [
+  "Qwen3.6-27B-FP8",
+  "GLM-4.7-Flash",
+  "Qwen3.6-35B-A3B-FP8",
+  "Gemma-4-12B"
+ ],
+ "missing": [
+  "Qwen3.8-27B-FP8",
+  "Gemma-4-31B-FP8"
+ ],
+ "t_star": 1000,
+ "n_boot": 2000,
+ "boot_seed": 20261002,
+ "n_questions": 160,
+ "contrasts": [
+  {
+   "group": "held-out rules x held-out models (primary)",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 9.226322356858137,
+    "ci": [
+     7.711067249253162,
+     10.965994258509355
+    ]
+   },
+   "b": {
+    "value": 9.175273302449009,
+    "ci": [
+     7.696505234332992,
+     10.755109431071817
+    ]
+   },
+   "difference": {
+    "value": 0.05104905440912866,
+    "ci": [
+     -1.484257877427382,
+     1.5717878351831684
+    ]
+   },
+   "p_two_sided": 0.954
+  },
+  {
+   "group": "held-out rules x held-out models (primary)",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 9.175273302449009,
+    "ci": [
+     7.696505234332992,
+     10.755109431071817
+    ]
+   },
+   "b": {
+    "value": 2.959495429312416,
+    "ci": [
+     2.1664074948367027,
+     3.7653876107385336
+    ]
+   },
+   "difference": {
+    "value": 6.215777873136593,
+    "ci": [
+     4.744962078114402,
+     7.752299246054819
+    ]
+   },
+   "p_two_sided": 0.0
+  },
+  {
+   "group": "search rules x held-out models",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 17.35675401980022,
+    "ci": [
+     16.028842947642147,
+     18.690146387777176
+    ]
+   },
+   "b": {
+    "value": 17.435760818123505,
+    "ci": [
+     16.032733882863663,
+     18.83006578331048
+    ]
+   },
+   "difference": {
+    "value": -0.0790067983232845,
+    "ci": [
+     -1.6830401549725158,
+     1.455302408816572
+    ]
+   },
+   "p_two_sided": 0.922
+  },
+  {
+   "group": "search rules x held-out models",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 17.435760818123505,
+    "ci": [
+     16.032733882863663,
+     18.83006578331048
+    ]
+   },
+   "b": {
+    "value": 2.296730324074076,
+    "ci": [
+     1.770895202080167,
+     2.8397899222488046
+    ]
+   },
+   "difference": {
+    "value": 15.139030494049429,
+    "ci": [
+     13.674170940602913,
+     16.644095531327984
+    ]
+   },
+   "p_two_sided": 0.0
+  },
+  {
+   "group": "multiple_word_suppression x held-out models",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 2.3660714285714284,
+    "ci": [
+     1.015407986111111,
+     3.9338235294117627
+    ]
+   },
+   "b": {
+    "value": 1.5624999999999991,
+    "ci": [
+     0.625,
+     2.65625
+    ]
+   },
+   "difference": {
+    "value": 0.8035714285714293,
+    "ci": [
+     -0.15624999999999867,
+     1.7187500000000013
+    ]
+   },
+   "p_two_sided": 0.102
+  },
+  {
+   "group": "multiple_word_suppression x held-out models",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 1.5624999999999991,
+    "ci": [
+     0.625,
+     2.65625
+    ]
+   },
+   "b": {
+    "value": 2.3437499999999996,
+    "ci": [
+     0.9374999999999997,
+     4.218749999999999
+    ]
+   },
+   "difference": {
+    "value": -0.7812500000000004,
+    "ci": [
+     -2.031250000000001,
+     0.31250000000000056
+    ]
+   },
+   "p_two_sided": 0.182
+  },
+  {
+   "group": "rule: lowercase_thinking",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 26.366419764178566,
+    "ci": [
+     22.80241598513805,
+     29.926397630679
+    ]
+   },
+   "b": {
+    "value": 29.95586884519411,
+    "ci": [
+     26.42011622090639,
+     33.541787441529536
+    ]
+   },
+   "difference": {
+    "value": -3.5894490810155446,
+    "ci": [
+     -7.901786656000697,
+     0.7650300522544515
+    ]
+   },
+   "p_two_sided": 0.108
+  },
+  {
+   "group": "rule: uppercase_thinking",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 35.23713505353013,
+    "ci": [
+     31.448760677932835,
+     39.11428400458781
+    ]
+   },
+   "b": {
+    "value": 30.500680291485303,
+    "ci": [
+     26.731952877974408,
+     34.316770083067894
+    ]
+   },
+   "difference": {
+    "value": 4.736454762044829,
+    "ci": [
+     0.6086680103018406,
+     9.106262466593316
+    ]
+   },
+   "p_two_sided": 0.03
+  },
+  {
+   "group": "rule: meow_between_words",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 9.804557725698542,
+    "ci": [
+     7.7544310883794845,
+     12.042626267068819
+    ]
+   },
+   "b": {
+    "value": 9.726473121299808,
+    "ci": [
+     7.811286683753783,
+     11.865428566854513
+    ]
+   },
+   "difference": {
+    "value": 0.07808460439873421,
+    "ci": [
+     -2.8651897180099684,
+     3.102612020969095
+    ]
+   },
+   "p_two_sided": 0.98
+  },
+  {
+   "group": "rule: end_of_sentence",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 6.038660944748554,
+    "ci": [
+     3.788357636030096,
+     8.414161729518058
+    ]
+   },
+   "b": {
+    "value": 7.345459921577227,
+    "ci": [
+     4.892729257791922,
+     9.823387520929733
+    ]
+   },
+   "difference": {
+    "value": -1.3067989768286727,
+    "ci": [
+     -4.396021849820577,
+     1.9751223860755827
+    ]
+   },
+   "p_two_sided": 0.437
+  },
+  {
+   "group": "rule: word_suppression",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 9.336996610845297,
+    "ci": [
+     6.768852099180954,
+     11.835924088342024
+    ]
+   },
+   "b": {
+    "value": 9.650321911061088,
+    "ci": [
+     7.57052372733588,
+     11.917806113138422
+    ]
+   },
+   "difference": {
+    "value": -0.31332530021579075,
+    "ci": [
+     -2.7263179770418455,
+     2.0218917357308066
+    ]
+   },
+   "p_two_sided": 0.777
+  },
+  {
+   "group": "rule: alternating_case",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 0.1692708333333335,
+    "ci": [
+     0.0,
+     0.5691964285714283
+    ]
+   },
+   "b": {
+    "value": 0.6219362745098046,
+    "ci": [
+     0.0,
+     1.361581110090568
+    ]
+   },
+   "difference": {
+    "value": -0.4526654411764711,
+    "ci": [
+     -1.2465562048037189,
+     0.2846869926948048
+    ]
+   },
+   "p_two_sided": 0.268
+  },
+  {
+   "group": "rule: multiple_word_suppression",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 2.3660714285714284,
+    "ci": [
+     1.015407986111111,
+     3.9338235294117627
+    ]
+   },
+   "b": {
+    "value": 1.5624999999999991,
+    "ci": [
+     0.625,
+     2.65625
+    ]
+   },
+   "difference": {
+    "value": 0.8035714285714293,
+    "ci": [
+     -0.15624999999999867,
+     1.7187500000000013
+    ]
+   },
+   "p_two_sided": 0.102
+  },
+  {
+   "group": "rule: no_digits",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 19.28795636593362,
+    "ci": [
+     15.051908697297161,
+     23.996347098683152
+    ]
+   },
+   "b": {
+    "value": 20.85291733976872,
+    "ci": [
+     16.609300713139895,
+     25.294576400235087
+    ]
+   },
+   "difference": {
+    "value": -1.564960973835099,
+    "ci": [
+     -4.97616515156227,
+     1.9728254276078432
+    ]
+   },
+   "p_two_sided": 0.374
+  },
+  {
+   "group": "rule: no_first_person",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 8.22173987130746,
+    "ci": [
+     5.7578424430988555,
+     10.900823992398108
+    ]
+   },
+   "b": {
+    "value": 6.0509662930685035,
+    "ci": [
+     3.914953926988526,
+     8.374120651483379
+    ]
+   },
+   "difference": {
+    "value": 2.170773578238956,
+    "ci": [
+     -0.5975660472400481,
+     4.925206802894028
+    ]
+   },
+   "p_two_sided": 0.138
+  },
+  {
+   "group": "model: Qwen3.6-27B-FP8",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-27B-FP8"
+   ],
+   "a": {
+    "value": 22.965895641586528,
+    "ci": [
+     21.0428940894031,
+     25.04317061640148
+    ]
+   },
+   "b": {
+    "value": 23.781552182506108,
+    "ci": [
+     21.668479727711496,
+     25.79238136897335
+    ]
+   },
+   "difference": {
+    "value": -0.81565654091958,
+    "ci": [
+     -3.2894525159722052,
+     1.7572793111402836
+    ]
+   },
+   "p_two_sided": 0.533
+  },
+  {
+   "group": "model: GLM-4.7-Flash",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "GLM-4.7-Flash"
+   ],
+   "a": {
+    "value": 8.0643584414889,
+    "ci": [
+     6.43510567952677,
+     9.886589176909231
+    ]
+   },
+   "b": {
+    "value": 6.27355974751058,
+    "ci": [
+     4.692414443273957,
+     8.008921698902517
+    ]
+   },
+   "difference": {
+    "value": 1.790798693978319,
+    "ci": [
+     -0.0818371372639808,
+     3.70139251058034
+    ]
+   },
+   "p_two_sided": 0.066
+  },
+  {
+   "group": "model: Qwen3.6-35B-A3B-FP8",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Qwen3.6-35B-A3B-FP8"
+   ],
+   "a": {
+    "value": 12.632286896834987,
+    "ci": [
+     10.898694038994039,
+     14.363902714322252
+    ]
+   },
+   "b": {
+    "value": 13.5404374107112,
+    "ci": [
+     11.884561901440875,
+     15.214684960413704
+    ]
+   },
+   "difference": {
+    "value": -0.9081505138762136,
+    "ci": [
+     -3.006460062779247,
+     1.1433236491642849
+    ]
+   },
+   "p_two_sided": 0.38
+  },
+  {
+   "group": "model: Gemma-4-12B",
+   "contrast": "rule_last - upgraded",
+   "models": [
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 8.261373952599333,
+    "ci": [
+     6.926890929730175,
+     9.612008238244263
+    ]
+   },
+   "b": {
+    "value": 8.078727991700802,
+    "ci": [
+     6.780736186389823,
+     9.30959562913883
+    ]
+   },
+   "difference": {
+    "value": 0.18264596089853136,
+    "ci": [
+     -1.4394306342790717,
+     1.6699724184706768
+    ]
+   },
+   "p_two_sided": 0.811
+  },
+  {
+   "group": "rule: lowercase_thinking",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 29.95586884519411,
+    "ci": [
+     26.42011622090639,
+     33.541787441529536
+    ]
+   },
+   "b": {
+    "value": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "difference": {
+    "value": 29.95586884519411,
+    "ci": [
+     26.42011622090639,
+     33.541787441529536
+    ]
+   },
+   "p_two_sided": 0.0
+  },
+  {
+   "group": "rule: uppercase_thinking",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 30.500680291485303,
+    "ci": [
+     26.731952877974408,
+     34.316770083067894
+    ]
+   },
+   "b": {
+    "value": 1.5039062499999996,
+    "ci": [
+     0.6250000000000003,
+     2.5
+    ]
+   },
+   "difference": {
+    "value": 28.996774041485303,
+    "ci": [
+     25.107478907520584,
+     32.92542790221673
+    ]
+   },
+   "p_two_sided": 0.0
+  },
+  {
+   "group": "rule: meow_between_words",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 9.726473121299808,
+    "ci": [
+     7.811286683753783,
+     11.865428566854513
+    ]
+   },
+   "b": {
+    "value": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "difference": {
+    "value": 9.726473121299808,
+    "ci": [
+     7.811286683753783,
+     11.865428566854513
+    ]
+   },
+   "p_two_sided": 0.0
+  },
+  {
+   "group": "rule: end_of_sentence",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 7.345459921577227,
+    "ci": [
+     4.892729257791922,
+     9.823387520929733
+    ]
+   },
+   "b": {
+    "value": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "difference": {
+    "value": 7.345459921577227,
+    "ci": [
+     4.892729257791922,
+     9.823387520929733
+    ]
+   },
+   "p_two_sided": 0.0
+  },
+  {
+   "group": "rule: word_suppression",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 9.650321911061088,
+    "ci": [
+     7.57052372733588,
+     11.917806113138422
+    ]
+   },
+   "b": {
+    "value": 9.979745370370383,
+    "ci": [
+     7.343750000000005,
+     12.63920318103228
+    ]
+   },
+   "difference": {
+    "value": -0.32942345930929484,
+    "ci": [
+     -3.4011554162204565,
+     2.5988076512929856
+    ]
+   },
+   "p_two_sided": 0.847
+  },
+  {
+   "group": "rule: alternating_case",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 0.6219362745098046,
+    "ci": [
+     0.0,
+     1.361581110090568
+    ]
+   },
+   "b": {
+    "value": 0.0,
+    "ci": [
+     0.0,
+     0.0
+    ]
+   },
+   "difference": {
+    "value": 0.6219362745098046,
+    "ci": [
+     0.0,
+     1.361581110090568
+    ]
+   },
+   "p_two_sided": 0.119
+  },
+  {
+   "group": "rule: multiple_word_suppression",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 1.5624999999999991,
+    "ci": [
+     0.625,
+     2.65625
+    ]
+   },
+   "b": {
+    "value": 2.3437499999999996,
+    "ci": [
+     0.9374999999999997,
+     4.218749999999999
+    ]
+   },
+   "difference": {
+    "value": -0.7812500000000004,
+    "ci": [
+     -2.031250000000001,
+     0.31250000000000056
+    ]
+   },
+   "p_two_sided": 0.182
+  },
+  {
+   "group": "rule: no_digits",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 20.85291733976872,
+    "ci": [
+     16.609300713139895,
+     25.294576400235087
+    ]
+   },
+   "b": {
+    "value": 2.656249999999999,
+    "ci": [
+     1.2500000000000004,
+     4.21875
+    ]
+   },
+   "difference": {
+    "value": 18.19666733976872,
+    "ci": [
+     14.304147421711539,
+     22.13589481370972
+    ]
+   },
+   "p_two_sided": 0.0
+  },
+  {
+   "group": "rule: no_first_person",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8",
+    "GLM-4.7-Flash",
+    "Qwen3.6-35B-A3B-FP8",
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 6.0509662930685035,
+    "ci": [
+     3.914953926988526,
+     8.374120651483379
+    ]
+   },
+   "b": {
+    "value": 6.222236287937248,
+    "ci": [
+     4.338430376589557,
+     8.233703977496214
+    ]
+   },
+   "difference": {
+    "value": -0.1712699948687444,
+    "ci": [
+     -2.9951364555367075,
+     2.6377080554627685
+    ]
+   },
+   "p_two_sided": 0.919
+  },
+  {
+   "group": "model: Qwen3.6-27B-FP8",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-27B-FP8"
+   ],
+   "a": {
+    "value": 23.781552182506108,
+    "ci": [
+     21.668479727711496,
+     25.79238136897335
+    ]
+   },
+   "b": {
+    "value": 2.126736111111112,
+    "ci": [
+     1.4351851851851851,
+     2.8847853535353525
+    ]
+   },
+   "difference": {
+    "value": 21.654816071394997,
+    "ci": [
+     19.301649316483655,
+     23.86944356222185
+    ]
+   },
+   "p_two_sided": 0.0
+  },
+  {
+   "group": "model: GLM-4.7-Flash",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "GLM-4.7-Flash"
+   ],
+   "a": {
+    "value": 6.27355974751058,
+    "ci": [
+     4.692414443273957,
+     8.008921698902517
+    ]
+   },
+   "b": {
+    "value": 1.4444444444444446,
+    "ci": [
+     0.8333333333333334,
+     2.0833333333333335
+    ]
+   },
+   "difference": {
+    "value": 4.829115303066136,
+    "ci": [
+     3.2217970804115788,
+     6.546529204349734
+    ]
+   },
+   "p_two_sided": 0.0
+  },
+  {
+   "group": "model: Qwen3.6-35B-A3B-FP8",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Qwen3.6-35B-A3B-FP8"
+   ],
+   "a": {
+    "value": 13.5404374107112,
+    "ci": [
+     11.884561901440875,
+     15.214684960413704
+    ]
+   },
+   "b": {
+    "value": 0.5555555555555556,
+    "ci": [
+     0.20833333333333334,
+     0.972222222222222
+    ]
+   },
+   "difference": {
+    "value": 12.984881855155646,
+    "ci": [
+     11.238471788200329,
+     14.698974548949243
+    ]
+   },
+   "p_two_sided": 0.0
+  },
+  {
+   "group": "model: Gemma-4-12B",
+   "contrast": "upgraded - baseline",
+   "models": [
+    "Gemma-4-12B"
+   ],
+   "a": {
+    "value": 8.078727991700802,
+    "ci": [
+     6.780736186389823,
+     9.30959562913883
+    ]
+   },
+   "b": {
+    "value": 5.964769625914501,
+    "ci": [
+     4.907856325049137,
+     7.060315698319085
+    ]
+   },
+   "difference": {
+    "value": 2.113958365786301,
+    "ci": [
+     0.6127429335794059,
+     3.548980124451067
+    ]
+   },
+   "p_two_sided": 0.004
+  }
+ ],
+ "guards": [
+  {
+   "prompt": "baseline",
+   "rule_set": "held-out rules",
+   "clean_200": 17.7,
+   "ended_clean_early": 0.0,
+   "empty": 0.0,
+   "degenerate": 0.5,
+   "meta_regex": 48.1
+  },
+  {
+   "prompt": "baseline",
+   "rule_set": "search rules",
+   "clean_200": 5.7,
+   "ended_clean_early": 0.0,
+   "empty": 0.0,
+   "degenerate": 0.9,
+   "meta_regex": 28.8
+  },
+  {
+   "prompt": "rule_last",
+   "rule_set": "held-out rules",
+   "clean_200": 28.0,
+   "ended_clean_early": 0.5,
+   "empty": 2.2,
+   "degenerate": 2.6,
+   "meta_regex": 45.7
+  },
+  {
+   "prompt": "rule_last",
+   "rule_set": "search rules",
+   "clean_200": 37.4,
+   "ended_clean_early": 0.7,
+   "empty": 5.6,
+   "degenerate": 6.2,
+   "meta_regex": 36.8
+  },
+  {
+   "prompt": "upgraded",
+   "rule_set": "held-out rules",
+   "clean_200": 27.5,
+   "ended_clean_early": 0.5,
+   "empty": 2.9,
+   "degenerate": 3.3,
+   "meta_regex": 44.1
+  },
+  {
+   "prompt": "upgraded",
+   "rule_set": "search rules",
+   "clean_200": 34.5,
+   "ended_clean_early": 0.5,
+   "empty": 2.1,
+   "degenerate": 2.8,
+   "meta_regex": 38.1
+  }
+ ],
+ "figures": [
+  "T1_contrasts",
+  "T2_per_rule"
+ ]
+}

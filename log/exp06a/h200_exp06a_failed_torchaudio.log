@@ -1,0 +1,13 @@
+2026-10-01T20:00:56Z Qwen3.8-27B-FP8: pre-pass
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3.8-27B-FP8.shard0of1.log
+a shard failed; see log/exp06a/generate_Qwen3.8-27B-FP8.shard*.log
+2026-10-01T20:01:05Z Qwen3.8-27B-FP8: pre-pass FAILED (log/exp06a/generate_Qwen3.8-27B-FP8.shard0of1.log)
+2026-10-01T20:01:05Z Gemma-4-31B-FP8: pre-pass
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Gemma-4-31B-FP8.shard0of1.log
+a shard failed; see log/exp06a/generate_Gemma-4-31B-FP8.shard*.log
+2026-10-01T20:01:13Z Gemma-4-31B-FP8: pre-pass FAILED (log/exp06a/generate_Gemma-4-31B-FP8.shard0of1.log)
+2026-10-01T20:01:13Z Qwen3-32B: pre-pass
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3-32B.shard0of1.log
+a shard failed; see log/exp06a/generate_Qwen3-32B.shard*.log
+2026-10-01T20:01:19Z Qwen3-32B: pre-pass FAILED (log/exp06a/generate_Qwen3-32B.shard0of1.log)
+2026-10-01T20:01:19Z exp06a round 1 done

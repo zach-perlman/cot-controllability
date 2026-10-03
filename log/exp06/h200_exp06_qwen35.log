@@ -1,0 +1,14 @@
+Qwen3.5-9B: Qwen/Qwen3.5-9B@c2022362 already complete
+2026-10-02T17:08:28Z Qwen3.5-9B_prepass (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3.5-9B.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3.5-9B__card__stream_abort_prepass__670c2571d01a.jsonl
+2026-10-02T17:11:39Z request files written
+2026-10-02T17:11:39Z Qwen3.5-9B_main (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3.5-9B.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3.5-9B__card__stream_abort_Qwen3.5-9B_main__c0e22627d746.jsonl
+2026-10-02T17:26:46Z Qwen3.5-9B_thinking_off (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3.5-9B.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3.5-9B__card__stream_abort_Qwen3.5-9B_thinking_off__79f7366658b1.jsonl
+2026-10-02T17:39:47Z Qwen3.5-9B generation and grading done
+2026-10-02T17:40:16Z analysis written (run with_qwen35)
+2026-10-02T17:40:33Z story figures written (v2)

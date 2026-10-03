@@ -1,0 +1,28 @@
+                      S_1000  clean_200  ended_clean_early  empty  degenerate  meta
+prompt                                                                             
+short_sentences         51.3       72.2                3.0    0.0         1.3  11.5
+rule_last               50.5       74.5                1.2    0.0         0.8  11.0
+guide_in_system_long    46.4       74.2                0.5    0.0         1.0   7.8
+examples_with_guide     33.0       61.5                0.5    0.0         0.8   6.2
+model                                    Gemma-4-31B-FP8  Qwen3.8-27B-FP8
+prompt               mode                                                
+examples_with_guide  end_of_sentence                32.1             14.1
+                     lowercase_thinking             37.8             20.7
+                     meow_between_words             19.3             70.3
+                     uppercase_thinking              4.9             47.7
+                     word_suppression               63.8             19.5
+guide_in_system_long end_of_sentence                47.0             24.5
+                     lowercase_thinking             64.8             50.6
+                     meow_between_words             34.3             63.7
+                     uppercase_thinking             20.8             60.1
+                     word_suppression               71.5             26.5
+rule_last            end_of_sentence                65.1             16.3
+                     lowercase_thinking             60.8             63.6
+                     meow_between_words             73.0             50.1
+                     uppercase_thinking             24.7             50.5
+                     word_suppression               66.8             34.0
+short_sentences      end_of_sentence                82.1             21.8
+                     lowercase_thinking             63.5             66.8
+                     meow_between_words             73.0             31.7
+                     uppercase_thinking             24.0             57.5
+                     word_suppression               65.2             27.2

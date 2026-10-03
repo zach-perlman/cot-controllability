@@ -1,0 +1,3 @@
+2026-10-01T22:38:41Z Qwen3.8-27B-FP8: round 2
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3.8-27B-FP8.shard0of1.log
+2026-10-01T22:41:14Z round 2 stopped by hand before finishing Qwen3.8 (human: run the thinking-off backfill first, then decide round 2)

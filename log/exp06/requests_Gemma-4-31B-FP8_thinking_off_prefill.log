@@ -1,0 +1,2 @@
+wrote 1900 requests to cache/exp06/requests_Gemma-4-31B-FP8_thinking_off_prefill.jsonl
+wrote results/exp06_prompt_prefill/requests_record_Gemma-4-31B-FP8_thinking_off_prefill.json: {"twins_match_request_file": 1500, "prefill_appended": 300, "graded_text_cut": 300}

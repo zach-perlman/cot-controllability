@@ -1,0 +1,6842 @@
+{
+  "exp_id": "exp06a_prompt_screen",
+  "run": "round1_thinking_on",
+  "models": [
+    "Qwen3.8-27B-FP8",
+    "Gemma-4-31B-FP8",
+    "Qwen3-32B"
+  ],
+  "missing_parts": [
+    "Gemma-4-31B-FP8_thinking_off_half",
+    "Qwen3-32B_thinking_off_half"
+  ],
+  "censor_empty": false,
+  "t_star": 1000,
+  "t_short": 200,
+  "stop": 1200,
+  "thinking_off_items": [
+    "GPQA:5",
+    "GPQA:36",
+    "GPQA:79",
+    "GPQA:132",
+    "GPQA:141",
+    "GPQA:160",
+    "GPQA:214",
+    "GPQA:235",
+    "GPQA:250",
+    "GPQA:256",
+    "GPQA:268",
+    "GPQA:270",
+    "GPQA:279",
+    "GPQA:288",
+    "GPQA:328",
+    "GPQA:370",
+    "GPQA:374",
+    "GPQA:388",
+    "GPQA:432",
+    "HLE:10",
+    "HLE:25",
+    "HLE:72",
+    "HLE:107",
+    "HLE:114",
+    "HLE:136",
+    "HLE:145",
+    "HLE:204",
+    "HLE:267",
+    "HLE:275",
+    "HLE:288",
+    "HLE:318",
+    "HLE:347",
+    "HLE:371",
+    "HLE:411",
+    "HLE:412",
+    "HLE:421",
+    "HLE:441",
+    "HLE:456",
+    "MMLU-Pro:39",
+    "MMLU-Pro:73",
+    "MMLU-Pro:81",
+    "MMLU-Pro:86",
+    "MMLU-Pro:90",
+    "MMLU-Pro:102",
+    "MMLU-Pro:108",
+    "MMLU-Pro:112",
+    "MMLU-Pro:131",
+    "MMLU-Pro:146",
+    "MMLU-Pro:153",
+    "MMLU-Pro:194",
+    "MMLU-Pro:229"
+  ],
+  "primary": [
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "start_with",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -9.420212031979084,
+        "ci": [
+          -12.33597492713718,
+          -6.354262859117391
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "warmup",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -9.928802399944452,
+        "ci": [
+          -13.195299086809587,
+          -6.592811459121292
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "fewshot",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -5.060549881355908,
+        "ci": [
+          -8.083240449655483,
+          -1.5375619468169546
+        ]
+      },
+      "p": 0.004,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "style_guide",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -8.383549068103681,
+        "ci": [
+          -12.176436664285799,
+          -4.490605778836286
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "failure_guide",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -6.1773421152583605,
+        "ci": [
+          -9.53354334919519,
+          -2.847735589733723
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "monitor_stealth",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -12.05920533034738,
+        "ci": [
+          -14.772427168143572,
+          -9.276192355990421
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "start_with",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -8.830026836816165,
+        "ci": [
+          -12.268943821486408,
+          -5.389993396616192
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "warmup",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -13.62526493205426,
+        "ci": [
+          -17.1380995923472,
+          -10.382075722955648
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "fewshot",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -8.638424487816662,
+        "ci": [
+          -12.191478045561178,
+          -5.290068576404445
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "style_guide",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -11.588237247804356,
+        "ci": [
+          -14.531999284721477,
+          -7.530518573492525
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "failure_guide",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -9.583598265387598,
+        "ci": [
+          -12.948663745577482,
+          -6.266241705350875
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "monitor_stealth",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -11.062843548406462,
+        "ci": [
+          -14.4827063854851,
+          -7.66300962480633
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "start_with",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 14.940237344883972,
+        "ci": [
+          11.434194217540576,
+          18.788808651876696
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "warmup",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 0.42544662231633124,
+        "ci": [
+          -2.8495902013032213,
+          3.5147337362318947
+        ]
+      },
+      "p": 0.811,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "fewshot",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 13.332843333338495,
+        "ci": [
+          10.059546732252949,
+          16.631869305786708
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "style_guide",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -1.9885588667786045,
+        "ci": [
+          -5.09962760111319,
+          1.4066085951108358
+        ]
+      },
+      "p": 0.25,
+      "p_holm": 0.75
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "failure_guide",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 15.837060204943276,
+        "ci": [
+          11.988057005965281,
+          19.563374187601035
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "monitor_stealth",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -0.2719244093395572,
+        "ci": [
+          -3.301604565927062,
+          2.601351798070782
+        ]
+      },
+      "p": 0.834,
+      "p_holm": 1.0
+    }
+  ],
+  "primary_vs_rerun": [
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "start_with",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -7.929514903569601,
+        "ci": [
+          -10.761048054031393,
+          -5.199941239747786
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "warmup",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -8.438105271534969,
+        "ci": [
+          -11.662581600444566,
+          -5.14328206887011
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "fewshot",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -3.5698527529464257,
+        "ci": [
+          -6.7919384562123,
+          0.08163828758669424
+        ]
+      },
+      "p": 0.058,
+      "p_holm": 0.22
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "style_guide",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -6.892851939694198,
+        "ci": [
+          -10.731613877846472,
+          -2.9878380331839596
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "failure_guide",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -4.686644986848878,
+        "ci": [
+          -8.06411625574332,
+          -1.4856170631705645
+        ]
+      },
+      "p": 0.002,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "monitor_stealth",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -10.568508201937899,
+        "ci": [
+          -13.458898319897692,
+          -7.615655123751469
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "start_with",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -10.110360082214557,
+        "ci": [
+          -14.047720928514803,
+          -6.515726510512463
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "warmup",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -14.90559817745265,
+        "ci": [
+          -18.702224031310287,
+          -11.435379087891935
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "fewshot",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -9.918757733215052,
+        "ci": [
+          -13.959026036420127,
+          -6.219117811275864
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "style_guide",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -12.868570493202746,
+        "ci": [
+          -16.750729750992104,
+          -8.274302673749093
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "failure_guide",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -10.863931510785989,
+        "ci": [
+          -14.549228845188516,
+          -7.4716105201934475
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "monitor_stealth",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -12.343176793804853,
+        "ci": [
+          -15.956129584624772,
+          -9.13484742516124
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "start_with",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 13.229995787539139,
+        "ci": [
+          9.472812390125487,
+          17.60183435819566
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "warmup",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -1.2847949350285,
+        "ci": [
+          -4.879307019140411,
+          2.2839143908742825
+        ]
+      },
+      "p": 0.456,
+      "p_holm": 0.512
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "fewshot",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 11.622601775993664,
+        "ci": [
+          8.105754783463462,
+          15.313143756014059
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "style_guide",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -3.698800424123436,
+        "ci": [
+          -6.577850968295657,
+          0.04189328894677585
+        ]
+      },
+      "p": 0.055,
+      "p_holm": 0.22
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "failure_guide",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 14.126818647598444,
+        "ci": [
+          10.277270076449268,
+          18.168110457191556
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.018000000000000002
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "monitor_stealth",
+      "b": "stacked_rerun",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -1.9821659666843885,
+        "ci": [
+          -5.359552013775549,
+          1.8483000097800129
+        ]
+      },
+      "p": 0.256,
+      "p_holm": 0.512
+    }
+  ],
+  "rerun_minus_reused": [
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "baseline_rerun",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 0.46077922077921996,
+        "ci": [
+          -0.6867222222222227,
+          1.703883522727272
+        ]
+      },
+      "p": 0.464,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "stacked_rerun",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -1.490697128409482,
+        "ci": [
+          -4.42508592952694,
+          1.5469859661548764
+        ]
+      },
+      "p": 0.346,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "baseline_rerun",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 0.15950473212541227,
+        "ci": [
+          -1.3220461357304603,
+          1.5953622265960297
+        ]
+      },
+      "p": 0.902,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "stacked_rerun",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 1.2803332453983907,
+        "ci": [
+          -2.1694346214218356,
+          5.096394385606451
+        ]
+      },
+      "p": 0.479,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "baseline_rerun",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -0.1201014145270296,
+        "ci": [
+          -1.9683924559407084,
+          2.2851268304188395
+        ]
+      },
+      "p": 0.903,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "stacked_rerun",
+      "b": "stacked",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 1.7102415573448313,
+        "ci": [
+          -1.68467630288162,
+          4.734585862010984
+        ]
+      },
+      "p": 0.286,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "baseline_rerun",
+      "b": "baseline",
+      "thinking": false,
+      "metric": "S_short",
+      "difference": {
+        "value": -0.19181093811557193,
+        "ci": [
+          -6.063259236478361,
+          5.600520872480257
+        ]
+      },
+      "p": 0.978,
+      "p_holm": 0.978
+    }
+  ],
+  "vs_baseline": [
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "start_with",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 2.6038284632034614,
+        "ci": [
+          0.9111840392722755,
+          4.565738660236821
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.021
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "warmup",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 2.095238095238093,
+        "ci": [
+          0.6997222222222218,
+          3.641300904977375
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.021
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "fewshot",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 6.963490613826637,
+        "ci": [
+          4.601467799410041,
+          9.83482501586236
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.021
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "style_guide",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 3.6404914270788638,
+        "ci": [
+          0.9211484788359802,
+          6.338942282058118
+        ]
+      },
+      "p": 0.005,
+      "p_holm": 0.065
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "failure_guide",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 5.846698379924184,
+        "ci": [
+          3.411047832167836,
+          8.464608436764216
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.021
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "monitor_stealth",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -0.03516483516483541,
+        "ci": [
+          -1.078818181818182,
+          1.0500530303030304
+        ]
+      },
+      "p": 0.943,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "meta_allowed",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 0.1771428571428566,
+        "ci": [
+          -0.8,
+          1.16
+        ]
+      },
+      "p": 0.759,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "start_with",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 0.6181181775035655,
+        "ci": [
+          -1.0183995824416665,
+          2.2425939924906104
+        ]
+      },
+      "p": 0.46,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "warmup",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -4.177119917734529,
+        "ci": [
+          -6.182368315556578,
+          -2.381329155818369
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.021
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "fewshot",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 0.8097205265030688,
+        "ci": [
+          -1.4579075953468603,
+          3.1665442927112606
+        ]
+      },
+      "p": 0.51,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "style_guide",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -2.140092233484625,
+        "ci": [
+          -4.261946058033405,
+          1.1623475528909724
+        ]
+      },
+      "p": 0.245,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "failure_guide",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -0.13545325106786715,
+        "ci": [
+          -1.777870370370365,
+          1.5999999999999988
+        ]
+      },
+      "p": 0.868,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "monitor_stealth",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -1.614698534086731,
+        "ci": [
+          -3.270460141865972,
+          -0.00022340425531404073
+        ]
+      },
+      "p": 0.048,
+      "p_holm": 0.5760000000000001
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "meta_allowed",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -0.13545325106786577,
+        "ci": [
+          -1.9619875776397522,
+          1.8000000000000003
+        ]
+      },
+      "p": 0.914,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "start_with",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 15.822787111437119,
+        "ci": [
+          12.680767543429077,
+          19.33941221625118
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.021
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "warmup",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 1.3079963888694806,
+        "ci": [
+          -1.3071415439499796,
+          3.9332304534732527
+        ]
+      },
+      "p": 0.361,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "fewshot",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 14.215393099891644,
+        "ci": [
+          10.950315817992895,
+          17.570807571457788
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.021
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "style_guide",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -1.1060091002254553,
+        "ci": [
+          -3.9521154050421745,
+          2.1386464409133197
+        ]
+      },
+      "p": 0.539,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "failure_guide",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 16.719609971496425,
+        "ci": [
+          12.756067366298248,
+          20.592877816977477
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.021
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "monitor_stealth",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 0.6106253572135921,
+        "ci": [
+          -2.2033679898532803,
+          3.2526603526615614
+        ]
+      },
+      "p": 0.662,
+      "p_holm": 1.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "meta_allowed",
+      "b": "baseline",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": -1.245655283955937,
+        "ci": [
+          -3.5559301442022018,
+          0.9734193047755866
+        ]
+      },
+      "p": 0.296,
+      "p_holm": 1.0
+    }
+  ],
+  "twins": [
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "start_with",
+      "b": "start_with_no_rule",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 3.146685606060604,
+        "ci": [
+          1.415024671052631,
+          4.945234962406012
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.006
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "a": "fewshot",
+      "b": "fewshot_no_rule",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 6.10634775668378,
+        "ci": [
+          3.385296704490966,
+          8.40090043436402
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.006
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "start_with",
+      "b": "start_with_no_rule",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 8.253571428571425,
+        "ci": [
+          6.299999999999993,
+          10.125071721311471
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.006
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "a": "fewshot",
+      "b": "fewshot_no_rule",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 8.545173777570927,
+        "ci": [
+          6.533112611504864,
+          10.608282449987714
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.006
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "start_with",
+      "b": "start_with_no_rule",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 19.735172373234143,
+        "ci": [
+          17.040217556936305,
+          22.91876615479319
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.006
+    },
+    {
+      "model": "Qwen3-32B",
+      "a": "fewshot",
+      "b": "fewshot_no_rule",
+      "thinking": true,
+      "metric": "S_t_star",
+      "difference": {
+        "value": 9.623953688213662,
+        "ci": [
+          6.200052469952542,
+          13.115710501220057
+        ]
+      },
+      "p": 0.001,
+      "p_holm": 0.006
+    }
+  ],
+  "cot_specificity": [
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "stacked",
+      "metric": "S_short",
+      "gain_thinking_on": {
+        "value": 21.568627450980387,
+        "ci": [
+          16.862745098039216,
+          26.27450980392157
+        ]
+      },
+      "gain_thinking_off": {
+        "value": 31.95595041897718,
+        "ci": [
+          25.139803627948638,
+          38.73458545437703
+        ]
+      },
+      "on_minus_off": {
+        "value": -10.387322967996793,
+        "ci": [
+          -19.541698488475586,
+          -0.9351647435813938
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "start_with",
+      "metric": "S_short",
+      "gain_thinking_on": {
+        "value": 3.529411764705881,
+        "ci": [
+          0.39215686274509665,
+          6.6666666666666705
+        ]
+      },
+      "gain_thinking_off": {
+        "value": 12.115598556825995,
+        "ci": [
+          3.2924589029474345,
+          21.56801943324514
+        ]
+      },
+      "on_minus_off": {
+        "value": -8.586186792120115,
+        "ci": [
+          -17.93732903262315,
+          0.10408880463212654
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "warmup",
+      "metric": "S_short",
+      "gain_thinking_on": {
+        "value": 5.098039215686274,
+        "ci": [
+          1.1764705882352997,
+          9.019607843137257
+        ]
+      },
+      "gain_thinking_off": {
+        "value": 20.34920073916248,
+        "ci": [
+          13.491702433576869,
+          27.26131671723649
+        ]
+      },
+      "on_minus_off": {
+        "value": -15.25116152347621,
+        "ci": [
+          -22.79745344517645,
+          -8.00520875582151
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot",
+      "metric": "S_short",
+      "gain_thinking_on": {
+        "value": 13.917723952326028,
+        "ci": [
+          9.018755328218234,
+          19.00868896578239
+        ]
+      },
+      "gain_thinking_off": {
+        "value": 28.42127853509438,
+        "ci": [
+          21.38982588246026,
+          35.48020458101051
+        ]
+      },
+      "on_minus_off": {
+        "value": -14.503554582768352,
+        "ci": [
+          -23.4629688064481,
+          -5.531735788472786
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "style_guide",
+      "metric": "S_short",
+      "gain_thinking_on": {
+        "value": 4.7058823529411775,
+        "ci": [
+          0.7843137254901946,
+          8.62745098039216
+        ]
+      },
+      "gain_thinking_off": {
+        "value": 39.05679107068289,
+        "ci": [
+          28.595286044431585,
+          48.53919236666999
+        ]
+      },
+      "on_minus_off": {
+        "value": -34.35090871774171,
+        "ci": [
+          -43.520052590762894,
+          -24.332381465406566
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "failure_guide",
+      "metric": "S_short",
+      "gain_thinking_on": {
+        "value": 11.372549019607842,
+        "ci": [
+          7.058823529411764,
+          16.07843137254902
+        ]
+      },
+      "gain_thinking_off": {
+        "value": 20.388019406618803,
+        "ci": [
+          13.007955253839759,
+          27.5972934495204
+        ]
+      },
+      "on_minus_off": {
+        "value": -9.01547038701096,
+        "ci": [
+          -16.520204152422696,
+          -1.0925283292190575
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "monitor_stealth",
+      "metric": "S_short",
+      "gain_thinking_on": {
+        "value": 1.3877787807814457e-15,
+        "ci": [
+          -2.352941176470591,
+          2.362745098039166
+        ]
+      },
+      "gain_thinking_off": {
+        "value": 7.079697808119906,
+        "ci": [
+          -0.8815689422608285,
+          15.043915870539362
+        ]
+      },
+      "on_minus_off": {
+        "value": -7.079697808119905,
+        "ci": [
+          -15.805727640808914,
+          1.7827014898141802
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "meta_allowed",
+      "metric": "S_short",
+      "gain_thinking_on": {
+        "value": 0.7843137254901975,
+        "ci": [
+          -2.7450980392156876,
+          4.313725490196078
+        ]
+      },
+      "gain_thinking_off": {
+        "value": -4.5936146210953215,
+        "ci": [
+          -11.736628044281469,
+          2.7016286492191126
+        ]
+      },
+      "on_minus_off": {
+        "value": 5.377928346585518,
+        "ci": [
+          -2.329779603932764,
+          13.64554721045719
+        ]
+      }
+    }
+  ],
+  "by_source": [
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 1.0810810810810823,
+        "ci": [
+          0.0,
+          2.7027027027027035
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 1.973684210526316,
+        "ci": [
+          0.0,
+          4.144736842105263
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "stacked",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 10.608108108108116,
+        "ci": [
+          6.990926640926644,
+          14.054054054054058
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "stacked",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 13.80989595200122,
+        "ci": [
+          9.703703971467133,
+          18.209412736386422
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "stacked",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 20.7671335200747,
+        "ci": [
+          14.64207792207792,
+          26.562142857142852
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 4.527027027027028,
+        "ci": [
+          1.7567567567567568,
+          7.567567567567571
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 9.763157894736844,
+        "ci": [
+          6.315789473684211,
+          13.70509607351712
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 15.211428571428574,
+        "ci": [
+          8.69739393939394,
+          22.4
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot_no_rule",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 2.162162162162163,
+        "ci": [
+          0.5405405405405405,
+          4.324324324324326
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot_no_rule",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 1.5789473684210538,
+        "ci": [
+          0.0,
+          4.736842105263158
+        ]
+      }
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot_no_rule",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 6.4,
+        "ci": [
+          2.4,
+          10.4
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "baseline",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 10.241820768136565,
+        "ci": [
+          7.027027027027027,
+          13.491891891891889
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "baseline",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 10.430622009569381,
+        "ci": [
+          6.8421052631578965,
+          14.154135338345869
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "baseline",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 1.6000000000000008,
+        "ci": [
+          0.0,
+          4.0
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "stacked",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 17.30499767290939,
+        "ci": [
+          13.426038519722736,
+          21.251198496359784
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "stacked",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 14.162033746652627,
+        "ci": [
+          9.816577702838332,
+          18.722849290005605
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "stacked",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 29.35912707847164,
+        "ci": [
+          17.893644410491476,
+          42.038777472527464
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "fewshot",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 12.463617463617464,
+        "ci": [
+          8.844799344799345,
+          15.945945945945947
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "fewshot",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 8.693498452012388,
+        "ci": [
+          5.263157894736843,
+          11.99965665426192
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "fewshot",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 3.4296650717703367,
+        "ci": [
+          0.0,
+          7.444911873840446
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "fewshot_no_rule",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 1.0810810810810816,
+        "ci": [
+          0.0,
+          2.7027027027027035
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "fewshot_no_rule",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "fewshot_no_rule",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "baseline",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 3.37837837837838,
+        "ci": [
+          1.0810810810810811,
+          6.486486486486489
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "baseline",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 4.436090225563912,
+        "ci": [
+          2.1052631578947363,
+          7.36842105263158
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "baseline",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 7.200000000000001,
+        "ci": [
+          3.2,
+          12.0
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "stacked",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 3.783783783783787,
+        "ci": [
+          1.6216216216216213,
+          6.486486486486489
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "stacked",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 6.205263157894738,
+        "ci": [
+          2.718421052631582,
+          10.051259398496242
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "stacked",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 10.236363636363635,
+        "ci": [
+          3.2000000000000015,
+          16.500833333333325
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "fewshot",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 17.027027027027035,
+        "ci": [
+          12.836711711711713,
+          21.297297297297295
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "fewshot",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 21.20028358738037,
+        "ci": [
+          17.068207803992745,
+          25.65102258996802
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "fewshot",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 14.637037037037034,
+        "ci": [
+          8.69279411764706,
+          22.60602597402597
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "fewshot_no_rule",
+      "source": "GPQA",
+      "n_items": 37,
+      "S_t_star": {
+        "value": 10.810810810810814,
+        "ci": [
+          7.554054054054074,
+          14.594594594594595
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "fewshot_no_rule",
+      "source": "HLE",
+      "n_items": 38,
+      "S_t_star": {
+        "value": 5.672514619883041,
+        "ci": [
+          2.631578947368421,
+          9.333805668016192
+        ]
+      }
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "fewshot_no_rule",
+      "source": "MMLU-Pro",
+      "n_items": 25,
+      "S_t_star": {
+        "value": 10.455126050420171,
+        "ci": [
+          6.187098214285718,
+          14.561310924369742
+        ]
+      }
+    }
+  ],
+  "arms": [
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 1.1428571428571428,
+        "ci": [
+          0.31950000000000056,
+          2.133333333333332
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 5.9999999999999964,
+        "ci": [
+          4.199999999999998,
+          7.799999999999999
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.7500000000000003,
+        "ci": [
+          0.0,
+          1.7500000000000009
+        ]
+      },
+      "P1": {
+        "value": 1.2,
+        "ci": [
+          0.4,
+          2.1999999999999997
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 12.4,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "stacked",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 13.166897638039687,
+        "ci": [
+          10.394198685456196,
+          15.869771274181177
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 13.827370576242362,
+        "ci": [
+          10.53150424467308,
+          16.943295346810363
+        ]
+      },
+      "S_short": {
+        "value": 27.79701492537312,
+        "ci": [
+          24.399999999999995,
+          30.99999999999999
+        ]
+      },
+      "S_short_openers": {
+        "value": 23.996268656716406,
+        "ci": [
+          20.74553571428571,
+          27.236115867579908
+        ]
+      },
+      "P1": {
+        "value": 15.6,
+        "ci": [
+          13.0,
+          18.2
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 192.0,
+      "meta_regex_share": 9.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline_rerun",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 1.6036363636363626,
+        "ci": [
+          0.6374999999999994,
+          2.799999999999999
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 6.799999999999992,
+        "ci": [
+          4.9999999999999964,
+          8.799999999999994
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.24999999999999997,
+        "ci": [
+          0.0,
+          0.7500000000000002
+        ]
+      },
+      "P1": {
+        "value": 1.6,
+        "ci": [
+          0.6,
+          2.8000000000000003
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 5.0,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "stacked_rerun",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 11.676200509630204,
+        "ci": [
+          8.744087943703132,
+          14.625185400646732
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 10.687152649832267,
+        "ci": [
+          7.463452153729532,
+          13.91056772971098
+        ]
+      },
+      "S_short": {
+        "value": 27.591042780748655,
+        "ci": [
+          24.399999999999995,
+          30.59411977834612
+        ]
+      },
+      "S_short_openers": {
+        "value": 22.988803475935825,
+        "ci": [
+          19.741788898475694,
+          25.999999999999996
+        ]
+      },
+      "P1": {
+        "value": 15.0,
+        "ci": [
+          12.4,
+          17.599999999999998
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 6.0,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "start_with",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 3.746685606060604,
+        "ci": [
+          1.99995,
+          5.7272238786621665
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 1.590909090909091,
+        "ci": [
+          0.0,
+          3.055555555555555
+        ]
+      },
+      "S_short": {
+        "value": 9.599999999999994,
+        "ci": [
+          7.199999999999999,
+          11.804999999999975
+        ]
+      },
+      "S_short_openers": {
+        "value": 3.75,
+        "ci": [
+          2.0000000000000004,
+          5.5
+        ]
+      },
+      "P1": {
+        "value": 3.8,
+        "ci": [
+          2.4,
+          5.4
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 10.6,
+      "starts_with_sentence_share": 13.8,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "warmup",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 3.238095238095236,
+        "ci": [
+          1.7000000000000002,
+          4.922614583333332
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 1.6666666666666659,
+        "ci": [
+          0.5000000000000004,
+          3.0999999999999988
+        ]
+      },
+      "S_short": {
+        "value": 8.99999999999999,
+        "ci": [
+          6.595000000000003,
+          11.599999999999996
+        ]
+      },
+      "S_short_openers": {
+        "value": 2.2499999999999987,
+        "ci": [
+          0.7500000000000007,
+          3.9999999999999996
+        ]
+      },
+      "P1": {
+        "value": 3.4000000000000004,
+        "ci": [
+          1.7999999999999998,
+          5.2
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 25.4,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 8.10634775668378,
+        "ci": [
+          5.999469251189555,
+          10.71621512825795
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 8.007500890313393,
+        "ci": [
+          5.660246711145228,
+          10.976088825218412
+        ]
+      },
+      "S_short": {
+        "value": 20.923387096774185,
+        "ci": [
+          17.930098290598288,
+          24.081250423355673
+        ]
+      },
+      "S_short_openers": {
+        "value": 18.968749999999996,
+        "ci": [
+          15.75,
+          22.249999999999996
+        ]
+      },
+      "P1": {
+        "value": 9.6,
+        "ci": [
+          7.199999999999999,
+          12.2
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 0.6,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "style_guide",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 4.783348569936006,
+        "ci": [
+          2.3641311344327836,
+          7.313345502495315
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 5.6666857124200085,
+        "ci": [
+          2.6742470775681806,
+          8.78898422373081
+        ]
+      },
+      "S_short": {
+        "value": 10.987096774193546,
+        "ci": [
+          8.576833333333335,
+          13.590492063492066
+        ]
+      },
+      "S_short_openers": {
+        "value": 8.983870967741936,
+        "ci": [
+          6.499999999999999,
+          11.729779169413316
+        ]
+      },
+      "P1": {
+        "value": 6.4,
+        "ci": [
+          4.3999999999999995,
+          8.6
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 80.60000000000001,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "failure_guide",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 6.989555522781327,
+        "ci": [
+          4.526822867368158,
+          9.73106499495094
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 6.974706641238898,
+        "ci": [
+          4.200715980343865,
+          10.059450120926652
+        ]
+      },
+      "S_short": {
+        "value": 16.978378378378366,
+        "ci": [
+          13.799799999999996,
+          20.199999999999996
+        ]
+      },
+      "S_short_openers": {
+        "value": 12.972972972972968,
+        "ci": [
+          9.75,
+          16.23443667763158
+        ]
+      },
+      "P1": {
+        "value": 8.6,
+        "ci": [
+          6.2,
+          11.200000000000001
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 12.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "monitor_stealth",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 1.1076923076923073,
+        "ci": [
+          0.25000000000000006,
+          2.138199494949494
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 5.799999999999994,
+        "ci": [
+          4.0,
+          7.404999999999973
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1": {
+        "value": 1.4000000000000001,
+        "ci": [
+          0.6,
+          2.4
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 4.8,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "meta_allowed",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 1.3199999999999994,
+        "ci": [
+          0.4,
+          2.369230769230768
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 6.199999999999994,
+        "ci": [
+          4.4,
+          7.9999999999999964
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.25,
+        "ci": [
+          0.0,
+          0.7500000000000003
+        ]
+      },
+      "P1": {
+        "value": 1.4000000000000001,
+        "ci": [
+          0.4,
+          2.4
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 5.800000000000001,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "start_with_no_rule",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 0.5999999999999999,
+        "ci": [
+          0.0,
+          1.3999999999999995
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 2.3999999999999986,
+        "ci": [
+          1.2,
+          3.599999999999999
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1": {
+        "value": 0.6,
+        "ci": [
+          0.0,
+          1.4000000000000001
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 0.8,
+      "starts_with_sentence_share": 13.200000000000001,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot_no_rule",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 1.9999999999999998,
+        "ci": [
+          0.9999999999999999,
+          4.120333333333331
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 1.0,
+        "ci": [
+          0.2499999999999999,
+          3.25
+        ]
+      },
+      "S_short": {
+        "value": 8.799999999999997,
+        "ci": [
+          6.399999999999999,
+          11.200000000000001
+        ]
+      },
+      "S_short_openers": {
+        "value": 6.75,
+        "ci": [
+          4.25,
+          9.25
+        ]
+      },
+      "P1": {
+        "value": 3.0,
+        "ci": [
+          1.6,
+          4.404999999999972
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 0.0,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "exp04_prefill",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 22.72421690107244,
+        "ci": [
+          19.512027015093125,
+          26.240427969131154
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 24.205705528280212,
+        "ci": [
+          20.429615406063846,
+          28.220996485022294
+        ]
+      },
+      "S_short": {
+        "value": 46.78181818181815,
+        "ci": [
+          42.6,
+          51.00249999999998
+        ]
+      },
+      "S_short_openers": {
+        "value": 48.727272727272705,
+        "ci": [
+          43.72499999999999,
+          53.45838815789473
+        ]
+      },
+      "P1": {
+        "value": 23.599999999999998,
+        "ci": [
+          20.200000000000003,
+          27.204999999999973
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 409.0,
+      "meta_regex_share": 6.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "exp04_prefill_stacked",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 30.771976639835657,
+        "ci": [
+          25.936025216888066,
+          35.19711944640006
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 34.09856808486245,
+        "ci": [
+          28.419441422026964,
+          39.29273453838357
+        ]
+      },
+      "S_short": {
+        "value": 62.99277108433732,
+        "ci": [
+          58.39233519644911,
+          67.39064280652019
+        ]
+      },
+      "S_short_openers": {
+        "value": 68.24096385542167,
+        "ci": [
+          63.23095917275805,
+          72.75564759036142
+        ]
+      },
+      "P1": {
+        "value": 36.4,
+        "ci": [
+          32.2,
+          40.400000000000006
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 517.0,
+      "meta_regex_share": 4.8,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "exp04_prefill_no_rule",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 6.163528181174787,
+        "ci": [
+          4.203916749915298,
+          8.259621914394586
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 7.454410226468483,
+        "ci": [
+          5.0474845315295465,
+          10.03051763043261
+        ]
+      },
+      "S_short": {
+        "value": 15.228282828282818,
+        "ci": [
+          12.59673469387755,
+          18.069387755102035
+        ]
+      },
+      "S_short_openers": {
+        "value": 16.035353535353526,
+        "ci": [
+          13.249999999999998,
+          19.02525252525252
+        ]
+      },
+      "P1": {
+        "value": 6.0,
+        "ci": [
+          4.2,
+          8.0
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 128.0,
+      "meta_regex_share": 1.4000000000000001,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "exp05_own_d3",
+      "thinking": true,
+      "n": 400,
+      "n_items": 100,
+      "origin": "exp05",
+      "S_t_star": null,
+      "S_t_star_openers": {
+        "value": 31.984677964918305,
+        "ci": [
+          26.37561593357272,
+          37.63136737038187
+        ]
+      },
+      "S_short": null,
+      "S_short_openers": {
+        "value": 74.79189953008316,
+        "ci": [
+          70.45838185997168,
+          79.2144013047262
+        ]
+      },
+      "P1": null,
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 514.0,
+      "meta_regex_share": 4.0,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "baseline",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 8.135453251067858,
+        "ci": [
+          6.321321629018847,
+          10.113291313131304
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.25,
+        "ci": [
+          0.0,
+          0.7500000000000001
+        ]
+      },
+      "S_short": {
+        "value": 15.599999999999998,
+        "ci": [
+          13.799999999999995,
+          17.4
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.5,
+        "ci": [
+          0.0,
+          1.2500000000000002
+        ]
+      },
+      "P1": {
+        "value": 7.6,
+        "ci": [
+          5.800000000000001,
+          9.4
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 15.6,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "stacked",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 17.58359826538759,
+        "ci": [
+          14.622605917474587,
+          20.58172527340205
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 6.065864728256741,
+        "ci": [
+          3.1452821796546107,
+          9.312742978180358
+        ]
+      },
+      "S_short": {
+        "value": 42.96427792384431,
+        "ci": [
+          40.14911946085089,
+          45.79555468638884
+        ]
+      },
+      "S_short_openers": {
+        "value": 32.47240197944422,
+        "ci": [
+          28.98381463472485,
+          36.21340131938482
+        ]
+      },
+      "P1": {
+        "value": 23.400000000000002,
+        "ci": [
+          20.4,
+          26.400000000000002
+        ]
+      },
+      "empty_share": 32.2,
+      "median_graded_tokens_capped": 224.0,
+      "meta_regex_share": 14.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "baseline_rerun",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 8.294957983193271,
+        "ci": [
+          6.439070387318956,
+          10.119099018733266
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.25,
+        "ci": [
+          0.0,
+          0.7500000000000001
+        ]
+      },
+      "S_short": {
+        "value": 15.999999999999998,
+        "ci": [
+          14.199999999999996,
+          17.8
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.7499999999999999,
+        "ci": [
+          0.0,
+          1.7499999999999996
+        ]
+      },
+      "P1": {
+        "value": 7.199999999999999,
+        "ci": [
+          5.6000000000000005,
+          8.799999999999999
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 8.4,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "stacked_rerun",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 18.86393151078598,
+        "ci": [
+          15.720532063340464,
+          22.43294297484898
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 6.604195467509574,
+        "ci": [
+          3.765935990613819,
+          10.148630947137322
+        ]
+      },
+      "S_short": {
+        "value": 42.97790395933654,
+        "ci": [
+          39.983373079272454,
+          46.16267810367456
+        ]
+      },
+      "S_short_openers": {
+        "value": 32.489434523809514,
+        "ci": [
+          28.97229550691244,
+          36.49374999999999
+        ]
+      },
+      "P1": {
+        "value": 24.0,
+        "ci": [
+          20.995000000000008,
+          27.200000000000003
+        ]
+      },
+      "empty_share": 32.2,
+      "median_graded_tokens_capped": 192.0,
+      "meta_regex_share": 10.6,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "start_with",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 8.753571428571425,
+        "ci": [
+          6.947747456059202,
+          10.599999999999996
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 14.2,
+        "ci": [
+          12.199999999999998,
+          16.2
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.5,
+        "ci": [
+          0.0,
+          1.25
+        ]
+      },
+      "P1": {
+        "value": 8.200000000000001,
+        "ci": [
+          6.4,
+          10.2
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 7.8,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "warmup",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 3.9583333333333304,
+        "ci": [
+          2.513303571428572,
+          5.546666666666664
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 8.199999999999994,
+        "ci": [
+          6.199999999999997,
+          10.199999999999994
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1": {
+        "value": 4.0,
+        "ci": [
+          2.6,
+          5.6000000000000005
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 15.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "fewshot",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 8.945173777570927,
+        "ci": [
+          6.969830253443505,
+          10.97335031311384
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.27500000000000013,
+        "ci": [
+          0.0,
+          0.8999999999999999
+        ]
+      },
+      "S_short": {
+        "value": 23.599999999999994,
+        "ci": [
+          21.200000000000003,
+          25.999999999999996
+        ]
+      },
+      "S_short_openers": {
+        "value": 8.75,
+        "ci": [
+          6.249999999999998,
+          11.250000000000002
+        ]
+      },
+      "P1": {
+        "value": 8.799999999999999,
+        "ci": [
+          7.000000000000001,
+          10.8
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 4.6,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "style_guide",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 5.9953610175832335,
+        "ci": [
+          4.199848484848482,
+          9.038652704831932
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 1.2719790497568277,
+        "ci": [
+          0.0,
+          4.10461038961039
+        ]
+      },
+      "S_short": {
+        "value": 23.378958834995974,
+        "ci": [
+          20.18814393939394,
+          26.398194922194918
+        ]
+      },
+      "S_short_openers": {
+        "value": 14.47369854374498,
+        "ci": [
+          11.203860409672558,
+          17.8976175879286
+        ]
+      },
+      "P1": {
+        "value": 11.799999999999999,
+        "ci": [
+          9.2,
+          14.6
+        ]
+      },
+      "empty_share": 13.600000000000001,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 19.0,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "failure_guide",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 7.999999999999992,
+        "ci": [
+          6.000000000000001,
+          9.799999999999995
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.7500000000000001,
+        "ci": [
+          0.0,
+          1.7499999999999996
+        ]
+      },
+      "S_short": {
+        "value": 15.999999999999998,
+        "ci": [
+          13.999999999999998,
+          18.0
+        ]
+      },
+      "S_short_openers": {
+        "value": 1.2500000000000002,
+        "ci": [
+          0.25000000000000006,
+          2.4999999999999996
+        ]
+      },
+      "P1": {
+        "value": 6.800000000000001,
+        "ci": [
+          4.995000000000009,
+          8.6
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 9.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "monitor_stealth",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 6.520754716981128,
+        "ci": [
+          4.799999999999996,
+          8.334426229508189
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 15.599999999999998,
+        "ci": [
+          13.799999999999999,
+          17.2
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.25,
+        "ci": [
+          0.0,
+          0.7500000000000001
+        ]
+      },
+      "P1": {
+        "value": 6.0,
+        "ci": [
+          4.3999999999999995,
+          7.8
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 8.4,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "meta_allowed",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 7.999999999999993,
+        "ci": [
+          5.999999999999998,
+          9.799999999999995
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.2500000000000003,
+        "ci": [
+          0.0,
+          0.7500000000000001
+        ]
+      },
+      "S_short": {
+        "value": 14.599999999999996,
+        "ci": [
+          12.799999999999995,
+          16.4
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.5000000000000006,
+        "ci": [
+          0.0,
+          1.25
+        ]
+      },
+      "P1": {
+        "value": 7.000000000000001,
+        "ci": [
+          5.2,
+          8.799999999999999
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 9.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "start_with_no_rule",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 0.49999999999999983,
+        "ci": [
+          0.0,
+          1.1999999999999993
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 4.399999999999997,
+        "ci": [
+          2.8000000000000007,
+          5.999999999999997
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.25,
+        "ci": [
+          0.0,
+          0.7500000000000001
+        ]
+      },
+      "P1": {
+        "value": 0.6,
+        "ci": [
+          0.0,
+          1.2
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 0.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "fewshot_no_rule",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 0.39999999999999986,
+        "ci": [
+          0.0,
+          0.9999999999999999
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 3.799999999999997,
+        "ci": [
+          2.2000000000000006,
+          5.399999999999998
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.5000000000000002,
+        "ci": [
+          0.0,
+          1.25
+        ]
+      },
+      "P1": {
+        "value": 0.4,
+        "ci": [
+          0.0,
+          1.0
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 0.6,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "exp04_prefill",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 17.79589326002927,
+        "ci": [
+          14.395945825051667,
+          21.091610129191448
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 9.675402835108846,
+        "ci": [
+          6.612641928318755,
+          12.778021747136286
+        ]
+      },
+      "S_short": {
+        "value": 51.99999999999998,
+        "ci": [
+          47.79999999999999,
+          56.399999999999984
+        ]
+      },
+      "S_short_openers": {
+        "value": 44.49999999999997,
+        "ci": [
+          39.74374999999999,
+          49.749999999999986
+        ]
+      },
+      "P1": {
+        "value": 17.4,
+        "ci": [
+          14.399999999999999,
+          20.599999999999998
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 517.0,
+      "meta_regex_share": 15.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "exp04_prefill_stacked",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 41.11780395822439,
+        "ci": [
+          36.854979508143884,
+          45.6558454794927
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 32.29590509441976,
+        "ci": [
+          27.570205829758276,
+          37.64714845228481
+        ]
+      },
+      "S_short": {
+        "value": 81.17437057908248,
+        "ci": [
+          77.38056077606358,
+          84.76856610983367
+        ]
+      },
+      "S_short_openers": {
+        "value": 77.72848953964258,
+        "ci": [
+          72.9945564516129,
+          82.00501700612458
+        ]
+      },
+      "P1": {
+        "value": 48.6,
+        "ci": [
+          44.6,
+          52.800000000000004
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 581.0,
+      "meta_regex_share": 11.799999999999999,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "exp04_prefill_no_rule",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 0.7999999999999997,
+        "ci": [
+          0.19999999999999993,
+          1.5999999999999996
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 3.9999999999999964,
+        "ci": [
+          2.5999999999999983,
+          5.599999999999998
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.25,
+        "ci": [
+          0.0,
+          0.7500000000000002
+        ]
+      },
+      "P1": {
+        "value": 0.6,
+        "ci": [
+          0.0,
+          1.2049999999999728
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 3.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "exp05_own_d3",
+      "thinking": true,
+      "n": 400,
+      "n_items": 100,
+      "origin": "exp05",
+      "S_t_star": null,
+      "S_t_star_openers": {
+        "value": 4.040986060432397,
+        "ci": [
+          1.9856155933037811,
+          6.51200093053099
+        ]
+      },
+      "S_short": null,
+      "S_short_openers": {
+        "value": 45.156189870025955,
+        "ci": [
+          39.90533066096421,
+          50.750805702009785
+        ]
+      },
+      "P1": null,
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 324.0,
+      "meta_regex_share": 6.0,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "baseline",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp03",
+      "S_t_star": {
+        "value": 4.235462184873947,
+        "ci": [
+          2.521122994652406,
+          6.289580451841853
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 2.599999999999999,
+        "ci": [
+          1.2499999999999998,
+          4.393452380952378
+        ]
+      },
+      "S_short": {
+        "value": 9.999999999999995,
+        "ci": [
+          7.799999999999999,
+          12.199999999999998
+        ]
+      },
+      "S_short_openers": {
+        "value": 4.25,
+        "ci": [
+          2.5,
+          6.249999999999999
+        ]
+      },
+      "P1": {
+        "value": 4.8,
+        "ci": [
+          3.2,
+          6.800000000000001
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 5.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "stacked",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp03",
+      "S_t_star": {
+        "value": 5.118011951427097,
+        "ci": [
+          3.0454086637999676,
+          7.408486646674796
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 3.060175195694131,
+        "ci": [
+          0.830988639551193,
+          5.391459614559935
+        ]
+      },
+      "S_short": {
+        "value": 14.79999999999999,
+        "ci": [
+          12.199999999999992,
+          17.399999999999995
+        ]
+      },
+      "S_short_openers": {
+        "value": 9.0,
+        "ci": [
+          6.75,
+          11.250000000000002
+        ]
+      },
+      "P1": {
+        "value": 7.3999999999999995,
+        "ci": [
+          5.4,
+          9.4
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 8.799999999999999,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "baseline_rerun",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 4.115360770346918,
+        "ci": [
+          2.502506625948893,
+          6.61091526742689
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 1.9047619047619042,
+        "ci": [
+          0.7499999999999999,
+          4.25
+        ]
+      },
+      "S_short": {
+        "value": 11.199999999999992,
+        "ci": [
+          8.799999999999999,
+          13.799999999999995
+        ]
+      },
+      "S_short_openers": {
+        "value": 4.25,
+        "ci": [
+          2.5,
+          6.249999999999998
+        ]
+      },
+      "P1": {
+        "value": 5.0,
+        "ci": [
+          3.2,
+          7.000000000000001
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 2.1999999999999997,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "stacked_rerun",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 6.828253508771928,
+        "ci": [
+          3.6217961309523794,
+          9.751288257357556
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 4.433754385964914,
+        "ci": [
+          1.000000000000001,
+          7.116190742945985
+        ]
+      },
+      "S_short": {
+        "value": 14.186666666666662,
+        "ci": [
+          11.599999999999996,
+          16.787918660287076
+        ]
+      },
+      "S_short_openers": {
+        "value": 8.733333333333333,
+        "ci": [
+          6.4767539525691715,
+          11.229166666666664
+        ]
+      },
+      "P1": {
+        "value": 8.4,
+        "ci": [
+          6.2,
+          10.8
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 8.200000000000001,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "start_with",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 20.058249296311068,
+        "ci": [
+          17.359064239088305,
+          23.28956176720882
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 18.57131423541388,
+        "ci": [
+          16.1780575385133,
+          21.592271242527147
+        ]
+      },
+      "S_short": {
+        "value": 29.69645067064083,
+        "ci": [
+          27.29350495291075,
+          31.980801163405598
+        ]
+      },
+      "S_short_openers": {
+        "value": 23.75,
+        "ci": [
+          21.75,
+          25.5
+        ]
+      },
+      "P1": {
+        "value": 20.599999999999998,
+        "ci": [
+          17.8,
+          23.204999999999973
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 3.5999999999999996,
+      "starts_with_sentence_share": 60.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "warmup",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 5.543458573743428,
+        "ci": [
+          3.3388502907910795,
+          7.897382462763609
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 3.882301273605621,
+        "ci": [
+          2.133125000000001,
+          5.7272727272727275
+        ]
+      },
+      "S_short": {
+        "value": 12.999999999999995,
+        "ci": [
+          10.399999999999999,
+          15.599999999999998
+        ]
+      },
+      "S_short_openers": {
+        "value": 7.000000000000001,
+        "ci": [
+          4.75,
+          9.000000000000002
+        ]
+      },
+      "P1": {
+        "value": 6.2,
+        "ci": [
+          4.2,
+          8.4
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 2.8000000000000003,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "fewshot",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 18.45085528476559,
+        "ci": [
+          15.936009122984249,
+          21.244177774207202
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 18.457311440744935,
+        "ci": [
+          15.780484682980834,
+          21.266562014446606
+        ]
+      },
+      "S_short": {
+        "value": 32.4,
+        "ci": [
+          29.999999999999993,
+          35.0
+        ]
+      },
+      "S_short_openers": {
+        "value": 30.25,
+        "ci": [
+          28.000000000000004,
+          32.49999999999999
+        ]
+      },
+      "P1": {
+        "value": 17.8,
+        "ci": [
+          15.2,
+          20.599999999999998
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 3.8,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "style_guide",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 3.1294530846484925,
+        "ci": [
+          1.0000000000000009,
+          5.785281293786728
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 1.0000000000000009,
+        "ci": [
+          0.2500000000000002,
+          3.4423076923076925
+        ]
+      },
+      "S_short": {
+        "value": 11.302814258911816,
+        "ci": [
+          9.114285714285716,
+          13.380236842105257
+        ]
+      },
+      "S_short_openers": {
+        "value": 3.884615384615385,
+        "ci": [
+          2.208125000000001,
+          5.729687499999997
+        ]
+      },
+      "P1": {
+        "value": 6.4,
+        "ci": [
+          4.6,
+          8.4
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 7.6,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "failure_guide",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 20.95507215637037,
+        "ci": [
+          17.51651376807699,
+          24.30576852864024
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 20.507228922610736,
+        "ci": [
+          16.87751132598508,
+          24.17159500931929
+        ]
+      },
+      "S_short": {
+        "value": 33.99999999999999,
+        "ci": [
+          30.8,
+          37.0
+        ]
+      },
+      "S_short_openers": {
+        "value": 26.999999999999996,
+        "ci": [
+          23.75,
+          30.006249999999966
+        ]
+      },
+      "P1": {
+        "value": 22.0,
+        "ci": [
+          19.2,
+          24.8
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 5.0,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "monitor_stealth",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 4.84608754208754,
+        "ci": [
+          2.9966694026931653,
+          6.8404181567975995
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 3.148148148148147,
+        "ci": [
+          1.4996875,
+          5.100249999999998
+        ]
+      },
+      "S_short": {
+        "value": 11.799999999999997,
+        "ci": [
+          9.399999999999995,
+          14.399999999999993
+        ]
+      },
+      "S_short_openers": {
+        "value": 5.749999999999998,
+        "ci": [
+          3.749999999999999,
+          8.0
+        ]
+      },
+      "P1": {
+        "value": 5.0,
+        "ci": [
+          3.195000000000009,
+          7.000000000000001
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 3.5999999999999996,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "meta_allowed",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 2.9898069009180106,
+        "ci": [
+          1.4000000000000001,
+          4.812684811827955
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 2.0000000000000004,
+        "ci": [
+          0.7500000000000004,
+          3.250000000000001
+        ]
+      },
+      "S_short": {
+        "value": 9.599999999999993,
+        "ci": [
+          7.399999999999999,
+          11.999999999999993
+        ]
+      },
+      "S_short_openers": {
+        "value": 2.2500000000000004,
+        "ci": [
+          1.0000000000000004,
+          3.500000000000001
+        ]
+      },
+      "P1": {
+        "value": 3.5999999999999996,
+        "ci": [
+          2.0,
+          5.4
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 3.8,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "start_with_no_rule",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 0.32307692307692304,
+        "ci": [
+          0.0,
+          1.0000000000000002
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 3.9999999999999996,
+        "ci": [
+          2.5999999999999996,
+          5.3999999999999995
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1": {
+        "value": 0.6,
+        "ci": [
+          0.0,
+          1.4000000000000001
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 1.2,
+      "starts_with_sentence_share": 55.00000000000001,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "fewshot_no_rule",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 8.826901596551927,
+        "ci": [
+          6.776822916666665,
+          11.073930040413517
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 10.283626995689911,
+        "ci": [
+          7.949128777840311,
+          12.680762265729829
+        ]
+      },
+      "S_short": {
+        "value": 16.199999999999996,
+        "ci": [
+          13.999999999999996,
+          18.4
+        ]
+      },
+      "S_short_openers": {
+        "value": 15.999999999999998,
+        "ci": [
+          13.749999999999996,
+          18.25624999999997
+        ]
+      },
+      "P1": {
+        "value": 8.0,
+        "ci": [
+          6.0,
+          10.2
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 1.4000000000000001,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "exp04_prefill",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 31.054532641076104,
+        "ci": [
+          27.264252558124447,
+          34.96404665287972
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 35.88083114526048,
+        "ci": [
+          31.376552423233466,
+          40.262711033261645
+        ]
+      },
+      "S_short": {
+        "value": 50.59999999999998,
+        "ci": [
+          47.19999999999999,
+          53.99999999999999
+        ]
+      },
+      "S_short_openers": {
+        "value": 52.99999999999998,
+        "ci": [
+          49.49999999999999,
+          56.499999999999986
+        ]
+      },
+      "P1": {
+        "value": 31.6,
+        "ci": [
+          28.000000000000004,
+          35.6
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 576.5,
+      "meta_regex_share": 8.200000000000001,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "exp04_prefill_stacked",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 34.79108218048036,
+        "ci": [
+          29.88784914758209,
+          39.68182814431367
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 39.70966720523846,
+        "ci": [
+          33.61004114154484,
+          45.835168194358076
+        ]
+      },
+      "S_short": {
+        "value": 62.78987119437935,
+        "ci": [
+          58.982270669979755,
+          66.59999999999998
+        ]
+      },
+      "S_short_openers": {
+        "value": 68.4873389929742,
+        "ci": [
+          63.74019117647058,
+          72.95306980843183
+        ]
+      },
+      "P1": {
+        "value": 40.2,
+        "ci": [
+          36.0,
+          44.6
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 542.0,
+      "meta_regex_share": 10.8,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "exp04_prefill_no_rule",
+      "thinking": true,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 6.753763883175647,
+        "ci": [
+          4.74121052631579,
+          8.934224034841657
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 8.192204853969558,
+        "ci": [
+          5.703120404411765,
+          10.960702829532812
+        ]
+      },
+      "S_short": {
+        "value": 12.199999999999998,
+        "ci": [
+          9.599999999999996,
+          14.999999999999996
+        ]
+      },
+      "S_short_openers": {
+        "value": 11.749999999999996,
+        "ci": [
+          8.999999999999998,
+          14.749999999999996
+        ]
+      },
+      "P1": {
+        "value": 6.800000000000001,
+        "ci": [
+          4.8,
+          8.799999999999999
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 2.0,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "exp05_own_d3",
+      "thinking": true,
+      "n": 400,
+      "n_items": 100,
+      "origin": "exp05",
+      "S_t_star": null,
+      "S_t_star_openers": {
+        "value": 46.042616236920196,
+        "ci": [
+          41.006125409776246,
+          50.96029804307918
+        ]
+      },
+      "S_short": null,
+      "S_short_openers": {
+        "value": 77.32817906039202,
+        "ci": [
+          73.50918248409857,
+          81.09046757764143
+        ]
+      },
+      "P1": null,
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 636.5,
+      "meta_regex_share": 7.5,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    }
+  ],
+  "arms_half_items": [
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 1.5686274509803921,
+        "ci": [
+          0.3921568627450979,
+          3.137254901960785
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 6.2745098039215685,
+        "ci": [
+          3.529411764705885,
+          9.019607843137255
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.9803921568627465,
+        "ci": [
+          0.0,
+          2.450980392156864
+        ]
+      },
+      "P1": {
+        "value": 1.5686274509803921,
+        "ci": [
+          0.39215686274509803,
+          3.1372549019607843
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 8.627450980392156,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline_rerun",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 1.5686274509803921,
+        "ci": [
+          0.3921568627450979,
+          3.137254901960785
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 5.490196078431372,
+        "ci": [
+          2.7450980392156876,
+          8.235294117647058
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.49019607843137264,
+        "ci": [
+          0.0,
+          1.4705882352941184
+        ]
+      },
+      "P1": {
+        "value": 1.5686274509803921,
+        "ci": [
+          0.39215686274509803,
+          3.1372549019607843
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 3.5294117647058822,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "stacked",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 12.075678057357786,
+        "ci": [
+          8.163871182903318,
+          16.464367095987868
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 12.86063106842926,
+        "ci": [
+          8.604434974807134,
+          17.349514929365927
+        ]
+      },
+      "S_short": {
+        "value": 27.843137254901958,
+        "ci": [
+          23.137254901960784,
+          32.549019607843135
+        ]
+      },
+      "S_short_openers": {
+        "value": 22.54901960784313,
+        "ci": [
+          18.13725490196078,
+          26.96078431372549
+        ]
+      },
+      "P1": {
+        "value": 13.725490196078432,
+        "ci": [
+          10.196078431372548,
+          18.03921568627451
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 192.0,
+      "meta_regex_share": 10.588235294117647,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "start_with",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 3.2235294117647064,
+        "ci": [
+          0.9803921568627454,
+          5.67237394957983
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 1.2254901960784315,
+        "ci": [
+          0.0,
+          2.941176470588235
+        ]
+      },
+      "S_short": {
+        "value": 9.80392156862745,
+        "ci": [
+          6.666666666666667,
+          12.950980392156813
+        ]
+      },
+      "S_short_openers": {
+        "value": 3.4313725490196076,
+        "ci": [
+          1.4705882352941173,
+          5.882352941176472
+        ]
+      },
+      "P1": {
+        "value": 4.313725490196078,
+        "ci": [
+          2.3529411764705883,
+          6.2745098039215685
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 9.411764705882353,
+      "starts_with_sentence_share": 13.725490196078432,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "warmup",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 4.967320261437909,
+        "ci": [
+          2.352941176470589,
+          7.843137254901962
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 2.777777777777778,
+        "ci": [
+          0.9803921568627444,
+          5.392156862745098
+        ]
+      },
+      "S_short": {
+        "value": 11.372549019607844,
+        "ci": [
+          7.84313725490196,
+          15.294117647058822
+        ]
+      },
+      "S_short_openers": {
+        "value": 3.9215686274509802,
+        "ci": [
+          1.4705882352941173,
+          6.862745098039216
+        ]
+      },
+      "P1": {
+        "value": 5.098039215686274,
+        "ci": [
+          2.3529411764705883,
+          8.235294117647058
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 29.01960784313726,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 7.8102078621109765,
+        "ci": [
+          4.486274509803923,
+          11.582892726468577
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 6.79686758839008,
+        "ci": [
+          3.2673731257208787,
+          10.71518799827623
+        ]
+      },
+      "S_short": {
+        "value": 20.192233756247596,
+        "ci": [
+          16.133053221288517,
+          24.4617214532872
+        ]
+      },
+      "S_short_openers": {
+        "value": 17.973856209150323,
+        "ci": [
+          13.235294117647062,
+          22.79411764705882
+        ]
+      },
+      "P1": {
+        "value": 9.411764705882353,
+        "ci": [
+          5.88235294117647,
+          13.333333333333334
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 0.39215686274509803,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "style_guide",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 6.14091790562379,
+        "ci": [
+          3.215686274509805,
+          9.135332564398308
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 7.185951303598364,
+        "ci": [
+          3.570378151260506,
+          10.784313725490197
+        ]
+      },
+      "S_short": {
+        "value": 10.980392156862747,
+        "ci": [
+          7.450980392156864,
+          14.509803921568626
+        ]
+      },
+      "S_short_openers": {
+        "value": 8.823529411764708,
+        "ci": [
+          5.3921568627450975,
+          12.254901960784315
+        ]
+      },
+      "P1": {
+        "value": 6.666666666666667,
+        "ci": [
+          3.9215686274509802,
+          9.411764705882353
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 78.82352941176471,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "failure_guide",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 8.274258421317246,
+        "ci": [
+          4.705882352941177,
+          11.837063117428038
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 8.87223479135244,
+        "ci": [
+          4.4603304284676835,
+          13.4351519174589
+        ]
+      },
+      "S_short": {
+        "value": 17.64705882352941,
+        "ci": [
+          12.941176470588237,
+          22.35294117647059
+        ]
+      },
+      "S_short_openers": {
+        "value": 14.215686274509803,
+        "ci": [
+          9.803921568627452,
+          18.627450980392158
+        ]
+      },
+      "P1": {
+        "value": 9.803921568627452,
+        "ci": [
+          6.666666666666667,
+          13.333333333333334
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 10.588235294117647,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "monitor_stealth",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 0.9150326797385628,
+        "ci": [
+          0.0,
+          2.3529411764705888
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 6.27450980392157,
+        "ci": [
+          3.92156862745098,
+          9.019607843137253
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1": {
+        "value": 1.1764705882352942,
+        "ci": [
+          0.0,
+          2.7450980392156863
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 5.88235294117647,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "meta_allowed",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 1.4705882352941184,
+        "ci": [
+          0.0,
+          3.1372549019607856
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 7.058823529411766,
+        "ci": [
+          4.705882352941175,
+          9.80392156862745
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.490196078431373,
+        "ci": [
+          0.0,
+          1.4705882352941184
+        ]
+      },
+      "P1": {
+        "value": 1.5686274509803921,
+        "ci": [
+          0.39215686274509803,
+          3.1372549019607843
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 64.0,
+      "meta_regex_share": 5.098039215686274,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 20.533052822178366,
+        "ci": [
+          15.019792014899222,
+          27.286079553409348
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 25.666316027722957,
+        "ci": [
+          18.474629830450905,
+          33.723819007713125
+        ]
+      },
+      "S_short": {
+        "value": 38.80562448377419,
+        "ci": [
+          32.034015763168014,
+          45.19805549279799
+        ]
+      },
+      "S_short_openers": {
+        "value": 41.04937261892279,
+        "ci": [
+          33.507177441394695,
+          48.128185791203926
+        ]
+      },
+      "P1": {
+        "value": 27.84313725490196,
+        "ci": [
+          21.95098039215688,
+          33.72549019607843
+        ]
+      },
+      "empty_share": 27.84313725490196,
+      "median_graded_tokens_capped": 246.0,
+      "meta_regex_share": 3.1372549019607843,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline_rerun",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 21.733265678381343,
+        "ci": [
+          15.290004928537057,
+          28.778640164454984
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 25.860021012003827,
+        "ci": [
+          17.949605282417547,
+          34.690514563082004
+        ]
+      },
+      "S_short": {
+        "value": 38.613813545658616,
+        "ci": [
+          32.15642363340356,
+          44.64971022891915
+        ]
+      },
+      "S_short_openers": {
+        "value": 40.05064695074741,
+        "ci": [
+          32.73146277741866,
+          46.98647965192083
+        ]
+      },
+      "P1": {
+        "value": 27.058823529411764,
+        "ci": [
+          21.96078431372549,
+          32.15686274509804
+        ]
+      },
+      "empty_share": 32.15686274509804,
+      "median_graded_tokens_capped": 235.0,
+      "meta_regex_share": 4.705882352941177,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "stacked",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 29.990056872052023,
+        "ci": [
+          23.14304065051382,
+          37.538559347999936
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 31.243836223154027,
+        "ci": [
+          23.667984977463952,
+          38.89327583205382
+        ]
+      },
+      "S_short": {
+        "value": 70.76157490275136,
+        "ci": [
+          63.82224443495063,
+          77.0969446416495
+        ]
+      },
+      "S_short_openers": {
+        "value": 73.4777183600713,
+        "ci": [
+          66.32103275181484,
+          79.97077918427328
+        ]
+      },
+      "P1": {
+        "value": 47.05882352941176,
+        "ci": [
+          39.99019607843139,
+          54.11764705882353
+        ]
+      },
+      "empty_share": 9.019607843137255,
+      "median_graded_tokens_capped": 471.0,
+      "meta_regex_share": 7.0588235294117645,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "start_with",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 22.122308059658373,
+        "ci": [
+          16.01691730039889,
+          28.573883783259596
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 24.631644840197968,
+        "ci": [
+          16.85549387317236,
+          33.031370159578394
+        ]
+      },
+      "S_short": {
+        "value": 50.92122304060018,
+        "ci": [
+          43.61991070399534,
+          58.15187359011353
+        ]
+      },
+      "S_short_openers": {
+        "value": 53.04632518084074,
+        "ci": [
+          44.899926553112834,
+          61.51179522548267
+        ]
+      },
+      "P1": {
+        "value": 28.627450980392155,
+        "ci": [
+          22.745098039215687,
+          34.90196078431372
+        ]
+      },
+      "empty_share": 13.333333333333334,
+      "median_graded_tokens_capped": 694.0,
+      "meta_regex_share": 7.0588235294117645,
+      "starts_with_sentence_share": 83.13725490196079,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "warmup",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 30.890563162939948,
+        "ci": [
+          22.194579635837282,
+          39.88197080065684
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 32.883016415864894,
+        "ci": [
+          23.162591510408728,
+          42.90546126218944
+        ]
+      },
+      "S_short": {
+        "value": 59.154825222936665,
+        "ci": [
+          53.97085104438045,
+          64.14376409100225
+        ]
+      },
+      "S_short_openers": {
+        "value": 54.851684263448966,
+        "ci": [
+          49.01960784313726,
+          60.29411764705882
+        ]
+      },
+      "P1": {
+        "value": 43.92156862745098,
+        "ci": [
+          38.0294117647059,
+          50.19607843137255
+        ]
+      },
+      "empty_share": 7.450980392156863,
+      "median_graded_tokens_capped": 402.0,
+      "meta_regex_share": 4.313725490196078,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 29.12003825200213,
+        "ci": [
+          23.440613732178704,
+          35.54339442521154
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 33.05597685328464,
+        "ci": [
+          26.170349574741824,
+          41.42887476155758
+        ]
+      },
+      "S_short": {
+        "value": 67.22690301886857,
+        "ci": [
+          61.30221463251977,
+          72.7606760725746
+        ]
+      },
+      "S_short_openers": {
+        "value": 69.41178003408992,
+        "ci": [
+          62.27697282358691,
+          75.9057148184384
+        ]
+      },
+      "P1": {
+        "value": 36.86274509803922,
+        "ci": [
+          30.980392156862745,
+          42.75490196078426
+        ]
+      },
+      "empty_share": 1.5686274509803921,
+      "median_graded_tokens_capped": 880.0,
+      "meta_regex_share": 7.0588235294117645,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "style_guide",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 68.64672927994728,
+        "ci": [
+          55.16332559339525,
+          83.62005090497738
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 74.28880375679684,
+        "ci": [
+          64.15088441092756,
+          82.84313725490196
+        ]
+      },
+      "S_short": {
+        "value": 77.86241555445707,
+        "ci": [
+          69.36684173669468,
+          85.06749729690904
+        ]
+      },
+      "S_short_openers": {
+        "value": 74.28880375679684,
+        "ci": [
+          64.15088441092756,
+          82.84313725490196
+        ]
+      },
+      "P1": {
+        "value": 80.7843137254902,
+        "ci": [
+          75.29411764705883,
+          86.27450980392157
+        ]
+      },
+      "empty_share": 11.372549019607844,
+      "median_graded_tokens_capped": 61.0,
+      "meta_regex_share": 0.39215686274509803,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "failure_guide",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 34.07742888685945,
+        "ci": [
+          27.003309091815026,
+          42.02290629674252
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 37.945797516301226,
+        "ci": [
+          30.16726702066074,
+          45.873852599378765
+        ]
+      },
+      "S_short": {
+        "value": 59.19364389039299,
+        "ci": [
+          52.78093874747004,
+          65.24594798354897
+        ]
+      },
+      "S_short_openers": {
+        "value": 62.30495532343322,
+        "ci": [
+          56.033193463277385,
+          68.5408790641667
+        ]
+      },
+      "P1": {
+        "value": 43.92156862745098,
+        "ci": [
+          37.254901960784316,
+          50.98039215686274
+        ]
+      },
+      "empty_share": 16.470588235294116,
+      "median_graded_tokens_capped": 342.0,
+      "meta_regex_share": 4.705882352941177,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "monitor_stealth",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 16.165037678401266,
+        "ci": [
+          10.086479738288855,
+          21.74264340979429
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 14.861952002103687,
+        "ci": [
+          7.414438502673798,
+          21.65327164058704
+        ]
+      },
+      "S_short": {
+        "value": 45.88532229189409,
+        "ci": [
+          40.00633923605313,
+          51.713984204793014
+        ]
+      },
+      "S_short_openers": {
+        "value": 45.436667479409095,
+        "ci": [
+          38.91035628798303,
+          51.84357191152322
+        ]
+      },
+      "P1": {
+        "value": 30.58823529411765,
+        "ci": [
+          24.313725490196077,
+          36.470588235294116
+        ]
+      },
+      "empty_share": 19.215686274509807,
+      "median_graded_tokens_capped": 313.0,
+      "meta_regex_share": 7.450980392156863,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "meta_allowed",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 18.843286656705537,
+        "ci": [
+          13.50556202047655,
+          25.138673100946058
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 21.544024287268478,
+        "ci": [
+          14.884244516317727,
+          29.059724500317046
+        ]
+      },
+      "S_short": {
+        "value": 34.21200986267887,
+        "ci": [
+          29.072569806607333,
+          39.64049872122763
+        ]
+      },
+      "S_short_openers": {
+        "value": 33.745404485211324,
+        "ci": [
+          27.073069087458133,
+          40.483850077025465
+        ]
+      },
+      "P1": {
+        "value": 27.058823529411764,
+        "ci": [
+          21.96078431372549,
+          32.549019607843135
+        ]
+      },
+      "empty_share": 25.098039215686274,
+      "median_graded_tokens_capped": 289.0,
+      "meta_regex_share": 4.705882352941177,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "baseline",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 8.181818181818182,
+        "ci": [
+          5.7950788158400615,
+          10.939858012170385
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.4901960784313728,
+        "ci": [
+          0.0,
+          1.4705882352941182
+        ]
+      },
+      "S_short": {
+        "value": 15.294117647058819,
+        "ci": [
+          12.94117647058823,
+          17.64705882352941
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.4901960784313728,
+        "ci": [
+          0.0,
+          1.4705882352941182
+        ]
+      },
+      "P1": {
+        "value": 7.8431372549019605,
+        "ci": [
+          5.490196078431373,
+          10.196078431372548
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 15.294117647058824,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "baseline_rerun",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 8.141176470588233,
+        "ci": [
+          5.4901960784313735,
+          10.899266197351148
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.4901960784313728,
+        "ci": [
+          0.0,
+          1.4705882352941182
+        ]
+      },
+      "S_short": {
+        "value": 15.686274509803916,
+        "ci": [
+          12.941176470588237,
+          18.03921568627451
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.9803921568627456,
+        "ci": [
+          0.0,
+          2.450980392156863
+        ]
+      },
+      "P1": {
+        "value": 6.2745098039215685,
+        "ci": [
+          3.9215686274509802,
+          8.627450980392156
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 8.235294117647058,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "stacked",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 17.076726339204534,
+        "ci": [
+          13.116227157725952,
+          22.16999229556962
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 5.649151770208888,
+        "ci": [
+          2.049627931980874,
+          11.10372971190615
+        ]
+      },
+      "S_short": {
+        "value": 42.69654528478057,
+        "ci": [
+          38.408891298454876,
+          47.0423400627596
+        ]
+      },
+      "S_short_openers": {
+        "value": 32.324929971988794,
+        "ci": [
+          26.868634846179855,
+          38.22443181818181
+        ]
+      },
+      "P1": {
+        "value": 24.313725490196077,
+        "ci": [
+          20.0,
+          28.627450980392155
+        ]
+      },
+      "empty_share": 31.76470588235294,
+      "median_graded_tokens_capped": 256.0,
+      "meta_regex_share": 12.941176470588237,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "start_with",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 8.540305010893249,
+        "ci": [
+          6.1083877995642695,
+          10.929791271347247
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 13.72549019607843,
+        "ci": [
+          10.980392156862743,
+          16.470588235294116
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.4901960784313727,
+        "ci": [
+          0.0,
+          1.470588235294118
+        ]
+      },
+      "P1": {
+        "value": 8.627450980392156,
+        "ci": [
+          6.2745098039215685,
+          10.980392156862745
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 7.0588235294117645,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "warmup",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 3.3986928104575163,
+        "ci": [
+          1.470588235294118,
+          5.589396284829715
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 9.019607843137253,
+        "ci": [
+          6.2745098039215685,
+          11.76470588235294
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "P1": {
+        "value": 3.5294117647058822,
+        "ci": [
+          1.5686274509803921,
+          5.88235294117647
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 14.901960784313726,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "fewshot",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 9.14355461930242,
+        "ci": [
+          6.036333764274938,
+          12.304720123343445
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.4901960784313727,
+        "ci": [
+          0.0,
+          1.4705882352941184
+        ]
+      },
+      "S_short": {
+        "value": 23.137254901960784,
+        "ci": [
+          20.0,
+          25.882352941176475
+        ]
+      },
+      "S_short_openers": {
+        "value": 8.333333333333334,
+        "ci": [
+          4.901960784313725,
+          12.254901960784315
+        ]
+      },
+      "P1": {
+        "value": 8.235294117647058,
+        "ci": [
+          5.490196078431373,
+          10.980392156862745
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 4.313725490196078,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "style_guide",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 6.753812636165576,
+        "ci": [
+          3.9215686274509802,
+          14.042728758169936
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 4.0849673202614385,
+        "ci": [
+          1.470216874628639,
+          12.88079919467787
+        ]
+      },
+      "S_short": {
+        "value": 20.466853408029877,
+        "ci": [
+          16.3661564040821,
+          24.6005291005291
+        ]
+      },
+      "S_short_openers": {
+        "value": 13.328664799253032,
+        "ci": [
+          9.173474945533771,
+          17.95937314319668
+        ]
+      },
+      "P1": {
+        "value": 11.76470588235294,
+        "ci": [
+          8.235294117647058,
+          15.686274509803921
+        ]
+      },
+      "empty_share": 12.941176470588237,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 18.43137254901961,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "failure_guide",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 7.058823529411764,
+        "ci": [
+          4.705882352941177,
+          9.80392156862745
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.4901960784313725,
+        "ci": [
+          0.0,
+          1.470588235294118
+        ]
+      },
+      "S_short": {
+        "value": 16.078431372549012,
+        "ci": [
+          13.33333333333333,
+          18.823529411764707
+        ]
+      },
+      "S_short_openers": {
+        "value": 1.4705882352941173,
+        "ci": [
+          0.0,
+          3.4313725490196076
+        ]
+      },
+      "P1": {
+        "value": 5.88235294117647,
+        "ci": [
+          3.5294117647058822,
+          8.235294117647058
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 8.627450980392156,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "monitor_stealth",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 7.320261437908497,
+        "ci": [
+          4.919786096256685,
+          9.803921568627452
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 16.078431372549016,
+        "ci": [
+          13.72549019607843,
+          18.431372549019603
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.49019607843137264,
+        "ci": [
+          0.0,
+          1.4705882352941182
+        ]
+      },
+      "P1": {
+        "value": 6.666666666666667,
+        "ci": [
+          4.313725490196078,
+          9.019607843137255
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 8.235294117647058,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "meta_allowed",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 7.058823529411764,
+        "ci": [
+          4.705882352941175,
+          9.803921568627452
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.0,
+        "ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "S_short": {
+        "value": 14.901960784313722,
+        "ci": [
+          12.549019607843134,
+          16.862745098039216
+        ]
+      },
+      "S_short_openers": {
+        "value": 0.49019607843137264,
+        "ci": [
+          0.0,
+          1.4705882352941184
+        ]
+      },
+      "P1": {
+        "value": 6.2745098039215685,
+        "ci": [
+          3.9215686274509802,
+          9.019607843137255
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 96.0,
+      "meta_regex_share": 7.0588235294117645,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Gemma-4-31B-FP8",
+      "arm": "baseline",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 43.42782385854457,
+        "ci": [
+          35.37211095821829,
+          55.41403516424107
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 36.52155474148136,
+        "ci": [
+          25.799199177558087,
+          51.324011697594166
+        ]
+      },
+      "S_short": {
+        "value": 77.66534734367892,
+        "ci": [
+          71.03126895445534,
+          83.73588621633871
+        ]
+      },
+      "S_short_openers": {
+        "value": 74.34475607502348,
+        "ci": [
+          66.95275264066096,
+          81.37812404961447
+        ]
+      },
+      "P1": {
+        "value": 68.23529411764706,
+        "ci": [
+          61.1764705882353,
+          74.90196078431373
+        ]
+      },
+      "empty_share": 0.39215686274509803,
+      "median_graded_tokens_capped": 292.0,
+      "meta_regex_share": 3.9215686274509802,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "baseline",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp03",
+      "S_t_star": {
+        "value": 3.713235294117647,
+        "ci": [
+          1.5686274509803921,
+          7.255090497737555
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 1.9607843137254901,
+        "ci": [
+          0.49019607843137264,
+          5.3921568627450975
+        ]
+      },
+      "S_short": {
+        "value": 10.196078431372548,
+        "ci": [
+          7.058823529411766,
+          13.333333333333334
+        ]
+      },
+      "S_short_openers": {
+        "value": 4.901960784313726,
+        "ci": [
+          2.450980392156863,
+          7.8431372549019605
+        ]
+      },
+      "P1": {
+        "value": 5.490196078431373,
+        "ci": [
+          2.7450980392156863,
+          8.627450980392156
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 5.098039215686274,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "baseline_rerun",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 4.830449826989619,
+        "ci": [
+          2.4313725490196085,
+          8.718073316283037
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 1.4705882352941175,
+        "ci": [
+          0.0,
+          4.901960784313726
+        ]
+      },
+      "S_short": {
+        "value": 11.76470588235294,
+        "ci": [
+          8.23529411764706,
+          15.294117647058822
+        ]
+      },
+      "S_short_openers": {
+        "value": 4.411764705882352,
+        "ci": [
+          1.9607843137254901,
+          7.352941176470587
+        ]
+      },
+      "P1": {
+        "value": 6.2745098039215685,
+        "ci": [
+          3.5294117647058822,
+          9.411764705882353
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 1.1764705882352942,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "stacked",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp03",
+      "S_t_star": {
+        "value": 7.184946895424837,
+        "ci": [
+          3.718032512150159,
+          10.81234552644587
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 4.044117647058824,
+        "ci": [
+          0.4901960784313736,
+          8.333333333333334
+        ]
+      },
+      "S_short": {
+        "value": 15.294117647058822,
+        "ci": [
+          11.76470588235294,
+          18.823529411764707
+        ]
+      },
+      "S_short_openers": {
+        "value": 8.333333333333334,
+        "ci": [
+          4.901960784313727,
+          11.764705882352942
+        ]
+      },
+      "P1": {
+        "value": 9.411764705882353,
+        "ci": [
+          6.2745098039215685,
+          12.549019607843137
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 9.019607843137255,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "start_with",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 20.456859292320452,
+        "ci": [
+          15.95030714689211,
+          24.891475590283747
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 18.800461361014992,
+        "ci": [
+          14.92880454636987,
+          22.30114353378651
+        ]
+      },
+      "S_short": {
+        "value": 29.26435295603652,
+        "ci": [
+          26.11509395424837,
+          32.44207731133842
+        ]
+      },
+      "S_short_openers": {
+        "value": 23.03921568627451,
+        "ci": [
+          20.588235294117645,
+          25.49019607843137
+        ]
+      },
+      "P1": {
+        "value": 20.392156862745097,
+        "ci": [
+          16.07843137254902,
+          24.313725490196077
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 3.1372549019607843,
+      "starts_with_sentence_share": 60.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "warmup",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 5.796695134930428,
+        "ci": [
+          2.8758169934640523,
+          9.040996969197659
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 4.084967320261438,
+        "ci": [
+          1.470588235294118,
+          6.862745098039216
+        ]
+      },
+      "S_short": {
+        "value": 12.549019607843137,
+        "ci": [
+          9.019607843137253,
+          16.47058823529412
+        ]
+      },
+      "S_short_openers": {
+        "value": 5.88235294117647,
+        "ci": [
+          3.419117647058844,
+          8.823529411764707
+        ]
+      },
+      "P1": {
+        "value": 7.0588235294117645,
+        "ci": [
+          4.313725490196078,
+          9.813725490196026
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 2.3529411764705883,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "fewshot",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 17.599198008401046,
+        "ci": [
+          13.443501730717106,
+          21.75424797322775
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 16.590343664347458,
+        "ci": [
+          12.627128241932489,
+          20.69533559792742
+        ]
+      },
+      "S_short": {
+        "value": 31.37254901960784,
+        "ci": [
+          28.22549019607845,
+          34.90196078431372
+        ]
+      },
+      "S_short_openers": {
+        "value": 28.921568627450977,
+        "ci": [
+          25.98039215686275,
+          31.86274509803922
+        ]
+      },
+      "P1": {
+        "value": 17.254901960784313,
+        "ci": [
+          13.333333333333334,
+          21.176470588235293
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 3.5294117647058822,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "style_guide",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 2.9128095682717534,
+        "ci": [
+          0.3921568627450989,
+          6.216463656169535
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 0.9803921568627444,
+        "ci": [
+          0.0,
+          3.431372549019609
+        ]
+      },
+      "S_short": {
+        "value": 11.30718954248366,
+        "ci": [
+          8.299019607843139,
+          14.01960784313725
+        ]
+      },
+      "S_short_openers": {
+        "value": 3.8398692810457513,
+        "ci": [
+          1.4705882352941189,
+          6.372549019607843
+        ]
+      },
+      "P1": {
+        "value": 6.2745098039215685,
+        "ci": [
+          3.5294117647058822,
+          9.019607843137255
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 7.450980392156863,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "failure_guide",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 19.689277106441075,
+        "ci": [
+          14.878955919531489,
+          24.427648905226985
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 18.566709292412618,
+        "ci": [
+          13.366843172206497,
+          23.482519537793365
+        ]
+      },
+      "S_short": {
+        "value": 32.15686274509804,
+        "ci": [
+          28.627450980392155,
+          36.07843137254901
+        ]
+      },
+      "S_short_openers": {
+        "value": 25.000000000000007,
+        "ci": [
+          20.588235294117645,
+          29.41176470588236
+        ]
+      },
+      "P1": {
+        "value": 21.176470588235293,
+        "ci": [
+          17.647058823529413,
+          24.705882352941178
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 95.0,
+      "meta_regex_share": 3.5294117647058822,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "monitor_stealth",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 5.531045751633988,
+        "ci": [
+          3.267722473604827,
+          8.248919357216568
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 3.267973856209151,
+        "ci": [
+          1.2254901960784315,
+          6.106601731601724
+        ]
+      },
+      "S_short": {
+        "value": 12.15686274509804,
+        "ci": [
+          8.627450980392156,
+          15.6960784313725
+        ]
+      },
+      "S_short_openers": {
+        "value": 6.862745098039218,
+        "ci": [
+          3.4313725490196094,
+          10.294117647058822
+        ]
+      },
+      "P1": {
+        "value": 5.490196078431373,
+        "ci": [
+          3.1372549019607843,
+          8.235294117647058
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 3.9215686274509802,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "meta_allowed",
+      "thinking": true,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 2.9473039215686283,
+        "ci": [
+          0.8330882352941182,
+          5.686500754147811
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 1.9607843137254908,
+        "ci": [
+          0.49019607843137236,
+          3.9215686274509802
+        ]
+      },
+      "S_short": {
+        "value": 9.41176470588235,
+        "ci": [
+          6.274509803921571,
+          12.54901960784314
+        ]
+      },
+      "S_short_openers": {
+        "value": 2.450980392156863,
+        "ci": [
+          0.4901960784313736,
+          4.411764705882353
+        ]
+      },
+      "P1": {
+        "value": 3.9215686274509802,
+        "ci": [
+          1.5686274509803921,
+          6.666666666666667
+        ]
+      },
+      "empty_share": 0.0,
+      "median_graded_tokens_capped": 63.0,
+      "meta_regex_share": 3.1372549019607843,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3-32B",
+      "arm": "baseline",
+      "thinking": false,
+      "n": 255,
+      "n_items": 51,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 40.686240267155476,
+        "ci": [
+          24.358967215487436,
+          55.042922145135556
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 38.17201974046998,
+        "ci": [
+          17.354084438424845,
+          53.98558522788209
+        ]
+      },
+      "S_short": {
+        "value": 58.00469221146373,
+        "ci": [
+          53.00088135772928,
+          62.802197112581815
+        ]
+      },
+      "S_short_openers": {
+        "value": 55.1183617935536,
+        "ci": [
+          49.79989323708765,
+          60.01013629190432
+        ]
+      },
+      "P1": {
+        "value": 55.68627450980392,
+        "ci": [
+          50.19607843137255,
+          60.78431372549019
+        ]
+      },
+      "empty_share": 8.627450980392156,
+      "median_graded_tokens_capped": 215.0,
+      "meta_regex_share": 0.7843137254901961,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    }
+  ],
+  "arms_off_all_items": [
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline",
+      "thinking": false,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp04",
+      "S_t_star": {
+        "value": 16.83635868081409,
+        "ci": [
+          12.762520300305368,
+          21.290833522102297
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 19.372119617385298,
+        "ci": [
+          14.538408207958822,
+          25.077871172121597
+        ]
+      },
+      "S_short": {
+        "value": 39.91438196366623,
+        "ci": [
+          35.020946877245066,
+          44.88441303064333
+        ]
+      },
+      "S_short_openers": {
+        "value": 42.33276946334031,
+        "ci": [
+          36.99506819480931,
+          47.61570441503036
+        ]
+      },
+      "P1": {
+        "value": 25.8,
+        "ci": [
+          21.8,
+          30.0
+        ]
+      },
+      "empty_share": 25.8,
+      "median_graded_tokens_capped": 329.0,
+      "meta_regex_share": 5.6000000000000005,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "baseline_rerun",
+      "thinking": false,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 18.941129595641346,
+        "ci": [
+          14.84803927147319,
+          23.242487349872206
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 21.754162200545334,
+        "ci": [
+          16.843733006203614,
+          26.92478549672128
+        ]
+      },
+      "S_short": {
+        "value": 40.15053741699121,
+        "ci": [
+          35.667833799728996,
+          44.67465716571882
+        ]
+      },
+      "S_short_openers": {
+        "value": 42.08967846766759,
+        "ci": [
+          36.938700203466546,
+          47.1237721397204
+        ]
+      },
+      "P1": {
+        "value": 26.6,
+        "ci": [
+          23.200000000000003,
+          30.00499999999997
+        ]
+      },
+      "empty_share": 30.2,
+      "median_graded_tokens_capped": 278.0,
+      "meta_regex_share": 6.0,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "stacked",
+      "thinking": false,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 33.1601121506033,
+        "ci": [
+          27.883822487743643,
+          38.885507476042825
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 35.27735383101183,
+        "ci": [
+          29.025475989846544,
+          41.90140309958392
+        ]
+      },
+      "S_short": {
+        "value": 70.38225453367836,
+        "ci": [
+          65.54795937217722,
+          74.9351219009614
+        ]
+      },
+      "S_short_openers": {
+        "value": 73.21482955198229,
+        "ci": [
+          68.13572025630452,
+          77.7724822410444
+        ]
+      },
+      "P1": {
+        "value": 47.599999999999994,
+        "ci": [
+          42.4,
+          52.800000000000004
+        ]
+      },
+      "empty_share": 9.0,
+      "median_graded_tokens_capped": 475.0,
+      "meta_regex_share": 6.0,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "start_with",
+      "thinking": false,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 22.361810522642457,
+        "ci": [
+          17.178733711777053,
+          27.433696283176268
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 25.348227059553068,
+        "ci": [
+          18.97609504883506,
+          31.734886256540157
+        ]
+      },
+      "S_short": {
+        "value": 54.13923050278691,
+        "ci": [
+          48.891177550813715,
+          59.363295708537954
+        ]
+      },
+      "S_short_openers": {
+        "value": 57.001225628483645,
+        "ci": [
+          50.97009457100843,
+          63.06974873093918
+        ]
+      },
+      "P1": {
+        "value": 27.6,
+        "ci": [
+          23.200000000000003,
+          32.2
+        ]
+      },
+      "empty_share": 12.2,
+      "median_graded_tokens_capped": 709.5,
+      "meta_regex_share": 8.200000000000001,
+      "starts_with_sentence_share": 83.2,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "warmup",
+      "thinking": false,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 30.86499729782003,
+        "ci": [
+          25.311171198548234,
+          36.85682360634788
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 31.106728428593396,
+        "ci": [
+          25.22956171214056,
+          37.69249203241133
+        ]
+      },
+      "S_short": {
+        "value": 60.3551923076923,
+        "ci": [
+          56.761524821759515,
+          63.76441329654872
+        ]
+      },
+      "S_short_openers": {
+        "value": 55.73124999999999,
+        "ci": [
+          51.99081387362637,
+          59.74999999999999
+        ]
+      },
+      "P1": {
+        "value": 43.0,
+        "ci": [
+          38.6,
+          47.4
+        ]
+      },
+      "empty_share": 7.000000000000001,
+      "median_graded_tokens_capped": 393.5,
+      "meta_regex_share": 5.4,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "fewshot",
+      "thinking": false,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 30.074662321450884,
+        "ci": [
+          25.513944445379078,
+          34.76156313811957
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 34.74602508180799,
+        "ci": [
+          29.12178344627981,
+          40.342760253371424
+        ]
+      },
+      "S_short": {
+        "value": 67.13326616854023,
+        "ci": [
+          63.070592196939636,
+          71.04657601405265
+        ]
+      },
+      "S_short_openers": {
+        "value": 70.96093754938497,
+        "ci": [
+          66.43927625078788,
+          75.27756270932493
+        ]
+      },
+      "P1": {
+        "value": 35.6,
+        "ci": [
+          31.2,
+          40.0
+        ]
+      },
+      "empty_share": 2.8000000000000003,
+      "median_graded_tokens_capped": 908.0,
+      "meta_regex_share": 7.8,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "style_guide",
+      "thinking": false,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 71.13322005798884,
+        "ci": [
+          58.361286217391616,
+          80.609029489881
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 72.91826118359715,
+        "ci": [
+          67.27905592226206,
+          77.95143378053534
+        ]
+      },
+      "S_short": {
+        "value": 77.5325256135444,
+        "ci": [
+          72.9968412732244,
+          81.75923862996906
+        ]
+      },
+      "S_short_openers": {
+        "value": 72.91826118359715,
+        "ci": [
+          67.27905592226206,
+          77.95143378053534
+        ]
+      },
+      "P1": {
+        "value": 79.2,
+        "ci": [
+          75.4,
+          82.6
+        ]
+      },
+      "empty_share": 13.600000000000001,
+      "median_graded_tokens_capped": 62.0,
+      "meta_regex_share": 0.4,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "failure_guide",
+      "thinking": false,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 32.98182906831797,
+        "ci": [
+          27.518066571825354,
+          38.18429692388906
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 36.19356401252345,
+        "ci": [
+          30.19910612359684,
+          41.99332503385904
+        ]
+      },
+      "S_short": {
+        "value": 60.0673781741057,
+        "ci": [
+          55.90549948234599,
+          64.20240407904615
+        ]
+      },
+      "S_short_openers": {
+        "value": 61.644475432982574,
+        "ci": [
+          57.27960925845953,
+          66.00334987809894
+        ]
+      },
+      "P1": {
+        "value": 44.4,
+        "ci": [
+          39.6,
+          49.2
+        ]
+      },
+      "empty_share": 15.8,
+      "median_graded_tokens_capped": 356.0,
+      "meta_regex_share": 5.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "monitor_stealth",
+      "thinking": false,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 19.828694011619028,
+        "ci": [
+          14.976830793314234,
+          25.7071516598411
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 20.146713651885072,
+        "ci": [
+          14.32781755091618,
+          26.675388880566313
+        ]
+      },
+      "S_short": {
+        "value": 45.68092595044627,
+        "ci": [
+          41.520596530498786,
+          49.75625519207655
+        ]
+      },
+      "S_short_openers": {
+        "value": 45.056309869400756,
+        "ci": [
+          40.40674717658174,
+          49.63399367890054
+        ]
+      },
+      "P1": {
+        "value": 30.599999999999998,
+        "ci": [
+          26.595000000000006,
+          34.80499999999997
+        ]
+      },
+      "empty_share": 22.400000000000002,
+      "median_graded_tokens_capped": 317.0,
+      "meta_regex_share": 6.2,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    },
+    {
+      "model": "Qwen3.8-27B-FP8",
+      "arm": "meta_allowed",
+      "thinking": false,
+      "n": 500,
+      "n_items": 100,
+      "origin": "exp06a",
+      "S_t_star": {
+        "value": 20.1820209172853,
+        "ci": [
+          16.269030189196844,
+          24.39144798676625
+        ]
+      },
+      "S_t_star_openers": {
+        "value": 23.66012457030627,
+        "ci": [
+          19.098156345155754,
+          28.382606844171388
+        ]
+      },
+      "S_short": {
+        "value": 37.54366487173037,
+        "ci": [
+          33.45947366651063,
+          41.58426469484019
+        ]
+      },
+      "S_short_openers": {
+        "value": 38.33946153180147,
+        "ci": [
+          33.72614943787083,
+          43.140012560014824
+        ]
+      },
+      "P1": {
+        "value": 27.6,
+        "ci": [
+          23.799999999999997,
+          31.20499999999997
+        ]
+      },
+      "empty_share": 25.4,
+      "median_graded_tokens_capped": 292.0,
+      "meta_regex_share": 5.6000000000000005,
+      "starts_with_sentence_share": 0.0,
+      "reasoning_cut_share": 0.0
+    }
+  ],
+  "checks": {
+    "thinking_on_status_share": {
+      "aborted": 90.43636363636364,
+      "closed": 5.654545454545454,
+      "truncated": 3.8909090909090907,
+      "no_think_close": 0.01818181818181818
+    },
+    "thinking_on_reached_stop_share": 2.484848484848485,
+    "thinking_off_no_tag_share": 15.37777777777778,
+    "thinking_off_reasoning_channel_cut_share": 0.0,
+    "fewshot_items": {
+      "Qwen3.8-27B-FP8": [
+        "MMLU-Pro:69",
+        "MMLU-Pro:103",
+        "MMLU-Pro:118"
+      ],
+      "Gemma-4-31B-FP8": [
+        "MMLU-Pro:69",
+        "MMLU-Pro:103",
+        "MMLU-Pro:118"
+      ],
+      "Qwen3-32B": [
+        "MMLU-Pro:69",
+        "MMLU-Pro:103",
+        "MMLU-Pro:118"
+      ]
+    },
+    "style_guide_turn1_grader_pass_rate": {
+      "Qwen3.8-27B-FP8": {
+        "end_of_sentence|thinking_off": 0.28,
+        "end_of_sentence|thinking_on": 0.79,
+        "lowercase_thinking|thinking_off": 1.0,
+        "lowercase_thinking|thinking_on": 0.95,
+        "meow_between_words|thinking_off": 0.62,
+        "meow_between_words|thinking_on": 0.86,
+        "uppercase_thinking|thinking_off": 0.08,
+        "uppercase_thinking|thinking_on": 0.99,
+        "word_suppression|thinking_off": 0.99,
+        "word_suppression|thinking_on": 0.99
+      },
+      "Gemma-4-31B-FP8": {
+        "end_of_sentence|thinking_off": 0.0,
+        "end_of_sentence|thinking_on": 0.99,
+        "lowercase_thinking|thinking_off": 0.39,
+        "lowercase_thinking|thinking_on": 0.68,
+        "meow_between_words|thinking_off": 1.0,
+        "meow_between_words|thinking_on": 0.12,
+        "uppercase_thinking|thinking_off": 0.0,
+        "uppercase_thinking|thinking_on": 1.0,
+        "word_suppression|thinking_off": 0.99,
+        "word_suppression|thinking_on": 1.0
+      },
+      "Qwen3-32B": {
+        "end_of_sentence|thinking_off": 0.36,
+        "end_of_sentence|thinking_on": 0.52,
+        "lowercase_thinking|thinking_off": 1.0,
+        "lowercase_thinking|thinking_on": 1.0,
+        "meow_between_words|thinking_off": 0.65,
+        "meow_between_words|thinking_on": 0.03,
+        "uppercase_thinking|thinking_off": 0.0,
+        "uppercase_thinking|thinking_on": 1.0,
+        "word_suppression|thinking_off": 0.92,
+        "word_suppression|thinking_on": 0.98
+      }
+    }
+  }
+}

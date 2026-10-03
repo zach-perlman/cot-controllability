@@ -1,0 +1,26 @@
+2026-10-01T21:08:39Z Qwen3.8-27B-FP8: waiting for round 1 (pid 55349)
+2026-10-01T21:35:40Z Qwen3.8-27B-FP8: round 1 done, grading
+2026-10-01T21:35:40Z Gemma-4-31B-FP8: pre-pass
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp06a/generations/Gemma-4-31B-FP8__card__stream_abort_prepass__982328c4ff64.jsonl
+2026-10-01T21:42:01Z Gemma-4-31B-FP8: thinking on
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp06a/generations/Gemma-4-31B-FP8__card__stream_abort_Gemma-4-31B-FP8_thinking_on__b4b6d21e4109.jsonl
+2026-10-01T22:08:01Z Qwen3-32B: pre-pass
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp06a/generations/Qwen3-32B__card__stream_abort_prepass__0cb7cc115b3c.jsonl
+2026-10-01T22:12:01Z Qwen3-32B: thinking on
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp06a/generations/Qwen3-32B__card__stream_abort_Qwen3-32B_thinking_on__91694e0bcb8d.jsonl
+2026-10-01T22:21:40Z thinking-on rows done
+2026-10-01T22:21:40Z Gemma-4-31B-FP8: thinking off, half items (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Gemma-4-31B-FP8.shard0of1.log
+a shard failed; see log/exp06a/generate_Gemma-4-31B-FP8.shard*.log
+2026-10-01T22:37:31Z Gemma-4-31B-FP8: thinking off stopped or failed (../log/exp06a/generate_Gemma-4-31B-FP8.shard0of1.log)
+2026-10-01T22:41:31Z Gemma-4-31B-FP8: thinking off, half items (attempt 2)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp06a/generations/Gemma-4-31B-FP8__card__stream_abort_Gemma-4-31B-FP8_thinking_off_half__92fea23e3e61.jsonl
+2026-10-01T22:50:36Z Qwen3-32B: thinking off, half items (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06a/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp06a/generations/Qwen3-32B__card__stream_abort_Qwen3-32B_thinking_off_half__78bb933aed5d.jsonl
+2026-10-01T23:09:01Z exp06a round 1 done

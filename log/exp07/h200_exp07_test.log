@@ -1,0 +1,26 @@
+2026-10-02T23:32:52Z request files written (arms baseline,upgraded,rule_last)
+2026-10-02T23:32:52Z Qwen3.6-27B-FP8 test (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Qwen3.6-27B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Qwen3.6-27B-FP8__card__stream_abort_test_Qwen3.6-27B-FP8__e45788172eb4.jsonl
+2026-10-03T00:20:14Z Qwen3.6-27B-FP8 graded
+2026-10-03T00:20:14Z GLM-4.7-Flash test (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_GLM-4.7-Flash.shard0of1.log
+wrote ../cache/exp07/generations/GLM-4.7-Flash__card__stream_abort_test_GLM-4.7-Flash__73a970050415.jsonl
+2026-10-03T00:29:24Z GLM-4.7-Flash graded
+2026-10-03T00:29:24Z Qwen3.6-35B-A3B-FP8 test (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Qwen3.6-35B-A3B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Qwen3.6-35B-A3B-FP8__card__stream_abort_test_Qwen3.6-35B-A3B-FP8__a202e0b77c5b.jsonl
+2026-10-03T00:39:01Z Qwen3.6-35B-A3B-FP8 graded
+2026-10-03T00:39:01Z Gemma-4-12B test (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Gemma-4-12B.shard0of1.log
+wrote ../cache/exp07/generations/Gemma-4-12B__card__stream_abort_test_Gemma-4-12B__42138661c141.jsonl
+2026-10-03T00:53:31Z Gemma-4-12B graded
+2026-10-03T00:53:31Z Qwen3.8-27B-FP8 test (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Qwen3.8-27B-FP8__card__stream_abort_test_Qwen3.8-27B-FP8__1694f384fafe.jsonl
+2026-10-03T01:45:24Z Qwen3.8-27B-FP8 graded
+2026-10-03T01:45:24Z Gemma-4-31B-FP8 test (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Gemma-4-31B-FP8__card__stream_abort_test_Gemma-4-31B-FP8__252d1bd4de3a.jsonl
+2026-10-03T02:58:37Z Gemma-4-31B-FP8 graded
+2026-10-03T02:58:37Z done

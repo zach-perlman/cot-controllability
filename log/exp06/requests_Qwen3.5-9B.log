@@ -1,0 +1,3 @@
+wrote 4700 requests to cache/exp06/requests_Qwen3.5-9B_main.jsonl
+wrote 1500 requests to cache/exp06/requests_Qwen3.5-9B_thinking_off.jsonl
+wrote results/exp06_prompt_prefill/requests_record_Qwen3.5-9B.json: {"same_as_exp06a": 0, "prefill_appended": 116, "longest_prompt_tokens": 9815}

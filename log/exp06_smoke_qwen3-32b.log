@@ -1,0 +1,2 @@
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp06/smoke/generations/Qwen3-32B__card__stream_abort_smoke_Qwen3-32B__abc474bfd4ae.jsonl

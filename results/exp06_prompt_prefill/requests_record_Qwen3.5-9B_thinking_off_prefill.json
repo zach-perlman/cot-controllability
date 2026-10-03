@@ -1,0 +1,20 @@
+{
+  "model": "Qwen3.5-9B",
+  "requests": {
+    "path": "cache/exp06/requests_Qwen3.5-9B_thinking_off_prefill.jsonl",
+    "sha256": "5fc92cc56c8d85c2a6e562c129afe78addf67f00f129dfc6d0226c9f0eb7e514",
+    "n": 1900,
+    "per_cell": {
+      "baseline|prefill_compliant|off": 500,
+      "upgraded|prefill_compliant|off": 500,
+      "upgraded|prefill_noncompliant|off": 400,
+      "no_rule|prefill_compliant|off": 500
+    }
+  },
+  "rendering_checks": {
+    "twins_match_request_file": 1500,
+    "prefill_appended": 300,
+    "graded_text_cut": 300
+  },
+  "written": "2026-10-02T17:49:36+00:00"
+}

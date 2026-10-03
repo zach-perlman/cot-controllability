@@ -1,0 +1,28 @@
+2026-10-02T04:35:04Z Qwen3.8-27B-FP8_main (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3.8-27B-FP8__card__stream_abort_Qwen3.8-27B-FP8_main__f895ef3dd8d5.jsonl
+2026-10-02T05:12:12Z Gemma-4-31B-FP8_main (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp06/generations/Gemma-4-31B-FP8__card__stream_abort_Gemma-4-31B-FP8_main__53f0fcb74361.jsonl
+2026-10-02T06:27:27Z Qwen3-32B_main (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3-32B__card__stream_abort_Qwen3-32B_main__56800e749370.jsonl
+2026-10-02T07:08:19Z screened models: thinking-on rows done
+2026-10-02T07:08:19Z Qwen3.8-27B-FP8_thinking_off (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3.8-27B-FP8__card__stream_abort_Qwen3.8-27B-FP8_thinking_off__84f5431f490d.jsonl
+2026-10-02T07:43:23Z Gemma-4-31B-FP8_thinking_off (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp06/generations/Gemma-4-31B-FP8__card__stream_abort_Gemma-4-31B-FP8_thinking_off__77d4a9dc9c0e.jsonl
+2026-10-02T08:11:22Z Qwen3-32B_thinking_off (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3-32B__card__stream_abort_Qwen3-32B_thinking_off__36d9d7f22f64.jsonl
+2026-10-02T08:30:51Z screened models: thinking-off rows done
+2026-10-02T08:30:51Z Qwen3.6-27B-FP8_main (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3.6-27B-FP8.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3.6-27B-FP8__card__stream_abort_Qwen3.6-27B-FP8_main__bfbc1792314f.jsonl
+2026-10-02T09:30:21Z Qwen3.6-27B-FP8_thinking_off (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp06/generate_Qwen3.6-27B-FP8.shard0of1.log
+wrote ../cache/exp06/generations/Qwen3.6-27B-FP8__card__stream_abort_Qwen3.6-27B-FP8_thinking_off__6884c13e4b47.jsonl
+2026-10-02T10:08:39Z exp06 generation and grading done
+2026-10-02T10:09:09Z analysis written (run overnight)

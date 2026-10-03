@@ -1,0 +1,10 @@
+2026-10-02T22:13:10Z GPU free
+2026-10-02T22:13:16Z request files written
+2026-10-02T22:13:16Z Qwen3.8-27B-FP8 validation (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Qwen3.8-27B-FP8__card__stream_abort_validation_Qwen3.8-27B-FP8__eff004b2c11b.jsonl
+2026-10-02T22:29:04Z Gemma-4-31B-FP8 validation (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp07/generations/Gemma-4-31B-FP8__card__stream_abort_validation_Gemma-4-31B-FP8__9c2d225b8da7.jsonl
+2026-10-02T22:54:24Z round scored (../log/exp07/score_validation.log)
+2026-10-02T22:54:24Z done
