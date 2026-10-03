@@ -174,12 +174,13 @@ def bare_context(item: dict, mode: str) -> cands.Context:
                          cotcontrol_user=rules.cotcontrol_user(item, mode))
 
 
-def examples(model: str, mode: str) -> list[cands.Example]:
-    """The first cands.N_EXAMPLES_NEEDED own traces whose 1000-character cut, rewritten, passes the grader (the cut
-    length a candidate asks for is rewritten and checked again when it is used)."""
+def examples(model: str, mode: str, n: int | None = cands.N_EXAMPLES_NEEDED,
+             traces: list[dict] | None = None) -> list[cands.Example]:
+    """The first n own traces (default: own_traces(model); n=None: all) whose 1000-character cut, rewritten, passes
+    the grader (the cut length a candidate asks for is rewritten and checked again when it is used)."""
     import cc_exp06a
     out = []
-    for row in own_traces(model):
+    for row in own_traces(model) if traces is None else traces:
         item = row["item"]
 
         def reasoning(max_chars: int, text=row["reasoning"], item=item) -> str:
@@ -193,8 +194,10 @@ def examples(model: str, mode: str) -> list[cands.Example]:
         except ValueError:
             continue
         out.append(cands.Example(context=bare_context(item, mode), reasoning=reasoning, answer=row["answer"].strip()))
-        if len(out) == cands.N_EXAMPLES_NEEDED:
+        if len(out) == n:
             return out
+    if n is None:
+        return out
     raise SystemExit(f"{model} {mode}: only {len(out)} usable examples")
 
 
@@ -284,20 +287,25 @@ def grades_path(gen_path: Path) -> Path:
 def grade(name: str, model: str) -> Path:
     """cc_grade.grade_row for CoT-Control's rules (with its caseless-letter placement); for the new rules the same
     flags, with compliance and first violation from exp07_rules."""
-    import cc_grade
-    from transformers import AutoTokenizer
     gen_path = generation_path(name, model)
     out = grades_path(gen_path)
     if out.exists():
         return out
     requests = {r["request_id"]: r for r in map(json.loads, requests_path(name, model).open())}
-    items = item_index()
+    rows = grade_generations([json.loads(line) for line in gen_path.open()], requests, item_index(), model)
+    EXP.grades.mkdir(parents=True, exist_ok=True)
+    out.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    return out
+
+
+def grade_generations(gens: list[dict], requests: dict, items: dict, model: str) -> list[dict]:
+    import cc_grade
+    from transformers import AutoTokenizer
     tokenizer = AutoTokenizer.from_pretrained(cfg.model_dir(model))
 
     def offsets_of(text: str) -> list[int]:
         return [s for s, _ in tokenizer(text, add_special_tokens=False, return_offsets_mapping=True)["offset_mapping"]]
 
-    gens = [json.loads(line) for line in gen_path.open()]
     rows = []
     for g in gens:
         request, item = requests[g["request_id"]], items[g["item_id"]]
@@ -313,12 +321,10 @@ def grade(name: str, model: str) -> Path:
         rows.append(row)
     cc_grade.place_caseless_violations(rows, gens, items, offsets_of)
     if any(r["locator_agrees"] is False for r in rows):
-        raise RuntimeError(f"{name} {model}: first-violation locator disagrees with the grader")
+        raise RuntimeError(f"{model}: first-violation locator disagrees with the grader")
     for r in rows:
         r["prompt"] = requests[r["request_id"]]["prompt"]
-    EXP.grades.mkdir(parents=True, exist_ok=True)
-    out.write_text("".join(json.dumps(r) + "\n" for r in rows))
-    return out
+    return rows
 
 
 # --- Scoring --------------------------------------------------------------------------------------------------------
