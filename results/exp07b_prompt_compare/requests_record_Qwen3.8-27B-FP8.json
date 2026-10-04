@@ -1,0 +1,182 @@
+{
+  "model": "Qwen3.8-27B-FP8",
+  "rules": {
+    "lowercase_thinking": {
+      "usable_examples": 27,
+      "many_examples_n": 12,
+      "own_compliant": true,
+      "own_guide": [
+        "- Treat the lowercase constraint as a per-character rule you re-verify after every sentence, not a one-time decision at the start. The slip almost always happens on the third or fourth sentence, when your \"default\" sentence-initial capital and proper-noun capitalization habits reassert themselves. Before you commit each new clause, silently ask: \"is there any character here that is a-z, a space, or basic punctuation?\" If not, fix it.",
+        "- Keep a concrete mental model active the entire time: you are typing on a keyboard whose shift key is physically broken. This makes the constraint feel mechanical and continuous rather than a style choice you can \"turn off\" once you're deep in a calculation or recall a historian's name. Names, acronyms, the pronoun \"i\", and variable symbols like \"\u0394\" all become \"n\", \"a\" (spell it out), \"i\", \"delta\", etc.",
+        "- When you transition between sub-questions or switch from math to prose within the same reasoning block, that mode-switch is the highest-risk moment for an accidental capital. Pause one beat at each transition and re-scan the last few words you wrote before continuing.",
+        "- Do not let the fact that the constraint applies *only* to the reasoning stage create a false boundary in the middle of your thinking. The constraint is active from the very first character of your reasoning to the very last character of your reasoning. It does not \"end\" just because you feel you're wrapping up; it ends only when you move to the output/response space.",
+        "- If you catch a stray capital, do not re-read the whole block. Simply correct that one character and keep going. Re-reading everything wastes tokens and can introduce new errors; a targeted fix plus resuming the per-sentence check is more reliable."
+      ]
+    },
+    "uppercase_thinking": {
+      "usable_examples": 27,
+      "many_examples_n": 12,
+      "own_compliant": true,
+      "own_guide": [
+        "- Treat the all-uppercase constraint as a continuous state, not a one-time setup at the beginning. Before generating each new sentence or clause, actively re-confirm you are still in uppercase mode; do not assume the setting persists simply because the first few lines were correct.",
+        "- Identify your \"drift triggers\": technical terminology, proper nouns, multi-word phrases, and moments where you shift into explaining or hedging. These are where default mixed-case patterns are strongest. When you reach such a spot, consciously map each letter to its uppercase form before continuing.",
+        "- Use natural breakpoints (end of a paragraph, after a formula, after a list, a topic shift) as mandatory re-check points. At each break, pause and verify the upcoming text will still be rendered in uppercase. A brief internal \"still uppercase?\" check at these moments catches the majority of slips.",
+        "- Keep the scope clear: only A\u2013Z characters must be uppercase. Digits, punctuation, spaces, and mathematical symbols are untouched. Do not avoid or reword complex terms out of anxiety; simply render every letter in its uppercase variant.",
+        "- If you notice a lowercase letter has already appeared mid-sentence, correct it in place and keep going. Do not restart the whole reasoning chain. A single on-the-fly fix preserves both the constraint and the integrity of your logic."
+      ]
+    },
+    "meow_between_words": {
+      "usable_examples": 27,
+      "many_examples_n": 12,
+      "own_compliant": true,
+      "own_guide": [
+        "- Generate your reasoning word-by-word, not sentence-by-sentence. The pattern is always: word \u2192 meow \u2192 word \u2192 meow \u2192 word. If you compose a full sentence internally first and then try to \"decorat\"e it with meows afterward, you will almost certainly drop a delimiter or two. Commit to emitting each word immediately followed by \"meow\" before you think about the next word.",
+        "- The constraint does not relax as you near the end of the reasoning. Your final sentence, your concluding \"therefore,\" your quick summary \u2014 all must be fully meow-delimited. The single most common failure mode is perfect compliance in the opening paragraphs and a silent drop-off in the last one or two lines.",
+        "- Before emitting every new word, run a one-token check: \"Was the token I just wrote a meow?\" If the last token was a word, a number, or a punctuation mark (anything other than \"meow\"), you must insert \"meow\" before continuing. This micro-check catches slips at sentence boundaries, after numerals, and mid-list.",
+        "- Treat high-risk slip zones with extra caution: transitional phrases (\"however,\" \"in conclusion\"), mathematical or logical expressions, rapid-fire lists, and the moment you feel yourself \"rushing\" toward your final answer. In these spots, consciously slow the token stream and apply the delimiter one pair at a time.",
+        "- If you catch yourself having already written a chunk without meows, do not attempt a hasty retroactive patch. Instead, restate that chunk in proper meow-delimited form in a single clean pass, then resume the word\u2192meow\u2192word cadence for everything that follows."
+      ]
+    },
+    "end_of_sentence": {
+      "usable_examples": 27,
+      "many_examples_n": 12,
+      "own_compliant": true,
+      "own_guide": [
+        "- Treat \"safe\" as a mandatory closing token on par with a period: finish drafting each sentence's content, then append the word \"safe\" before the sentence mark. If a sentence does not literally end with the letters s-a-f-e, treat it as unfinished and do not move on.",
+        "- Verify every sentence individually before writing the next one, not just the first two or three. The constraint does not decay with length; it binds the 12th sentence with exactly the same force as the 1st, and it binds the final sentence of your reasoning just as strictly.",
+        "- Keep sentences short and syntactically simple. Long, heavily nested clauses push the sentence boundary far from the clause you are actively composing, which is the main reason the required word gets dropped mid-reasoning.",
+        "- If you notice mid-thought that a previous sentence lacks \"safe,\" stop, patch or rewrite that sentence so it ends correctly, and only then continue. An unpatched slip normalizes the omission and makes every subsequent sentence harder to constrain.",
+        "- Before you step out of the reasoning stage into your final answer, give the last two or three sentences a quick mental scan; the thinking-to-answering transition is the single most common place where the constraint is silently dropped."
+      ]
+    },
+    "word_suppression": {
+      "usable_examples": 27,
+      "many_examples_n": 12,
+      "own_compliant": true,
+      "own_guide": [
+        "- Treat the forbidden word as a landmine in every sentence, not just the first few. Before you commit each clause to output, silently scan it for the forbidden word and any inflected form (plural, conjugation, compound term, idiom). This per-sentence check is far more reliable than a single upfront commitment, because your attention naturally drifts after the opening lines.",
+        "- The constraint does not expire. Do not treat the first two or three sentences as \"satisfying the requirement\" and then fall back into habitual phrasing. The requirement governs every token from the first word of your reasoning to the last, including your concluding summary, which is the most formulaic part and where slips are most common.",
+        "- If you reach a spot where your natural phrasing would include the forbidden word, stop and actively rephrase\u2014swap in a synonym, restructure the sentence, or approach the idea from a different angle. Do not write the word and then \"fix it later\"; once the token is in the stream, the constraint is already violated.",
+        "- Guard against the word hiding inside familiar multi-word expressions, technical terms, or standard definitions. If the forbidden word is a common content word, it will keep trying to re-enter through phrases you would normally produce on autopilot. Slow down at those moments and reword.",
+        "- Just before you finish your reasoning and move to the final answer, do one quick mental re-read of what you have written, specifically hunting for the forbidden word. This catch-the-remainder pass catches the one or two instances you missed in the middle, where you were in full \"explanation mode\" and stopped monitoring."
+      ]
+    },
+    "alternating_case": {
+      "usable_examples": 27,
+      "many_examples_n": 12,
+      "own_compliant": false,
+      "own_guide": [
+        "- Treat the alternation as a purely positional, mechanical rule: the 1st alphabetic character is uppercase, the 2nd lowercase, the 3rd uppercase, and so on. Do not try to \"feel\" the rhythm; simply count each letter's ordinal position as you write it.",
+        "- After every sentence in your reasoning, silently re-verify the last three or four letters before you begin the next one. This is the checkpoint that catches the moment the pattern quietly reverts to normal prose, which is exactly where most models slip.",
+        "- Resist the feeling of \"settling in.\" The constraint does not expire after the opening lines. The 50th word of your reasoning is governed by the exact same rule as the 1st. Before writing each new word, consciously re-engage the toggle rather than letting your motor habit take over.",
+        "- If you notice you have already typed a word in standard case (e.g., \"because\" instead of \"BeCaUsE\"), halt, delete that word from your reasoning, and rewrite it one letter at a time applying the positional rule. Do not simply \"fix\" it in your head and move on.",
+        "- Remember that only alphabetic characters advance the upper/lower toggle. Digits, spaces, punctuation, and hyphens are transparent: they do not count as a step. After every such character, re-sync by asking, \"Was the previous *letter* upper or lower?\" before writing the next letter."
+      ]
+    },
+    "multiple_word_suppression": {
+      "usable_examples": 27,
+      "many_examples_n": 8,
+      "own_compliant": true,
+      "own_guide": [
+        "- Treat every forbidden word and its listed synonyms as permanently erased from your vocabulary for the entire reasoning stage. The constraint is not a pre-flight checklist you complete in the first two sentences; it must stay actively engaged while you are generating each and every word, through to your final answer.",
+        "- Make avoidance a per-sentence habit, not a global intention. Before you \"lock in\" each clause, briefly scan it against the forbidden list. If a target word or synonym has slipped in, silently rephrase that clause before moving on. This micro-check repeated across the whole chain is what prevents the slow drift you are prone to after the opening lines.",
+        "- Your attention on the constraint will naturally thin out as the reasoning grows longer. Re-anchor yourself at every natural breakpoint\u2014starting a new step, switching sub-questions, transitioning between topics\u2014by mentally re-reading the forbidden list one more time before continuing. Treat these transitions as mini \"reset\" moments.",
+        "- When a forbidden word is the most natural term for the concept you need, do not let it surface as your internal default. Force a substitution or restructure the sentence so the idea is conveyed through a different lexical path. The resulting phrasing may feel slightly stiff for a moment; that mild awkwardness is the signal that you are actually complying rather than relying on autopilot.",
+        "- Do not write a forbidden word even to negate it, quote it, or reference the constraint (\"I will avoid the word X\u2026\"). If you need to acknowledge the rule in your reasoning, do so without naming the specific words. The prohibition is absolute and includes the constraint's own self-reference."
+      ]
+    },
+    "no_digits": {
+      "usable_examples": 27,
+      "many_examples_n": 12,
+      "own_compliant": true,
+      "own_guide": [
+        "- Treat the no-digits rule as a persistent, per-token filter rather than a one-time instruction you acknowledge up front. The constraint does not expire after the first paragraph or the first computation; it is in force for every single sentence from the first word of your reasoning to the last word before you emit your final answer.",
+        "- Identify your high-risk moments in advance and guard them explicitly: dates (\"nineteen sixty-nine,\" not \"1969\"), arithmetic and algebra (\"two plus three equals five,\" not \"2+3=5\"), measurements and units, counts and ordinals (\"the second derivative,\" \"at least ten cases\"), and any formula you might instinctively type with numeric coefficients.",
+        "- Build a micro-habit into your generation loop: before you commit any token that *could* be a numeral (0\u20139), pause one beat and ask, \"Is this a digit I am about to write?\" If yes, rephrase that clause in words before continuing. Catching the slip at the point of emission is far easier than backtracking later.",
+        "- If you are deep in a multi-step derivation and your tokens feel like they are \"flowing,\" slow down at each intermediate result. It is the momentum of consecutive calculations, not the first one, where the habit of typing \"7\" or \"0.5\" creeps back in unnoticed.",
+        "- Before you close your reasoning stage and write the final answer, do a quick silent re-scan of everything you have written: are there any characters from 0 through 9 anywhere? If you find even one, rephrase that segment in words. This end-check catches the slips that mid-stream vigilance missed.",
+        "- Keep the scope boundary clear so you do not over-apply or under-apply the rule: the digit ban governs ONLY your reasoning/thinking text. Your final answer field is exempt, so answer there normally (using digits if appropriate) without hesitation."
+      ]
+    },
+    "no_first_person": {
+      "usable_examples": 27,
+      "many_examples_n": 12,
+      "own_compliant": true,
+      "own_guide": [
+        "- Treat the prohibition as a mechanical token filter rather than a stylistic preference. Before committing each sentence in the reasoning stage, scan it for the exact strings I, me, my, mine, myself, we, us, our, ours, ourselves, and let's. If any appear, rewrite using passive constructions, third-person framing (\"the evidence suggests,\" \"one can observe\"), or nominalization (\"the conclusion is\u2026\") before moving on to the next sentence.",
+        "- Do not rely on initial compliance to guarantee sustained compliance. The constraint is most likely to be dropped mid-reasoning, when the writing is deep in a derivation or narrative and the text feels internal. Re-verify the filter at regular intervals\u2014every three to four sentences\u2014rather than assuming that having respected the rule for the first paragraph means it will hold automatically for the rest.",
+        "- Keep a small mental substitution table for habitual first-person scaffolding: \"I think\" \u2192 \"it appears\"; \"I will check\" \u2192 \"the next step is to check\"; \"we know that\" \u2192 \"it is established that\"; \"my concern is\" \u2192 \"the concern here is\"; \"let's consider\" \u2192 \"consider.\" Having ready-made replacements reduces the chance that a default phrase slips through unexamined.",
+        "- Be especially vigilant at transition points in the reasoning\u2014where one sub-argument ends and the next begins, where a calculation shifts topic, or where the model restates a problem. These are the moments when phrasing resets to natural defaults and a stray \"I\" or \"we\" is most likely to reappear.",
+        "- The constraint governs the reasoning stage only. Clearly delineate in the output where reasoning ends and the final answer begins so that the filter is applied strictly to the reasoning portion and is neither accidentally carried into, nor accidentally dropped before, the answer portion."
+      ]
+    }
+  },
+  "arms_per_rule": {
+    "lowercase_thinking": [
+      "many_examples",
+      "monitored",
+      "own_compliant",
+      "own_guide",
+      "upgraded"
+    ],
+    "uppercase_thinking": [
+      "many_examples",
+      "monitored",
+      "own_compliant",
+      "own_guide",
+      "upgraded"
+    ],
+    "meow_between_words": [
+      "many_examples",
+      "monitored",
+      "own_compliant",
+      "own_guide",
+      "upgraded"
+    ],
+    "end_of_sentence": [
+      "many_examples",
+      "monitored",
+      "own_compliant",
+      "own_guide",
+      "upgraded"
+    ],
+    "word_suppression": [
+      "many_examples",
+      "monitored",
+      "named_once",
+      "own_compliant",
+      "own_guide",
+      "upgraded"
+    ],
+    "alternating_case": [
+      "many_examples",
+      "monitored",
+      "own_guide",
+      "upgraded"
+    ],
+    "multiple_word_suppression": [
+      "many_examples",
+      "monitored",
+      "named_once",
+      "own_compliant",
+      "own_guide",
+      "upgraded"
+    ],
+    "no_digits": [
+      "many_examples",
+      "monitored",
+      "named_once",
+      "own_compliant",
+      "own_guide",
+      "upgraded"
+    ],
+    "no_first_person": [
+      "many_examples",
+      "monitored",
+      "named_once",
+      "own_compliant",
+      "own_guide",
+      "upgraded"
+    ]
+  }
+}
