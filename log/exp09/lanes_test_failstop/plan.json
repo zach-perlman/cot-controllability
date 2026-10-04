@@ -1,0 +1,3 @@
+{"name": "test_failstop", "mps": false, "log_group": "exp09",
+ "gpus": {"0": [[{"exp": "exp09", "model": "Qwen3.8-27B-FP8", "requests": "cache/exp09/does_not_exist.jsonl", "items": "cache/exp09/items.jsonl", "memory": 0.9},
+                 {"exp": "exp09", "model": "Qwen3.6-27B-FP8", "requests": "cache/exp09/does_not_exist.jsonl", "items": "cache/exp09/items.jsonl", "memory": 0.9}]]}}

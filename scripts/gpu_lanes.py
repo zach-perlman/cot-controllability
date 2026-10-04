@@ -164,7 +164,7 @@ def load_jobs(plan: dict, log_dir: Path) -> list[Job]:
 
 def can_start(job: Job, jobs: list[Job]) -> bool:
     earlier = [j for j in jobs if j.gpu == job.gpu and j.lane == job.lane and j.position < job.position]
-    if any(j.finished is None for j in earlier):
+    if any(j.finished is None or j.failed for j in earlier):
         return False
     on_gpu = [j for j in jobs if j.gpu == job.gpu and j.proc is not None and j.finished is None]
     if any(not j.loaded for j in on_gpu):
@@ -189,7 +189,7 @@ def run(plan: dict, plan_path: Path) -> None:
     try:
         while any(j.finished is None for j in jobs):
             for job in jobs:
-                if job.proc is None and can_start(job, jobs):
+                if job.proc is None and job.finished is None and can_start(job, jobs):
                     start(job, use_mps)
                 elif job.proc is not None and job.finished is None:
                     if not job.loaded and loaded(job):

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/workspace/cot-controllability/scripts/cc_generate_abort.py", line 433, in <module>
+    main()
+  File "/workspace/cot-controllability/scripts/cc_generate_abort.py", line 386, in main
+    requests = [json.loads(line) for line in requests_path.open()]
+                                             ^^^^^^^^^^^^^^^^^^^^
+  File "/.uv/python_install/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/cot-controllability/cache/exp09/does_not_exist.jsonl'
