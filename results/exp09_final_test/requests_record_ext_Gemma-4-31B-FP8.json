@@ -1,0 +1,33 @@
+{
+  "model": "Gemma-4-31B-FP8",
+  "example_source": "Gemma-4-31B-FP8",
+  "rules": {
+    "alternating_case": {
+      "A_examples_exp09": 12,
+      "A_examples_off": 9,
+      "A_runs_off": false
+    },
+    "multiple_word_suppression": {
+      "A_examples_exp09": 8,
+      "A_examples_off": 2,
+      "A_runs_off": false
+    },
+    "no_digits": {
+      "A_examples_exp09": 12,
+      "A_examples_off": 10,
+      "A_runs_off": false
+    },
+    "no_first_person": {
+      "A_examples_exp09": 12,
+      "A_examples_off": 10,
+      "A_runs_off": false
+    }
+  },
+  "cells": {
+    "A|commitment|on": 240,
+    "A|compliant|on": 240,
+    "A|noncompliant|on": 240,
+    "baseline|none|off": 480,
+    "no_rule|compliant|on": 240
+  }
+}

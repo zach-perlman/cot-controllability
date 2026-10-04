@@ -1,0 +1,34 @@
+{
+  "model": "Qwen3.8-27B-FP8",
+  "example_source": "Qwen3.8-27B-FP8",
+  "rules": {
+    "alternating_case": {
+      "A_examples_exp09": 12,
+      "A_examples_off": 11,
+      "A_runs_off": false
+    },
+    "multiple_word_suppression": {
+      "A_examples_exp09": 8,
+      "A_examples_off": 2,
+      "A_runs_off": false
+    },
+    "no_digits": {
+      "A_examples_exp09": 12,
+      "A_examples_off": 12,
+      "A_runs_off": true
+    },
+    "no_first_person": {
+      "A_examples_exp09": 12,
+      "A_examples_off": 12,
+      "A_runs_off": true
+    }
+  },
+  "cells": {
+    "A|commitment|on": 240,
+    "A|compliant|on": 240,
+    "A|noncompliant|on": 240,
+    "A|none|off": 240,
+    "baseline|none|off": 480,
+    "no_rule|compliant|on": 240
+  }
+}
