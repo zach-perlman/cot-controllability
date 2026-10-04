@@ -1,0 +1,22 @@
+{
+  "experiment": "exp09_final_test",
+  "written": "2026-10-04 20:35 UTC, before the B200 run and before any analysis",
+  "deviations": [
+    {
+      "what": "hardware: 1x NVIDIA B200 (183 GB, driver 580.126.09, CUDA 13.2 forward-compat libs) instead of 1 or 2 H200",
+      "why": "the 2x H200 NVL instance was shut down by the host at about 20:25 UTC; the human moved to a B200",
+      "effect": "same software (vLLM 0.30.0, torch 2.13.0+cu132, frozen envs), same request files, seeds and engine settings (one engine, 0.90 of GPU memory, max_num_seqs 256); plan_1xH200.json runs the 7 models one after another. GPU numerics differ between GPU types, so traces are not bit-identical to what the H200 would have produced; no comparison across GPU types is made"
+    },
+    {
+      "what": "the 2x H200 run (started 20:02 UTC, about 20 minutes of generation, Qwen3.6-27B-FP8 and Qwen3.8-27B-FP8 only) was lost with the instance's disk; it was not backed up",
+      "why": "instance shutdown",
+      "effect": "restarted from scratch on the B200 with the same request files and seeds; nothing from the lost run is used. What was read from it before it was lost: progress counts (rows, tokens) and the metadata of about 50 finished full rows (reasoning_cap, abort flag, think_status, answer_finish, reasoning/answer token counts) as a check that rows were well-formed; no reasoning or answer text and no grades",
+      "prevention": "partial generations are now uploaded to the private HF dataset every 20 minutes (the engine resumes from finished rows)"
+    },
+    {
+      "what": "scripts/gpu_lanes.py fix (commit c4a9ac0): a failed job now stops its lane; before, jobs logged as skipped were still started",
+      "why": "found when the first H200 launch failed at import (CoT-Control submodule not checked out); nothing was generated in that attempt",
+      "effect": "scheduling only; requests, seeds, engine and grading unchanged"
+    }
+  ]
+}
