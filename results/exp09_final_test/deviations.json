@@ -17,6 +17,11 @@
       "what": "scripts/gpu_lanes.py fix (commit c4a9ac0): a failed job now stops its lane; before, jobs logged as skipped were still started",
       "why": "found when the first H200 launch failed at import (CoT-Control submodule not checked out); nothing was generated in that attempt",
       "effect": "scheduling only; requests, seeds, engine and grading unchanged"
+    },
+    {
+      "what": "extension 1 (manifest_extension_exp08_parts.json, requests_ext_<M>.jsonl, plan_ext_1xB200.json) superseded by extension 2 (manifest_extension2.json) before any extension generation; the waiter that would have started plan_ext_1xB200.json was stopped",
+      "why": "human requests at 22:18-22:19 UTC: thinking on vs off on every rule and model, A thinking off with the most examples that fit, and openings on exp06's rules",
+      "effect": "extension 1's rows are all in extension 2 unchanged (checked); its files are kept, never generated. exp09's main test (P1-P3) is unaffected. cc_generate_abort gained a route for rows with exp09_render (GLM-4.7-Flash's extension rows, scripts/cc_exp09_render.py); every other row is routed and keyed exactly as before"
     }
   ]
 }

@@ -74,6 +74,13 @@ def output_path(requests_path: Path, model: str, sampling: dict, requests: list[
         material["exp07"] = {"prompt_code": inspect.getsource(cc_exp07.prompt_ids),
                              "job_code": inspect.getsource(cc_exp07.job),
                              "history_formats": [cc_exp07.HISTORY_REASONING, cc_exp07.HISTORY_EMPTY_THINK]}
+    if any("exp09_render" in r for r in requests):  # exp09 extension, GLM: cc_exp09_render (cc_exp07's + prefill)
+        import cc_exp07
+        import cc_exp09_render
+        material["exp09_render"] = {"prompt_code": [inspect.getsource(cc_exp09_render.prompt_ids),
+                                                    inspect.getsource(cc_exp07.prompt_ids)],
+                                    "job_code": inspect.getsource(cc_exp09_render.job),
+                                    "history_formats": [cc_exp07.HISTORY_REASONING, cc_exp07.HISTORY_EMPTY_THINK]}
     stem = requests_path.stem.removeprefix("requests")  # exp04's requests_none / requests_repro -> "_none" / "_repro"
     return requests_path.parent / "generations" / f"{model}__card__{ENGINE}{stem}__{cfg.content_key(material)}.jsonl"
 
@@ -321,7 +328,13 @@ def run_shard(llm, tokenizer, family: str, requests: list[dict], items: dict, sa
         return
     exp07 = any("exp07_cell" in r for r in todo)
     exp06 = any("exp06_cell" in r for r in todo)
-    if exp07:
+    exp09_render = any("exp09_render" in r for r in todo)  # also exp06 rows: graded text from cc_exp06
+    if exp09_render:
+        import cc_exp06
+        import cc_exp09_render
+        cc_exp09_render.check_history_template(tokenizer, family)
+        jobs = [cc_exp09_render.job(tokenizer, family, r, items) for r in todo]
+    elif exp07:
         import cc_exp07
         cc_exp07.check_history_template(tokenizer, family)
         jobs = [cc_exp07.job(tokenizer, family, r, items) for r in todo]
@@ -331,7 +344,7 @@ def run_shard(llm, tokenizer, family: str, requests: list[dict], items: dict, sa
     elif any("history" in r for r in todo):
         import cc_exp06a
         cc_exp06a.check_history_template(tokenizer, family)
-    if not exp07:
+    if not exp07 and not exp09_render:
         jobs = [cc_exp06.job(tokenizer, family, r, items) if exp06 else job_of(tokenizer, family, r, items)
                 for r in todo]
     with path.open("a") as f:

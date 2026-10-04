@@ -1,0 +1,86 @@
+{
+ "model": "Gemma-4-12B-FP8",
+ "example_source": "Gemma-4-12B",
+ "rules": {
+  "lowercase_thinking": {
+   "A_examples_on": 12,
+   "A_examples_off": 12,
+   "same_examples": true
+  },
+  "uppercase_thinking": {
+   "A_examples_on": 12,
+   "A_examples_off": 12,
+   "same_examples": true
+  },
+  "meow_between_words": {
+   "A_examples_on": 12,
+   "A_examples_off": 9,
+   "same_examples": false
+  },
+  "end_of_sentence": {
+   "A_examples_on": 12,
+   "A_examples_off": 12,
+   "same_examples": true
+  },
+  "word_suppression": {
+   "A_examples_on": 12,
+   "A_examples_off": 7,
+   "same_examples": false
+  },
+  "alternating_case": {
+   "A_examples_on": 12,
+   "A_examples_off": 9,
+   "same_examples": false
+  },
+  "multiple_word_suppression": {
+   "A_examples_on": 8,
+   "A_examples_off": 3,
+   "same_examples": false
+  },
+  "no_digits": {
+   "A_examples_on": 12,
+   "A_examples_off": 10,
+   "same_examples": false
+  },
+  "no_first_person": {
+   "A_examples_on": 12,
+   "A_examples_off": 10,
+   "same_examples": false
+  },
+  "no_commas": {
+   "A_examples_on": 12,
+   "A_examples_off": 12,
+   "same_examples": true
+  },
+  "now_sentence_start": {
+   "A_examples_on": 12,
+   "A_examples_off": 12,
+   "same_examples": true
+  },
+  "no_question_words": {
+   "A_examples_on": 12,
+   "A_examples_off": 11,
+   "same_examples": false
+  }
+ },
+ "cells": {
+  "A|commitment|on": 840,
+  "A|compliant|on": 840,
+  "A|noncompliant|on": 720,
+  "A|none|off": 1440,
+  "baseline|none|off": 1440,
+  "no_rule|compliant|on": 840,
+  "no_rule|none|off": 120
+ },
+ "checks": {
+  "first_extension_rows_included": 1440,
+  "opening_rows_render_as_exp09": 35,
+  "longest_prompt": {
+   "on": 31742,
+   "off": 23698
+  }
+ }
+}
+6240 rows; first A|none|off lowercase_thinking; last no_rule|compliant|on no_first_person
+wrote 6240 requests to /workspace/cot-controllability/cache/exp09/requests_ext2_Gemma-4-12B-FP8.jsonl
+wrote /workspace/cot-controllability/cache/exp09/requests_ext2_Gemma-4-12B-FP8.jsonl
