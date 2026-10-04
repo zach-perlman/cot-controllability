@@ -1,0 +1,21 @@
+2026-10-04T18:10:04Z start gpu0.lane0.0_Qwen3.8-27B-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_bench_alone/gpu0.lane0.0_Qwen3.8-27B-FP8.log
+2026-10-04T18:11:34Z loaded gpu0.lane0.0_Qwen3.8-27B-FP8 after 1.5 min
+2026-10-04T18:24:35Z done gpu0.lane0.0_Qwen3.8-27B-FP8 after 14.5 min
+2026-10-04T18:24:35Z start gpu0.lane0.1_Qwen3.6-27B-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_bench_alone/gpu0.lane0.1_Qwen3.6-27B-FP8.log
+2026-10-04T18:26:05Z loaded gpu0.lane0.1_Qwen3.6-27B-FP8 after 1.5 min
+2026-10-04T18:40:06Z done gpu0.lane0.1_Qwen3.6-27B-FP8 after 15.5 min
+2026-10-04T18:40:36Z plan bench_alone finished in 0.51 h; failed: none
+2026-10-04T18:40:36Z MPS control daemon started for GPUs 0 (pipe /tmp/nvidia-mps)
+2026-10-04T18:40:36Z start gpu0.lane0.0_Qwen3.8-27B-FP8 (memory 0.45) -> /workspace/cot-controllability/log/exp09/lanes_bench_paired_mps/gpu0.lane0.0_Qwen3.8-27B-FP8.log
+2026-10-04T18:42:06Z loaded gpu0.lane0.0_Qwen3.8-27B-FP8 after 1.5 min
+2026-10-04T18:42:06Z start gpu0.lane1.0_Qwen3.6-27B-FP8 (memory 0.45) -> /workspace/cot-controllability/log/exp09/lanes_bench_paired_mps/gpu0.lane1.0_Qwen3.6-27B-FP8.log
+2026-10-04T18:44:36Z loaded gpu0.lane1.0_Qwen3.6-27B-FP8 after 2.5 min
+2026-10-04T18:55:58Z MPS control daemon stopped
+Traceback (most recent call last):
+  File "/workspace/cot-controllability/scripts/gpu_lanes.py", line 245, in <module>
+    main()
+  File "/workspace/cot-controllability/scripts/gpu_lanes.py", line 241, in main
+    run(plan, args.plan)
+  File "/workspace/cot-controllability/scripts/gpu_lanes.py", line 214, in run
+    time.sleep(POLL_SECONDS)
+KeyboardInterrupt

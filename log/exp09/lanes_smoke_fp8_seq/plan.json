@@ -1,0 +1,25 @@
+{
+ "name": "smoke_fp8_seq",
+ "mps": false,
+ "log_group": "exp09",
+ "gpus": {
+  "0": [
+   [
+    {
+     "exp": "exp07",
+     "model": "GLM-4.7-Flash-FP8",
+     "requests": "/tmp/exp09_bench/smoke_fp8/requests_smoke_GLM-4.7-Flash-FP8.jsonl",
+     "items": "cache/exp07/items.jsonl",
+     "memory": 0.9
+    },
+    {
+     "exp": "exp07",
+     "model": "Gemma-4-12B-FP8",
+     "requests": "/tmp/exp09_bench/smoke_fp8/requests_smoke_Gemma-4-12B-FP8.jsonl",
+     "items": "cache/exp07/items.jsonl",
+     "memory": 0.9
+    }
+   ]
+  ]
+ }
+}

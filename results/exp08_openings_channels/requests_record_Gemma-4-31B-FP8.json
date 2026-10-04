@@ -1,0 +1,57 @@
+{
+  "model": "Gemma-4-31B-FP8",
+  "rules": {
+    "alternating_case": {
+      "usable_examples": 27,
+      "A_examples_on": 12,
+      "A_examples_off": 12,
+      "A_examples_full": 12,
+      "A_runs": {
+        "off": true,
+        "full": true
+      }
+    },
+    "multiple_word_suppression": {
+      "usable_examples": 27,
+      "A_examples_on": 8,
+      "A_examples_off": 1,
+      "A_examples_full": 1,
+      "A_runs": {
+        "off": false,
+        "full": false
+      }
+    },
+    "no_digits": {
+      "usable_examples": 27,
+      "A_examples_on": 12,
+      "A_examples_off": 12,
+      "A_examples_full": 12,
+      "A_runs": {
+        "off": true,
+        "full": true
+      }
+    },
+    "no_first_person": {
+      "usable_examples": 27,
+      "A_examples_on": 12,
+      "A_examples_off": 12,
+      "A_examples_full": 12,
+      "A_runs": {
+        "off": true,
+        "full": true
+      }
+    }
+  },
+  "cells": {
+    "A|commitment|on": 320,
+    "A|compliant|on": 320,
+    "A|noncompliant|on": 320,
+    "A|none|full": 120,
+    "A|none|off": 480,
+    "A|none|on": 640,
+    "baseline|none|full": 160,
+    "baseline|none|off": 640,
+    "no_rule|compliant|on": 320,
+    "no_rule|none|full": 40
+  }
+}

@@ -1,0 +1,25 @@
+{
+ "name": "bench_alone",
+ "mps": false,
+ "log_group": "exp09",
+ "gpus": {
+  "0": [
+   [
+    {
+     "exp": "exp08",
+     "model": "Qwen3.8-27B-FP8",
+     "requests": "/tmp/exp09_bench/bench_alone/requests_bench_Qwen3.8-27B-FP8.jsonl",
+     "items": "cache/exp07/items.jsonl",
+     "memory": 0.9
+    },
+    {
+     "exp": "exp08",
+     "model": "Qwen3.6-27B-FP8",
+     "requests": "/tmp/exp09_bench/bench_alone/requests_bench_Qwen3.6-27B-FP8.jsonl",
+     "items": "cache/exp07/items.jsonl",
+     "memory": 0.9
+    }
+   ]
+  ]
+ }
+}

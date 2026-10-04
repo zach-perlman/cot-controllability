@@ -79,13 +79,28 @@ Ad hoc exp04 figures: F7 correctness check, F1c baseline-vs-stacked overlay (fig
 Resume on a new instance: clone the repo, then restore the git-ignored files from the private HF dataset
 (`hf download zachperlman20/cot-controllability-cache --repo-type dataset --local-dir .` inside the repo: cache/,
 log/, quoted-question reports); envs as in Environment below; models download from cfg revisions.
+exp06-exp08 (development, UNVERIFIED): exp06 upgraded prompt; exp07 prompt search (test reused later by exp08);
+exp07b chose A = upgraded with up to 12 example turns (+7.2 S(1000) over upgraded on its 90 questions); exp08
+openings / thinking on-off / accuracy with A (+3.9 over upgraded on exp07's test questions). Figures:
+figures/exp6_story (renamed from figures/story), figures/exp8_story.
+exp09_final_test (results/exp09_final_test/manifest.json; pre-registered, code and request files written and
+committed before any generation): A vs CoT-Control's prompt on 120 never-used questions, 12 rules (3 new:
+scripts/exp09_rules.py), 7 models (3 design, 4 fresh incl. online-FP8 GLM-4.7-Flash and Gemma-4-12B), short rows
+(S(1000), stop 1200) + full traces (whole-trace compliance, accuracy) on lowercase and no_commas. The upgraded arm
+was dropped by the human. Two engines per GPU under MPS were benchmarked (log/exp09/lanes_bench_*: ~4x slower), so
+one engine per GPU. Status 2026-10-04: request files written (cache/exp09/), NOT generated; the human is moving to
+2x H200. To run on the new instance: restore cache/ from the HF dataset, download the 7 models (cfg revisions; GLM
+and Gemma-12B are the bf16 repos), check `nvidia-smi` shows 2 GPUs, then
+`setsid nohup /venv/main/bin/python scripts/gpu_lanes.py results/exp09_final_test/plan_2xH200.json
+> log/exp09/run_2xH200.log 2>&1 &` (generation + per-model grading, ~4.5 h estimated), then
+`scripts/cc_exp09_analysis.py --run v1`.
 Next experiment and why: not chosen; options for the human: run part 3 (the two gated models), a bf16 check of
 the FP8 models, or a horizon/floor-robust primary for the weak models.
 Kill criteria in force: exp03 engine check (results/exp03_abort_survival/engine_check.json) fails -> no exp03
 manifest or generation until a human decides.
 Open issue for the human: three tracked files quote benchmark question text (prompt_examples.md,
 verification_smoke/sheet.md, exp01 read_samples.md) and are in public git history.
-Last updated: 2026-10-01 by agent (exp05 main run complete for 6 models, UNVERIFIED)
+Last updated: 2026-10-04 by agent (exp09 written, not generated; moving to 2x H200)
 
 ## Roles
 - Agent: implement, run, report in the format below.

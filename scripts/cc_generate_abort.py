@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import inspect
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -367,8 +368,8 @@ def merge(requests: list[dict], parts: Path, n_shards: int) -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exp", choices=["exp03", "exp04", "exp05", "exp06a", "exp06", "exp07", "exp07b", "exp08"],
-                        required=True)
+    parser.add_argument("--exp", choices=["exp03", "exp04", "exp05", "exp06a", "exp06", "exp07", "exp07b", "exp08",
+                                          "exp09"], required=True)
     parser.add_argument("--model", choices=list(cfg.ALL_MODELS), required=True)
     parser.add_argument("--requests", type=Path, default=None, help="default: cache/<exp>/requests.jsonl")
     parser.add_argument("--items", type=Path, default=None, help="default: the experiment's items (cfg.ITEMS_BY_EXP)")
@@ -399,11 +400,14 @@ def main() -> None:
         return
 
     shard = tuple(int(x) for x in args.shard.split("/"))
+    # Two engines sharing a GPU (exp09's scheduler) each take a fraction of its memory.
+    memory_fraction = float(os.environ.get("CC_GPU_MEMORY_UTILIZATION", spec["gpu_memory_utilization"]))
     meta = {"exp": args.exp, "model": args.model, "spec": spec, "sampling_name": args.sampling, "sampling": sampling,
             "n_requests": len(requests), "requests_file": str(requests_path), "engine": ENGINE,
             "abort": {k: v for k, v in abort_key_material().items() if k != "rule_code"},
             "gpus": gen.visible_gpus(), "tensor_parallel": gen.TENSOR_PARALLEL, "shard": args.shard,
-            "gpu_memory_utilization": spec["gpu_memory_utilization"],
+            "gpu_memory_utilization": memory_fraction, "vllm_args": spec.get("vllm_args", {}),
+            "mps_pipe_directory": os.environ.get("CUDA_MPS_PIPE_DIRECTORY"),
             "started": time.strftime("%Y-%m-%dT%H:%M:%S%z")}
     (parts / f"meta_shard{shard[0]}of{shard[1]}_{int(time.time())}.json").write_text(json.dumps(meta, indent=2))
     print(f"{args.model}: shard {args.shard} of {len(requests)} requests, TP {gen.TENSOR_PARALLEL} -> {out.name}",
@@ -412,8 +416,9 @@ def main() -> None:
     from transformers import AutoTokenizer
     tokenizer = AutoTokenizer.from_pretrained(cfg.model_dir(args.model))
     gen.check_family_tokens(tokenizer, family)
-    llm = gen.load_llm(cfg.model_dir(args.model), spec["gpu_memory_utilization"], cfg.VLLM_MAX_MODEL_LEN,
-                       {"scheduling_policy": "priority"})
+    llm = gen.load_llm(cfg.model_dir(args.model), memory_fraction, cfg.VLLM_MAX_MODEL_LEN,
+                       {"scheduling_policy": "priority", **spec.get("vllm_args", {})})
+    print("engine loaded", flush=True)  # the exp09 scheduler starts a GPU's second engine after this line
     started = time.time()
     run_shard(llm, tokenizer, family, requests, items, sampling, cfg.VLLM_MAX_MODEL_LEN, parts, shard, args.model)
     (parts / f"timing_shard{shard[0]}of{shard[1]}_{int(started)}.json").write_text(json.dumps(

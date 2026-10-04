@@ -106,6 +106,13 @@ EXTRA_SUBJECTS = {
                             "family": "qwen3.6", "gpu_memory_utilization": 0.90},
     "GLM-4.7-Flash": {"repo": "zai-org/GLM-4.7-Flash", "revision": "7dd20894a642a0aa287e9827cb1a1f7f91386b67",
                       "family": "glm4.7", "gpu_memory_utilization": 0.90},
+    # exp09 (results/exp09_final_test/manifest.json): two models share a GPU, so the bf16 checkpoints above are loaded
+    # with vLLM's online FP8 weight quantization (no published FP8 checkpoint of either). vllm_args are extra engine
+    # arguments; they are part of the spec, so these outputs never share a cache key with the bf16 ones.
+    "GLM-4.7-Flash-FP8": {"repo": "zai-org/GLM-4.7-Flash", "revision": "7dd20894a642a0aa287e9827cb1a1f7f91386b67",
+                          "family": "glm4.7", "gpu_memory_utilization": 0.90, "vllm_args": {"quantization": "fp8"}},
+    "Gemma-4-12B-FP8": {"repo": "google/gemma-4-12B-it", "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+                        "family": "gemma4", "gpu_memory_utilization": 0.90, "vllm_args": {"quantization": "fp8"}},
 }
 ALL_MODELS = {**SUBJECTS, **PRECISION_CHECK_MODEL, **EXTRA_SUBJECTS}
 GATE_MODELS = ["Qwen3-8B", "Qwen3-32B"]

@@ -1,0 +1,7 @@
+2026-10-04T18:57:04Z start gpu0.lane0.0_GLM-4.7-Flash-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_smoke_fp8_seq/gpu0.lane0.0_GLM-4.7-Flash-FP8.log
+2026-10-04T18:59:34Z loaded gpu0.lane0.0_GLM-4.7-Flash-FP8 after 2.5 min
+2026-10-04T19:00:04Z done gpu0.lane0.0_GLM-4.7-Flash-FP8 after 3.0 min
+2026-10-04T19:00:04Z start gpu0.lane0.1_Gemma-4-12B-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_smoke_fp8_seq/gpu0.lane0.1_Gemma-4-12B-FP8.log
+2026-10-04T19:03:04Z loaded gpu0.lane0.1_Gemma-4-12B-FP8 after 3.0 min
+2026-10-04T19:03:35Z done gpu0.lane0.1_Gemma-4-12B-FP8 after 3.5 min
+2026-10-04T19:04:05Z plan smoke_fp8_seq finished in 0.12 h; failed: none

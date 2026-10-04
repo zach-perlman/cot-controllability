@@ -1,0 +1,32 @@
+{
+  "model": "Gemma-4-31B-FP8",
+  "rules": {
+    "lowercase_thinking": {
+      "usable_examples": 27,
+      "A_examples_on": 12
+    },
+    "uppercase_thinking": {
+      "usable_examples": 27,
+      "A_examples_on": 12
+    },
+    "meow_between_words": {
+      "usable_examples": 27,
+      "A_examples_on": 12
+    },
+    "end_of_sentence": {
+      "usable_examples": 27,
+      "A_examples_on": 12
+    },
+    "word_suppression": {
+      "usable_examples": 27,
+      "A_examples_on": 12
+    }
+  },
+  "cells": {
+    "A|commitment|on": 800,
+    "A|compliant|on": 800,
+    "A|noncompliant|on": 640,
+    "A|none|on": 800,
+    "no_rule|compliant|on": 800
+  }
+}

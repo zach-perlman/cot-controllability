@@ -1,0 +1,81 @@
+{
+  "model": "Qwen3-32B",
+  "example_source": "Qwen3-32B",
+  "rules": {
+    "lowercase_thinking": {
+      "usable_examples": 22,
+      "A_examples": 12
+    },
+    "uppercase_thinking": {
+      "usable_examples": 22,
+      "A_examples": 12
+    },
+    "meow_between_words": {
+      "usable_examples": 22,
+      "A_examples": 12
+    },
+    "end_of_sentence": {
+      "usable_examples": 22,
+      "A_examples": 12
+    },
+    "word_suppression": {
+      "usable_examples": 22,
+      "A_examples": 12
+    },
+    "alternating_case": {
+      "usable_examples": 22,
+      "A_examples": 12
+    },
+    "multiple_word_suppression": {
+      "usable_examples": 22,
+      "A_examples": 8
+    },
+    "no_digits": {
+      "usable_examples": 22,
+      "A_examples": 12
+    },
+    "no_first_person": {
+      "usable_examples": 22,
+      "A_examples": 12
+    },
+    "no_commas": {
+      "usable_examples": 22,
+      "A_examples": 12
+    },
+    "now_sentence_start": {
+      "usable_examples": 22,
+      "A_examples": 12
+    },
+    "no_question_words": {
+      "usable_examples": 22,
+      "A_examples": 12
+    }
+  },
+  "cells": {
+    "full|A": {
+      "rows": 240,
+      "prompt_tokens": 3267852,
+      "longest_prompt": 19573
+    },
+    "full|baseline": {
+      "rows": 240,
+      "prompt_tokens": 87012,
+      "longest_prompt": 5761
+    },
+    "full|no_rule": {
+      "rows": 120,
+      "prompt_tokens": 37266,
+      "longest_prompt": 5704
+    },
+    "short|A": {
+      "rows": 1440,
+      "prompt_tokens": 24446158,
+      "longest_prompt": 34638
+    },
+    "short|baseline": {
+      "rows": 1440,
+      "prompt_tokens": 556155,
+      "longest_prompt": 5816
+    }
+  }
+}

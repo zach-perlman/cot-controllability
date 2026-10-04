@@ -1,0 +1,19 @@
+2026-10-04T05:05:44Z waiting for h200_exp08.sh (pid 61966)
+2026-10-04T08:35:45Z Qwen3.8-27B-FP8 exp06rules (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp08/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp08/generations/Qwen3.8-27B-FP8__card__stream_abort_exp06rules_Qwen3.8-27B-FP8__133299314f9d.jsonl
+2026-10-04T09:13:26Z Qwen3.8-27B-FP8 graded
+2026-10-04T09:13:26Z Gemma-4-31B-FP8 exp06rules (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp08/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp08/generations/Gemma-4-31B-FP8__card__stream_abort_exp06rules_Gemma-4-31B-FP8__1a42b2cb34cd.jsonl
+2026-10-04T10:02:06Z Gemma-4-31B-FP8 graded
+2026-10-04T10:02:06Z Qwen3.6-27B-FP8 exp06rules (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp08/generate_Qwen3.6-27B-FP8.shard0of1.log
+wrote ../cache/exp08/generations/Qwen3.6-27B-FP8__card__stream_abort_exp06rules_Qwen3.6-27B-FP8__20c445f5f43f.jsonl
+2026-10-04T10:42:22Z Qwen3.6-27B-FP8 graded
+2026-10-04T10:42:22Z Qwen3-32B exp06rules (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp08/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp08/generations/Qwen3-32B__card__stream_abort_exp06rules_Qwen3-32B__fb176cb9132f.jsonl
+2026-10-04T11:20:52Z Qwen3-32B graded
+2026-10-04T11:21:00Z analysis written (results/exp08_openings_channels/analysis/v2)
+2026-10-04T11:21:00Z done

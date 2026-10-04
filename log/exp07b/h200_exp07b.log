@@ -1,0 +1,26 @@
+2026-10-03T18:22:55Z Qwen3.8-27B-FP8 prep (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07b/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp07b/generations/Qwen3.8-27B-FP8__card__stream_abort_prep_Qwen3.8-27B-FP8__3260955126bf.jsonl
+2026-10-03T18:29:44Z Qwen3.8-27B-FP8 main (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07b/generate_Qwen3.8-27B-FP8.shard0of1.log
+wrote ../cache/exp07b/generations/Qwen3.8-27B-FP8__card__stream_abort_main_Qwen3.8-27B-FP8__646b7eb6976f.jsonl
+2026-10-03T19:40:40Z Qwen3.8-27B-FP8 graded
+2026-10-03T19:40:42Z Gemma-4-31B-FP8 prep (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07b/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp07b/generations/Gemma-4-31B-FP8__card__stream_abort_prep_Gemma-4-31B-FP8__b5ee71b39b8e.jsonl
+2026-10-03T19:49:01Z Gemma-4-31B-FP8 main (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07b/generate_Gemma-4-31B-FP8.shard0of1.log
+wrote ../cache/exp07b/generations/Gemma-4-31B-FP8__card__stream_abort_main_Gemma-4-31B-FP8__a6ac24d3112d.jsonl
+2026-10-03T21:28:48Z Gemma-4-31B-FP8 graded
+2026-10-03T21:28:48Z Qwen3-32B prepass (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07b/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp07b/generations/Qwen3-32B__card__stream_abort_prepass_Qwen3-32B__5766fe596b85.jsonl
+2026-10-03T21:37:03Z Qwen3-32B prep (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07b/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp07b/generations/Qwen3-32B__card__stream_abort_prep_Qwen3-32B__a69db413295f.jsonl
+2026-10-03T21:41:36Z Qwen3-32B main (attempt 1)
+shard 0/1: GPUs 0 -> ../log/exp07b/generate_Qwen3-32B.shard0of1.log
+wrote ../cache/exp07b/generations/Qwen3-32B__card__stream_abort_main_Qwen3-32B__4d689b2f9eaf.jsonl
+2026-10-03T22:33:35Z Qwen3-32B graded
+2026-10-03T22:33:41Z analysis written (results/exp07b_prompt_compare/analysis/v1)
+2026-10-03T22:33:41Z done

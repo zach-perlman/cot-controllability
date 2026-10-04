@@ -1,0 +1,1470 @@
+{
+ "exp_id": "exp08_openings_channels",
+ "run": "v1",
+ "models": [
+  "Qwen3.8-27B-FP8",
+  "Gemma-4-31B-FP8",
+  "Qwen3.6-27B-FP8",
+  "Qwen3-32B"
+ ],
+ "missing": [],
+ "n_boot": 2000,
+ "boot_seed": 20261002,
+ "contrasts": {
+  "O1 compliant opening - none (A)": {
+   "value": -0.9170864467380075,
+   "ci": [
+    -3.9142057926757006,
+    2.2914142216356206
+   ],
+   "p_two_sided": 0.62,
+   "n_cells": 8,
+   "metric": "S_1000",
+   "a": "A|compliant|on",
+   "b": "A|none|on",
+   "primary": true,
+   "family": "primary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 0.05534665265561056,
+     "ci": [
+      -4.941771064617786,
+      4.531487451268966
+     ],
+     "p_two_sided": 0.972,
+     "n_cells": 2
+    },
+    "Gemma-4-31B-FP8": {
+     "value": -0.6704681990262253,
+     "ci": [
+      -8.813304832303782,
+      7.502903308872692
+     ],
+     "p_two_sided": 0.873,
+     "n_cells": 2
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": -1.8305123167252402,
+     "ci": [
+      -3.9698148825400663,
+      1.9006994141840803
+     ],
+     "p_two_sided": 0.357,
+     "n_cells": 2
+    },
+    "Qwen3-32B": {
+     "value": -1.2227119238561754,
+     "ci": [
+      -8.821273784723395,
+      6.286097660189568
+     ],
+     "p_two_sided": 0.809,
+     "n_cells": 2
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 3.5842840466453785,
+     "ci": [
+      1.0941198283064884,
+      5.8616368937948575
+     ],
+     "p_two_sided": 0.001,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": -5.418456940121393,
+     "ci": [
+      -10.851484313133415,
+      0.38362427379161657
+     ],
+     "p_two_sided": 0.072,
+     "n_cells": 4
+    }
+   },
+   "p_holm": 0.828
+  },
+  "O3 commitment - compliant opening (A)": {
+   "value": 1.4550557340812313,
+   "ci": [
+    -1.7573282495172737,
+    4.434496509091078
+   ],
+   "p_two_sided": 0.414,
+   "n_cells": 8,
+   "metric": "S_1000",
+   "a": "A|commitment|on",
+   "b": "A|compliant|on",
+   "primary": true,
+   "family": "primary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 2.2240630130556145,
+     "ci": [
+      -1.8658870468045505,
+      6.514871132988643
+     ],
+     "p_two_sided": 0.275,
+     "n_cells": 2
+    },
+    "Gemma-4-31B-FP8": {
+     "value": -7.725013980080408,
+     "ci": [
+      -16.567341934568216,
+      1.265476805620399
+     ],
+     "p_two_sided": 0.091,
+     "n_cells": 2
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": 1.7197645189222683,
+     "ci": [
+      -2.705303290286908,
+      4.375281149646742
+     ],
+     "p_two_sided": 0.512,
+     "n_cells": 2
+    },
+    "Qwen3-32B": {
+     "value": 9.60140938442745,
+     "ci": [
+      2.3031971577332366,
+      17.49093790315155
+     ],
+     "p_two_sided": 0.012,
+     "n_cells": 2
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": -3.234173880245805,
+     "ci": [
+      -5.820483395848598,
+      -0.534507124283018
+     ],
+     "p_two_sided": 0.012,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": 6.144285348408268,
+     "ci": [
+      -0.18014052918729984,
+      11.847658954931019
+     ],
+     "p_two_sided": 0.057,
+     "n_cells": 4
+    }
+   },
+   "p_holm": 0.828
+  },
+  "C2 thinking off - on (A)": {
+   "value": 4.701208278374819,
+   "ci": [
+    2.5714973240753176,
+    6.824536956798596
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 12,
+   "metric": "S_200",
+   "a": "A|none|off",
+   "b": "A|none|on",
+   "primary": true,
+   "family": "primary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 3.65325827512367,
+     "ci": [
+      -0.3616764341815419,
+      7.738080236239224
+     ],
+     "p_two_sided": 0.075,
+     "n_cells": 3
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 8.925725390807429,
+     "ci": [
+      5.4948440578260564,
+      12.47382901772009
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": -12.904807236968983,
+     "ci": [
+      -18.371900220673616,
+      -7.804244309217869
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Qwen3-32B": {
+     "value": 19.130656684537158,
+     "ci": [
+      15.16123071161624,
+      22.95960252219466
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 5.326336959820247,
+     "ci": [
+      1.530965327138808,
+      9.099448992957015
+     ],
+     "p_two_sided": 0.004,
+     "n_cells": 4
+    },
+    "no_digits": {
+     "value": -0.733131765924913,
+     "ci": [
+      -4.01846252745072,
+      2.7052755013358043
+     ],
+     "p_two_sided": 0.65,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": 9.510419641229124,
+     "ci": [
+      5.459923831546931,
+      13.525244063098002
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   },
+   "p_holm": 0.0
+  },
+  "ACC1 A - no rule (accuracy)": {
+   "value": -6.666666666666669,
+   "ci": [
+    -13.195199275362318,
+    -0.7352941176470598
+   ],
+   "p_two_sided": 0.022,
+   "n_cells": 12,
+   "metric": "accuracy",
+   "a": "A|none|full",
+   "b": "no_rule|none|full",
+   "primary": true,
+   "family": "primary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": -8.333333333333336,
+     "ci": [
+      -18.10262725779967,
+      0.0
+     ],
+     "p_two_sided": 0.051,
+     "n_cells": 3
+    },
+    "Gemma-4-31B-FP8": {
+     "value": -10.0,
+     "ci": [
+      -21.62455934195065,
+      0.7411616161616136
+     ],
+     "p_two_sided": 0.07,
+     "n_cells": 3
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": -8.333333333333337,
+     "ci": [
+      -21.56862745098039,
+      3.921568627450976
+     ],
+     "p_two_sided": 0.205,
+     "n_cells": 3
+    },
+    "Qwen3-32B": {
+     "value": 0.0,
+     "ci": [
+      -9.090909090909092,
+      10.260416666666645
+     ],
+     "p_two_sided": 1.0,
+     "n_cells": 3
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": -10.000000000000002,
+     "ci": [
+      -17.94871794871795,
+      -2.856737012987012
+     ],
+     "p_two_sided": 0.004,
+     "n_cells": 4
+    },
+    "no_digits": {
+     "value": -4.3750000000000036,
+     "ci": [
+      -10.812279670975325,
+      1.4741461100569067
+     ],
+     "p_two_sided": 0.165,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": -5.625,
+     "ci": [
+      -12.5,
+      0.7148109243697451
+     ],
+     "p_two_sided": 0.095,
+     "n_cells": 4
+    }
+   },
+   "p_holm": 0.066
+  },
+  "O2 rule + opening - opening only": {
+   "value": 14.846531173164067,
+   "ci": [
+    12.472990370721238,
+    17.40276887986194
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 8,
+   "metric": "S_1000",
+   "a": "A|compliant|on",
+   "b": "no_rule|compliant|on",
+   "primary": false,
+   "family": "secondary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 5.895240783883457,
+     "ci": [
+      2.876053750528353,
+      9.01562105773288
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 2
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 28.31831274905293,
+     "ci": [
+      21.683301598921208,
+      34.954854999007786
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 2
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": 0.15625000000000094,
+     "ci": [
+      -0.6250000000000003,
+      3.4483390879666582
+     ],
+     "p_two_sided": 0.603,
+     "n_cells": 2
+    },
+    "Qwen3-32B": {
+     "value": 25.01632115971988,
+     "ci": [
+      18.200725208246887,
+      30.733251156327395
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 2
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 8.005826180627036,
+     "ci": [
+      6.170850985181223,
+      9.99067333893482
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": 21.6872361657011,
+     "ci": [
+      17.5211340909925,
+      26.10798711379024
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   }
+  },
+  "O4 non-compliant opening - none (A)": {
+   "value": -10.466080578455873,
+   "ci": [
+    -13.53801746310309,
+    -7.394478844582616
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 8,
+   "metric": "S_1000",
+   "a": "A|noncompliant|on",
+   "b": "A|none|on",
+   "primary": false,
+   "family": "secondary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": -2.4738622295699217,
+     "ci": [
+      -7.4045896700233484,
+      1.9238238877716074
+     ],
+     "p_two_sided": 0.282,
+     "n_cells": 2
+    },
+    "Gemma-4-31B-FP8": {
+     "value": -21.81863493968272,
+     "ci": [
+      -30.184886032934603,
+      -13.368250449327833
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 2
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": -1.2910318640503438,
+     "ci": [
+      -4.16725943460551,
+      1.172587316176466
+     ],
+     "p_two_sided": 0.327,
+     "n_cells": 2
+    },
+    "Qwen3-32B": {
+     "value": -16.280793280520513,
+     "ci": [
+      -22.01792422084993,
+      -10.578136759061069
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 2
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": -3.7965421339816565,
+     "ci": [
+      -5.776663081832074,
+      -2.0668332346310625
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": -17.135619022930094,
+     "ci": [
+      -22.73222605998033,
+      -11.419872398916391
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   }
+  },
+  "C1 thinking off - on (CoT-Control prompt)": {
+   "value": 23.67093007682252,
+   "ci": [
+    21.49802586619544,
+    25.921765539548396
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 16,
+   "metric": "S_200",
+   "a": "baseline|none|off",
+   "b": "baseline|none|on",
+   "primary": false,
+   "family": "secondary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 17.163543461133663,
+     "ci": [
+      13.506645936623956,
+      20.88803041846935
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 33.604177083591935,
+     "ci": [
+      29.799493515824324,
+      37.54490153679269
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": 15.951344529108592,
+     "ci": [
+      11.672164625264474,
+      19.990073142129365
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "Qwen3-32B": {
+     "value": 27.964655233455886,
+     "ci": [
+      24.430088967938758,
+      31.42288620596488
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 18.230126221445847,
+     "ci": [
+      15.72527183970725,
+      20.862634695589655
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "multiple_word_suppression": {
+     "value": 20.90302487551717,
+     "ci": [
+      16.874341305191525,
+      25.07559270969539
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_digits": {
+     "value": 30.19599685980203,
+     "ci": [
+      25.31974323108419,
+      34.884398406726646
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": 25.354572350525032,
+     "ci": [
+      21.002229361275287,
+      29.550927896601994
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   }
+  },
+  "C3 A - CoT-Control prompt, thinking on": {
+   "value": 30.485430459641893,
+   "ci": [
+    28.41146203381716,
+    32.39766864684194
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 12,
+   "metric": "S_200",
+   "a": "A|none|on",
+   "b": "baseline|none|on",
+   "primary": false,
+   "family": "secondary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 35.588783617182706,
+     "ci": [
+      31.626436546518732,
+      39.44648285591646
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 36.854406757905764,
+     "ci": [
+      32.456199337482495,
+      41.029663749927316
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": 25.598505015371085,
+     "ci": [
+      20.834630044713812,
+      30.445179418762596
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Qwen3-32B": {
+     "value": 23.900026448108047,
+     "ci": [
+      20.77925268964977,
+      26.855662244470388
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 26.3247282608696,
+     "ci": [
+      23.498471467391308,
+      29.13203125000001
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_digits": {
+     "value": 35.57999358364437,
+     "ci": [
+      32.124336372951056,
+      39.049776580885016
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": 29.551569534411733,
+     "ci": [
+      25.70372310798379,
+      33.32305322934706
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   }
+  },
+  "C4 A - CoT-Control prompt, thinking off": {
+   "value": 10.593073594092415,
+   "ci": [
+    8.300008790051798,
+    13.035261078901533
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 12,
+   "metric": "S_200",
+   "a": "A|none|off",
+   "b": "baseline|none|off",
+   "primary": false,
+   "family": "secondary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 19.069815384486713,
+     "ci": [
+      14.818355890274104,
+      23.526473260668002
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 12.810562790676912,
+     "ci": [
+      9.091921287607649,
+      16.339547627471784
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": -5.528126410743859,
+     "ci": [
+      -10.789702953083083,
+      -0.19185887082277608
+     ],
+     "p_two_sided": 0.042,
+     "n_cells": 3
+    },
+    "Qwen3-32B": {
+     "value": 16.020042611949904,
+     "ci": [
+      11.24976921992892,
+      20.98986970020116
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 13.420938999243997,
+     "ci": [
+      9.7494746318325,
+      17.345556943397842
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_digits": {
+     "value": 4.650864957917429,
+     "ci": [
+      0.5417223257062632,
+      8.694616071515291
+     ],
+     "p_two_sided": 0.022,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": 13.707416825115825,
+     "ci": [
+      9.092844308452031,
+      18.494137318016293
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   }
+  },
+  "ACC2 CoT-Control prompt - no rule (accuracy)": {
+   "value": -2.812499999999999,
+   "ci": [
+    -8.088444184491982,
+    2.23242902930403
+   ],
+   "p_two_sided": 0.283,
+   "n_cells": 16,
+   "metric": "accuracy",
+   "a": "baseline|none|full",
+   "b": "no_rule|none|full",
+   "primary": false,
+   "family": "secondary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": -5.624999999999998,
+     "ci": [
+      -12.500000000000002,
+      1.317616959064323
+     ],
+     "p_two_sided": 0.128,
+     "n_cells": 4
+    },
+    "Gemma-4-31B-FP8": {
+     "value": -3.125,
+     "ci": [
+      -11.540697674418608,
+      3.949490662139206
+     ],
+     "p_two_sided": 0.425,
+     "n_cells": 4
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": -3.1249999999999982,
+     "ci": [
+      -13.571816770186334,
+      7.434121621621611
+     ],
+     "p_two_sided": 0.568,
+     "n_cells": 4
+    },
+    "Qwen3-32B": {
+     "value": 0.625,
+     "ci": [
+      -6.061117936117938,
+      8.333333333333332
+     ],
+     "p_two_sided": 0.887,
+     "n_cells": 4
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": -1.875,
+     "ci": [
+      -6.897749042145594,
+      3.048780487804878
+     ],
+     "p_two_sided": 0.475,
+     "n_cells": 4
+    },
+    "multiple_word_suppression": {
+     "value": -3.125,
+     "ci": [
+      -10.465585146286573,
+      3.90727796052631
+     ],
+     "p_two_sided": 0.408,
+     "n_cells": 4
+    },
+    "no_digits": {
+     "value": -1.875,
+     "ci": [
+      -7.608695652173912,
+      3.5714285714285747
+     ],
+     "p_two_sided": 0.58,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": -4.3749999999999964,
+     "ci": [
+      -9.756097560975611,
+      0.6944444444444446
+     ],
+     "p_two_sided": 0.099,
+     "n_cells": 4
+    }
+   }
+  },
+  "ACC3 A - CoT-Control prompt (accuracy)": {
+   "value": -3.958333333333336,
+   "ci": [
+    -8.080808080808081,
+    -0.2604166666666667
+   ],
+   "p_two_sided": 0.032,
+   "n_cells": 12,
+   "metric": "accuracy",
+   "a": "A|none|full",
+   "b": "baseline|none|full",
+   "primary": false,
+   "family": "secondary",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": -1.6666666666666714,
+     "ci": [
+      -9.304142441860465,
+      5.263157894736838
+     ],
+     "p_two_sided": 0.659,
+     "n_cells": 3
+    },
+    "Gemma-4-31B-FP8": {
+     "value": -7.5,
+     "ci": [
+      -14.285714285714283,
+      -1.8006164058795697
+     ],
+     "p_two_sided": 0.015,
+     "n_cells": 3
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": -5.000000000000007,
+     "ci": [
+      -12.037037037037038,
+      1.667735042735037
+     ],
+     "p_two_sided": 0.19,
+     "n_cells": 3
+    },
+    "Qwen3-32B": {
+     "value": -1.6666666666666667,
+     "ci": [
+      -7.317073170731707,
+      5.984848484848475
+     ],
+     "p_two_sided": 0.676,
+     "n_cells": 3
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": -8.125000000000002,
+     "ci": [
+      -13.79310344827586,
+      -3.0609133897461445
+     ],
+     "p_two_sided": 0.002,
+     "n_cells": 4
+    },
+    "no_digits": {
+     "value": -2.5000000000000036,
+     "ci": [
+      -7.558579985905565,
+      2.206290849673203
+     ],
+     "p_two_sided": 0.342,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": -1.2500000000000036,
+     "ci": [
+      -6.428571428571427,
+      3.6764705882352917
+     ],
+     "p_two_sided": 0.669,
+     "n_cells": 4
+    }
+   }
+  }
+ },
+ "tagged_only": {
+  "C1 thinking off - on (CoT-Control prompt)": {
+   "value": 27.004599011077964,
+   "ci": [
+    24.652768595155024,
+    29.13022738042069
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 16,
+   "metric": "S_200",
+   "a": "baseline|none|off",
+   "b": "baseline|none|on",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 24.737602244243597,
+     "ci": [
+      20.895479745156422,
+      28.46289182944598
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 34.09556580433323,
+     "ci": [
+      30.328203502041433,
+      38.052127225795076
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": 19.184298941686194,
+     "ci": [
+      14.723593117672058,
+      23.405584599479294
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "Qwen3-32B": {
+     "value": 30.000929054048832,
+     "ci": [
+      25.977515178122253,
+      34.09079624725005
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 20.223486755451244,
+     "ci": [
+      17.08384129996735,
+      23.54154077476268
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "multiple_word_suppression": {
+     "value": 22.864221410926078,
+     "ci": [
+      18.72101330006429,
+      27.112938565710575
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_digits": {
+     "value": 36.38624517881627,
+     "ci": [
+      31.32700618805388,
+      41.19437532259332
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": 28.544442699118264,
+     "ci": [
+      24.01777501143435,
+      32.66608057895507
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   }
+  },
+  "C2 thinking off - on (A)": {
+   "value": 9.274416595860899,
+   "ci": [
+    7.076956215084991,
+    11.516015950774472
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 12,
+   "metric": "S_200",
+   "a": "A|none|off",
+   "b": "A|none|on",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 6.837530738027232,
+     "ci": [
+      2.904360070373654,
+      10.938238163958838
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 9.08632132557211,
+     "ci": [
+      5.644897237753749,
+      12.635105347803755
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": 1.1768056121984831,
+     "ci": [
+      -4.870072889719536,
+      6.752669280774181
+     ],
+     "p_two_sided": 0.706,
+     "n_cells": 3
+    },
+    "Qwen3-32B": {
+     "value": 19.997008707645772,
+     "ci": [
+      16.006222673750255,
+      23.878930696747997
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 6.653395277111099,
+     "ci": [
+      2.7155124246254183,
+      10.541648260047209
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_digits": {
+     "value": 4.55201390001441,
+     "ci": [
+      1.11132735586358,
+      8.054190182654661
+     ],
+     "p_two_sided": 0.013,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": 16.617840610457186,
+     "ci": [
+      12.802480613291136,
+      20.586983132741736
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   }
+  },
+  "C4 A - CoT-Control prompt, thinking off": {
+   "value": 11.375122177707539,
+   "ci": [
+    8.949568919162322,
+    13.885663087619424
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 12,
+   "metric": "S_200",
+   "a": "A|none|off",
+   "b": "baseline|none|off",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 13.84817560654409,
+     "ci": [
+      9.036449531493329,
+      18.735706320685072
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 12.584467436437413,
+     "ci": [
+      8.902767027894319,
+      16.110992069598257
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": 4.6523636893021525,
+     "ci": [
+      -0.9491992185525575,
+      10.400746869979479
+     ],
+     "p_two_sided": 0.097,
+     "n_cells": 3
+    },
+    "Qwen3-32B": {
+     "value": 14.415481978546504,
+     "ci": [
+      9.019300893855908,
+      19.957097091060838
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 12.754636782529452,
+     "ci": [
+      8.144876607157936,
+      17.226647841105862
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "no_digits": {
+     "value": 3.7457623048425113,
+     "ci": [
+      -0.5701748754367876,
+      8.238569009585843
+     ],
+     "p_two_sided": 0.092,
+     "n_cells": 4
+    },
+    "no_first_person": {
+     "value": 17.624967445750656,
+     "ci": [
+      13.099909832762597,
+      22.40962454377787
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    }
+   }
+  }
+ },
+ "a_vs_upgraded": {
+  "A - upgraded (exp07 test rows), S_200": {
+   "value": 4.072471821143787,
+   "ci": [
+    1.9517102303570295,
+    6.028581102698258
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 12,
+   "metric": "S_200",
+   "a": "A|none|on",
+   "b": "upgraded|none|on",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 9.28138032732172,
+     "ci": [
+      5.714486246347096,
+      12.749120425403248
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 4
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 1.845195025897148,
+     "ci": [
+      -2.172654635218833,
+      5.453123617946853
+     ],
+     "p_two_sided": 0.38,
+     "n_cells": 4
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": 1.0908401102124938,
+     "ci": [
+      -2.937127101171189,
+      5.089433656514223
+     ],
+     "p_two_sided": 0.584,
+     "n_cells": 4
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 1.8808876811594126,
+     "ci": [
+      -3.3333333333333255,
+      6.87499999999999
+     ],
+     "p_two_sided": 0.491,
+     "n_cells": 3
+    },
+    "multiple_word_suppression": {
+     "value": 1.798290419435616,
+     "ci": [
+      -1.515470388794419,
+      5.201318889751479
+     ],
+     "p_two_sided": 0.302,
+     "n_cells": 3
+    },
+    "no_digits": {
+     "value": 8.23685274155251,
+     "ci": [
+      4.247753969246853,
+      12.404854225065725
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 3
+    },
+    "no_first_person": {
+     "value": 4.373856442427609,
+     "ci": [
+      -0.6903483806501185,
+      9.349017641274019
+     ],
+     "p_two_sided": 0.1,
+     "n_cells": 3
+    }
+   }
+  },
+  "A - upgraded (exp07 test rows), S_1000": {
+   "value": 2.7670942142768755,
+   "ci": [
+    0.49200447521832885,
+    5.0627385659367
+   ],
+   "p_two_sided": 0.016,
+   "n_cells": 12,
+   "metric": "S_1000",
+   "a": "A|none|on",
+   "b": "upgraded|none|on",
+   "per_model": {
+    "Qwen3.8-27B-FP8": {
+     "value": 4.242174441475575,
+     "ci": [
+      0.809306416105125,
+      7.9135400925910995
+     ],
+     "p_two_sided": 0.018,
+     "n_cells": 4
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 6.464616806528543,
+     "ci": [
+      0.9676852896333771,
+      11.563219559826218
+     ],
+     "p_two_sided": 0.019,
+     "n_cells": 4
+    },
+    "Qwen3.6-27B-FP8": {
+     "value": -2.4055086051734906,
+     "ci": [
+      -5.160708067962173,
+      0.3668469562628724
+     ],
+     "p_two_sided": 0.083,
+     "n_cells": 4
+    }
+   },
+   "per_rule": {
+    "alternating_case": {
+     "value": 0.7050412832182404,
+     "ci": [
+      -2.163537144431407,
+      3.992344001527396
+     ],
+     "p_two_sided": 0.616,
+     "n_cells": 3
+    },
+    "multiple_word_suppression": {
+     "value": 3.9826113254575994,
+     "ci": [
+      1.2683743901435534,
+      6.933719546857676
+     ],
+     "p_two_sided": 0.003,
+     "n_cells": 3
+    },
+    "no_digits": {
+     "value": 4.253543584822583,
+     "ci": [
+      -0.6907730752385178,
+      9.363647228679051
+     ],
+     "p_two_sided": 0.108,
+     "n_cells": 3
+    },
+    "no_first_person": {
+     "value": 2.1271806636090798,
+     "ci": [
+      -4.347631080646728,
+      8.698816915574103
+     ],
+     "p_two_sided": 0.537,
+     "n_cells": 3
+    }
+   }
+  }
+ },
+ "descriptives": [
+  {
+   "rules": "held-out rules",
+   "cell": "A|commitment|on",
+   "n": 1280,
+   "empty": 0.0,
+   "degenerate": 0.2,
+   "meta_regex": 6.1,
+   "ended_clean_early": 2.0,
+   "tokens_p25": 192,
+   "tokens_median": 364,
+   "tokens_p75": 762,
+   "truncated": NaN,
+   "compliant_full_trace": NaN,
+   "no_tag_block": NaN
+  },
+  {
+   "rules": "held-out rules",
+   "cell": "A|compliant|on",
+   "n": 1280,
+   "empty": 0.0,
+   "degenerate": 0.2,
+   "meta_regex": 6.3,
+   "ended_clean_early": 0.8,
+   "tokens_p25": 224,
+   "tokens_median": 444,
+   "tokens_p75": 928,
+   "truncated": NaN,
+   "compliant_full_trace": NaN,
+   "no_tag_block": NaN
+  },
+  {
+   "rules": "held-out rules",
+   "cell": "A|noncompliant|on",
+   "n": 1280,
+   "empty": 0.0,
+   "degenerate": 0.1,
+   "meta_regex": 7.7,
+   "ended_clean_early": 0.3,
+   "tokens_p25": 64,
+   "tokens_median": 206,
+   "tokens_p75": 800,
+   "truncated": NaN,
+   "compliant_full_trace": NaN,
+   "no_tag_block": NaN
+  },
+  {
+   "rules": "held-out rules",
+   "cell": "A|none|full",
+   "n": 480,
+   "empty": 0.0,
+   "degenerate": 0.0,
+   "meta_regex": 23.1,
+   "ended_clean_early": 1.0,
+   "tokens_p25": 520,
+   "tokens_median": 946,
+   "tokens_p75": 2079,
+   "truncated": 4.2,
+   "compliant_full_trace": 31.5,
+   "no_tag_block": NaN
+  },
+  {
+   "rules": "held-out rules",
+   "cell": "A|none|off",
+   "n": 1920,
+   "empty": 8.4,
+   "degenerate": 8.4,
+   "meta_regex": 4.4,
+   "ended_clean_early": 12.3,
+   "tokens_p25": 221,
+   "tokens_median": 429,
+   "tokens_p75": 861,
+   "truncated": NaN,
+   "compliant_full_trace": NaN,
+   "no_tag_block": 8.4
+  },
+  {
+   "rules": "held-out rules",
+   "cell": "A|none|on",
+   "n": 2560,
+   "empty": 0.0,
+   "degenerate": 0.2,
+   "meta_regex": 24.2,
+   "ended_clean_early": 1.8,
+   "tokens_p25": 160,
+   "tokens_median": 365,
+   "tokens_p75": 925,
+   "truncated": NaN,
+   "compliant_full_trace": NaN,
+   "no_tag_block": NaN
+  },
+  {
+   "rules": "held-out rules",
+   "cell": "baseline|none|full",
+   "n": 640,
+   "empty": 0.0,
+   "degenerate": 0.0,
+   "meta_regex": 45.5,
+   "ended_clean_early": 0.0,
+   "tokens_p25": 932,
+   "tokens_median": 2220,
+   "tokens_p75": 5419,
+   "truncated": 5.6,
+   "compliant_full_trace": 6.1,
+   "no_tag_block": NaN
+  },
+  {
+   "rules": "held-out rules",
+   "cell": "baseline|none|off",
+   "n": 2560,
+   "empty": 12.9,
+   "degenerate": 13.7,
+   "meta_regex": 3.5,
+   "ended_clean_early": 18.0,
+   "tokens_p25": 130,
+   "tokens_median": 307,
+   "tokens_p75": 688,
+   "truncated": NaN,
+   "compliant_full_trace": NaN,
+   "no_tag_block": 12.9
+  },
+  {
+   "rules": "held-out rules",
+   "cell": "baseline|none|on",
+   "n": 2560,
+   "empty": 0.0,
+   "degenerate": 0.4,
+   "meta_regex": 19.3,
+   "ended_clean_early": 0.0,
+   "tokens_p25": 64,
+   "tokens_median": 363,
+   "tokens_p75": 1200,
+   "truncated": NaN,
+   "compliant_full_trace": NaN,
+   "no_tag_block": NaN
+  },
+  {
+   "rules": "held-out rules",
+   "cell": "no_rule|compliant|on",
+   "n": 1280,
+   "empty": 0.0,
+   "degenerate": 1.0,
+   "meta_regex": 2.9,
+   "ended_clean_early": 0.0,
+   "tokens_p25": 96,
+   "tokens_median": 369,
+   "tokens_p75": 1200,
+   "truncated": NaN,
+   "compliant_full_trace": NaN,
+   "no_tag_block": NaN
+  },
+  {
+   "rules": "held-out rules",
+   "cell": "no_rule|none|full",
+   "n": 160,
+   "empty": 0.0,
+   "degenerate": 0.0,
+   "meta_regex": 22.5,
+   "ended_clean_early": 0.0,
+   "tokens_p25": 852,
+   "tokens_median": 2239,
+   "tokens_p75": 6177,
+   "truncated": 10.0,
+   "compliant_full_trace": NaN,
+   "no_tag_block": NaN
+  }
+ ],
+ "figures": [
+  "X1_contrasts"
+ ]
+}
