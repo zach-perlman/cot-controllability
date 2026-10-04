@@ -1,0 +1,31 @@
+{
+ "model": "Qwen3.8-27B-FP8",
+ "rows": {
+  "nec": 600,
+  "exonly": 1440,
+  "offopen": 3240
+ },
+ "cells": {
+  "nec": {},
+  "exonly": {
+   "examples_only|none|on": 1440
+  },
+  "offopen": {
+   "A|commitment|off": 840,
+   "A|compliant|off": 840,
+   "A|noncompliant|off": 720,
+   "no_rule|compliant|off": 840
+  }
+ },
+ "checks": {
+  "longest_prompt": {
+   "exonly": 18151,
+   "offopen": 24202,
+   "nec": 5774
+  }
+ }
+}
+wrote 600 requests to /workspace/cot-controllability/cache/exp09/requests_nec_Qwen3.8-27B-FP8.jsonl
+wrote 1440 requests to /workspace/cot-controllability/cache/exp09/requests_exonly_Qwen3.8-27B-FP8.jsonl
+wrote 3240 requests to /workspace/cot-controllability/cache/exp09/requests_offopen_Qwen3.8-27B-FP8.jsonl
+wrote ['/workspace/cot-controllability/cache/exp09/requests_nec_Qwen3.8-27B-FP8.jsonl', '/workspace/cot-controllability/cache/exp09/requests_exonly_Qwen3.8-27B-FP8.jsonl', '/workspace/cot-controllability/cache/exp09/requests_offopen_Qwen3.8-27B-FP8.jsonl']

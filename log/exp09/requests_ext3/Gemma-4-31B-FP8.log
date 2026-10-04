@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext3.py", line 204, in <module>
+    main()
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext3.py", line 194, in main
+    parts, record = model_rows(args.model)
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext3.py", line 123, in model_rows
+    "checks": check_rows(tokenizer, model, parts)}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext3.py", line 138, in check_rows
+    raise RuntimeError(f"{model} {name} {r['mode']} {r['item_id']}: prompt of {n} tokens does not fit")
+RuntimeError: Gemma-4-31B-FP8 offopen no_first_person HLE:128: prompt of 24327 tokens does not fit

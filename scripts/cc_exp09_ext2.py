@@ -266,31 +266,32 @@ def check_rows(tokenizer, model: str, rows: list[dict], exp09_a: dict) -> dict:
 
 
 # --- Paths, plan and grading ----------------------------------------------------------------------------------------
-def requests_path(model: str) -> Path:
-    return e9.EXP.cache / f"requests_{STEM}_{model}.jsonl"
+def requests_path(model: str, stem: str = STEM) -> Path:
+    return e9.EXP.cache / f"requests_{stem}_{model}.jsonl"
 
 
-def generation_path(model: str) -> Path:
-    paths = glob.glob(str(e9.EXP.generations / f"{model}__card__stream_abort_{STEM}_{model}__*.jsonl"))
+def generation_path(model: str, stem: str = STEM) -> Path:
+    paths = glob.glob(str(e9.EXP.generations / f"{model}__card__stream_abort_{stem}_{model}__*.jsonl"))
     if len(paths) != 1:
-        raise SystemExit(f"{model}: expected one extension-2 generation file, found {len(paths)}")
+        raise SystemExit(f"{model}: expected one {stem} generation file, found {len(paths)}")
     return Path(paths[0])
 
 
-def grades_path(model: str) -> Path:
-    return e9.EXP.grades / generation_path(model).name
+def grades_path(model: str, stem: str = STEM) -> Path:
+    return e9.EXP.grades / generation_path(model, stem).name
 
 
-def grade(model: str) -> Path:
+def grade(model: str, stem: str = STEM) -> Path:
     """exp08's grading (cc_exp07.grade_generations) for exp07's rules and the no-rule rows; exp09's for its new rules
-    (cc_grade's flags, compliance and the first violation from exp09_rules' locator), as cc_exp09.grade."""
+    (cc_grade's flags, compliance and the first violation from exp09_rules' locator), as cc_exp09.grade. stem: the
+    request file (cc_exp09_ext3's parts are graded the same way)."""
     import cc_grade
     from transformers import AutoTokenizer
-    out = grades_path(model)
+    out = grades_path(model, stem)
     if out.exists():
         return out
-    requests = {r["request_id"]: r for r in map(json.loads, requests_path(model).open())}
-    gens = [json.loads(line) for line in generation_path(model).open()]
+    requests = {r["request_id"]: r for r in map(json.loads, requests_path(model, stem).open())}
+    gens = [json.loads(line) for line in generation_path(model, stem).open()]
     by_id = {it["item_id"]: it for it in e9.items()}
     graded = {r["request_id"]: r for r in e7.grade_generations(
         [g for g in gens if g["mode"] not in R.NEW_RULES], requests, by_id, model)}

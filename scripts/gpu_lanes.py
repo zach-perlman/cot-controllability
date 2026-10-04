@@ -162,9 +162,14 @@ def load_jobs(plan: dict, log_dir: Path) -> list[Job]:
     return jobs
 
 
+def stops_lane(job: Job) -> bool:
+    """A failed job stops its lane unless its spec has "optional": true."""
+    return job.failed and not job.spec.get("optional", False)
+
+
 def can_start(job: Job, jobs: list[Job]) -> bool:
     earlier = [j for j in jobs if j.gpu == job.gpu and j.lane == job.lane and j.position < job.position]
-    if any(j.finished is None or j.failed for j in earlier):
+    if any(j.finished is None or stops_lane(j) for j in earlier):
         return False
     on_gpu = [j for j in jobs if j.gpu == job.gpu and j.proc is not None and j.finished is None]
     if any(not j.loaded for j in on_gpu):
@@ -200,8 +205,8 @@ def run(plan: dict, plan_path: Path) -> None:
                         finish(job)
                     elif not job.loaded and time.time() - job.started > LOAD_TIMEOUT_SECONDS:
                         raise SystemExit(f"{job.name} did not load within {LOAD_TIMEOUT_SECONDS} s")
-            blocked = [j for j in jobs if j.proc is None and any(
-                e.failed for e in jobs if e.gpu == j.gpu and e.lane == j.lane and e.position < j.position)]
+            blocked = [j for j in jobs if j.proc is None and j.finished is None and any(
+                stops_lane(e) for e in jobs if e.gpu == j.gpu and e.lane == j.lane and e.position < j.position)]
             for job in blocked:  # a lane stops at its first failed job (rerun the plan: finished rows are kept)
                 job.finished, job.failed = time.time(), True
                 stamp(f"skipped {job.name}: an earlier job in its lane failed")

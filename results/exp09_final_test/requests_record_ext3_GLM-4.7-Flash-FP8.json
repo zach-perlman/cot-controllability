@@ -1,0 +1,27 @@
+{
+  "model": "GLM-4.7-Flash-FP8",
+  "rows": {
+    "nec": 600,
+    "exonly": 1440,
+    "offopen": 3240
+  },
+  "cells": {
+    "nec": {},
+    "exonly": {
+      "examples_only|none|on": 1440
+    },
+    "offopen": {
+      "A|commitment|off": 840,
+      "A|compliant|off": 840,
+      "A|noncompliant|off": 720,
+      "no_rule|compliant|off": 840
+    }
+  },
+  "checks": {
+    "longest_prompt": {
+      "exonly": 13872,
+      "offopen": 22634,
+      "nec": 4524
+    }
+  }
+}
