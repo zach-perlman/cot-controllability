@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext3.py", line 292, in <module>
+    main()
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext3.py", line 276, in main
+    print(grade(args.model, args.part))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext3.py", line 173, in grade
+    return x2.grade(model, part)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext2.py", line 378, in grade
+    gens = read_unclosed_blocks([json.loads(line) for line in generation_path(model, stem).open()], requests,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext2.py", line 360, in read_unclosed_blocks
+    text, unclosed = unclosed_block_reasoning(request, g)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext2.py", line 346, in unclosed_block_reasoning
+    raise RuntimeError(f"{request['request_id']}: tag content does not start with the prefill")
+RuntimeError: 668691fae986: tag content does not start with the prefill

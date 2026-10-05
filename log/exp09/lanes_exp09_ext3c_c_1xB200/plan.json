@@ -1,0 +1,248 @@
+{
+  "name": "exp09_ext3c_c_1xB200",
+  "mps": false,
+  "gpus": {
+    "0": [
+      [
+        {
+          "exp": "exp09",
+          "model": "Qwen3.6-27B-FP8",
+          "requests": "cache/exp09/requests_ext2c80_Qwen3.6-27B-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "ext2c80",
+            "--model",
+            "Qwen3.6-27B-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Qwen3.8-27B-FP8",
+          "requests": "cache/exp09/requests_ext2c80_Qwen3.8-27B-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "ext2c80",
+            "--model",
+            "Qwen3.8-27B-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Gemma-4-31B-FP8",
+          "requests": "cache/exp09/requests_ext2c80_Gemma-4-31B-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "ext2c80",
+            "--model",
+            "Gemma-4-31B-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Qwen3-32B",
+          "requests": "cache/exp09/requests_ext2c80_Qwen3-32B.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "ext2c80",
+            "--model",
+            "Qwen3-32B"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Gemma-4-12B-FP8",
+          "requests": "cache/exp09/requests_ext2c80_Gemma-4-12B-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "ext2c80",
+            "--model",
+            "Gemma-4-12B-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Qwen3.6-35B-A3B-FP8",
+          "requests": "cache/exp09/requests_ext2c80_Qwen3.6-35B-A3B-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "ext2c80",
+            "--model",
+            "Qwen3.6-35B-A3B-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "GLM-4.7-Flash-FP8",
+          "requests": "cache/exp09/requests_ext2c80_GLM-4.7-Flash-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "ext2c80",
+            "--model",
+            "GLM-4.7-Flash-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Gemma-4-31B-FP8",
+          "requests": "cache/exp09/requests_offopenc80_Gemma-4-31B-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "offopenc80",
+            "--model",
+            "Gemma-4-31B-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Qwen3-32B",
+          "requests": "cache/exp09/requests_offopenc80_Qwen3-32B.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "offopenc80",
+            "--model",
+            "Qwen3-32B"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Gemma-4-12B-FP8",
+          "requests": "cache/exp09/requests_offopenc80_Gemma-4-12B-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "offopenc80",
+            "--model",
+            "Gemma-4-12B-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Qwen3.6-35B-A3B-FP8",
+          "requests": "cache/exp09/requests_offopenc80_Qwen3.6-35B-A3B-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "offopenc80",
+            "--model",
+            "Qwen3.6-35B-A3B-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "GLM-4.7-Flash-FP8",
+          "requests": "cache/exp09/requests_offopenc80_GLM-4.7-Flash-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "offopenc80",
+            "--model",
+            "GLM-4.7-Flash-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Qwen3.6-27B-FP8",
+          "requests": "cache/exp09/requests_offopenc80_Qwen3.6-27B-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "offopenc80",
+            "--model",
+            "Qwen3.6-27B-FP8"
+          ],
+          "optional": true
+        },
+        {
+          "exp": "exp09",
+          "model": "Qwen3.8-27B-FP8",
+          "requests": "cache/exp09/requests_offopenc80_Qwen3.8-27B-FP8.jsonl",
+          "items": "cache/exp09/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp09_ext3.py",
+            "grade",
+            "--part",
+            "offopenc80",
+            "--model",
+            "Qwen3.8-27B-FP8"
+          ],
+          "optional": true
+        }
+      ]
+    ]
+  }
+}

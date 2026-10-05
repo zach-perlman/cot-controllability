@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext3.py", line 292, in <module>
+    main()
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext3.py", line 276, in main
+    print(grade(args.model, args.part))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext3.py", line 173, in grade
+    return x2.grade(model, part)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cot-controllability/scripts/cc_exp09_ext2.py", line 381, in grade
+    graded = {r["request_id"]: r for r in e7.grade_generations(
+                                          ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cot-controllability/scripts/cc_exp07.py", line 324, in grade_generations
+    raise RuntimeError(f"{model}: first-violation locator disagrees with the grader")
+RuntimeError: Qwen3.6-35B-A3B-FP8: first-violation locator disagrees with the grader

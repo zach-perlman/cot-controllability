@@ -316,7 +316,12 @@ def generation_path(model: str, stem: str = STEM) -> Path:
 
 
 def grades_path(model: str, stem: str = STEM) -> Path:
-    return e9.EXP.grades / generation_path(model, stem).name
+    """Parts with capped thinking-off rows are graded with READER (unclosed-block reader version); reader 1's files,
+    named without a suffix, are kept (deviations.json)."""
+    name = generation_path(model, stem).name
+    if stem in READER_STEMS and READER > 1:
+        name = name.removesuffix(".jsonl") + f"__reader{READER}.jsonl"
+    return e9.EXP.grades / name
 
 
 ANSWER_LINE = re.compile(r"^[ \t]*ANSWER:", re.MULTILINE)
@@ -348,6 +353,45 @@ def unclosed_block_reasoning(request: dict, gen: dict) -> tuple[str, str | None]
     return text, "cap" if gen["answer_finish"] == "length" else "stop"
 
 
+BLOCK_END = re.compile(rf"</{cfg.EXP04_EXTERNAL_TAG}>|</think>")
+
+
+def unclosed_block_reasoning_v2(request: dict, gen: dict) -> tuple[str, str | None]:
+    """Reader 2 (deviations.json): as unclosed_block_reasoning, but every block is read from its opening tag to the
+    next </output_reasoning> or </think>, and an opening tag inside an open block is dropped (the block continues). A
+    block not closed by its own tag is cut at its last ANSWER line. Reader 1 kept only the last opened block when a
+    model re-opened the tag, losing the text before it."""
+    tag = cfg.EXP04_EXTERNAL_TAG
+    open_tag = f"<{tag}>"
+    prefill = request["prefill"] or ""
+    response = f"{open_tag}\n{prefill}{gen['answer']}" if prefill else gen["answer"]
+    opened = response.rfind(open_tag)
+    if opened == -1 or response.rfind(f"</{tag}>") > opened:
+        return gen["reasoning"], None
+    blocks, pos = [], response.find(open_tag)
+    while pos != -1:
+        start = pos + len(open_tag)
+        end = BLOCK_END.search(response, start)
+        content = response[start:end.start() if end else len(response)]
+        if end is None or end.group() == "</think>":  # not closed by its tag: the answer may be inside the block
+            answer_lines = list(ANSWER_LINE.finditer(content))
+            if answer_lines:
+                content = content[:answer_lines[-1].start()]
+        blocks.append(content.replace(open_tag, "\n").strip())
+        pos = response.find(open_tag, end.end()) if end else -1
+    text = "\n\n".join(b for b in blocks if b)
+    if prefill:
+        if not text.startswith(prefill):
+            raise RuntimeError(f"{request['request_id']}: tag content does not start with the prefill")
+        text = text[len(prefill):]
+    return text, "cap" if gen["answer_finish"] == "length" else "stop"
+
+
+READERS = {1: unclosed_block_reasoning, 2: unclosed_block_reasoning_v2}
+READER = 2
+READER_STEMS = {CAPPED_STEM, CAPPED_STEM + SUBSET_SUFFIX, "offopenc", "offopenc" + SUBSET_SUFFIX}
+
+
 def read_unclosed_blocks(gens: list[dict], requests: dict, tokenizer) -> list[dict]:
     """Capped thinking-off rows (response cap CAPPED_OFF_TOKENS) graded on unclosed_block_reasoning's text; every
     row gets "unclosed" (None when not a capped thinking-off row or all blocks close)."""
@@ -357,10 +401,44 @@ def read_unclosed_blocks(gens: list[dict], requests: dict, tokenizer) -> list[di
         if request["thinking"] or request["response_cap_tokens"] != CAPPED_OFF_TOKENS:
             out.append({**g, "unclosed": None})
             continue
-        text, unclosed = unclosed_block_reasoning(request, g)
+        text, unclosed = READERS[READER](request, g)
         out.append({**g, "reasoning": text, "unclosed": unclosed,
                     "reasoning_tokens": len(tokenizer.encode(text, add_special_tokens=False)) if text else 0})
     return out
+
+
+def grade_generations_allowing_degenerate(gens: list[dict], requests: dict, items: dict, model: str) -> list[dict]:
+    """cc_exp07.grade_generations (unchanged; its grading is reused line for line), except that the first-violation
+    locator may disagree with the grader on a degenerate row: survival counts a degenerate row as a violation at token
+    0 whatever the locator says (e.g. an opening continued with just "1.", no letter for a case rule). Any other
+    disagreement still raises."""
+    import cc_grade
+    from transformers import AutoTokenizer
+    tokenizer = AutoTokenizer.from_pretrained(cfg.model_dir(model))
+
+    def offsets_of(text: str) -> list[int]:
+        return [s for s, _ in tokenizer(text, add_special_tokens=False, return_offsets_mapping=True)["offset_mapping"]]
+
+    rows = []
+    for g in gens:
+        request, item = requests[g["request_id"]], items[g["item_id"]]
+        if g["mode"] not in r7.NEW_RULES:
+            rows.append(cc_grade.grade_row(g, request, item, offsets_of))
+            continue
+        row = cc_grade.grade_row({**g, "mode": cfg.NO_CONSTRAINT}, request, item, offsets_of)
+        char = r7.first_violation_new(g["mode"], g["reasoning"]) if g["reasoning"] else None
+        row.update(mode=g["mode"], compliant=char is None and bool(g["reasoning"]), locator_agrees=True)
+        if char is not None:
+            row.update(fv_char=char, fv_token=max(0, bisect.bisect_right(offsets_of(g["reasoning"]), char) - 1),
+                       fv_rel=char / max(1, len(g["reasoning"])))
+        rows.append(row)
+    cc_grade.place_caseless_violations(rows, gens, items, offsets_of)
+    disagree = [r for r in rows if r["locator_agrees"] is False]
+    if any(not r["degenerate"] for r in disagree):
+        raise RuntimeError(f"{model}: first-violation locator disagrees with the grader on a non-degenerate row")
+    for r in rows:
+        r["prompt"] = requests[r["request_id"]]["prompt"]
+    return rows
 
 
 def grade(model: str, stem: str = STEM) -> Path:
@@ -378,7 +456,8 @@ def grade(model: str, stem: str = STEM) -> Path:
     gens = read_unclosed_blocks([json.loads(line) for line in generation_path(model, stem).open()], requests,
                                 tokenizer)
     by_id = {it["item_id"]: it for it in e9.items()}
-    graded = {r["request_id"]: r for r in e7.grade_generations(
+    grade_generations = grade_generations_allowing_degenerate if stem in READER_STEMS else e7.grade_generations
+    graded = {r["request_id"]: r for r in grade_generations(
         [g for g in gens if g["mode"] not in R.NEW_RULES], requests, by_id, model)}
 
     def offsets_of(text: str) -> list[int]:
