@@ -10,14 +10,18 @@ exp09's main run (all 7 models) and extension 3's thinking-on parts (examples on
   F7_ways_to_look_better  empty, degenerate and meta-regex rates per model and arm (short rows)
   F8_length_matched       added check (not pre-registered): whole-trace compliance and accuracy by reasoning length
   F9_examples_only        extension 3: A - examples only and examples only - CoT-Control's prompt per model (thinking on)
-  F10_necessity           extension 3: A - baseline and A - examples only within CoT-necessity labels
+  F10_necessity           extension 3: thinking off - on, A - baseline and A - examples only within CoT-necessity labels
+  F11_thinking_off        extension 2: thinking off - on (both prompts) and A - baseline (thinking on, off) per model
+  F12_thinking_off_checks extension 2: the thinking-off contrasts under each sensitivity check, unclosed-block and
+                          early-ending rates per model
+  F13_openings            extensions 2 and 3: the opening contrasts thinking on and off, and their difference per model
 
 Estimates (levels, differences, CIs) are read from the analysis outputs (analysis/<run>/primary.json, secondary.json,
-cells.csv; analysis_ext3/<ext3 run>/summary.json). Rates, length distributions and length bins (F6 right, F7, F8)
-are counted from the graded rows. No question text appears.
+cells.csv; analysis_ext2/<ext2 run>/summary.json; analysis_ext3/<ext3 run>/summary.json). Rates, length
+distributions and length bins (F6 right, F7, F8) are counted from the graded rows. No question text appears.
 
 Outputs (never overwritten): figures/exp09_final_test/<run>/F*.{png,html}.
-Run: /venv/main/bin/python scripts/cc_exp09_figures.py --run NAME [--analysis-run v1] [--ext3-run thinking_on_v1]
+Run: /venv/main/bin/python scripts/cc_exp09_figures.py --run NAME [--analysis-run v2] [--ext2-run v2] [--ext3-run v1]
 """
 
 from __future__ import annotations
@@ -311,12 +315,17 @@ def fig_examples_only(ext3: dict, fig_dir) -> str:
 
 def fig_necessity(ext3: dict, fig_dir) -> str:
     labels = ["necessary", "mixed", "unnecessary"]
-    names = {"C3 A - CoT-Control prompt, thinking on": ("A - CoT-Control's prompt", ARM["A"][1]),
-             "E1 A - examples only (thinking on)": ("A - A's examples without the rule", ARM["examples_only"][1])}
+    names = {"C1 thinking off - on (CoT-Control prompt)": ("Thinking off - on, CoT-Control's prompt (S(200), 80 q)",
+                                                           "#636363"),
+             "C2 thinking off - on (A)": ("Thinking off - on, A (S(200), 80 q)", "#E6550D"),
+             "C3 A - CoT-Control prompt, thinking on": ("A - CoT-Control's prompt, thinking on (S(1000), 120 q)",
+                                                        ARM["A"][1]),
+             "E1 A - examples only (thinking on)": ("A - A's examples without the rule, thinking on (S(1000), 120 q)",
+                                                    ARM["examples_only"][1])}
     counts = pd.DataFrame(ext3["necessity_counts"]).T.reindex(MODELS)[labels]
-    fig = make_subplots(rows=1, cols=2, column_widths=[0.55, 0.45], horizontal_spacing=0.12,
-                        subplot_titles=["Gain in S(1000) within each label (pp)", "Questions per label and model"])
-    for offset, (key, (label, color)) in zip((-0.08, 0.08), names.items()):
+    fig = make_subplots(rows=1, cols=2, column_widths=[0.6, 0.4], horizontal_spacing=0.12,
+                        subplot_titles=["Difference within each label (pp)", "Questions per label and model (120)"])
+    for offset, (key, (label, color)) in zip((-0.24, -0.08, 0.08, 0.24), names.items()):
         vals = [ext3["by_necessity"][lab][key] for lab in labels]
         fig.add_trace(go.Scatter(x=np.arange(len(labels)) + offset, y=[v["value"] for v in vals], mode="markers",
                                  name=label,
@@ -327,20 +336,149 @@ def fig_necessity(ext3: dict, fig_dir) -> str:
         fig.add_trace(go.Bar(y=[SHORT[m] for m in MODELS], x=counts[lab], orientation="h", name=lab,
                              marker_color=color), row=1, col=2)
     fig.update_xaxes(tickvals=list(range(len(labels))), ticktext=labels, range=[-0.5, len(labels) - 0.5], row=1, col=1)
-    fig.update_yaxes(range=[0, 30], row=1, col=1)
+    fig.update_yaxes(range=[0, 45], row=1, col=1)
     fig.update_yaxes(autorange="reversed", row=1, col=2)
     fig.update_layout(barmode="stack",
-                      title=title("Extension 3: A's gain is about the same whether or not the question needs reasoning",
+                      title=title("Extension 3: no contrast depends on whether the question needs reasoning",
                                   "Labels per model and question from 5 direct one-letter answers: necessary <= 1 "
-                                  "right, unnecessary >= 4. Thinking-off splits wait for extension 2"))
-    return save(fig, fig_dir, "F10_necessity", 1300, 580)
+                                  "right, unnecessary >= 4. Thinking-off contrasts use the 80-question subset; "
+                                  "95% CIs resample questions"))
+    return save(fig, fig_dir, "F10_necessity", 1400, 640, bottom=170)
+
+
+# --- Extensions 2 and 3: thinking off and openings ------------------------------------------------------------------
+OFF_CONTRASTS = {"C1 thinking off - on (CoT-Control prompt)": "Thinking off - on<br>CoT-Control's prompt",
+                 "C2 thinking off - on (A)": "Thinking off - on<br>prompt A",
+                 "C3 A - CoT-Control prompt, thinking on": "A - CoT-Control's prompt<br>thinking on",
+                 "C4 A - CoT-Control prompt, thinking off": "A - CoT-Control's prompt<br>thinking off"}
+EXT_FOOT = ("80-question subset (27 GPQA, 27 HLE, 26 MMLU-Pro), 12 rules, 7 models; thinking-off replies capped at "
+            "1200 tokens; 95% CIs resample questions only. Extension, not pre-registered in exp09")
+
+
+def forest(fig: go.Figure, results: dict, row: int, col: int, show_legend: bool) -> None:
+    """Per-model points with 95% CIs, colored by model group."""
+    for m in MODELS:
+        v = results["per_model"].get(m)
+        if v is None:
+            continue
+        group = "design" if m in e9.DESIGN_MODELS else "fresh"
+        fig.add_trace(go.Scatter(x=[v["value"]], y=[SHORT[m]], mode="markers", marker=dict(
+            size=10, color=GROUP_COLOR[group]), error_x=err(v["ci"], v["value"]), name=group, legendgroup=group,
+            showlegend=show_legend and m in (e9.DESIGN_MODELS[0], e9.FRESH_MODELS[0])), row=row, col=col)
+    fig.add_vline(x=0, line_color="#999", row=row, col=col)
+
+
+def fig_thinking_off(ext2: dict, fig_dir) -> str:
+    c = ext2["contrasts"]
+    fig = make_subplots(rows=1, cols=4, shared_yaxes=True, horizontal_spacing=0.03,
+                        subplot_titles=[f"{label}<br>pooled {fmt(c[k], 'ci')}" for k, label in OFF_CONTRASTS.items()])
+    for col, key in enumerate(OFF_CONTRASTS, start=1):
+        forest(fig, c[key], 1, col, col == 1)
+        fig.update_xaxes(title_text="difference in S(200), pp", range=[-15, 85], row=1, col=col)
+    fig.update_yaxes(autorange="reversed")
+    fig.update_layout(title=title("Extension 2: turning thinking off raises compliance at S(200), more with "
+                                  "CoT-Control's prompt than with A",
+                                  "Thinking-off reasoning is the text the model writes inside <output_reasoning> tags "
+                                  "in its reply; thinking-on reasoning is its thinking trace.<br>" + EXT_FOOT))
+    return save(fig, fig_dir, "F11_thinking_off", 1500, 620, top=160)
+
+
+SENSITIVITY_LABEL = {"main": "Main reading", "short_as_violation": "Ends before token 200 = violation*",
+                     "strict_tags": "Unclosed tag block = empty", "tagged_only": "Only rows whose tags all close",
+                     "no_hidden_reasoning": "Only rows without hidden reasoning",
+                     "same_examples": "Only cells where A off has all examples",
+                     "held_out_only": "Without exp06's 5 rules (A chosen on them)"}
+SENSITIVITY_COLOR = {"C1 thinking off - on (CoT-Control prompt)": "#636363", "C2 thinking off - on (A)": "#E6550D",
+                     "C4 A - CoT-Control prompt, thinking off": ARM["A"][1]}
+
+
+def fig_thinking_off_checks(ext2: dict, fig_dir) -> str:
+    checks = {"main": ext2["contrasts"], **ext2["sensitivity"]}
+    labels = [SENSITIVITY_LABEL[k] for k in SENSITIVITY_LABEL if k in checks]
+    desc = pd.DataFrame(ext2["descriptives"])
+    off = desc[desc["cell"].isin(["A|none|off", "baseline|none|off"])].groupby("model")[
+        ["unclosed_at_cap", "unclosed_at_stop", "ended_clean_early"]].mean().reindex(MODELS)
+    on = desc[desc["cell"].isin(["A|none|on", "baseline|none|on"])].groupby("model")["ended_clean_early"].mean() \
+        .reindex(MODELS)
+    fig = make_subplots(rows=1, cols=3, column_widths=[0.46, 0.27, 0.27], horizontal_spacing=0.1,
+                        subplot_titles=["Pooled difference in S(200) under each check (pp)",
+                                        "Thinking-off tag block never closes (%)",
+                                        "Text ends cleanly before token 200 (%)"])
+    for offset, (key, color) in zip((-0.2, 0.0, 0.2), SENSITIVITY_COLOR.items()):
+        pts = [(i + offset, checks[k][key]) for i, k in enumerate(k for k in SENSITIVITY_LABEL if k in checks)
+               if key in checks[k]]
+        fig.add_trace(go.Scatter(x=[p[1]["value"] for p in pts], y=[p[0] for p in pts], mode="markers",
+                                 marker=dict(size=10, color=color), name=OFF_CONTRASTS[key].replace("<br>", ", "),
+                                 error_x=dict(type="data", symmetric=False,
+                                              array=[p[1]["ci"][1] - p[1]["value"] for p in pts],
+                                              arrayminus=[p[1]["value"] - p[1]["ci"][0] for p in pts])),
+                      row=1, col=1)
+    fig.update_yaxes(tickvals=list(range(len(labels))), ticktext=labels, autorange="reversed", row=1, col=1)
+    fig.add_vline(x=0, line_color="#999", row=1, col=1)
+    names = [SHORT[m] for m in MODELS]
+    for key, label, color in (("unclosed_at_cap", "hit the 1200-token cap", "#08519C"),
+                              ("unclosed_at_stop", "stopped without closing", "#6BAED6")):
+        fig.add_trace(go.Bar(y=names, x=off[key], orientation="h", name=f"unclosed: {label}", marker_color=color),
+                      row=1, col=2)
+    for series, label, color in ((off["ended_clean_early"], "thinking off", "#E6550D"),
+                                 (on, "thinking on", "#636363")):
+        fig.add_trace(go.Bar(y=names, x=series, orientation="h", name=f"ends early: {label}", marker_color=color,
+                             offsetgroup=label), row=1, col=3)
+    fig.update_yaxes(autorange="reversed", row=1, col=2)
+    fig.update_yaxes(autorange="reversed", row=1, col=3, showticklabels=False)
+    fig.update_layout(barmode="stack",
+                      title=title("Extension 2 checks: thinking off still wins under every reading, but short replies "
+                                  "carry about half of its gain",
+                                  "Rates averaged over A and CoT-Control's prompt (12 rules x 80 questions each). "
+                                  "*Added after v1: censoring counts a reply that ends cleanly before token 200 as "
+                                  "surviving.<br>" + EXT_FOOT))
+    return save(fig, fig_dir, "F12_thinking_off_checks", 1600, 640, top=150, bottom=150)
+
+
+OPENING_PAIRS = [("O1 compliant opening - none (A)", "OF1 compliant opening - none (A, thinking off)",
+                  "Compliant opening<br>- none (A)"),
+                 ("O2 rule + opening - opening only", "OF2 rule + opening - opening only (thinking off)",
+                  "Rule + opening<br>- opening only"),
+                 ("O3 commitment - compliant opening (A)", "OF3 commitment - compliant opening (A, thinking off)",
+                  "Commitment<br>- compliant opening (A)"),
+                 ("O4 non-compliant opening - none (A)", "OF4 non-compliant opening - none (A, thinking off)",
+                  "Non-compliant opening<br>- none (A)")]
+
+
+def fig_openings(ext2: dict, ext3: dict, fig_dir) -> str:
+    on, off = ext2["contrasts"], ext3["openings_off_all_models"]
+    ofx = off["OFX opening effect, thinking off - on (A, S(200))"]
+    fig = make_subplots(rows=1, cols=2, column_widths=[0.58, 0.42], horizontal_spacing=0.14,
+                        subplot_titles=["Pooled differences (pp), 7 models, 80 questions",
+                                        f"Compliant opening's effect, thinking off - on, S(200)<br>"
+                                        f"pooled {fmt(ofx, 'ci')}"])
+    for offset, (source, idx, label, color) in zip((-0.12, 0.12), ((on, 0, "thinking on, S(1000)", "#636363"),
+                                                                   (off, 1, "thinking off, S(200)", "#E6550D"))):
+        vals = [source[p[idx]] for p in OPENING_PAIRS]
+        fig.add_trace(go.Scatter(x=np.arange(len(vals)) + offset, y=[v["value"] for v in vals], mode="markers",
+                                 marker=dict(size=12, color=color), name=label,
+                                 error_y=dict(type="data", symmetric=False, array=[v["ci"][1] - v["value"] for v in vals],
+                                              arrayminus=[v["value"] - v["ci"][0] for v in vals])), row=1, col=1)
+    fig.update_xaxes(tickvals=list(range(len(OPENING_PAIRS))), ticktext=[p[2] for p in OPENING_PAIRS],
+                     range=[-0.5, len(OPENING_PAIRS) - 0.5], row=1, col=1)
+    fig.add_hline(y=0, line_color="#999", row=1, col=1)
+    forest(fig, ofx, 1, 2, True)
+    fig.update_yaxes(autorange="reversed", row=1, col=2)
+    fig.update_xaxes(title_text="difference in S(200), pp", row=1, col=2)
+    fig.update_layout(title=title("Openings: a compliant start helps only with thinking on; a non-compliant start "
+                                  "hurts far more with thinking off",
+                                  "7 opening rules (exp06's 5 + exp08's 2; 6 for the non-compliant opening). Only the "
+                                  "text after the opening is graded. Thinking off: all 7 models (the stated pool "
+                                  "of 5 gives the same picture, analysis_ext3 report)<br>" + EXT_FOOT))
+    return save(fig, fig_dir, "F13_openings", 1500, 620, top=160)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--run", required=True)
-    parser.add_argument("--analysis-run", default="v1")
-    parser.add_argument("--ext3-run", default="thinking_on_v1")
+    parser.add_argument("--analysis-run", default="v2")
+    parser.add_argument("--ext2-run", default="v2")
+    parser.add_argument("--ext3-run", default="v1")
     args = parser.parse_args()
     fig_dir = FIG_ROOT / args.run
     if fig_dir.exists():
@@ -349,6 +487,7 @@ def main() -> None:
     primary = json.loads((analysis / "primary.json").read_text())
     secondary = json.loads((analysis / "secondary.json").read_text())
     cells = pd.read_csv(analysis / "cells.csv")
+    ext2 = json.loads((e9.EXP.results / "analysis_ext2" / args.ext2_run / "summary.json").read_text())
     ext3 = json.loads((e9.EXP.results / "analysis_ext3" / args.ext3_run / "summary.json").read_text())
     grades = load_grades()
     fig_dir.mkdir(parents=True)
@@ -356,9 +495,10 @@ def main() -> None:
             fig_heatmap(cells, "S_200", fig_dir, "F3_heatmap_S200"), fig_design_vs_fresh(secondary, fig_dir),
             fig_by_kind(secondary, fig_dir), fig_accuracy_and_length(secondary, cells, grades, fig_dir),
             fig_ways_to_look_better(grades, fig_dir), fig_length_matched(grades, fig_dir),
-            fig_examples_only(ext3, fig_dir), fig_necessity(ext3, fig_dir)]
-    (fig_dir / "inputs.json").write_text(json.dumps({"analysis_run": args.analysis_run, "ext3_run": args.ext3_run,
-                                                     "figures": made}, indent=1) + "\n")
+            fig_examples_only(ext3, fig_dir), fig_necessity(ext3, fig_dir), fig_thinking_off(ext2, fig_dir),
+            fig_thinking_off_checks(ext2, fig_dir), fig_openings(ext2, ext3, fig_dir)]
+    (fig_dir / "inputs.json").write_text(json.dumps({"analysis_run": args.analysis_run, "ext2_run": args.ext2_run,
+                                                     "ext3_run": args.ext3_run, "figures": made}, indent=1) + "\n")
     print(fig_dir, made)
 
 
