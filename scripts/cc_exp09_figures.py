@@ -17,6 +17,8 @@ exp09's main run (all 7 models) and extension 3's thinking-on parts (examples on
   F13_openings            extensions 2 and 3: the opening contrasts thinking on and off, and their difference per model
   F14_survival_curves     Kaplan-Meier S(t) for t up to 1000 tokens, both arms, pooled and per model, S(200) and
                           S(1000) marked (checked against cells.csv)
+  F15_survival_thinking_off  the same for thinking off vs on, both prompts (extension 2, 80-question subset)
+  F16_survival_openings   the same for the openings, thinking on and off (extensions 2 and 3, 80-question subset)
 
 Estimates (levels, differences, CIs) are read from the analysis outputs (analysis/<run>/primary.json, secondary.json,
 cells.csv; analysis_ext2/<ext2 run>/summary.json; analysis_ext3/<ext3 run>/summary.json). Rates, length
@@ -480,68 +482,169 @@ T_GRID = np.arange(0, 1001, 5)
 MARKED_T = (200, 1000)
 
 
-def survival_curves(grades: pd.DataFrame) -> tuple[dict, dict]:
-    """Kaplan-Meier S(t) on T_GRID for exp09's short rows (cc_survival.kaplan_meier, as the analysis), averaged over
-    rules: {(pool, arm): (point curve, bootstrap curves)}, pool = "all" or a model; the bootstrap resamples questions
-    (cc_exp09_analysis.question_draws, same seed), not rules. Also returns the per-cell values at MARKED_T for the
-    check against the analysis's cells.csv."""
-    from cc_exp09_analysis import question_draws
+def survival_curves(df: pd.DataFrame, index: dict, weights: np.ndarray) -> tuple[dict, dict]:
+    """Kaplan-Meier S(t) on T_GRID (cc_survival.kaplan_meier, as the analyses) per (model, rule, cell), averaged over
+    rules: {(pool, cell): (point curve, bootstrap curves)}, pool = "all" or a model. index, weights: the analysis's
+    question bootstrap (questions only, not rules). Also returns each (model, rule, cell)'s values at MARKED_T, for
+    the check against the analysis outputs."""
     from cc_survival import kaplan_meier
-    index, weights = question_draws()
-    short = grades[grades["channel"] == "short"]
     sums, n_cells, at_marks = {}, {}, {}
-    for (model, rule, arm), c in short.groupby(["model", "mode", "prompt"]):
+    for (model, rule, cell), c in df.groupby(["model", "mode", "cell"]):
         times, events = c["time"].to_numpy(), c["event"].to_numpy().astype(bool)
         w = np.vstack([np.ones(len(c)), weights[:, c["item_id"].map(index).to_numpy()]])  # row 0: the point estimate
         curves = 100 * kaplan_meier(times, events, w, T_GRID)
-        at_marks[(model, rule, arm)] = {t: curves[0, T_GRID == t][0] for t in MARKED_T}
+        at_marks[(model, rule, cell)] = {t: curves[0, T_GRID == t][0] for t in MARKED_T}
         for pool in ("all", model):
-            sums[(pool, arm)] = sums.get((pool, arm), 0) + curves
-            n_cells[(pool, arm)] = n_cells.get((pool, arm), 0) + 1
+            sums[(pool, cell)] = sums.get((pool, cell), 0) + curves
+            n_cells[(pool, cell)] = n_cells.get((pool, cell), 0) + 1
     out = {k: (s[0] / n_cells[k], s[1:] / n_cells[k]) for k, s in sums.items()}
     return out, at_marks
 
 
-def fig_survival_curves(grades: pd.DataFrame, cells: pd.DataFrame, fig_dir) -> str:
-    curves, at_marks = survival_curves(grades)
-    analysis = cells.set_index(["metric", "model", "rule", "arm"])["value"]
-    worst = max(abs(v[t] - analysis[(f"S_{t}", m, r, a)]) for (m, r, a), v in at_marks.items() for t in MARKED_T)
-    if worst > 0.005 + 1e-9:  # cells.csv rounds to 2 decimals
-        raise RuntimeError(f"survival curves disagree with the analysis's cells.csv by {worst:.3g} pp")
+def check_curves(at_marks: dict, reference: dict, tolerance: float) -> None:
+    """reference: (metric, model, rule, cell) -> the analysis's value."""
+    worst = max(abs(v[t] - reference[(f"S_{t}", m, r, c)]) for (m, r, c), v in at_marks.items() for t in MARKED_T)
+    if worst > tolerance:
+        raise RuntimeError(f"survival curves disagree with the analysis by {worst:.3g} pp")
+
+
+def plot_curves(fig: go.Figure, curves: dict, pool: str, styles: dict, row: int, col: int, show_legend: bool,
+                label_marks: bool) -> None:
+    """styles: cell -> (label, color, dash). Bands: 95% bootstrap; markers (and labels) at MARKED_T."""
+    for cell, (label, color, dash) in styles.items():
+        if (pool, cell) not in curves:
+            continue
+        point, draws = curves[(pool, cell)]
+        lo, hi = np.percentile(draws, [2.5, 97.5], axis=0)
+        fig.add_trace(go.Scatter(x=np.r_[T_GRID, T_GRID[::-1]], y=np.r_[hi, lo[::-1]], fill="toself", fillcolor=color,
+                                 opacity=0.15, line=dict(width=0), hoverinfo="skip", showlegend=False),
+                      row=row, col=col)
+        fig.add_trace(go.Scatter(x=T_GRID, y=point, mode="lines", line=dict(color=color, width=2, shape="hv", dash=dash),
+                                 name=label, legendgroup=cell, showlegend=show_legend), row=row, col=col)
+        marks = [point[T_GRID == t][0] for t in MARKED_T]
+        fig.add_trace(go.Scatter(x=list(MARKED_T), y=marks, mode="markers+text" if label_marks else "markers",
+                                 marker=dict(color=color, size=7), text=[f"{v:.0f}" for v in marks],
+                                 textposition="top right" if cell.startswith("A|") else "bottom right",
+                                 textfont=dict(size=10, color=color), showlegend=False, hoverinfo="skip"),
+                      row=row, col=col)
+    for t in MARKED_T:
+        fig.add_vline(x=t, line_dash="dot", line_color="#999", row=row, col=col)
+    fig.update_xaxes(range=[0, 1100], tickvals=[0, 200, 400, 600, 800, 1000], row=row, col=col)
+
+
+def model_title(m: str) -> str:
+    return f"{SHORT[m]} ({'design' if m in e9.DESIGN_MODELS else 'fresh'})"
+
+
+def curve_grid(curves: dict, styles: dict, label_marks_on_models: bool) -> go.Figure:
+    """2 x 4 panels: all 7 models, then one per model."""
     pools = ["all"] + MODELS
-    titles = ["All 7 models"] + [f"{SHORT[m]} ({'design' if m in e9.DESIGN_MODELS else 'fresh'})" for m in MODELS]
-    fig = make_subplots(rows=2, cols=4, subplot_titles=titles, horizontal_spacing=0.05, vertical_spacing=0.16,
-                        shared_yaxes=True)
+    fig = make_subplots(rows=2, cols=4, subplot_titles=["All 7 models"] + [model_title(m) for m in MODELS],
+                        horizontal_spacing=0.05, vertical_spacing=0.16, shared_yaxes=True)
     for k, pool in enumerate(pools):
         row, col = divmod(k, 4)
-        for arm in ("baseline", "A"):
-            point, draws = curves[(pool, arm)]
-            lo, hi = np.percentile(draws, [2.5, 97.5], axis=0)
-            label, color = ARM[arm]
-            fig.add_trace(go.Scatter(x=np.r_[T_GRID, T_GRID[::-1]], y=np.r_[hi, lo[::-1]], fill="toself",
-                                     fillcolor=color, opacity=0.2, line=dict(width=0), hoverinfo="skip",
-                                     showlegend=False), row=row + 1, col=col + 1)
-            fig.add_trace(go.Scatter(x=T_GRID, y=point, mode="lines", line=dict(color=color, width=2, shape="hv"),
-                                     name=label, legendgroup=arm, showlegend=k == 0), row=row + 1, col=col + 1)
-            marks = [point[T_GRID == t][0] for t in MARKED_T]
-            fig.add_trace(go.Scatter(x=list(MARKED_T), y=marks, mode="markers+text", marker=dict(color=color, size=8),
-                                     text=[f"{v:.0f}" for v in marks],
-                                     textposition="top right" if arm == "A" else "bottom right",
-                                     textfont=dict(size=11, color=color), showlegend=False, hoverinfo="skip"),
-                          row=row + 1, col=col + 1)
-        for t in MARKED_T:
-            fig.add_vline(x=t, line_dash="dot", line_color="#999", row=row + 1, col=col + 1)
-        fig.update_xaxes(range=[0, 1100], tickvals=[0, 200, 400, 600, 800, 1000], row=row + 1, col=col + 1,
-                         title_text="reasoning tokens" if row == 1 else None)
+        plot_curves(fig, curves, pool, styles, row + 1, col + 1, k == 0, k == 0 or label_marks_on_models)
+        if row == 1:
+            fig.update_xaxes(title_text="reasoning tokens", row=2, col=col + 1)
     fig.update_yaxes(range=[-9, 105], tickvals=[0, 20, 40, 60, 80, 100])
     fig.update_yaxes(title_text="S(t), % of traces", col=1)
+    return fig
+
+
+CURVE_NOTE = ("Kaplan-Meier, mean over rules; dotted lines and markers: S(200) and S(1000). Empty or degenerate texts "
+              "are violations at token 0; a clean text is censored at its length.")
+
+
+def fig_survival_curves(grades: pd.DataFrame, cells: pd.DataFrame, fig_dir) -> str:
+    from cc_exp09_analysis import question_draws
+    short = grades[grades["channel"] == "short"].assign(cell=lambda d: d["prompt"])
+    curves, at_marks = survival_curves(short, *question_draws())
+    check_curves(at_marks, cells.set_index(["metric", "model", "rule", "arm"])["value"].to_dict(),
+                 0.005 + 1e-9)  # cells.csv rounds to 2 decimals
+    styles = {arm: (ARM[arm][0], ARM[arm][1], "solid") for arm in ("baseline", "A")}
+    fig = curve_grid(curves, styles, True)
     fig.update_layout(title=title("Survival curves: share of reasoning traces still following the rule after t tokens "
                                   "(main test, thinking on)",
-                                  "Kaplan-Meier, mean over the 12 rules; dotted lines and labels: S(200) and S(1000). "
-                                  "Empty or degenerate traces are violations at token 0; a clean trace is censored at "
-                                  "its length.<br>Bands: 95% bootstrap over questions only (F1's CIs also resample "
-                                  "rules). Each model: 12 rules x 120 questions per arm"))
+                                  CURVE_NOTE + "<br>Bands: 95% bootstrap over questions only (F1's CIs also "
+                                  "resample rules). Each model: 12 rules x 120 questions per arm"))
     return save(fig, fig_dir, "F14_survival_curves", 1500, 820, top=140)
+
+
+def extension_rows() -> tuple[pd.DataFrame, dict, np.ndarray]:
+    """Every extension-2 and -3 row with exp09's thinking-on short rows (cell "<arm>|<opening>|<on/off>"), on the
+    80-question subset the thinking-off and opening rows cover, with that subset's question bootstrap."""
+    import cc_exp09_ext2_analysis as an2
+    import cc_exp09_ext3_analysis as an3
+    df, _, models = an3.load(False)
+    if models != list(an2.x.MODEL_ORDER):
+        raise RuntimeError(f"extension rows missing for some models: {models}")
+    return (df[df["item_id"].isin(an2.subset_ids())], *an2.subset_question_draws())
+
+
+def check_against_analysis(df: pd.DataFrame, at_marks: dict, ext2_run: str) -> None:
+    """Thinking-off and thinking-on opening cells against extension 2's per_cell.csv (2 decimals); the
+    thinking-off opening cells against cc_exp09_ext2_analysis.cell_values, which both analyses use."""
+    import cc_exp09_ext2_analysis as an2
+    per_cell = pd.read_csv(e9.EXP.results / "analysis_ext2" / ext2_run / "per_cell.csv")
+    reference = per_cell.set_index(["metric", "model", "mode", "cell"])["value"].to_dict()
+    check_curves({k: v for k, v in at_marks.items() if (f"S_200", *k) in reference}, reference, 0.005 + 1e-9)
+    rest = {k: v for k, v in at_marks.items() if (f"S_200", *k) not in reference}
+    if rest:
+        values = an2.cell_values(df[df["cell"].isin({c for _, _, c in rest})])
+        check_curves(rest, {(metric, m, r, c): v[0] for (metric, c, m, r), v in values.items()}, 1e-9)
+
+
+def fig_survival_thinking_off(df: pd.DataFrame, index: dict, weights: np.ndarray, ext2_run: str, fig_dir) -> str:
+    styles = {"baseline|none|on": ("CoT-Control's prompt, thinking on", ARM["baseline"][1], "solid"),
+              "baseline|none|off": ("CoT-Control's prompt, thinking off", ARM["baseline"][1], "dash"),
+              "A|none|on": ("Prompt A, thinking on", ARM["A"][1], "solid"),
+              "A|none|off": ("Prompt A, thinking off", ARM["A"][1], "dash")}
+    d = df[df["cell"].isin(styles)]
+    curves, at_marks = survival_curves(d, index, weights)
+    check_against_analysis(d, at_marks, ext2_run)
+    fig = curve_grid(curves, styles, False)
+    fig.update_layout(title=title("Survival curves, thinking off vs on (extension 2): thinking-off text stays "
+                                  "compliant longer, with both prompts",
+                                  CURVE_NOTE + "<br>Thinking off: the text inside <output_reasoning> tags in the "
+                                  "reply, capped at 1200 tokens. 14-18% of thinking-off texts end cleanly early "
+                                  "(0-1.5% on) and are censored, which lifts their curves; counting those as "
+                                  "violations shrinks the gap (F12).<br>12 rules x 80 questions per cell; bands: 95% "
+                                  "bootstrap over questions only. Extension, not pre-registered in exp09"))
+    return save(fig, fig_dir, "F15_survival_thinking_off", 1500, 850, top=165)
+
+
+OPENING_STYLES = {"A|none": ("A, no opening", "#B15928", "solid"),
+                  "A|compliant": ("A + compliant opening", "#33A02C", "solid"),
+                  "A|commitment": ("A + commitment opening", "#1F78B4", "solid"),
+                  "A|noncompliant": ("A + non-compliant opening", "#E31A1C", "solid"),
+                  "no_rule|compliant": ("No rule + compliant opening (copying control)", "#000000", "dash")}
+
+
+def fig_survival_openings(df: pd.DataFrame, index: dict, weights: np.ndarray, ext2_run: str, fig_dir) -> str:
+    import cc_exp09_ext2 as x2
+    styles = {f"{k}|{ch}": v for ch in ("on", "off") for k, v in OPENING_STYLES.items()}
+    d = df[df["cell"].isin(styles) & df["mode"].isin(x2.OPENING_RULES)]
+    curves, at_marks = survival_curves(d, index, weights)
+    check_against_analysis(d, at_marks, ext2_run)
+    pools = ["all"] + MODELS
+    titles = [f"Thinking {ch}: {'all 7 models' if p == 'all' else SHORT[p]}" for ch in ("on", "off") for p in pools]
+    fig = make_subplots(rows=2, cols=len(pools), subplot_titles=titles, horizontal_spacing=0.025,
+                        vertical_spacing=0.16, shared_yaxes=True)
+    for row, ch in enumerate(("on", "off"), start=1):
+        ch_styles = {f"{k}|{ch}": v for k, v in OPENING_STYLES.items()}
+        for col, pool in enumerate(pools, start=1):
+            plot_curves(fig, curves, pool, ch_styles, row, col, row == 1 and col == 1, col == 1)
+            if row == 2:
+                fig.update_xaxes(title_text="tokens after the opening", row=2, col=col)
+    fig.update_yaxes(range=[-9, 105], tickvals=[0, 20, 40, 60, 80, 100])
+    fig.update_yaxes(title_text="S(t), % of traces", col=1)
+    fig.update_layout(title=title("Survival curves with openings (extensions 2 and 3): a non-compliant opening sinks "
+                                  "compliance; a compliant one helps a little with thinking on, not with thinking off",
+                                  CURVE_NOTE + " Only the text after the opening is graded. 7 opening rules "
+                                  "(exp06's 5 + exp08's 2; 6 for the non-compliant opening) x 80 questions per cell; "
+                                  "thinking off capped at 1200 tokens.<br>Bands: 95% bootstrap over questions only. "
+                                  "Extension, not pre-registered in exp09"))
+    return save(fig, fig_dir, "F16_survival_openings", 2600, 860, top=140)
 
 
 def main() -> None:
@@ -569,6 +672,9 @@ def main() -> None:
             fig_examples_only(ext3, fig_dir), fig_necessity(ext3, fig_dir), fig_thinking_off(ext2, fig_dir),
             fig_thinking_off_checks(ext2, fig_dir), fig_openings(ext2, ext3, fig_dir),
             fig_survival_curves(grades, cells, fig_dir)]
+    ext_rows = extension_rows()
+    made += [fig_survival_thinking_off(*ext_rows, args.ext2_run, fig_dir),
+             fig_survival_openings(*ext_rows, args.ext2_run, fig_dir)]
     (fig_dir / "inputs.json").write_text(json.dumps({"analysis_run": args.analysis_run, "ext2_run": args.ext2_run,
                                                      "ext3_run": args.ext3_run, "figures": made}, indent=1) + "\n")
     print(fig_dir, made)
