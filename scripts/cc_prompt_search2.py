@@ -1,5 +1,5 @@
-"""exp10_prompt_search2: a second search for a prompt that beats A (exp09's prompt), in two tracks (prompt only;
-prompt + a pre-filled opening), with a strict screening score and racing (results/exp10_prompt_search2/manifest.json,
+"""prompt_search2 (abandoned; was exp10_prompt_search2): a second search for a prompt that beats A (exp09's prompt), in two tracks (prompt only;
+prompt + a pre-filled opening), with a strict screening score and racing (results/prompt_search2_abandoned/manifest.json,
 written before any exp10 generation).
 
 Held out, fixed before the search:
@@ -16,14 +16,14 @@ before 200 tokens, is empty or is degenerate fails. Racing: a round's candidates
 after each stage the eligible candidates are ranked by their paired difference from A over the questions so far and
 the top half (rounded up) go on to the next stage; after stage 3 the round is done.
 
-Steps (/venv/main/bin/python scripts/cc_exp10.py ...):
+Steps (/venv/main/bin/python scripts/cc_prompt_search2.py ...):
   items                                     draw the splits (once)
   prepass --model M --split S               the unconstrained-opening requests (the prefill track's openings)
   requests --model M --round R --stage K --candidates a,b
-  grade --model M --name N                  grade one generated request file (cache/exp10/grades/)
+  grade --model M --name N                  grade one generated request file (cache/prompt_search2/grades/)
   race --round R --stage K [--log]          scores so far, eligibility, and who goes on
   plan --name N --models a,b --after-grade  a gpu_lanes.py plan for the request files named N
-Generation: scripts/gpu_lanes.py results/exp10_prompt_search2/plan_<N>.json
+Generation: scripts/gpu_lanes.py results/prompt_search2_abandoned/plan_<N>.json
 """
 
 from __future__ import annotations
@@ -49,9 +49,9 @@ import cc_exp09 as e9
 import cc_prompts
 import exp07_candidates as cands
 import exp09_rules as R
-import exp10_candidates as c10
+import prompt_search2_candidates as c10
 
-EXP = cfg.Exp("exp10_prompt_search2", "exp10")
+EXP = cfg.Exp("prompt_search2_abandoned", "prompt_search2")
 ITEMS_PATH = EXP.cache / "items.jsonl"
 SEARCH_LOG = EXP.results / "search_log.jsonl"
 SEARCH_MODELS = ["Qwen3.8-27B-FP8", "Gemma-4-31B-FP8"]
@@ -382,9 +382,9 @@ def write_plan(name: str, models: list[str], after_grade: bool) -> Path:
                "requests": str(requests_path(name, model).relative_to(cfg.REPO_ROOT)),
                "items": str(ITEMS_PATH.relative_to(cfg.REPO_ROOT)), "memory": 0.90}
         if after_grade:
-            out["after"] = ["/venv/main/bin/python", "cc_exp10.py", "grade", "--model", model, "--name", name]
+            out["after"] = ["/venv/main/bin/python", "cc_prompt_search2.py", "grade", "--model", model, "--name", name]
         return out
-    plan = {"name": f"exp10_{name}", "mps": False, "gpus": {"0": [[job(m) for m in models]]}}
+    plan = {"name": f"prompt_search2_{name}", "mps": False, "gpus": {"0": [[job(m) for m in models]]}}
     path = EXP.results / f"plan_{name}.json"
     if path.exists():
         raise SystemExit(f"{path} exists")
@@ -401,7 +401,7 @@ def main() -> None:
     parser.add_argument("--split", choices=["search", "validation", "test"])
     parser.add_argument("--round")
     parser.add_argument("--stage", type=int, choices=range(1, N_STAGES + 1))
-    parser.add_argument("--candidates", help="comma-separated exp10_candidates names (A is added)")
+    parser.add_argument("--candidates", help="comma-separated prompt_search2_candidates names (A is added)")
     parser.add_argument("--name", help="request file name (requests_<name>_<model>.jsonl)")
     parser.add_argument("--after-grade", action="store_true")
     parser.add_argument("--log", action="store_true")

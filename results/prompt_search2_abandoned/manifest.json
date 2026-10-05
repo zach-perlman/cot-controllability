@@ -1,7 +1,9 @@
 {
   "experiment": "exp10_prompt_search2",
-  "written": "2026-10-05 21:55 UTC, before exp10's questions were drawn and before any exp10 generation (repo at 8cd4fd6)",
   "status": "pre-registered; UNVERIFIED until a human adds it to VERIFIED.md",
+  "abandoned": "2026-10-05 22:36 UTC, human: the search was stopped for time (a round took about an hour, mostly prompt processing of A's 14k-23k-token prompts) and the exp10 number given to hide what you need. What ran: the opening pre-pass on the 90 search questions for Qwen3.8-27B-FP8 and Gemma-4-31B-FP8 (merged), and part of round 1 stage 1 for Qwen3.8-27B-FP8 only (about 1,200 of 1,536 rows, killed before merge; never graded). Gemma-4-31B-FP8's stage 1 never started. No result was computed or looked at.",
+  "renamed": "results/exp10_prompt_search2 -> results/prompt_search2_abandoned, cache/exp10 -> cache/prompt_search2, log/exp10 -> log/prompt_search2, scripts/cc_exp10.py -> scripts/cc_prompt_search2.py, scripts/exp10_candidates.py -> scripts/prompt_search2_candidates.py. Paths below and in the plan files are the names at the time; seeds and the exp10|... cell labels inside the request files are unchanged.",
+  "written": "2026-10-05 21:55 UTC, before exp10's questions were drawn and before any exp10 generation (repo at 8cd4fd6)",
   "question": "Does a second, more efficient prompt search find a prompt (prompt-only track) or a prompt plus a pre-filled opening (prefill track) that beats A (exp09's prompt) on reasoning-trace controllability, on new questions, held-out rules and models the search never saw?",
   "human_choices": "2026-10-05 21:45 UTC: run the search with motivational framing, best-of-n as a separate number, and build momentum (prefilled compliant openings); not the model's own compliant traces as examples (exp07b's B: +3.1 [+0.1, +6.0], Holm p 0.123, not a large gain), not shorter-and-more examples, not mid-reasoning reminders. Also chosen: the strict score, racing, paired comparisons, a check model and factorial crossing of components.",
   "naming": "2026-10-05 21:53 UTC, human: this search is exp10; its results feed exp11 (hide what you need, the intermediates project). It was first written as exp11; the question draw ran once under that name before any generation, and the redraw under exp10 is byte-identical (same seed and exclusions)",
@@ -53,7 +55,12 @@
       "T2": "prefill-track winner - A, strict S(1000), 4 fresh models x 6 held-out rules",
       "inference": "mean over model x rule cells; 95% CI and two-sided p from a bootstrap over questions and rules (exp09's questions_and_rules), with the questions-only CI beside it; Holm over T1 and T2"
     },
-    "secondary": ["the same contrasts on all 7 models x 12 rules, and per model, per rule kind, search vs held-out rules", "exp09's S(1000) (Kaplan-Meier, a clean text censored at its length) and S(200) for every arm, for comparison with exp09", "each arm - CoT-Control's prompt", "empty, degenerate, meta-regex and ended-clean-early shares per arm"],
+    "secondary": [
+      "the same contrasts on all 7 models x 12 rules, and per model, per rule kind, search vs held-out rules",
+      "exp09's S(1000) (Kaplan-Meier, a clean text censored at its length) and S(200) for every arm, for comparison with exp09",
+      "each arm - CoT-Control's prompt",
+      "empty, degenerate, meta-regex and ended-clean-early shares per arm"
+    ],
     "best_of_n": "separately reported, never used to choose: for A and both winners, 4 samples (seeds rollout_seed(item, rule, r), r = 0..3) on 4 fresh models x 6 held-out rules x the first 80 test questions; pass@1 and pass@4 (unbiased estimator from 4 samples) of strict clean through 1000 tokens",
     "accuracy_check": "for A and both winners, full traces (16000-token reasoning cap) with an answer on no_commas and lowercase_thinking x 40 test questions x 7 models; accuracy difference from A, reported, not a selection criterion"
   },
