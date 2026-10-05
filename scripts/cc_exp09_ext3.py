@@ -24,6 +24,10 @@ Steps (/venv/main/bin/python scripts/cc_exp09_ext3.py ...):
                        extension 2's capped example counts (deviations.json; replaces offopen)
   plan                 the gpu_lanes.py plans after the cap (write_capped_plans: plan_ext3c_a_1xB200.json, examples
                        only and necessity; plan_ext3c_b_1xB200.json, extension 2 capped, then openings off capped)
+  subset --model M     write requests_{ext2c,offopenc}80_<M>.jsonl: the capped files' rows for the 80-question subset
+                       (cc_exp09_ext2.subset_items; deviations.json)
+  subset-plan          plan_ext3c_c_1xB200.json: extension 2 capped on the 80 for every model, then openings off
+                       capped on the 80
   grade --model M --part P
 """
 
@@ -31,6 +35,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
 import cc_config as cfg
 import cc_exp04
@@ -204,6 +209,36 @@ def write_capped_plans() -> list:
     return paths
 
 
+def write_subset_requests(model: str) -> list:
+    """requests_<stem>80_<M>.jsonl for extension 2 capped and openings off capped: the rows of subset_items(),
+    unchanged."""
+    keep = {it["item_id"] for it in x2.subset_items()}
+    paths = []
+    for stem in (x2.CAPPED_STEM, OFFOPEN_CAPPED):
+        out = x2.requests_path(model, stem + x2.SUBSET_SUFFIX)
+        if out.exists():
+            raise SystemExit(f"{out} exists; request files are fixed once written")
+        rows = [r for r in map(json.loads, x2.requests_path(model, stem).open()) if r["item_id"] in keep]
+        e7.write_requests(out, rows)
+        paths.append(out)
+    return paths
+
+
+def write_subset_plan() -> Path:
+    """plan_ext3c_c: extension 2 capped on the 80 questions for every model, then openings off capped on the 80 for
+    every model (the stated 5 first)."""
+    grade = ["cc_exp09_ext3.py", "grade", "--part"]
+    ext2c80, offopenc80 = x2.CAPPED_STEM + x2.SUBSET_SUFFIX, OFFOPEN_CAPPED + x2.SUBSET_SUFFIX
+    offopen_order = ([m for m in x2.MODEL_ORDER if m not in OFFOPEN_SKIPPED]
+                     + [m for m in x2.MODEL_ORDER if m in OFFOPEN_SKIPPED])
+    lane = ([plan_job(m, ext2c80, grade + [ext2c80]) for m in x2.MODEL_ORDER]
+            + [plan_job(m, offopenc80, grade + [offopenc80]) for m in offopen_order])
+    plan = {"name": "exp09_ext3c_c_1xB200", "mps": False, "gpus": {"0": [lane]}}
+    path = e9.EXP.results / "plan_ext3c_c_1xB200.json"
+    path.write_text(json.dumps(plan, indent=2) + "\n")
+    return path
+
+
 def write_plan():
     job = plan_job
     lane = []
@@ -221,14 +256,21 @@ def write_plan():
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=["check", "requests", "plan", "grade"])
+    parser.add_argument("command", choices=["check", "requests", "plan", "grade", "subset", "subset-plan"])
     parser.add_argument("--model", choices=x2.MODEL_ORDER)
-    parser.add_argument("--part", choices=PARTS + [OFFOPEN_CAPPED])
+    parser.add_argument("--part", choices=PARTS + [OFFOPEN_CAPPED] + [
+        p + x2.SUBSET_SUFFIX for p in (x2.CAPPED_STEM, OFFOPEN_CAPPED)])
     parser.add_argument("--capped", action="store_true",
                         help=f"requests: write only openings off with the {x2.CAPPED_OFF_TOKENS}-token thinking-off cap")
     args = parser.parse_args()
     if args.command == "plan":
         print(write_capped_plans())
+        return
+    if args.command == "subset":
+        print([str(p) for p in write_subset_requests(args.model)])
+        return
+    if args.command == "subset-plan":
+        print(write_subset_plan())
         return
     if args.command == "grade":
         print(grade(args.model, args.part))

@@ -1,0 +1,2 @@
+Qwen3.6-27B ext2c shard exited 2026-10-05T03:55:16Z; starting plan_ext3c_c
+2026-10-05T03:55:16Z start gpu0.lane0.0_Qwen3.6-27B-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_exp09_ext3c_c_1xB200/gpu0.lane0.0_Qwen3.6-27B-FP8.log

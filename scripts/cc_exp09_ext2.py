@@ -58,6 +58,23 @@ STEM = "ext2"
 # uncapped file had started; deviations.json). Replaces STEM's file, which is kept.
 CAPPED_STEM = "ext2c"
 CAPPED_OFF_TOKENS = e7.STOP_TOKENS
+# The remaining extension rows run on 80 of the 120 questions (human decision, deviations.json): request files
+# requests_<stem>80_<M>.jsonl hold the <stem> file's rows for subset_items(), unchanged.
+SUBSET_SUFFIX = "80"
+SUBSET_SALT = "exp09_ext_subset80"
+SUBSET_PER_SOURCE = {"GPQA": 27, "HLE": 27, "MMLU-Pro": 26}
+
+
+def subset_items() -> list[dict]:
+    """exp09's questions in the 80-question subset (in exp09's order): per source, the first SUBSET_PER_SOURCE[source]
+    in order of sha256(SUBSET_SALT + "|" + item_id)."""
+    import hashlib
+    chosen = set()
+    for source, k in SUBSET_PER_SOURCE.items():
+        ids = sorted((it["item_id"] for it in e9.items() if it["source"] == source),
+                     key=lambda i: hashlib.sha256(f"{SUBSET_SALT}|{i}".encode()).hexdigest())
+        chosen |= set(ids[:k])
+    return [it for it in e9.items() if it["item_id"] in chosen]
 MODEL_ORDER = ["Qwen3.6-27B-FP8", "Qwen3.8-27B-FP8", "Gemma-4-31B-FP8", "Qwen3-32B", "Gemma-4-12B-FP8",
                "Qwen3.6-35B-A3B-FP8", "GLM-4.7-Flash-FP8"]  # longest first; GLM's renderer is new, so it runs last
 RENDERED_BY_EXP09 = {"GLM-4.7-Flash-FP8"}

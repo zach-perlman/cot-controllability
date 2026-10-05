@@ -10,6 +10,8 @@ rows (A|short -> A|none|on, baseline|short -> baseline|none|on). A contrast is t
 Thinking-off responses are capped at 1200 tokens (deviations.json; request files requests_ext2c_<M>), so thinking-off
 accuracy is not estimable and its contrasts (ACC_A, ACC_baseline) are dropped. A tag block that never closes (cut at
 the cap, or ended without its closing tag) is graded on its text so far (cc_exp09_ext2.unclosed_block_reasoning).
+Every cell is restricted to the 80-question subset the extension-2 rows cover (cc_exp09_ext2.subset_items;
+deviations.json), with exp09's bootstrap (same seed, stratified by source) over those 80.
 Sensitivity: C2 and C4 on the cells where A off has all of exp09's A examples (same_examples); C1, C2, C4 on
 thinking-off rows whose tag blocks all close (tagged_only), with unclosed blocks read as empty, a violation at token 0
 (strict_tags: cc_exp06's reading), and without rows with a hidden reasoning block (no_hidden_reasoning); every
@@ -33,7 +35,7 @@ import cc_exp09_ext2 as x
 import exp07_rules as r7
 import exp09_rules as R
 from cc_exp08_analysis import GUARDS, contrast, fmt
-from cc_exp09_analysis import question_draws
+from cc_exp09_analysis import BOOT_SEED, N_BOOT, question_draws
 from cc_survival import holm, kaplan_meier
 
 OUT_ROOT = e9.EXP.results / "analysis_ext2"
@@ -58,12 +60,38 @@ TAGGED_ONLY = ["C1 thinking off - on (CoT-Control prompt)", "C2 thinking off - o
 
 
 # --- Data -----------------------------------------------------------------------------------------------------------
-def load(skip_missing: bool) -> tuple[pd.DataFrame, list[str]]:
-    """Extension 2's grades and exp09's short rows (all 12 rules), with survival columns."""
+def subset_ids() -> set[str]:
+    return {it["item_id"] for it in x.subset_items()}
+
+
+def subset_question_draws() -> tuple[dict, np.ndarray]:
+    """question_draws over the 80-question subset (same seed, questions resampled within each source)."""
+    items = x.subset_items()
+    index = {it["item_id"]: k for k, it in enumerate(items)}
+    rng = np.random.default_rng(BOOT_SEED)
+    weights = np.zeros((N_BOOT, len(items)))
+    for source in sorted({it["source"] for it in items}):
+        cols = [k for k, it in enumerate(items) if it["source"] == source]
+        weights[:, cols] = rng.multinomial(len(cols), np.ones(len(cols)) / len(cols), size=N_BOOT)
+    return index, weights
+
+
+def extension2_grades(model: str):
+    """The model's capped extension-2 grades (80-question file), or None."""
+    try:
+        path = x.grades_path(model, x.CAPPED_STEM + x.SUBSET_SUFFIX)
+    except SystemExit:
+        return None
+    return path if path.exists() else None
+
+
+def load(skip_missing: bool, subset: bool = True) -> tuple[pd.DataFrame, list[str]]:
+    """Extension 2's grades and exp09's short rows (all 12 rules), with survival columns; subset: only the 80
+    questions every model's extension-2 rows cover."""
     frames, present = [], []
     for model in x.MODEL_ORDER:
         try:
-            ext, main = x.grades_path(model, x.CAPPED_STEM), e9.grades_path(model)
+            ext, main = extension2_grades(model), e9.grades_path(model)
         except SystemExit:
             ext = main = None
         if ext is None or not ext.exists() or not main.exists():
@@ -79,7 +107,10 @@ def load(skip_missing: bool) -> tuple[pd.DataFrame, list[str]]:
         present.append(model)
     if not frames:
         raise SystemExit("no graded model")
-    return e7.survival(pd.concat(frames, ignore_index=True)), present
+    df = pd.concat(frames, ignore_index=True)
+    if subset:
+        df = df[df["item_id"].isin(subset_ids())]
+    return e7.survival(df), present
 
 
 def same_example_cells(models: list[str]) -> set[tuple[str, str]]:
@@ -91,9 +122,10 @@ def same_example_cells(models: list[str]) -> set[tuple[str, str]]:
     return out
 
 
-def cell_values(df: pd.DataFrame) -> dict:
-    """(metric, cell, model, rule) -> (point, bootstrap draws)."""
-    index, weights = question_draws()
+def cell_values(df: pd.DataFrame, subset: bool = True) -> dict:
+    """(metric, cell, model, rule) -> (point, bootstrap draws); subset: draws over the 80 questions (df holds only
+    them), else over exp09's 120."""
+    index, weights = subset_question_draws() if subset else question_draws()
     out = {}
     for (cell, model, mode), c in df.groupby(["cell", "model", "mode"]):
         w = weights[:, c["item_id"].map(index).to_numpy()]
