@@ -1,0 +1,42 @@
+{
+  "name": "exp10_r1_s1",
+  "mps": false,
+  "gpus": {
+    "0": [
+      [
+        {
+          "exp": "exp10",
+          "model": "Qwen3.8-27B-FP8",
+          "requests": "cache/exp10/requests_r1_s1_Qwen3.8-27B-FP8.jsonl",
+          "items": "cache/exp10/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp10.py",
+            "grade",
+            "--model",
+            "Qwen3.8-27B-FP8",
+            "--name",
+            "r1_s1"
+          ]
+        },
+        {
+          "exp": "exp10",
+          "model": "Gemma-4-31B-FP8",
+          "requests": "cache/exp10/requests_r1_s1_Gemma-4-31B-FP8.jsonl",
+          "items": "cache/exp10/items.jsonl",
+          "memory": 0.9,
+          "after": [
+            "/venv/main/bin/python",
+            "cc_exp10.py",
+            "grade",
+            "--model",
+            "Gemma-4-31B-FP8",
+            "--name",
+            "r1_s1"
+          ]
+        }
+      ]
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "model": "Qwen3.8-27B-FP8",
+  "A_examples": {
+    "lowercase_thinking": 12,
+    "alternating_case": 12,
+    "meow_between_words": 12,
+    "end_of_sentence": 12,
+    "word_suppression": 12,
+    "no_first_person": 12
+  }
+}

@@ -18,6 +18,18 @@ if ((driver_major < MIN_NATIVE_DRIVER_MAJOR)); then
   fi
   export LD_LIBRARY_PATH="${COMPAT_DIR}${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 fi
+# FlashInfer JIT-compiles kernels with $CUDA_HOME/bin/nvcc. At boot, Vast's 05-configure-cuda.sh can point
+# /usr/local/cuda at /usr/local/cuda-13.2, which holds only the compat libs (no nvcc); then use the newest
+# installed toolkit that has nvcc, and its lib64 (the compiled kernels link its libcudart).
+if [[ ! -x "${CUDA_HOME:-/usr/local/cuda}/bin/nvcc" ]]; then
+  for toolkit in $(ls -d /usr/local/cuda-[0-9]*.[0-9]* 2>/dev/null | sort -V -r); do
+    if [[ -x "${toolkit}/bin/nvcc" ]]; then
+      export CUDA_HOME="${toolkit}"
+      export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+${LD_LIBRARY_PATH}:}${toolkit}/lib64"
+      break
+    fi
+  done
+fi
 # DeepGEMM's FP8 kernels are JIT-compiled and need nvcc >= 12.9; the system toolkit is 12.8 (Qwen3-32B-FP8 failed
 # to start). Without it vLLM uses its precompiled CUTLASS FP8 kernels.
 export VLLM_USE_DEEP_GEMM=0

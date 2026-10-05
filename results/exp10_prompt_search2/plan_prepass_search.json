@@ -1,0 +1,24 @@
+{
+  "name": "exp10_prepass_search",
+  "mps": false,
+  "gpus": {
+    "0": [
+      [
+        {
+          "exp": "exp10",
+          "model": "Qwen3.8-27B-FP8",
+          "requests": "cache/exp10/requests_prepass_search_Qwen3.8-27B-FP8.jsonl",
+          "items": "cache/exp10/items.jsonl",
+          "memory": 0.9
+        },
+        {
+          "exp": "exp10",
+          "model": "Gemma-4-31B-FP8",
+          "requests": "cache/exp10/requests_prepass_search_Gemma-4-31B-FP8.jsonl",
+          "items": "cache/exp10/items.jsonl",
+          "memory": 0.9
+        }
+      ]
+    ]
+  }
+}

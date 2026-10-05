@@ -216,7 +216,13 @@ def opening(model: str, item: dict, mode: str, target_tokens: int) -> tuple[str,
             raise ValueError(f"{model} {item['item_id']}: no word boundary within {target_tokens} tokens")
     rewritten = R.rewrite(item, mode, text[:cut].rstrip())
     if not R.compliant(mode, rewritten, item):
-        raise ValueError(f"{model} {item['item_id']} {mode}: rewritten opening fails the grader")
+        # Some characters cannot be rewritten (e.g. "ℝ" under lowercase_thinking): use the latest earlier sentence end
+        # whose rewrite passes.
+        earlier = (R.rewrite(item, mode, text[:e].rstrip()) for e in reversed(ends) if e < cut)
+        rewritten = next((r for r in earlier if R.compliant(mode, r, item)), None)
+        if rewritten is None:
+            raise ValueError(f"{model} {item['item_id']} {mode}: no rewritten opening passes the grader")
+        kind = "earlier_sentence"
     return rewritten, {"cut": kind, "opening_tokens": len(tok.encode(rewritten, add_special_tokens=False))}
 
 
@@ -349,8 +355,11 @@ def race(round_name: str, stage: int, log: bool) -> list[str]:
                      **paired_difference(df, name), "guard_minus_A": guard,
                      "eligible": all(v <= GUARD_POINTS for v in guard.values())})
     rows.sort(key=lambda r: -r["difference"])
-    eligible = [r["candidate"] for r in rows if r["eligible"]]
-    advance = eligible[:math.ceil(len(eligible) / 2)] if stage < N_STAGES else []
+    advance = []
+    if stage < N_STAGES:
+        for track in sorted({r["track"] for r in rows}):
+            eligible = [r["candidate"] for r in rows if r["eligible"] and r["track"] == track]
+            advance += eligible[:math.ceil(len(eligible) / 2)]
     per_cell = df.groupby(["prompt", "model", "mode"])["clean"].mean().unstack("prompt").mul(100).round(1)
     print(f"{round_name} after stage {stage}: A clean_200 {flags.loc[c10.INCUMBENT, 'clean']:.1f}")
     print(pd.DataFrame(rows).to_string(index=False))

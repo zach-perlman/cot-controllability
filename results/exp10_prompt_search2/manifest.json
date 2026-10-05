@@ -5,6 +5,10 @@
   "question": "Does a second, more efficient prompt search find a prompt (prompt-only track) or a prompt plus a pre-filled opening (prefill track) that beats A (exp09's prompt) on reasoning-trace controllability, on new questions, held-out rules and models the search never saw?",
   "human_choices": "2026-10-05 21:45 UTC: run the search with motivational framing, best-of-n as a separate number, and build momentum (prefilled compliant openings); not the model's own compliant traces as examples (exp07b's B: +3.1 [+0.1, +6.0], Holm p 0.123, not a large gain), not shorter-and-more examples, not mid-reasoning reminders. Also chosen: the strict score, racing, paired comparisons, a check model and factorial crossing of components.",
   "naming": "2026-10-05 21:53 UTC, human: this search is exp10; its results feed exp11 (hide what you need, the intermediates project). It was first written as exp11; the question draw ran once under that name before any generation, and the redraw under exp10 is byte-identical (same seed and exclusions)",
+  "amendments": [
+    "2026-10-05 22:15 UTC, before any candidate generation (only the opening pre-pass had run): racing advances the top half (rounded up) of eligible candidates within each track, not over both tracks together, so that each track reaches validation with candidates (validation takes the top 2 per track).",
+    "2026-10-05 22:20 UTC, before any candidate generation: when an opening's rewrite fails the grader (1 of 1620 Gemma-4-31B search openings: 'ℝ' has no lowercase form), the opening is cut at the latest earlier sentence end whose rewrite passes (the row's cut is 'earlier_sentence'); if none passes, the request writer stops. Qwen3.8-27B's r1_s1 request file was written just before this change and is kept: no Qwen opening needed the fallback, and the current code writes rows identical to it except that its prefill rows' candidate_hash covers the earlier opening code (checked)."
+  ],
   "code": {
     "requests_grading_racing": "scripts/cc_exp10.py",
     "candidates": "scripts/exp10_candidates.py (texts written before any generation)",
