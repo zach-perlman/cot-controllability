@@ -19,8 +19,11 @@ one-letter restriction), unchanged.
 Steps (/venv/main/bin/python scripts/cc_exp09_ext3.py ...):
   check --model M      build the model's three files' rows and run the checks (writes nothing)
   requests --model M   write cache/exp09/requests_{nec,exonly,offopen}_<M>.jsonl (once each) and the record
-  plan                 the gpu_lanes.py plan (results/exp09_final_test/plan_ext3_1xB200.json): extension 2, examples
-                       only and necessity per model, then openings off per model (the longest part, last)
+  requests --model M --capped
+                       write requests_offopenc_<M>.jsonl: openings off with the 1200-token thinking-off cap and
+                       extension 2's capped example counts (deviations.json; replaces offopen)
+  plan                 the gpu_lanes.py plans after the cap (write_capped_plans: plan_ext3c_a_1xB200.json, examples
+                       only and necessity; plan_ext3c_b_1xB200.json, extension 2 capped, then openings off capped)
   grade --model M --part P
 """
 
@@ -43,6 +46,7 @@ import exp07b_candidates as b
 import exp09_rules as R
 
 PARTS = ["nec", "exonly", "offopen"]
+OFFOPEN_CAPPED = "offopenc"  # openings off with the 1200-token thinking-off cap (deviations.json); replaces "offopen"
 # Openings off is not run for the two models with the longest thinking-off responses (about 3000 tokens; human
 # decision, to save about 4.7 GPU hours); their request files are written but not generated.
 OFFOPEN_SKIPPED = ["Qwen3.6-27B-FP8", "Qwen3.8-27B-FP8"]
@@ -82,12 +86,15 @@ def examples_only(item: dict, examples: list[cands.Example], example_items: list
 
 
 # --- Rows -----------------------------------------------------------------------------------------------------------
-def model_rows(model: str) -> tuple[dict[str, list[dict]], dict]:
+def model_rows(model: str, capped: bool = False) -> tuple[dict[str, list[dict]], dict]:
+    """The three parts' rows; capped: only openings off, with the 1200-token thinking-off cap and extension 2's capped
+    example counts (part OFFOPEN_CAPPED)."""
     from transformers import AutoTokenizer
     tokenizer = AutoTokenizer.from_pretrained(cfg.model_dir(model))
     source = e9.EXAMPLE_SOURCE.get(model, model)
     by_block = {cc_prompts.question_block(t["item"]): t["item"] for t in e7b.own_traces(source)}
-    ext2 = json.loads((e9.EXP.results / f"requests_record_{x2.STEM}_{model}.json").read_text())["rules"]
+    ext2_stem, off_cap = (x2.CAPPED_STEM, x2.CAPPED_OFF_TOKENS) if capped else (x2.STEM, cfg.EXP04_EXTERNAL_CAP_TOKENS)
+    ext2 = json.loads((e9.EXP.results / f"requests_record_{ext2_stem}_{model}.json").read_text())["rules"]
     exp09_a = x1.exp09_short_rows(model, "A")
     parts = {"nec": necessity_rows(), "exonly": [], "offopen": []}
     for mode in R.ALL_RULES:
@@ -107,7 +114,7 @@ def model_rows(model: str) -> tuple[dict[str, list[dict]], dict]:
                 for arm, kind in OFFOPEN_ORDER:
                     if kind in texts:
                         parts["offopen"].append(x2.row(it, mode, arm, kind, "off", prompts[arm], "openings_off",
-                                                       prefill=texts[kind]))
+                                                       prefill=texts[kind], off_cap=off_cap))
     rule_order = {m: k for k, m in enumerate(R.ALL_RULES)}
     item_order = {it["item_id"]: k for k, it in enumerate(e9.items())}
     parts["exonly"].sort(key=lambda r: (rule_order[r["mode"]], item_order[r["item_id"]]))
@@ -116,6 +123,8 @@ def model_rows(model: str) -> tuple[dict[str, list[dict]], dict]:
     if model in x2.RENDERED_BY_EXP09:
         for r in parts["exonly"] + parts["offopen"]:
             r["exp09_render"] = True
+    if capped:
+        parts = {OFFOPEN_CAPPED: parts["offopen"]}
     for name, rows in parts.items():
         if len({r["request_id"] for r in rows}) != len(rows):
             raise RuntimeError(f"{model} {name}: duplicate request ids")
@@ -135,18 +144,19 @@ def check_rows(tokenizer, model: str, parts: dict[str, list[dict]]) -> dict:
     family = cfg.ALL_MODELS[model]["family"]
     on_limit = cfg.VLLM_MAX_MODEL_LEN - e7.STOP_TOKENS - e8.CONTEXT_MARGIN
     longest = {}
-    for name in ("exonly", "offopen"):
-        for r in parts[name]:
+    for name in ("exonly", "offopen", OFFOPEN_CAPPED):
+        for r in parts.get(name, []):
             n = len(x2.rendered(tokenizer, model, r))
             if r["thinking"]:
                 fits = n <= on_limit
             else:
-                fits = (len(x2.rendered(tokenizer, model, {**r, "prefill": None})) <= x2.OFF_PROMPT_LIMIT
-                        and n + cfg.EXP04_EXTERNAL_CAP_TOKENS <= cfg.VLLM_MAX_MODEL_LEN)
+                cap = r["response_cap_tokens"]
+                fits = (len(x2.rendered(tokenizer, model, {**r, "prefill": None})) <= x2.off_prompt_limit(cap)
+                        and n + cap <= cfg.VLLM_MAX_MODEL_LEN)
             if not fits:
                 raise RuntimeError(f"{model} {name} {r['mode']} {r['item_id']}: prompt of {n} tokens does not fit")
             longest[name] = max(longest.get(name, 0), n)
-    for r in parts["nec"]:
+    for r in parts.get("nec", []):
         cc_generate_abort.letter_token_ids(tokenizer, r)
         longest["nec"] = max(longest.get("nec", 0), len(cc_generate_abort.request_prompt_ids(tokenizer, family, r)))
     return {"longest_prompt": longest}
@@ -168,13 +178,34 @@ def grade(model: str, part: str):
     return out
 
 
+def plan_job(model: str, stem: str, after: list[str]) -> dict:
+    # The jobs do not depend on each other, so a failed one does not stop the lane (rerunning the plan resumes it)
+    return {"exp": "exp09", "model": model,
+            "requests": str(x2.requests_path(model, stem).relative_to(cfg.REPO_ROOT)),
+            "items": str(e9.ITEMS_PATH.relative_to(cfg.REPO_ROOT)), "memory": e9.MEMORY[model],
+            "after": ["/venv/main/bin/python"] + after + ["--model", model], "optional": True}
+
+
+def write_capped_plans() -> list:
+    """The plans after the 1200-token thinking-off cap (deviations.json): (a) examples only and necessity per model,
+    unchanged, first; (b) extension 2 capped per model, then openings off capped (the 5 stated models, then the
+    2 dropped for cost, last)."""
+    grade = ["cc_exp09_ext3.py", "grade", "--part"]
+    plan_a = [plan_job(m, p, grade + [p]) for m in x2.MODEL_ORDER for p in ("exonly", "nec")]
+    offopen_order = ([m for m in x2.MODEL_ORDER if m not in OFFOPEN_SKIPPED]
+                     + [m for m in x2.MODEL_ORDER if m in OFFOPEN_SKIPPED])
+    plan_b = ([plan_job(m, x2.CAPPED_STEM, ["cc_exp09_ext2.py", "grade", "--capped"]) for m in x2.MODEL_ORDER]
+              + [plan_job(m, OFFOPEN_CAPPED, grade + [OFFOPEN_CAPPED]) for m in offopen_order])
+    paths = []
+    for name, lane in (("a", plan_a), ("b", plan_b)):
+        plan = {"name": f"exp09_ext3c_{name}_1xB200", "mps": False, "gpus": {"0": [lane]}}
+        paths.append(e9.EXP.results / f"plan_ext3c_{name}_1xB200.json")
+        paths[-1].write_text(json.dumps(plan, indent=2) + "\n")
+    return paths
+
+
 def write_plan():
-    def job(model: str, stem: str, after: list[str]) -> dict:
-        # The jobs do not depend on each other, so a failed one does not stop the lane (rerunning the plan resumes it)
-        return {"exp": "exp09", "model": model,
-                "requests": str(x2.requests_path(model, stem).relative_to(cfg.REPO_ROOT)),
-                "items": str(e9.ITEMS_PATH.relative_to(cfg.REPO_ROOT)), "memory": e9.MEMORY[model],
-                "after": ["/venv/main/bin/python"] + after + ["--model", model], "optional": True}
+    job = plan_job
     lane = []
     for m in x2.MODEL_ORDER:
         lane.append(job(m, x2.STEM, ["cc_exp09_ext2.py", "grade"]))
@@ -192,23 +223,27 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=["check", "requests", "plan", "grade"])
     parser.add_argument("--model", choices=x2.MODEL_ORDER)
-    parser.add_argument("--part", choices=PARTS)
+    parser.add_argument("--part", choices=PARTS + [OFFOPEN_CAPPED])
+    parser.add_argument("--capped", action="store_true",
+                        help=f"requests: write only openings off with the {x2.CAPPED_OFF_TOKENS}-token thinking-off cap")
     args = parser.parse_args()
     if args.command == "plan":
-        print(write_plan())
+        print(write_capped_plans())
         return
     if args.command == "grade":
         print(grade(args.model, args.part))
         return
-    if args.command == "requests" and any(x2.requests_path(args.model, p).exists() for p in PARTS):
+    written = [OFFOPEN_CAPPED] if args.capped else PARTS
+    if args.command == "requests" and any(x2.requests_path(args.model, p).exists() for p in written):
         raise SystemExit(f"{args.model}: an extension-3 request file exists; request files are fixed once written")
-    parts, record = model_rows(args.model)
+    parts, record = model_rows(args.model, args.capped)
     print(json.dumps(record, indent=1))
     if args.command == "requests":
         for p, rows in parts.items():
             e7.write_requests(x2.requests_path(args.model, p), rows)
-        (e9.EXP.results / f"requests_record_ext3_{args.model}.json").write_text(json.dumps(record, indent=2) + "\n")
-        print("wrote", [str(x2.requests_path(args.model, p)) for p in PARTS])
+        name = "ext3c" if args.capped else "ext3"
+        (e9.EXP.results / f"requests_record_{name}_{args.model}.json").write_text(json.dumps(record, indent=2) + "\n")
+        print("wrote", [str(x2.requests_path(args.model, p)) for p in written])
 
 
 if __name__ == "__main__":

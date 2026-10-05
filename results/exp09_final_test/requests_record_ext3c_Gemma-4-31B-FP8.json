@@ -1,0 +1,19 @@
+{
+  "model": "Gemma-4-31B-FP8",
+  "rows": {
+    "offopenc": 3240
+  },
+  "cells": {
+    "offopenc": {
+      "A|commitment|off": 840,
+      "A|compliant|off": 840,
+      "A|noncompliant|off": 720,
+      "no_rule|compliant|off": 840
+    }
+  },
+  "checks": {
+    "longest_prompt": {
+      "offopenc": 31838
+    }
+  }
+}

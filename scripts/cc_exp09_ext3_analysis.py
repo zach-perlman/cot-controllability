@@ -5,7 +5,8 @@ Cells and inference as cc_exp09_ext2_analysis (mean over model x rule cells of t
 question bootstrap; two-sided bootstrap p). Holm over E1 and OF1.
   examples only   S(1000), thinking on (exp09's P1/P2 metric)
   openings off    S(200) of the graded continuation (extension 2's thinking-off metric); OFX compares the opening's
-                  effect thinking off and on, both in S(200)
+                  effect thinking off and on, both in S(200). Thinking-off responses capped at 1200 tokens (part
+                  "offopenc", deviations.json); pooled over the stated 5 models, and over all 7 as a secondary pool
   necessity       per model and question, from 5 direct answers: necessary (<= 1 right), mixed, unnecessary (>= 4
                   right); C1, C2, C3 (exp09's A - baseline thinking on, S(1000)) and E1 within each label
 
@@ -62,12 +63,16 @@ def load(skip_missing: bool) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
     frames, labels, present = [], [], []
     base, base_models = an2.load(skip_missing)
     for model in base_models:
-        parts = ["exonly", "nec"] + ([] if model in x3.OFFOPEN_SKIPPED else ["offopen"])
-        try:
-            paths = {p: x2.grades_path(model, p) for p in parts}
-        except SystemExit:
-            paths = {}
-        if len(paths) < len(parts) or not all(p.exists() for p in paths.values()):
+        parts = ["exonly", "nec", x3.OFFOPEN_CAPPED]
+        paths = {}
+        for p in parts:
+            try:
+                paths[p] = x2.grades_path(model, p)
+            except SystemExit:
+                continue
+        if model in x3.OFFOPEN_SKIPPED and not paths.get(x3.OFFOPEN_CAPPED, cfg.REPO_ROOT / "-").exists():
+            parts.remove(x3.OFFOPEN_CAPPED)  # queued last, optional (not in the stated 5-model pool)
+        if not all(p in paths and paths[p].exists() for p in parts):
             if skip_missing:
                 continue
             raise SystemExit(f"{model}: extension-3 grades missing (pass --skip-missing)")
@@ -105,10 +110,17 @@ def interaction(values: dict, cells: list[tuple[str, str]]) -> dict | None:
             "p_two_sided": float(min(1.0, 2 * min(np.mean(d <= 0), np.mean(d >= 0)))), "n_cells": len(cells)}
 
 
-def contrasts(values: dict, models: list[str]) -> dict:
+def openings_off_models(models: list[str], all_models: bool) -> list[str]:
+    """The stated pool for the openings-off contrasts: the 5 models not dropped for cost (all_models: every model
+    with openings-off grades, a secondary pool)."""
+    return [m for m in models if all_models or m not in x3.OFFOPEN_SKIPPED]
+
+
+def contrasts(values: dict, models: list[str], all_openings_off_models: bool = False) -> dict:
     out = {}
     for name, (metric, a, b, rules, primary) in CONTRASTS.items():
-        cells = [(m, r) for m in models for r in rules]
+        pool = openings_off_models(models, all_openings_off_models) if name.startswith("OF") else models
+        cells = [(m, r) for m in pool for r in rules]
         res = contrast(values, metric, a, b, cells)
         if res is not None:
             res.update(metric=metric, a=a, b=b, primary=primary,
@@ -119,7 +131,7 @@ def contrasts(values: dict, models: list[str]) -> dict:
             out[name] = res
     for n, p in holm({n: v["p_two_sided"] for n, v in out.items() if v["primary"]}).items():
         out[n]["p_holm"] = p
-    cells = [(m, r) for m in models for r in OPEN_OFF_RULES]
+    cells = [(m, r) for m in openings_off_models(models, all_openings_off_models) for r in OPEN_OFF_RULES]
     ofx = interaction(values, cells)
     if ofx is not None:
         ofx.update(metric="S_200", primary=False,
@@ -154,6 +166,8 @@ def report(summary: dict) -> str:
              "Not part of exp09's pre-registered test; Holm over E1 and OF1 only. Rule-grader and accuracy metrics "
              "(no LLM judge).", "", "## Contrasts", ""]
     lines += an2.contrast_table(summary["contrasts"], models, with_holm=True)
+    lines += ["", "## Openings off on every model with openings-off grades (secondary pool)", ""]
+    lines += an2.contrast_table(summary["openings_off_all_models"], models, with_holm=False)
     lines += ["", "## Per rule set", ""] + an2.breakdown_table(
         {n: v for n, v in summary["contrasts"].items() if v["per_rule_set"]}, "per_rule_set", list(an2.RULE_SETS))
     lines += ["", "## By CoT necessity (5 direct answers per model and question)", "",
@@ -177,8 +191,10 @@ def main() -> None:
     values = an2.cell_values(df)
     out_dir.mkdir(parents=True)
     labels.to_csv(out_dir / "necessity_labels.csv", index=False)
+    all_off = {n: v for n, v in contrasts(values, models, all_openings_off_models=True).items() if n.startswith("OF")}
     summary = {"run": args.run, "models": models, "missing": [m for m in x2.MODEL_ORDER if m not in models],
-               "contrasts": contrasts(values, models), "by_necessity": by_necessity(df, labels, models),
+               "contrasts": contrasts(values, models), "openings_off_all_models": all_off,
+               "by_necessity": by_necessity(df, labels, models),
                "necessity_counts": labels.groupby(["model", "label"]).size().unstack(fill_value=0).to_dict("index")}
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=1))
     (out_dir / "REPORT_auto.md").write_text(report(summary))

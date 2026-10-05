@@ -7,10 +7,13 @@ rows (A|short -> A|none|on, baseline|short -> baseline|none|on). A contrast is t
 .question_draws) and a two-sided bootstrap p; Holm over C1, C2, O1, O3.
   channels   S(200), thinking on and off
   openings   S(1000) of the graded continuation after the opening
-  accuracy   thinking off: share of correct answers; the no-rule reference (one row per question) is paired with
-             every rule's cell
+Thinking-off responses are capped at 1200 tokens (deviations.json; request files requests_ext2c_<M>), so thinking-off
+accuracy is not estimable and its contrasts (ACC_A, ACC_baseline) are dropped. A tag block that never closes (cut at
+the cap, or ended without its closing tag) is graded on its text so far (cc_exp09_ext2.unclosed_block_reasoning).
 Sensitivity: C2 and C4 on the cells where A off has all of exp09's A examples (same_examples); C1, C2, C4 on
-thinking-off rows with a closed tag block (tagged_only); every contrast without exp06's 5 rules (held_out_only).
+thinking-off rows whose tag blocks all close (tagged_only), with unclosed blocks read as empty, a violation at token 0
+(strict_tags: cc_exp06's reading), and without rows with a hidden reasoning block (no_hidden_reasoning); every
+contrast without exp06's 5 rules (held_out_only).
 
 Run: /venv/main/bin/python scripts/cc_exp09_ext2_analysis.py --run NAME [--skip-missing]
 Writes results/exp09_final_test/analysis_ext2/<run>/ (never overwritten).
@@ -24,7 +27,6 @@ import json
 import numpy as np
 import pandas as pd
 
-import cc_config as cfg
 import cc_exp07 as e7
 import cc_exp09 as e9
 import cc_exp09_ext2 as x
@@ -49,9 +51,6 @@ CONTRASTS = {
     "O2 rule + opening - opening only": ("S_1000", "A|compliant|on", "no_rule|compliant|on", x.OPENING_RULES, False),
     "O4 non-compliant opening - none (A)": ("S_1000", "A|noncompliant|on", "A|none|on",
                                             [r for r in x.OPENING_RULES if r not in NO_NONCOMPLIANT], False),
-    "ACC_A thinking-off accuracy, A - no rule": ("accuracy", "A|none|off", "no_rule|none|off", R.ALL_RULES, False),
-    "ACC_baseline thinking-off accuracy, CoT-Control prompt - no rule": ("accuracy", "baseline|none|off",
-                                                                          "no_rule|none|off", R.ALL_RULES, False),
 }
 SAME_EXAMPLES = ["C2 thinking off - on (A)", "C4 A - CoT-Control prompt, thinking off"]
 TAGGED_ONLY = ["C1 thinking off - on (CoT-Control prompt)", "C2 thinking off - on (A)",
@@ -64,7 +63,7 @@ def load(skip_missing: bool) -> tuple[pd.DataFrame, list[str]]:
     frames, present = [], []
     for model in x.MODEL_ORDER:
         try:
-            ext, main = x.grades_path(model), e9.grades_path(model)
+            ext, main = x.grades_path(model, x.CAPPED_STEM), e9.grades_path(model)
         except SystemExit:
             ext = main = None
         if ext is None or not ext.exists() or not main.exists():
@@ -87,14 +86,13 @@ def same_example_cells(models: list[str]) -> set[tuple[str, str]]:
     """(model, rule) cells where A thinking off has all of exp09's thinking-on examples (the request records)."""
     out = set()
     for m in models:
-        record = json.loads((e9.EXP.results / f"requests_record_{x.STEM}_{m}.json").read_text())
+        record = json.loads((e9.EXP.results / f"requests_record_{x.CAPPED_STEM}_{m}.json").read_text())
         out |= {(m, rule) for rule, r in record["rules"].items() if r["same_examples"]}
     return out
 
 
 def cell_values(df: pd.DataFrame) -> dict:
-    """(metric, cell, model, rule) -> (point, bootstrap draws). The no-rule reference's accuracy is entered under
-    every rule, so it pairs with each rule's thinking-off cells."""
+    """(metric, cell, model, rule) -> (point, bootstrap draws)."""
     index, weights = question_draws()
     out = {}
     for (cell, model, mode), c in df.groupby(["cell", "model", "mode"]):
@@ -104,12 +102,19 @@ def cell_values(df: pd.DataFrame) -> dict:
         draws = kaplan_meier(times, events, w, T_VALUES)
         out[("S_200", cell, model, mode)] = (100 * point[0], 100 * draws[:, 0])
         out[("S_1000", cell, model, mode)] = (100 * point[1], 100 * draws[:, 1])
-        if cell.endswith("|off"):
-            correct = c["correct"].astype(float).to_numpy()
-            acc = (100 * correct.mean(), 100 * (w @ correct) / w.sum(axis=1))
-            for rule in (R.ALL_RULES if mode == cfg.NO_CONSTRAINT else [mode]):
-                out[("accuracy", cell, model, rule)] = acc
     return out
+
+
+def unclosed(df: pd.DataFrame) -> pd.Series:
+    """Thinking-off rows graded on a tag block that never closed."""
+    return (df["channel"] == "off") & df["unclosed"].notna()
+
+
+def strict_tags(df: pd.DataFrame) -> pd.DataFrame:
+    """cc_exp06's reading: an unclosed tag block has no text, a violation at token 0."""
+    d = df.copy()
+    d.loc[unclosed(d), "reasoning_tokens"] = 0
+    return e7.survival(d)
 
 
 def with_breakdowns(values: dict, name: str, cells: list[tuple[str, str]], models: list[str]) -> dict | None:
@@ -139,12 +144,14 @@ def contrasts(values: dict, models: list[str]) -> dict:
 
 def sensitivity(df: pd.DataFrame, values: dict, models: list[str]) -> dict:
     same = same_example_cells(models)
-    keep = (df["channel"] != "off") | (df["external_blocks"].fillna(0) > 0)
-    tagged_values = cell_values(df[keep])
+    tagged_values = cell_values(df[~unclosed(df)])
+    strict_values = cell_values(strict_tags(df))
     held_out = set(r7.HELDOUT_RULES) | set(R.NEW_RULES)
     no_hidden = (df["channel"] != "off") | (df["hidden_reasoning_tokens"].fillna(0) == 0)
     no_hidden_values = cell_values(df[no_hidden])
     return {
+        "strict_tags": {n: r for n in TAGGED_ONLY if (r := with_breakdowns(
+            strict_values, n, all_cells(n, models), models)) is not None},
         "no_hidden_reasoning": {n: r for n in TAGGED_ONLY if (r := with_breakdowns(
             no_hidden_values, n, all_cells(n, models), models)) is not None},
         "same_examples": {n: r for n in SAME_EXAMPLES if (r := with_breakdowns(
@@ -166,11 +173,10 @@ def descriptives(df: pd.DataFrame) -> pd.DataFrame:
                "tokens_p25": int(q[0]), "tokens_median": int(q[1]), "tokens_p75": int(q[2])}
         if cell.endswith("|off"):
             row["no_tag_block"] = round(100 * float((c["external_blocks"].fillna(0) == 0).mean()), 1)
-            row["accuracy"] = round(100 * float(c["correct"].astype(float).mean()), 1)
+            row["unclosed_at_cap"] = round(100 * float((c["unclosed"] == "cap").mean()), 1)
+            row["unclosed_at_stop"] = round(100 * float((c["unclosed"] == "stop").mean()), 1)
             row["hidden_reasoning_block"] = round(100 * float((c["hidden_reasoning_tokens"].fillna(0) > 0).mean()), 1)
             row["outside_tag_chars_median"] = int(c["outside_tag_chars"].median())
-            if not cell.startswith("no_rule"):
-                row["whole_trace_compliance"] = round(100 * float(c["compliant"].astype(float).mean()), 1)
         rows.append(row)
     return pd.DataFrame(rows)
 
@@ -201,17 +207,18 @@ def report(summary: dict) -> str:
              "(UNVERIFIED until a human adds it to VERIFIED.md)", "",
              f"Models: {', '.join(models)}." + (f" Missing: {', '.join(summary['missing'])}." if summary["missing"]
                                                  else ""),
-             "Not part of exp09's pre-registered test; Holm over C1, C2, O1, O3 only. Survival and accuracy are "
-             "rule-grader metrics (no LLM judge).", "",
+             "Not part of exp09's pre-registered test; Holm over C1, C2, O1, O3 only. Survival is a rule-grader "
+             "metric (no LLM judge). Thinking-off responses are capped at 1200 tokens (no thinking-off accuracy).", "",
              "## Contrasts (mean over model x rule cells, 95% CI over questions)", ""]
     lines += contrast_table(summary["contrasts"], models, with_holm=True)
     lines += ["", "## Per rule set", ""] + breakdown_table(summary["contrasts"], "per_rule_set", list(RULE_SETS))
     lines += ["", "## Per model group", ""] + breakdown_table(summary["contrasts"], "per_model_group",
                                                               ["design", "fresh"])
     lines += ["", "## Per rule", ""] + breakdown_table(summary["contrasts"], "per_rule", R.ALL_RULES)
-    for name, title in (("no_hidden_reasoning", "thinking-off rows without a hidden reasoning block only"),
+    for name, title in (("strict_tags", "an unclosed tag block read as empty (violation at token 0)"),
+                        ("no_hidden_reasoning", "thinking-off rows without a hidden reasoning block only"),
                         ("same_examples", "A thinking off with all of exp09's examples only"),
-                        ("tagged_only", "thinking-off rows with a closed tag block only"),
+                        ("tagged_only", "thinking-off rows whose tag blocks all close only"),
                         ("held_out_only", "without exp06's 5 rules (A was chosen on them)")):
         lines += ["", f"## Sensitivity: {title}", ""] + contrast_table(summary["sensitivity"][name], models, False)
     lines += ["", "## Cells", ""]
