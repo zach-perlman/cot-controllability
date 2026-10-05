@@ -144,10 +144,12 @@ def primary(values: dict, present: list[str]) -> dict:
 def secondary(df: pd.DataFrame, values: dict, present: list[str]) -> dict:
     design = [m for m in e9.DESIGN_MODELS if m in present]
     fresh = [m for m in e9.FRESH_MODELS if m in present]
-    out = {"A_minus_baseline_by_kind": {}, "per_model": {}}
+    out = {"A_minus_baseline_by_kind": {}, "A_minus_baseline_by_kind_S200": {}, "per_model": {}}
     for kind in ("formatting", "insertion", "content"):
         rules = [r for r in R.ALL_RULES if R.RULE_KIND[r] == kind]
         out["A_minus_baseline_by_kind"][kind] = contrast(values, "S_1000", "A", "baseline", present, rules)
+        # Added after the v1 analysis (descriptive, not pre-registered).
+        out["A_minus_baseline_by_kind_S200"][kind] = contrast(values, "S_200", "A", "baseline", present, rules)
     for model in present:
         out["per_model"][model] = contrast(values, "S_1000", "A", "baseline", [model], R.ALL_RULES)
     if design and fresh:  # selection check: is A's gain larger on the models it was chosen on?

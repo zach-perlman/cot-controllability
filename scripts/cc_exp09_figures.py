@@ -155,25 +155,41 @@ def fig_design_vs_fresh(secondary: dict, fig_dir) -> str:
     return save(fig, fig_dir, "F4_design_vs_fresh", 900, 560, top=100)
 
 
+BY_KIND_KEY = {"S_1000": "A_minus_baseline_by_kind", "S_200": "A_minus_baseline_by_kind_S200"}
+
+
 def fig_by_kind(secondary: dict, fig_dir) -> str:
+    """One row per metric: S(1000) (pre-registered) on top, S(200) (added after v1) below."""
     kinds = ["formatting", "insertion", "content"]
-    fig = make_subplots(rows=1, cols=2, column_widths=[0.6, 0.4], horizontal_spacing=0.12,
-                        subplot_titles=["S(1000) per arm, 7 models", "A - baseline (pp)"])
-    for arm in ("baseline", "A"):
-        vals = [secondary["A_minus_baseline_by_kind"][k][f"{arm}_questions_and_rules"] for k in kinds]
-        fig.add_trace(go.Bar(x=kinds, y=[v["value"] for v in vals], name=ARM[arm][0], marker_color=ARM[arm][1],
-                             error_y=dict(type="data", symmetric=False, array=[v["ci95"][1] - v["value"] for v in vals],
-                                          arrayminus=[v["value"] - v["ci95"][0] for v in vals])), row=1, col=1)
-    diffs = [secondary["A_minus_baseline_by_kind"][k]["questions_and_rules"] for k in kinds]
-    fig.add_trace(go.Scatter(x=kinds, y=[v["value"] for v in diffs], mode="markers", marker=dict(size=12,
-                  color="#333"), showlegend=False, error_y=dict(type="data", symmetric=False,
-                  array=[v["ci95"][1] - v["value"] for v in diffs],
-                  arrayminus=[v["value"] - v["ci95"][0] for v in diffs])), row=1, col=2)
-    rules = {k: ", ".join(RULE_LABEL[r] for r in secondary["A_minus_baseline_by_kind"][k]["rules"]) for k in kinds}
-    fig.update_layout(barmode="group",
-                      title=title("By rule kind: A helps formatting and insertion rules most, content rules least",
-                                  "<br>".join(f"{k}: {v}" for k, v in rules.items())))
-    return save(fig, fig_dir, "F5_by_rule_kind", 1150, 600, top=150)
+    metrics = {"S_1000": "S(1000)", "S_200": "S(200), added after v1"}
+    fig = make_subplots(rows=2, cols=2, column_widths=[0.6, 0.4], horizontal_spacing=0.12, vertical_spacing=0.14,
+                        subplot_titles=[s for t in metrics.values() for s in (f"{t}: per arm, 7 models",
+                                                                               f"{t}: A - baseline (pp)")])
+    ranked = {}
+    for row, metric in enumerate(metrics, start=1):
+        by_kind = secondary[BY_KIND_KEY[metric]]
+        for arm in ("baseline", "A"):
+            vals = [by_kind[k][f"{arm}_questions_and_rules"] for k in kinds]
+            fig.add_trace(go.Bar(x=kinds, y=[v["value"] for v in vals], name=ARM[arm][0], marker_color=ARM[arm][1],
+                                 legendgroup=arm, showlegend=row == 1,
+                                 error_y=dict(type="data", symmetric=False,
+                                              array=[v["ci95"][1] - v["value"] for v in vals],
+                                              arrayminus=[v["value"] - v["ci95"][0] for v in vals])), row=row, col=1)
+        diffs = [by_kind[k]["questions_and_rules"] for k in kinds]
+        fig.add_trace(go.Scatter(x=kinds, y=[v["value"] for v in diffs], mode="markers", marker=dict(size=12,
+                      color="#333"), showlegend=False, error_y=dict(type="data", symmetric=False,
+                      array=[v["ci95"][1] - v["value"] for v in diffs],
+                      arrayminus=[v["value"] - v["ci95"][0] for v in diffs])), row=row, col=2)
+        fig.update_yaxes(rangemode="tozero", row=row, col=2)
+        ranked[metric] = sorted(kinds, key=lambda k: by_kind[k]["questions_and_rules"]["value"], reverse=True)
+    if ranked["S_1000"][::2] == ranked["S_200"][::2]:  # same largest and smallest at both thresholds
+        headline = (f"By rule kind: A's gain is largest for {ranked['S_1000'][0]} rules and smallest for "
+                    f"{ranked['S_1000'][-1]} rules, at both S(1000) and S(200)")
+    else:
+        headline = "By rule kind: the ordering of A's gain differs between S(1000) and S(200)"
+    rules = {k: ", ".join(RULE_LABEL[r] for r in secondary[BY_KIND_KEY["S_1000"]][k]["rules"]) for k in kinds}
+    fig.update_layout(barmode="group", title=title(headline, "<br>".join(f"{k}: {v}" for k, v in rules.items())))
+    return save(fig, fig_dir, "F5_by_rule_kind", 1150, 950, top=150)
 
 
 def fig_accuracy_and_length(secondary: dict, cells: pd.DataFrame, grades: pd.DataFrame, fig_dir) -> str:

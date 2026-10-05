@@ -1,0 +1,214 @@
+{
+  "models_present": [
+    "Qwen3.8-27B-FP8",
+    "Gemma-4-31B-FP8",
+    "Qwen3-32B",
+    "Qwen3.6-27B-FP8",
+    "Qwen3.6-35B-A3B-FP8",
+    "GLM-4.7-Flash-FP8",
+    "Gemma-4-12B-FP8"
+  ],
+  "complete": true,
+  "primary": {
+    "P1": {
+      "metric": "S_1000",
+      "arm": "A",
+      "minus": "baseline",
+      "models": [
+        "Qwen3.6-27B-FP8",
+        "Qwen3.6-35B-A3B-FP8",
+        "GLM-4.7-Flash-FP8",
+        "Gemma-4-12B-FP8"
+      ],
+      "rules": [
+        "lowercase_thinking",
+        "uppercase_thinking",
+        "meow_between_words",
+        "end_of_sentence",
+        "word_suppression",
+        "alternating_case",
+        "multiple_word_suppression",
+        "no_digits",
+        "no_first_person",
+        "no_commas",
+        "now_sentence_start",
+        "no_question_words"
+      ],
+      "questions_and_rules": {
+        "value": 9.2,
+        "ci95": [
+          4.13,
+          14.95
+        ],
+        "p": 0.0
+      },
+      "A_questions_and_rules": {
+        "value": 11.58,
+        "ci95": [
+          7.21,
+          16.85
+        ]
+      },
+      "baseline_questions_and_rules": {
+        "value": 2.38,
+        "ci95": [
+          0.82,
+          4.51
+        ]
+      },
+      "questions_only": {
+        "value": 9.2,
+        "ci95": [
+          8.13,
+          10.33
+        ],
+        "p": 0.0
+      },
+      "A_questions_only": {
+        "value": 11.58,
+        "ci95": [
+          10.64,
+          12.62
+        ]
+      },
+      "baseline_questions_only": {
+        "value": 2.38,
+        "ci95": [
+          1.94,
+          2.85
+        ]
+      },
+      "holm_p": 0.0,
+      "supported": true
+    },
+    "P2": {
+      "metric": "S_1000",
+      "arm": "A",
+      "minus": "baseline",
+      "models": [
+        "Qwen3.8-27B-FP8",
+        "Gemma-4-31B-FP8",
+        "Qwen3-32B",
+        "Qwen3.6-27B-FP8",
+        "Qwen3.6-35B-A3B-FP8",
+        "GLM-4.7-Flash-FP8",
+        "Gemma-4-12B-FP8"
+      ],
+      "rules": [
+        "no_commas",
+        "now_sentence_start",
+        "no_question_words"
+      ],
+      "questions_and_rules": {
+        "value": 16.67,
+        "ci95": [
+          9.97,
+          22.02
+        ],
+        "p": 0.0
+      },
+      "A_questions_and_rules": {
+        "value": 23.43,
+        "ci95": [
+          19.83,
+          26.84
+        ]
+      },
+      "baseline_questions_and_rules": {
+        "value": 6.76,
+        "ci95": [
+          0.0,
+          13.89
+        ]
+      },
+      "questions_only": {
+        "value": 16.67,
+        "ci95": [
+          14.98,
+          18.47
+        ],
+        "p": 0.0
+      },
+      "A_questions_only": {
+        "value": 23.43,
+        "ci95": [
+          21.62,
+          25.32
+        ]
+      },
+      "baseline_questions_only": {
+        "value": 6.76,
+        "ci95": [
+          5.44,
+          8.09
+        ]
+      },
+      "holm_p": 0.0,
+      "supported": true
+    },
+    "P3": {
+      "metric": "whole_trace_compliance",
+      "arm": "A",
+      "minus": "baseline",
+      "models": [
+        "Qwen3.8-27B-FP8",
+        "Gemma-4-31B-FP8",
+        "Qwen3-32B",
+        "Qwen3.6-27B-FP8",
+        "Qwen3.6-35B-A3B-FP8",
+        "GLM-4.7-Flash-FP8",
+        "Gemma-4-12B-FP8"
+      ],
+      "rules": [
+        "lowercase_thinking",
+        "no_commas"
+      ],
+      "questions_and_rules": {
+        "value": 28.69,
+        "ci95": [
+          17.02,
+          40.95
+        ],
+        "p": 0.0
+      },
+      "A_questions_and_rules": {
+        "value": 32.44,
+        "ci95": [
+          23.1,
+          42.38
+        ]
+      },
+      "baseline_questions_and_rules": {
+        "value": 3.75,
+        "ci95": [
+          0.95,
+          7.02
+        ]
+      },
+      "questions_only": {
+        "value": 28.69,
+        "ci95": [
+          26.31,
+          31.13
+        ],
+        "p": 0.0
+      },
+      "A_questions_only": {
+        "value": 32.44,
+        "ci95": [
+          30.0,
+          35.0
+        ]
+      },
+      "baseline_questions_only": {
+        "value": 3.75,
+        "ci95": [
+          2.86,
+          4.64
+        ]
+      },
+      "holm_p": 0.0,
+      "supported": true
+    }
+  }
+}
