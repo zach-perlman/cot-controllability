@@ -1,0 +1,128 @@
+{
+  "Qwen3.8-27B-FP8": {
+    "nocot_model": "local/qwen3.8-27b",
+    "theta15_2": -2.348333,
+    "ncri15_2": 66.1207,
+    "per_rung": {
+      "brew:lo": 0.23781110179142884,
+      "brew:mid": 0.16887965599729138
+    },
+    "expected": 0.2119618096186273,
+    "observed": 0.2708333333333333,
+    "n": 48,
+    "n_reasoned": 0,
+    "observed_per_rung": {
+      "brew:lo": 0.3,
+      "brew:mid": 0.2222222222222222
+    },
+    "binomial_p_vs_expected": 0.2945285311988759
+  },
+  "Gemma-4-31B-FP8": {
+    "nocot_model": "local/gemma-4-31b-it",
+    "theta15_2": -1.271852,
+    "ncri15_2": 81.6511,
+    "per_rung": {
+      "brew:lo": 0.34583917724547664,
+      "brew:mid": 0.17312649875266356
+    },
+    "expected": 0.2810719228106717,
+    "observed": 0.375,
+    "n": 48,
+    "n_reasoned": 0,
+    "observed_per_rung": {
+      "brew:lo": 0.6,
+      "brew:mid": 0.0
+    },
+    "binomial_p_vs_expected": 0.1505645802884482
+  },
+  "Qwen3-32B": {
+    "nocot_model": "qwen/qwen3-32b",
+    "theta15_2": -2.825309,
+    "ncri15_2": 59.2394,
+    "per_rung": {
+      "brew:lo": 0.21230099932995067,
+      "brew:mid": 0.16804168599285985
+    },
+    "expected": 0.1957037568285416,
+    "observed": 0.16666666666666666,
+    "n": 48,
+    "n_reasoned": 0,
+    "observed_per_rung": {
+      "brew:lo": 0.23333333333333334,
+      "brew:mid": 0.05555555555555555
+    },
+    "binomial_p_vs_expected": 0.7181736814896094
+  },
+  "Qwen3.6-27B-FP8": {
+    "nocot_model": "local/qwen3.6-27b",
+    "theta15_2": -2.257083,
+    "ncri15_2": 67.4372,
+    "per_rung": {
+      "brew:lo": 0.24397780558295706,
+      "brew:mid": 0.1690904446824564
+    },
+    "expected": 0.21589504524526934,
+    "observed": 0.16666666666666666,
+    "n": 48,
+    "n_reasoned": 0,
+    "observed_per_rung": {
+      "brew:lo": 0.2,
+      "brew:mid": 0.1111111111111111
+    },
+    "binomial_p_vs_expected": 0.4856126580776375
+  },
+  "Qwen3.6-35B-A3B-FP8": {
+    "nocot_model": "qwen/qwen3.6-35b-a3b",
+    "theta15_2": -2.659135,
+    "ncri15_2": 61.6368,
+    "per_rung": {
+      "brew:lo": 0.22002245045502306,
+      "brew:mid": 0.16828971579789437
+    },
+    "expected": 0.20062267495859978,
+    "observed": 0.16666666666666666,
+    "n": 48,
+    "n_reasoned": 0,
+    "observed_per_rung": {
+      "brew:lo": 0.2,
+      "brew:mid": 0.1111111111111111
+    },
+    "binomial_p_vs_expected": 0.7183541668132605
+  },
+  "GLM-4.7-Flash-FP8": {
+    "nocot_model": "z-ai/glm-4.7-flash",
+    "theta15_2": -3.059024,
+    "ncri15_2": 55.8676,
+    "per_rung": {
+      "brew:lo": 0.20320732737346317,
+      "brew:mid": 0.16775555834086278
+    },
+    "expected": 0.18991291398623802,
+    "observed": 0.1875,
+    "n": 48,
+    "n_reasoned": 0,
+    "observed_per_rung": {
+      "brew:lo": 0.23333333333333334,
+      "brew:mid": 0.1111111111111111
+    },
+    "binomial_p_vs_expected": 1.0
+  },
+  "Gemma-4-12B-FP8": {
+    "nocot_model": "local/gemma-4-12b-it",
+    "theta15_2": -2.792639,
+    "ncri15_2": 59.7107,
+    "per_rung": {
+      "brew:lo": 0.21373089322605093,
+      "brew:mid": 0.16808726085363748
+    },
+    "expected": 0.1966145310863959,
+    "observed": 0.16666666666666666,
+    "n": 48,
+    "n_reasoned": 0,
+    "observed_per_rung": {
+      "brew:lo": 0.2,
+      "brew:mid": 0.1111111111111111
+    },
+    "binomial_p_vs_expected": 0.7180564500458739
+  }
+}

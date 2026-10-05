@@ -424,10 +424,54 @@ def fit_depth(h: list[int], y: list[bool], chance: float) -> dict:
     return {"d": float(best.x[0]), "s": float(best.x[1]), "nll": float(best.fun)}
 
 
+# --- Calibration ----------------------------------------------------------------------------------------------------
+def nocot_prediction(model: str) -> dict:
+    """nocot-bench's predicted no-CoT accuracy of the model on the shipped bank: per rung, c + (1-c) sigma(theta - b)
+    (place.py's item response model; theta15_2 from models.csv, b and c from data/release/rungs_ncri15_2.csv)."""
+    import csv
+    import math
+    models = {r["model_id"]: r for r in csv.DictReader((NOCOT_DIR / "models.csv").open())}
+    name = NOCOT_NAME[model]
+    row = models.get(f"local/{name}") or models[name]
+    theta = float(row["theta15_2"])
+    rungs = {r["rung_id"]: r for r in csv.DictReader((NOCOT_DIR / "data/release/rungs_ncri15_2.csv").open())}
+    per_rung = {}
+    for rung in sorted({it["rung"] for it in evals("shipped")}):
+        b, c = float(rungs[rung]["b"]), float(rungs[rung]["c"])
+        per_rung[rung] = c + (1 - c) / (1 + math.exp(-(theta - b)))
+    n = collections.Counter(it["rung"] for it in evals("shipped"))
+    return {"nocot_model": row["model_id"], "theta15_2": theta, "ncri15_2": float(row["ncri15_2"]),
+            "per_rung": per_rung, "expected": sum(per_rung[r] * k for r, k in n.items()) / sum(n.values())}
+
+
+def calibration() -> None:
+    """Greedy C0 on the shipped bank against nocot-bench's prediction; an exact binomial test of the difference.
+    Confounds: our FP8 checkpoints (theirs bf16 for the local models, provider-served for the others)."""
+    from scipy.stats import binomtest
+    out = {}
+    for model in MODELS:
+        try:
+            grades = load_grades("calib", model, "greedy")
+        except SystemExit:
+            continue
+        pred = nocot_prediction(model)
+        by_rung = collections.defaultdict(list)
+        for g in grades:
+            by_rung[next(it["rung"] for it in evals("shipped") if it["item_id"] == g["item_id"])].append(g["correct"])
+        k, n = sum(g["correct"] for g in grades), len(grades)
+        out[model] = {**pred, "observed": k / n, "n": n, "n_reasoned": sum(bool(g["reasoned"]) for g in grades),
+                      "observed_per_rung": {r: sum(v) / len(v) for r, v in sorted(by_rung.items())},
+                      "binomial_p_vs_expected": binomtest(k, n, pred["expected"]).pvalue}
+        print(f"{model:22s} observed {k / n:.3f} (n {n}, reasoned {out[model]['n_reasoned']}) expected "
+              f"{pred['expected']:.3f}  p {out[model]['binomial_p_vs_expected']:.3f}  per rung "
+              + " ".join(f"{r} {v:.2f}/{pred['per_rung'][r]:.2f}" for r, v in out[model]["observed_per_rung"].items()))
+    (EXP.results / "calibration.json").write_text(json.dumps(out, indent=2) + "\n")
+
+
 # --- CLI ------------------------------------------------------------------------------------------------------------
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=["items", "shipped", "requests", "plan", "grade"])
+    parser.add_argument("command", choices=["items", "shipped", "requests", "plan", "grade", "calibration"])
     parser.add_argument("--set", choices=list(SETS))
     parser.add_argument("--model", choices=MODELS)
     parser.add_argument("--models", nargs="+", choices=MODELS)
@@ -443,6 +487,8 @@ def main() -> None:
         write_plan(args.set, args.models)
     elif args.command == "grade":
         grade(args.set, args.model, args.sampling)
+    elif args.command == "calibration":
+        calibration()
 
 
 if __name__ == "__main__":
