@@ -1,0 +1,21 @@
+{
+ "analysis_run": "v2",
+ "ext2_run": "v2",
+ "ext3_run": "v1",
+ "figures": [
+  "F1_primary",
+  "F2_heatmap_S1000",
+  "F3_heatmap_S200",
+  "F4_design_vs_fresh",
+  "F5_by_rule_kind",
+  "F6_accuracy_and_length",
+  "F7_ways_to_look_better",
+  "F8_length_matched",
+  "F9_examples_only",
+  "F10_necessity",
+  "F11_thinking_off",
+  "F12_thinking_off_checks",
+  "F13_openings",
+  "F14_survival_curves"
+ ]
+}
