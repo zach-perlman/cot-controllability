@@ -1,0 +1,72 @@
+{
+  "nocot_commit": "634d7de",
+  "h_values": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8
+  ],
+  "banks": {
+    "dev": {
+      "seed": "exp10_dev_20261005",
+      "n_eval": 105,
+      "n_shot": 1,
+      "per_h": {
+        "1": 15,
+        "2": 15,
+        "3": 15,
+        "4": 15,
+        "5": 15,
+        "6": 15,
+        "8": 15
+      },
+      "chance": 0.1238,
+      "gold_counts": {
+        "purple": 13,
+        "gray": 13,
+        "blue": 12,
+        "brown": 11,
+        "black": 11,
+        "red": 11,
+        "green": 10,
+        "gold": 9,
+        "pink": 8,
+        "white": 7
+      },
+      "checks": "every item passes gold_ok, h_ok, distinct, lookup_wrong, every_step_matters, ten_rules",
+      "content_key": "65b25180fe91"
+    },
+    "test": {
+      "seed": "exp10_test_20261005",
+      "n_eval": 280,
+      "n_shot": 1,
+      "per_h": {
+        "1": 40,
+        "2": 40,
+        "3": 40,
+        "4": 40,
+        "5": 40,
+        "6": 40,
+        "8": 40
+      },
+      "chance": 0.1214,
+      "gold_counts": {
+        "blue": 34,
+        "black": 33,
+        "purple": 31,
+        "white": 30,
+        "gray": 28,
+        "pink": 27,
+        "brown": 26,
+        "green": 26,
+        "red": 25,
+        "gold": 20
+      },
+      "checks": "every item passes gold_ok, h_ok, distinct, lookup_wrong, every_step_matters, ten_rules",
+      "content_key": "2b58d2f7567e"
+    }
+  }
+}

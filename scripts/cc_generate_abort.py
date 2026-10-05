@@ -81,6 +81,14 @@ def output_path(requests_path: Path, model: str, sampling: dict, requests: list[
                                                     inspect.getsource(cc_exp07.prompt_ids)],
                                     "job_code": inspect.getsource(cc_exp09_render.job),
                                     "history_formats": [cc_exp07.HISTORY_REASONING, cc_exp07.HISTORY_EMPTY_THINK]}
+    if any("exp10_render" in r for r in requests):  # exp10: cc_exp10_render (prompts, jobs, graded text)
+        import cc_exp07
+        import cc_exp10_render
+        material["exp10_render"] = {"code": [inspect.getsource(f) for f in (
+                                        cc_exp10_render.prompt_text, cc_exp10_render.suffix_pieces,
+                                        cc_exp10_render.prompt_ids, cc_exp10_render.job,
+                                        cc_exp10_render.generation_result)],
+                                    "history_formats": [cc_exp07.HISTORY_REASONING, cc_exp07.HISTORY_EMPTY_THINK]}
     stem = requests_path.stem.removeprefix("requests")  # exp04's requests_none / requests_repro -> "_none" / "_repro"
     return requests_path.parent / "generations" / f"{model}__card__{ENGINE}{stem}__{cfg.content_key(material)}.jsonl"
 
@@ -329,6 +337,20 @@ def run_shard(llm, tokenizer, family: str, requests: list[dict], items: dict, sa
     exp07 = any("exp07_cell" in r for r in todo)
     exp06 = any("exp06_cell" in r for r in todo)
     exp09_render = any("exp09_render" in r for r in todo)  # also exp06 rows: graded text from cc_exp06
+    exp10 = any("exp10_render" in r for r in todo)
+    if exp10:
+        import cc_exp10_render
+        if not all("exp10_render" in r for r in todo):
+            raise SystemExit("exp10 rows cannot share a request file with other rows")
+        cc_exp10_render.check_history_template(tokenizer, family)
+        jobs = [cc_exp10_render.job(tokenizer, family, r, items) for r in todo]
+        with path.open("a") as f:
+            def write_exp10(index: int, result: dict) -> None:
+                result = cc_exp10_render.generation_result(todo[index], result, tokenizer)
+                f.write(json.dumps(output_row(todo[index], model, result)) + "\n")
+                f.flush()
+            generate_streaming_abort(llm, tokenizer, family, jobs, sampling, max_model_len, write_exp10)
+        return
     if exp09_render:
         import cc_exp06
         import cc_exp09_render
