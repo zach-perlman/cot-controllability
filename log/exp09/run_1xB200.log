@@ -1,0 +1,29 @@
+2026-10-04T20:31:01Z start gpu0.lane0.0_Qwen3.6-27B-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_exp09_1xH200/gpu0.lane0.0_Qwen3.6-27B-FP8.log
+2026-10-04T20:35:31Z loaded gpu0.lane0.0_Qwen3.6-27B-FP8 after 4.5 min
+2026-10-04T21:45:35Z done gpu0.lane0.0_Qwen3.6-27B-FP8 after 74.6 min
+2026-10-04T21:45:35Z start gpu0.lane0.1_Gemma-4-31B-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_exp09_1xH200/gpu0.lane0.1_Gemma-4-31B-FP8.log
+2026-10-04T21:48:05Z loaded gpu0.lane0.1_Gemma-4-31B-FP8 after 2.5 min
+2026-10-04T22:42:39Z done gpu0.lane0.1_Gemma-4-31B-FP8 after 57.1 min
+2026-10-04T22:42:39Z start gpu0.lane0.2_Qwen3.8-27B-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_exp09_1xH200/gpu0.lane0.2_Qwen3.8-27B-FP8.log
+2026-10-04T22:45:09Z loaded gpu0.lane0.2_Qwen3.8-27B-FP8 after 2.5 min
+2026-10-04T23:38:13Z done gpu0.lane0.2_Qwen3.8-27B-FP8 after 55.6 min
+2026-10-04T23:38:13Z start gpu0.lane0.3_Qwen3-32B (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_exp09_1xH200/gpu0.lane0.3_Qwen3-32B.log
+2026-10-04T23:40:13Z loaded gpu0.lane0.3_Qwen3-32B after 2.0 min
+2026-10-05T00:23:16Z done gpu0.lane0.3_Qwen3-32B after 45.1 min
+2026-10-05T00:23:16Z start gpu0.lane0.4_Gemma-4-12B-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_exp09_1xH200/gpu0.lane0.4_Gemma-4-12B-FP8.log
+2026-10-05T00:26:16Z loaded gpu0.lane0.4_Gemma-4-12B-FP8 after 3.0 min
+2026-10-05T00:41:48Z done gpu0.lane0.4_Gemma-4-12B-FP8 after 18.5 min
+2026-10-05T00:41:48Z start gpu0.lane0.5_Qwen3.6-35B-A3B-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_exp09_1xH200/gpu0.lane0.5_Qwen3.6-35B-A3B-FP8.log
+2026-10-05T00:54:48Z loaded gpu0.lane0.5_Qwen3.6-35B-A3B-FP8 after 13.0 min
+2026-10-05T01:09:50Z done gpu0.lane0.5_Qwen3.6-35B-A3B-FP8 after 28.0 min
+2026-10-05T01:09:50Z start gpu0.lane0.6_GLM-4.7-Flash-FP8 (memory 0.9) -> /workspace/cot-controllability/log/exp09/lanes_exp09_1xH200/gpu0.lane0.6_GLM-4.7-Flash-FP8.log
+2026-10-05T01:12:50Z loaded gpu0.lane0.6_GLM-4.7-Flash-FP8 after 3.0 min
+2026-10-05T01:30:52Z done gpu0.lane0.6_GLM-4.7-Flash-FP8 after 21.0 min
+2026-10-05T01:31:22Z after-command of gpu0.lane0.0_Qwen3.6-27B-FP8: exit 0
+2026-10-05T01:31:22Z after-command of gpu0.lane0.1_Gemma-4-31B-FP8: exit 0
+2026-10-05T01:31:22Z after-command of gpu0.lane0.2_Qwen3.8-27B-FP8: exit 0
+2026-10-05T01:31:22Z after-command of gpu0.lane0.3_Qwen3-32B: exit 0
+2026-10-05T01:31:22Z after-command of gpu0.lane0.4_Gemma-4-12B-FP8: exit 0
+2026-10-05T01:31:22Z after-command of gpu0.lane0.5_Qwen3.6-35B-A3B-FP8: exit 0
+2026-10-05T01:31:22Z after-command of gpu0.lane0.6_GLM-4.7-Flash-FP8: exit 0
+2026-10-05T01:31:22Z plan exp09_1xH200 finished in 5.01 h; failed: none

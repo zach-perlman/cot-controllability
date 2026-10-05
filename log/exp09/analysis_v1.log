@@ -1,0 +1,4 @@
+P1 ('S_1000', 'A', 'baseline') +9.2 [+4.1, +14.9] holm p=0.0
+P2 ('S_1000', 'A', 'baseline') +16.7 [+10.0, +22.0] holm p=0.0
+P3 ('whole_trace_compliance', 'A', 'baseline') +28.7 [+17.0, +41.0] holm p=0.0
+wrote /workspace/cot-controllability/results/exp09_final_test/analysis/v1
