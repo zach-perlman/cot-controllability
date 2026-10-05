@@ -13,7 +13,7 @@ E1, E2 and C3 use all 120.
   necessity       per model and question, from 5 direct answers: necessary (<= 1 right), mixed, unnecessary (>= 4
                   right); C1, C2, C3 (exp09's A - baseline thinking on, S(1000)) and E1 within each label
 
-Run: /venv/main/bin/python scripts/cc_exp09_ext3_analysis.py --run NAME [--skip-missing]
+Run: /venv/main/bin/python scripts/cc_exp09_ext3_analysis.py --run NAME [--skip-missing] [--thinking-on-only]
 Writes results/exp09_final_test/analysis_ext3/<run>/ (never overwritten).
 """
 
@@ -61,20 +61,22 @@ LABELS = ["necessary", "mixed", "unnecessary"]
 
 
 # --- Data -----------------------------------------------------------------------------------------------------------
-def load(skip_missing: bool) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
-    """Extension 2's and 3's graded rows with exp09's short rows (survival columns), and the necessity labels."""
+def load(skip_missing: bool, thinking_on_only: bool = False) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
+    """Extension 2's and 3's graded rows with exp09's short rows (survival columns), and the necessity labels.
+    thinking_on_only: exp09's short rows, examples only and necessity (no thinking-off rows), for E1, E2 and the
+    thinking-on necessity splits before the thinking-off rows exist."""
     frames, labels, present = [], [], []
-    base, base_models = an2.load(skip_missing, subset=False)
+    base, base_models = an2.load(skip_missing, subset=False, with_extension2=not thinking_on_only)
     offopen = x3.OFFOPEN_CAPPED + x2.SUBSET_SUFFIX
     for model in base_models:
-        parts = ["exonly", "nec", offopen]
+        parts = ["exonly", "nec"] + ([] if thinking_on_only else [offopen])
         paths = {}
         for p in parts:
             try:
                 paths[p] = x2.grades_path(model, p)
             except SystemExit:
                 continue
-        if model in x3.OFFOPEN_SKIPPED and not paths.get(offopen, cfg.REPO_ROOT / "-").exists():
+        if offopen in parts and model in x3.OFFOPEN_SKIPPED and not paths.get(offopen, cfg.REPO_ROOT / "-").exists():
             parts.remove(offopen)  # queued last, optional (not in the stated 5-model pool)
         if not all(p in paths and paths[p].exists() for p in parts):
             if skip_missing:
@@ -176,7 +178,12 @@ def report(summary: dict) -> str:
              f"Models: {', '.join(models)}." + (f" Missing: {', '.join(summary['missing'])}." if summary["missing"]
                                                  else ""),
              "Not part of exp09's pre-registered test; Holm over E1 and OF1 only. Rule-grader and accuracy metrics "
-             "(no LLM judge).", "", "## Contrasts", ""]
+             "(no LLM judge)."]
+    if summary.get("thinking_on_only"):
+        lines += ["", "**Partial run (--thinking-on-only): no thinking-off rows yet, so only E1, E2 and the thinking-on "
+                  "necessity splits; E1's 'Holm p' is 2 x p (Bonferroni over E1 and OF1, an upper bound of the final "
+                  "Holm p).**"]
+    lines += ["", "## Contrasts", ""]
     lines += an2.contrast_table(summary["contrasts"], models, with_holm=True)
     lines += ["", "## Openings off on every model with openings-off grades (secondary pool)", ""]
     lines += an2.contrast_table(summary["openings_off_all_models"], models, with_holm=False)
@@ -195,19 +202,27 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--run", required=True)
     parser.add_argument("--skip-missing", action="store_true")
+    parser.add_argument("--thinking-on-only", action="store_true",
+                        help="E1, E2 and the thinking-on necessity splits only (before the thinking-off rows exist)")
     args = parser.parse_args()
     out_dir = OUT_ROOT / args.run
     if out_dir.exists():
         raise SystemExit(f"{out_dir} exists; analysis runs are never overwritten")
-    df, labels, models = load(args.skip_missing)
+    df, labels, models = load(args.skip_missing, args.thinking_on_only)
     values_all = an2.cell_values(df, subset=False)
     values_80 = an2.cell_values(df[df["item_id"].isin(an2.subset_ids())], subset=True)
     out_dir.mkdir(parents=True)
     labels.to_csv(out_dir / "necessity_labels.csv", index=False)
     all_off = {n: v for n, v in contrasts(values_all, values_80, models, all_openings_off_models=True).items()
                if n.startswith("OF")}
+    main_contrasts = contrasts(values_all, values_80, models)
+    if args.thinking_on_only:  # OF1 does not exist yet: Bonferroni over E1 and OF1 bounds the final Holm p
+        for v in main_contrasts.values():
+            if v.get("primary"):
+                v["p_holm"] = min(1.0, 2 * v["p_two_sided"])
     summary = {"run": args.run, "models": models, "missing": [m for m in x2.MODEL_ORDER if m not in models],
-               "contrasts": contrasts(values_all, values_80, models), "openings_off_all_models": all_off,
+               "thinking_on_only": args.thinking_on_only,
+               "contrasts": main_contrasts, "openings_off_all_models": all_off,
                "by_necessity": by_necessity(df, labels, models),
                "necessity_counts": labels.groupby(["model", "label"]).size().unstack(fill_value=0).to_dict("index")}
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=1))

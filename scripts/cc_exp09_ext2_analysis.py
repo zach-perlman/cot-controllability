@@ -85,20 +85,21 @@ def extension2_grades(model: str):
     return path if path.exists() else None
 
 
-def load(skip_missing: bool, subset: bool = True) -> tuple[pd.DataFrame, list[str]]:
+def load(skip_missing: bool, subset: bool = True, with_extension2: bool = True) -> tuple[pd.DataFrame, list[str]]:
     """Extension 2's grades and exp09's short rows (all 12 rules), with survival columns; subset: only the 80
-    questions every model's extension-2 rows cover."""
+    questions every model's extension-2 rows cover; with_extension2=False: exp09's short rows only."""
     frames, present = [], []
     for model in x.MODEL_ORDER:
         try:
-            ext, main = extension2_grades(model), e9.grades_path(model)
+            ext, main = extension2_grades(model) if with_extension2 else None, e9.grades_path(model)
         except SystemExit:
             ext = main = None
-        if ext is None or not ext.exists() or not main.exists():
+        if (with_extension2 and (ext is None or not ext.exists())) or main is None or not main.exists():
             if skip_missing:
                 continue
             raise SystemExit(f"{model}: no extension-2 or exp09 grades (pass --skip-missing)")
-        frames.append(pd.DataFrame([json.loads(line) for line in ext.open()]).assign(model=model))
+        if with_extension2:
+            frames.append(pd.DataFrame([json.loads(line) for line in ext.open()]).assign(model=model))
         short = pd.DataFrame([json.loads(line) for line in main.open()]).assign(model=model)
         short = short[short["channel"] == "short"].copy()
         short["cell"] = short["prompt"] + "|none|on"

@@ -1,0 +1,557 @@
+{
+ "run": "thinking_on_v1",
+ "models": [
+  "Qwen3.6-27B-FP8",
+  "Qwen3.8-27B-FP8",
+  "Gemma-4-31B-FP8",
+  "Qwen3-32B",
+  "Gemma-4-12B-FP8",
+  "Qwen3.6-35B-A3B-FP8",
+  "GLM-4.7-Flash-FP8"
+ ],
+ "missing": [],
+ "thinking_on_only": true,
+ "contrasts": {
+  "E1 A - examples only (thinking on)": {
+   "value": 16.041823474962317,
+   "ci": [
+    15.011945909641186,
+    17.065162055720652
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 84,
+   "metric": "S_1000",
+   "a": "A|none|on",
+   "b": "examples_only|none|on",
+   "primary": true,
+   "per_model": {
+    "Qwen3.6-27B-FP8": {
+     "value": 9.201217113532273,
+     "ci": [
+      6.6809159558655296,
+      11.635608986638136
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "Qwen3.8-27B-FP8": {
+     "value": 13.783373845133639,
+     "ci": [
+      10.441527180666412,
+      16.940684070739326
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "Gemma-4-31B-FP8": {
+     "value": 51.36342731667744,
+     "ci": [
+      48.00188642499138,
+      54.70503583284824
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "Qwen3-32B": {
+     "value": 23.711139275755382,
+     "ci": [
+      20.970159372028405,
+      26.498187493421195
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "Gemma-4-12B-FP8": {
+     "value": 2.638898320367781,
+     "ci": [
+      1.3182306112114424,
+      3.9777777354062374
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "Qwen3.6-35B-A3B-FP8": {
+     "value": 6.419102658597265,
+     "ci": [
+      4.275070581800228,
+      8.48348885575684
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "GLM-4.7-Flash-FP8": {
+     "value": 5.175605794672425,
+     "ci": [
+      3.5697173296350493,
+      6.867546160102704
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    }
+   },
+   "per_rule": {
+    "lowercase_thinking": {
+     "value": 35.196350990271775,
+     "ci": [
+      31.415906269439677,
+      38.85900595472295
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "uppercase_thinking": {
+     "value": 14.428113104123598,
+     "ci": [
+      11.19863269629395,
+      17.729994104505984
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "meow_between_words": {
+     "value": 15.478728849883195,
+     "ci": [
+      12.055606968696411,
+      18.94326613757353
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "end_of_sentence": {
+     "value": 21.8395982255914,
+     "ci": [
+      18.80581569363174,
+      24.69066687619841
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "word_suppression": {
+     "value": 21.48465486376866,
+     "ci": [
+      18.172866752021594,
+      24.785522581754776
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "alternating_case": {
+     "value": 2.6057368403975,
+     "ci": [
+      1.3954960065586177,
+      3.8171764206289844
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "multiple_word_suppression": {
+     "value": 6.2015134000657195,
+     "ci": [
+      4.156720412698196,
+      8.474850197919004
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "no_digits": {
+     "value": 15.66153255747175,
+     "ci": [
+      11.184249574222221,
+      19.843589924872553
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "no_first_person": {
+     "value": 12.318192581297891,
+     "ci": [
+      8.28823333941898,
+      16.33879667178782
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "no_commas": {
+     "value": 23.54099375612492,
+     "ci": [
+      20.76517122770154,
+      26.25094000865403
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "now_sentence_start": {
+     "value": 7.7014140668326965,
+     "ci": [
+      4.20478155455038,
+      11.22317500160714
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "no_question_words": {
+     "value": 16.04505246371869,
+     "ci": [
+      12.062935278787789,
+      19.889735390438116
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    }
+   },
+   "per_rule_set": {
+    "exp06": {
+     "value": 21.685489206727723,
+     "ci": [
+      20.200701311563993,
+      23.18436788314267
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 35
+    },
+    "held_out_exp07": {
+     "value": 9.196743844808216,
+     "ci": [
+      7.452574991518303,
+      10.909820630915416
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 28
+    },
+    "new_exp09": {
+     "value": 15.762486762225432,
+     "ci": [
+      13.879388573798266,
+      17.66111435545019
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 21
+    }
+   },
+   "p_holm": 0.0
+  },
+  "E2 examples only - CoT-Control prompt (thinking on)": {
+   "value": 2.504481288399591,
+   "ci": [
+    1.7280753507586355,
+    3.3236025637956126
+   ],
+   "p_two_sided": 0.0,
+   "n_cells": 84,
+   "metric": "S_1000",
+   "a": "examples_only|none|on",
+   "b": "baseline|none|on",
+   "primary": false,
+   "per_model": {
+    "Qwen3.6-27B-FP8": {
+     "value": 11.606563626243284,
+     "ci": [
+      9.605779497530632,
+      13.720166555982441
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "Qwen3.8-27B-FP8": {
+     "value": 11.413252437761296,
+     "ci": [
+      9.26068678937309,
+      13.756597844497739
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "Gemma-4-31B-FP8": {
+     "value": -7.543587768943884,
+     "ci": [
+      -9.375916552120616,
+      -5.674692848455816
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "Qwen3-32B": {
+     "value": 0.3067485585309835,
+     "ci": [
+      -1.7446599235586584,
+      2.355944022725156
+     ],
+     "p_two_sided": 0.798,
+     "n_cells": 12
+    },
+    "Gemma-4-12B-FP8": {
+     "value": -3.362994107670262,
+     "ci": [
+      -4.686192023957136,
+      -2.1182902746248637
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "Qwen3.6-35B-A3B-FP8": {
+     "value": 3.831147683451942,
+     "ci": [
+      2.6764112848130766,
+      5.012076984111954
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 12
+    },
+    "GLM-4.7-Flash-FP8": {
+     "value": 1.2802385894237762,
+     "ci": [
+      0.2726351620649467,
+      2.3922580854660223
+     ],
+     "p_two_sided": 0.011,
+     "n_cells": 12
+    }
+   },
+   "per_rule": {
+    "lowercase_thinking": {
+     "value": 5.227964334597828,
+     "ci": [
+      3.557889195327832,
+      6.936730885375931
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "uppercase_thinking": {
+     "value": 10.822287191379491,
+     "ci": [
+      7.9318890458018005,
+      13.749001918896962
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "meow_between_words": {
+     "value": 20.5021489972077,
+     "ci": [
+      17.725331418910823,
+      23.13856008011676
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "end_of_sentence": {
+     "value": 3.7197810570030705,
+     "ci": [
+      2.429041486431665,
+      5.221881485760269
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "word_suppression": {
+     "value": -15.613867793682177,
+     "ci": [
+      -19.05565138911501,
+      -12.501256638561108
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "alternating_case": {
+     "value": 0.13888888888888898,
+     "ci": [
+      0.0,
+      0.674603174603175
+     ],
+     "p_two_sided": 0.485,
+     "n_cells": 7
+    },
+    "multiple_word_suppression": {
+     "value": -4.3898809523809526,
+     "ci": [
+      -6.315459517140187,
+      -2.5950892857142858
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "no_digits": {
+     "value": 4.8687543055280385,
+     "ci": [
+      1.2392926971209772,
+      8.845230055794815
+     ],
+     "p_two_sided": 0.009,
+     "n_cells": 7
+    },
+    "no_first_person": {
+     "value": 2.0442866715073307,
+     "ci": [
+      -0.27564344471329794,
+      4.5770948692397235
+     ],
+     "p_two_sided": 0.097,
+     "n_cells": 7
+    },
+    "no_commas": {
+     "value": -3.4844734621264233,
+     "ci": [
+      -5.358550571195083,
+      -1.1931305469122582
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "now_sentence_start": {
+     "value": 12.882517219472641,
+     "ci": [
+      10.157677034657265,
+      15.644357490203497
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    },
+    "no_question_words": {
+     "value": -6.664630996600347,
+     "ci": [
+      -9.219647560948275,
+      -4.21122258893854
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 7
+    }
+   },
+   "per_rule_set": {
+    "exp06": {
+     "value": 4.931662757301183,
+     "ci": [
+      3.6751363995895883,
+      6.184937656926719
+     ],
+     "p_two_sided": 0.0,
+     "n_cells": 35
+    },
+    "held_out_exp07": {
+     "value": 0.6655122283858262,
+     "ci": [
+      -0.6492087724256081,
+      2.0642020720331535
+     ],
+     "p_two_sided": 0.326,
+     "n_cells": 28
+    },
+    "new_exp09": {
+     "value": 0.9111375869152903,
+     "ci": [
+      -0.37087864693263706,
+      2.214516761223757
+     ],
+     "p_two_sided": 0.168,
+     "n_cells": 21
+    }
+   }
+  }
+ },
+ "openings_off_all_models": {},
+ "by_necessity": {
+  "necessary": {
+   "C1 thinking off - on (CoT-Control prompt)": null,
+   "C2 thinking off - on (A)": null,
+   "C3 A - CoT-Control prompt, thinking on": {
+    "value": 18.22117211025388,
+    "ci": [
+     16.863202881489148,
+     19.67719020921856
+    ],
+    "p_two_sided": 0.0,
+    "n_cells": 84
+   },
+   "E1 A - examples only (thinking on)": {
+    "value": 16.22023802052062,
+    "ci": [
+     14.935579402765807,
+     17.47278567927515
+    ],
+    "p_two_sided": 0.0,
+    "n_cells": 84
+   }
+  },
+  "mixed": {
+   "C1 thinking off - on (CoT-Control prompt)": null,
+   "C2 thinking off - on (A)": null,
+   "C3 A - CoT-Control prompt, thinking on": {
+    "value": 15.047196461575885,
+    "ci": [
+     12.876472704695248,
+     19.370271534923706
+    ],
+    "p_two_sided": 0.0,
+    "n_cells": 84
+   },
+   "E1 A - examples only (thinking on)": {
+    "value": 13.608030865680396,
+    "ci": [
+     10.671853873033346,
+     18.786140403292716
+    ],
+    "p_two_sided": 0.0,
+    "n_cells": 84
+   }
+  },
+  "unnecessary": {
+   "C1 thinking off - on (CoT-Control prompt)": null,
+   "C2 thinking off - on (A)": null,
+   "C3 A - CoT-Control prompt, thinking on": {
+    "value": 20.322236587082223,
+    "ci": [
+     18.345353300064254,
+     22.69386561312384
+    ],
+    "p_two_sided": 0.0,
+    "n_cells": 84
+   },
+   "E1 A - examples only (thinking on)": {
+    "value": 16.204726103981525,
+    "ci": [
+     14.11014251721899,
+     18.22676452569832
+    ],
+    "p_two_sided": 0.0,
+    "n_cells": 84
+   }
+  }
+ },
+ "necessity_counts": {
+  "GLM-4.7-Flash-FP8": {
+   "mixed": 27,
+   "necessary": 76,
+   "unnecessary": 17
+  },
+  "Gemma-4-12B-FP8": {
+   "mixed": 5,
+   "necessary": 75,
+   "unnecessary": 40
+  },
+  "Gemma-4-31B-FP8": {
+   "mixed": 5,
+   "necessary": 62,
+   "unnecessary": 53
+  },
+  "Qwen3-32B": {
+   "mixed": 6,
+   "necessary": 77,
+   "unnecessary": 37
+  },
+  "Qwen3.6-27B-FP8": {
+   "mixed": 28,
+   "necessary": 57,
+   "unnecessary": 35
+  },
+  "Qwen3.6-35B-A3B-FP8": {
+   "mixed": 25,
+   "necessary": 60,
+   "unnecessary": 35
+  },
+  "Qwen3.8-27B-FP8": {
+   "mixed": 28,
+   "necessary": 60,
+   "unnecessary": 32
+  }
+ }
+}
