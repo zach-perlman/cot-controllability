@@ -1,5 +1,5 @@
 """Checks of exp10's prompts and rendering (CPU only; tokenizers from models/):
-  - the tag instruction is CoT-Control's (cc_exp08's), and C4's inline example passage follows the rule
+  - the rule, guide and C4's inline example passage name no colour
   - every condition builds for a dev item, and every model's renders end as cc_exp10_render's docstring says
   - nocot-bench's Qwen3.8 trap: thinking off with preserve_thinking=False leaves its demo turn clean
 The rendered prompts of one item per model are written to cache/exp10/render_check/ (they quote item text, so not to
@@ -20,19 +20,19 @@ FAKE_TRACE = {"reasoning": "The potion starts out red. Salt turns red into blue.
 
 
 def test_texts() -> None:
-    import cc_exp08
-    assert C.TAG_INSTRUCTION == cc_exp08.tag_instruction()
     assert not leak.leaks(C.PASSAGE), leak.leaks(C.PASSAGE)
+    assert not any(leak.leaks(text) for text in (C.requirement(True), C.requirement(False), *C.GUIDE)), \
+        "the rule text itself names a colour (models quote it)"
     assert not leak.leaks(C.CODE_NOTE.split(":", 1)[0])
     assert all(not leak.leaks(word) for word in C.CODE.values())
-    masked = C.example(FAKE_TRACE, E.evals("dev")[0])["reasoning"]
+    masked = C.example(FAKE_TRACE, E.evals("dev")[0], "gold")["reasoning"]
     assert "■" in masked and not leak.leaks(masked), masked
 
 
 def test_rendering() -> None:
     from transformers import AutoTokenizer
     item, shot = E.evals("dev")[20], E.shots("dev")[0]
-    examples = [C.example(FAKE_TRACE, it) for it in E.evals("dev")[:3]]
+    examples = [C.example(FAKE_TRACE, it, it["answer"]) for it in E.evals("dev")[:3]]
     out_dir = E.EXP.cache / "render_check"
     out_dir.mkdir(parents=True, exist_ok=True)
     for model in E.MODELS:

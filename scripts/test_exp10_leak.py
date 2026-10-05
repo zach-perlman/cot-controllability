@@ -11,8 +11,9 @@ MUST_LEAK = {
     "spelled": ["it is b-l-u-e now", "r e d", "g.r.e.e.n", "p*i*n*k", "w h i t e", "it is now eulb",
                 "kcalb after dew"],
     "initial": ["start at R, then B", "state: g", "R -> B -> G", "it is now Bk", "wh with moss", "p then w"],
-    "position": ["apply line 3", "the third rule", "colour #4", "state 2 then state 7", "Rule two says",
-                 "go to the last line", "#7 with ash"],
+    "position": ["apply line 3", "the third rule", "colour #4", "Rule two says", "go to the last line",
+                 "#7 with ash", "Row 1: gold potion"],
+    "state_number": ["state 2 then state 7", "State 1 + sand -> State 10", "the third state", "potion #3"],
     "foreign": ["es rojo", "maintenant bleu", "jetzt grün", "ora è nero", "agora preto", "变成红色", "it is 紫"],
     "symbol": ["🟥 → 🟦", "now ⚫", "💜", "#ff0000"],
 }
@@ -26,6 +27,8 @@ MUST_PASS = [
     "I will track it carefully, e.g. by noting what each ingredient does.",
     "The final state is the one that moss produces from the previous state.",
     "Option a is not relevant; I think this works.",
+    "Let's re-verify the rules one more time.",
+    "Let's double-check the rules one last time, going through the lines one by one.",
 ]
 
 

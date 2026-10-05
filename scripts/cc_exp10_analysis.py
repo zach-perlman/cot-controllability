@@ -30,17 +30,21 @@ import exp10_conditions as C
 import exp10_leak as leak
 
 BASELINES = ["C0", "C1a", "C1b", "C1c"]
-STAGE_SETS = {"pilot": ["dev_c2", "pilot", "pilot_c1b"], "test": ["test", "test_c1b"]}
+# stage -> (request set, the conditions taken from it; None: all)
+STAGE_SETS = {"pilot": [("dev_c2", None), ("pilot", None), ("pilot_c1b", None)],
+              "pilot2": [("dev_c2", None), ("pilot", ["C0", "C1a", "C1c", "C5"]), ("pilot2", None),
+                         ("pilot2_c1b", None)],
+              "test": [("test", None), ("test_c1b", None)]}
 
 
 def stage_grades(stage: str, model: str) -> list[dict]:
     rows = []
-    for set_name in STAGE_SETS[stage]:
+    for set_name, conditions in STAGE_SETS[stage]:
         try:
-            rows += E.load_grades(set_name, model)
+            rows += [g for g in E.load_grades(set_name, model) if conditions is None or g["condition"] in conditions]
         except (SystemExit, FileNotFoundError):
             pass
-    if stage == "pilot":  # dev_c2 covers the example items too; compare conditions on the pilot's items
+    if stage.startswith("pilot"):  # dev_c2 covers the example items too; compare conditions on the pilot's items
         pilot_items = {g["item_id"] for g in rows if g["condition"] != "C2"}
         rows = [g for g in rows if g["item_id"] in pilot_items]
     return rows
@@ -150,8 +154,9 @@ def main() -> None:
     parser.add_argument("--models", nargs="+", default=None)
     parser.add_argument("--bootstrap", type=int, default=1000)
     args = parser.parse_args()
-    models = args.models or (E.PILOT_MODELS if args.stage == "pilot" else E.MODELS)
-    bank = "dev" if args.stage == "pilot" else "test"
+    pilot = args.stage.startswith("pilot")
+    models = args.models or (E.PILOT_MODELS if pilot else E.MODELS)
+    bank = "dev" if pilot else "test"
     chance = E.evals(bank)[0]["chance"]
     rng = np.random.default_rng(int(cfg.content_key({"exp10_analysis": args.stage}), 16))
     results = {}

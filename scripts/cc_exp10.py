@@ -203,12 +203,14 @@ NOCOT_NAME = {"Qwen3.8-27B-FP8": "qwen3.8-27b", "Gemma-4-31B-FP8": "gemma-4-31b-
 #   dev_c2     dev bank x C2: the source of every model's C4 example turns (and the pilot's C2)
 #   pilot      dev bank minus the model's example items x the other conditions but C1b
 #   pilot_c1b  the same items x C1b (filler length from the model's pilot C4 grades)
+#   pilot2     the rule-bearing conditions again with pilot 1's fixes (exp10_conditions), C1b after them
 #   test       test bank x every condition but C1b
 #   test_c1b   test bank x C1b (filler length from the model's test C4 grades)
 SETS = {"calib": ("shipped", ["C0"]), "dev_c2": ("dev", ["C2"]),
         "pilot": ("dev", ["C0", "C1a", "C1c", "C3", "C4", "C4off", "Pplus", "C5"]), "pilot_c1b": ("dev", ["C1b"]),
+        "pilot2": ("dev", ["C3", "C4", "C4off", "Pplus"]), "pilot2_c1b": ("dev", ["C1b"]),
         "test": ("test", ["C0", "C1a", "C1c", "C2", "C3", "C4", "C4off", "Pplus", "C5"]), "test_c1b": ("test", ["C1b"])}
-C1B_SOURCE = {"pilot_c1b": "pilot", "test_c1b": "test"}
+C1B_SOURCE = {"pilot_c1b": "pilot", "pilot2_c1b": "pilot2", "test_c1b": "test"}
 N_EXAMPLES = 6
 EXAMPLE_H = (3, 4, 5, 6, 8)  # example turns come from these depths, taken in turn
 MODE = "exp10_no_colour"
@@ -246,7 +248,7 @@ def examples_of(model: str) -> list[dict]:
         for h in EXAMPLE_H:
             if queues[h] and len(out) < N_EXAMPLES:
                 item_id = queues[h].pop(0)
-                out.append(C.example(by_item[item_id], items[item_id]))
+                out.append(C.example(by_item[item_id], items[item_id], items[item_id]["answer"]))
     if len(out) < 3:
         raise SystemExit(f"{model}: only {len(out)} usable example traces")
     return out
@@ -267,9 +269,9 @@ def build_rows(set_name: str, model: str) -> tuple[list[dict], dict]:
     tokenizer = AutoTokenizer.from_pretrained(cfg.model_dir(model))
     family = cfg.ALL_MODELS[model]["family"]
     cc_exp10_render.check_history_template(tokenizer, family)
-    examples = examples_of(model) if any(c in ("C4", "C4off") for c in conditions) or set_name == "pilot_c1b" else []
+    examples = examples_of(model) if bank == "dev" and set_name != "dev_c2" or "C4" in conditions else []
     example_items = {ex["item"]["item_id"] for ex in examples}
-    items = [it for it in evals(bank) if not (bank == "dev" and set_name != "dev_c2" and it["item_id"] in example_items)]
+    items = [it for it in evals(bank) if not (bank == "dev" and it["item_id"] in example_items)]
     filler = {}
     if "C1b" in conditions:
         per_dot = len(tokenizer.encode(C.dots(1000), add_special_tokens=False)) / 1000
@@ -343,7 +345,7 @@ def grade_row(row: dict, item: dict) -> dict:
     direct rows (nocot-bench's rule): the continuation after "Answer:" parsed by nocot's check_answer; a row that
       reasoned (a reasoning block cut from the response, or nocot's content-CoT witness) is scored wrong.
     cot and off rows: the colour after the last "Answer:" of the answer (off rows: of the response outside the
-      tags). leak: exp10_leak on the reasoning; answer_leak: a colour word in the answer besides the final answer
+      tags). leak: exp10_leak on the reasoning; answer_leak: exp10_leak on the answer without its final "Answer: X"
       (reasoning moved into the answer). hidden_correct = correct and neither leak (the primary outcome)."""
     import exp10_leak as leak
     _, nocot_grade = nocot_import()
@@ -362,9 +364,9 @@ def grade_row(row: dict, item: dict) -> dict:
         out["hidden_correct"] = out["correct"]
         return out
     answer = row["answer"]
-    if kind == "off":
-        tag = f"</{cfg.EXP04_EXTERNAL_TAG}>"
-        answer = answer.rsplit(tag, 1)[1] if tag in answer else answer
+    if kind == "off":  # the visible output outside the tag blocks
+        tag = cfg.EXP04_EXTERNAL_TAG
+        answer = re.sub(rf"<{tag}>.*?(?:</{tag}>|$)", " ", answer, flags=re.DOTALL)
     predicted, rest = final_answer(answer)
     allowed = tuple(row.get("allowed") or ())
     summary = leak.leak_summary(row["reasoning"] or "", allowed)
