@@ -349,40 +349,6 @@
         },
         {
           "exp": "exp09",
-          "model": "Qwen3.6-27B-FP8",
-          "requests": "cache/exp09/requests_offopen_Qwen3.6-27B-FP8.jsonl",
-          "items": "cache/exp09/items.jsonl",
-          "memory": 0.9,
-          "after": [
-            "/venv/main/bin/python",
-            "cc_exp09_ext3.py",
-            "grade",
-            "--part",
-            "offopen",
-            "--model",
-            "Qwen3.6-27B-FP8"
-          ],
-          "optional": true
-        },
-        {
-          "exp": "exp09",
-          "model": "Qwen3.8-27B-FP8",
-          "requests": "cache/exp09/requests_offopen_Qwen3.8-27B-FP8.jsonl",
-          "items": "cache/exp09/items.jsonl",
-          "memory": 0.9,
-          "after": [
-            "/venv/main/bin/python",
-            "cc_exp09_ext3.py",
-            "grade",
-            "--part",
-            "offopen",
-            "--model",
-            "Qwen3.8-27B-FP8"
-          ],
-          "optional": true
-        },
-        {
-          "exp": "exp09",
           "model": "Gemma-4-31B-FP8",
           "requests": "cache/exp09/requests_offopen_Gemma-4-31B-FP8.jsonl",
           "items": "cache/exp09/items.jsonl",

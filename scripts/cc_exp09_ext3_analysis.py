@@ -26,6 +26,7 @@ import cc_exp07 as e7
 import cc_exp09 as e9
 import cc_exp09_ext2 as x2
 import cc_exp09_ext2_analysis as an2
+import cc_exp09_ext3 as x3
 import exp09_rules as R
 from cc_exp08_analysis import contrast, fmt
 from cc_survival import holm
@@ -61,15 +62,16 @@ def load(skip_missing: bool) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
     frames, labels, present = [], [], []
     base, base_models = an2.load(skip_missing)
     for model in base_models:
+        parts = ["exonly", "nec"] + ([] if model in x3.OFFOPEN_SKIPPED else ["offopen"])
         try:
-            paths = {p: x2.grades_path(model, p) for p in ("exonly", "offopen", "nec")}
+            paths = {p: x2.grades_path(model, p) for p in parts}
         except SystemExit:
             paths = {}
-        if len(paths) < 3 or not all(p.exists() for p in paths.values()):
+        if len(paths) < len(parts) or not all(p.exists() for p in paths.values()):
             if skip_missing:
                 continue
             raise SystemExit(f"{model}: extension-3 grades missing (pass --skip-missing)")
-        for p in ("exonly", "offopen"):
+        for p in parts[:1] + parts[2:]:
             frames.append(pd.DataFrame([json.loads(line) for line in paths[p].open()]).assign(model=model))
         nec = pd.DataFrame([json.loads(line) for line in paths["nec"].open()])
         right = nec.groupby("item_id")["correct"].sum().rename("direct_correct").reset_index().assign(model=model)

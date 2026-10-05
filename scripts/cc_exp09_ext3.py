@@ -43,6 +43,9 @@ import exp07b_candidates as b
 import exp09_rules as R
 
 PARTS = ["nec", "exonly", "offopen"]
+# Openings off is not run for the two models with the longest thinking-off responses (about 3000 tokens; human
+# decision, to save about 4.7 GPU hours); their request files are written but not generated.
+OFFOPEN_SKIPPED = ["Qwen3.6-27B-FP8", "Qwen3.8-27B-FP8"]
 OFFOPEN_ORDER = [("A", "compliant"), ("A", "noncompliant"), ("A", "commitment"), ("no_rule", "compliant")]
 
 
@@ -177,7 +180,8 @@ def write_plan():
         lane.append(job(m, x2.STEM, ["cc_exp09_ext2.py", "grade"]))
         lane.append(job(m, "exonly", ["cc_exp09_ext3.py", "grade", "--part", "exonly"]))
         lane.append(job(m, "nec", ["cc_exp09_ext3.py", "grade", "--part", "nec"]))
-    lane += [job(m, "offopen", ["cc_exp09_ext3.py", "grade", "--part", "offopen"]) for m in x2.MODEL_ORDER]
+    lane += [job(m, "offopen", ["cc_exp09_ext3.py", "grade", "--part", "offopen"])
+             for m in x2.MODEL_ORDER if m not in OFFOPEN_SKIPPED]
     plan = {"name": "exp09_ext3_1xB200", "mps": False, "gpus": {"0": [lane]}}
     path = e9.EXP.results / "plan_ext3_1xB200.json"
     path.write_text(json.dumps(plan, indent=2) + "\n")

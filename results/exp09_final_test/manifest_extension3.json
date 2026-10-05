@@ -27,6 +27,7 @@
     }
   },
   "rows_per_model": {"necessity": 600, "examples_only": 1440, "openings_off": 3240},
+  "openings_off_models": "5 of the 7: not Qwen3.6-27B-FP8 or Qwen3.8-27B-FP8 (human decision at 23:20 UTC, before any generation, to save about 4.7 GPU hours: their thinking-off responses are the longest, about 3000 tokens). Their request files exist and are not generated; OF1-OF4 and OFX pool over the 5 models",
   "primary_contrasts_of_the_extension": {
     "E1": "A - examples only, S(1000), thinking on, 12 rules x 7 models (what stating the rule adds beyond showing rule-following examples)",
     "OF1": "A|compliant|off - A|none|off, S(200), 7 opening rules x 7 models",

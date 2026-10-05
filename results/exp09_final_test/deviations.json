@@ -27,6 +27,11 @@
       "what": "plan_ext2_1xB200.json replaced by plan_ext3_1xB200.json before either started: extension 2's files unchanged, plus extension 3 (manifest_extension3.json: CoT necessity, examples only, openings with thinking off); every job marked optional (scripts/gpu_lanes.py: a failed optional job does not stop its lane)",
       "why": "human selection at 22:40 UTC; the jobs are independent, and one failure (e.g. in GLM's new renderer) should not block the night's remaining jobs",
       "effect": "scheduling only for extension 2; exp09's main plan (running) is unaffected"
+    },
+    {
+      "what": "openings with thinking off dropped for Qwen3.6-27B-FP8 and Qwen3.8-27B-FP8 before any generation (plan_ext3_1xB200.json rewritten; cc_exp09_ext3.OFFOPEN_SKIPPED); their request files are kept, not generated",
+      "why": "human decision at 23:20 UTC after the corrected cost estimate (openings off about 9 GPU hours, these two about 4.7)",
+      "effect": "OF1-OF4 and OFX pool over 5 models (manifest_extension3.json)"
     }
   ]
 }
