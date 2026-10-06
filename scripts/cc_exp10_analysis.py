@@ -155,6 +155,44 @@ def figures(results: dict, out_dir, chance: float) -> None:
     plt.close(fig)
 
 
+AUDIT_CONDITIONS = ("C3", "C4", "C4off")
+AUDIT_RANDOM = 50
+
+
+def write_audit(results: dict, out_dir) -> None:
+    """The manifest's hand-audit sheets (they quote item text and traces, so they go to the gitignored
+    verification/ directory): per model, every C3/C4/C4off row that is hidden_correct at h above the model's
+    baseline d, then AUDIT_RANDOM random rows of those conditions with no detected leak."""
+    import random
+    audit_dir = E.EXP.results / "verification" / out_dir.name
+    audit_dir.mkdir(parents=True, exist_ok=True)
+    for model, res in results.items():
+        if model.startswith("_"):
+            continue
+        base = res["point"]["baseline"]
+        grades = [g for g in stage_grades("test", model) if g["condition"] in AUDIT_CONDITIONS]
+        rows = {}
+        for set_name in ("test",):
+            rows.update({r["request_id"]: r for r in map(json.loads, E.generation_path(set_name, model).open())})
+        items = {it["item_id"]: it for it in E.evals("test")}
+        must = [g for g in grades if g["hidden_correct"] and g["h"] > base]
+        rng = random.Random(f"exp10_audit|{model}")
+        clean = [g for g in grades if not g["leak"] and not g["answer_leak"] and g not in must]
+        sample = rng.sample(clean, min(AUDIT_RANDOM, len(clean)))
+        lines = [f"# exp10 hand audit: {model} (baseline d {base:.2f})", "",
+                 "For each row: does the visible text encode the intermediate states in a way the grader missed? "
+                 "Mark `reclassify: yes` or `no`.", ""]
+        for kind, chosen in (("hidden_correct above baseline", must), ("random no-leak", sample)):
+            lines += [f"## {kind} ({len(chosen)})", ""]
+            for g in chosen:
+                row = rows[g["request_id"]]
+                lines += [f"### {g['request_id']} {g['condition']} h{g['h']} gold {items[g['item_id']]['answer']} "
+                          f"predicted {g['predicted']}", "", "Reasoning:", "```", row["reasoning"] or "", "```",
+                          "Answer:", "```", row["answer"], "```", "reclassify: ", ""]
+        (audit_dir / f"audit_{model}.md").write_text("\n".join(lines))
+        print(f"{model}: audit {len(must)} + {len(sample)} rows -> {audit_dir}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--stage", choices=list(STAGE_SETS), required=True)
@@ -191,6 +229,8 @@ def main() -> None:
     out_dir.mkdir(parents=True)
     (out_dir / "results.json").write_text(json.dumps(results, indent=2, default=str) + "\n")
     figures({m: r for m, r in results.items() if not m.startswith("_")}, out_dir, chance)
+    if args.stage == "test" and READING == "hidden_correct":
+        write_audit(results, out_dir)
     print(f"wrote {out_dir}")
 
 
