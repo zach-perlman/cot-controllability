@@ -1,0 +1,55 @@
+{
+  "nocot_commit": "634d7de",
+  "task": "mhn",
+  "banks": {
+    "split_seed": "exp10_mhn_split_20261005",
+    "dev_per_n": 5,
+    "dev": {
+      "n_eval": 45,
+      "n_shot": 10,
+      "per_n": {
+        "1": 5,
+        "2": 5,
+        "3": 5,
+        "4": 5,
+        "5": 5,
+        "6": 5,
+        "7": 5,
+        "8": 5,
+        "9": 5
+      },
+      "chance": 0.028,
+      "content_key": "5d493e1ee4ca",
+      "mean_intermediate_entities": 2.36,
+      "mean_intermediate_numbers": 2
+    },
+    "test": {
+      "n_eval": 241,
+      "n_shot": 10,
+      "per_n": {
+        "1": 15,
+        "2": 20,
+        "3": 23,
+        "4": 25,
+        "5": 24,
+        "6": 34,
+        "7": 33,
+        "8": 34,
+        "9": 33
+      },
+      "chance": 0.028,
+      "content_key": "a957176176fd",
+      "mean_intermediate_entities": 2.72,
+      "mean_intermediate_numbers": 2.35
+    },
+    "ctl": {
+      "n_eval": 966,
+      "n_shot": 10,
+      "per_n": {
+        "1": 966
+      },
+      "chance": 0.0155,
+      "content_key": "828a7cb89752"
+    }
+  }
+}
