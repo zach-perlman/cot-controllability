@@ -50,11 +50,14 @@ def stage_grades(stage: str, model: str) -> list[dict]:
     return rows
 
 
+READING = "hidden_correct"  # the primary reading; main() can switch to a sensitivity reading
+
+
 def table(grades: list[dict]) -> dict[str, dict[str, bool]]:
-    """condition -> item_id -> hidden_correct."""
+    """condition -> item_id -> the reading's outcome."""
     out = collections.defaultdict(dict)
     for g in grades:
-        out[g["condition"]][g["item_id"]] = bool(g["hidden_correct"])
+        out[g["condition"]][g["item_id"]] = bool(g[READING])
     return out
 
 
@@ -153,7 +156,11 @@ def main() -> None:
     parser.add_argument("--stage", choices=list(STAGE_SETS), required=True)
     parser.add_argument("--models", nargs="+", default=None)
     parser.add_argument("--bootstrap", type=int, default=1000)
+    parser.add_argument("--reading", default="hidden_correct",
+                        choices=["hidden_correct", "hidden_correct_mapped", "hidden_correct_strict", "correct"])
     args = parser.parse_args()
+    global READING
+    READING = args.reading
     pilot = args.stage.startswith("pilot")
     models = args.models or (E.PILOT_MODELS if pilot else E.MODELS)
     bank = "dev" if pilot else "test"
@@ -175,7 +182,8 @@ def main() -> None:
         delta = [results[m]["point"]["delta_C4"] for m in results]
         rho, p = spearmanr(ncri, delta)
         results["_spearman_ncri_delta_C4"] = {"rho": float(rho), "p": float(p), "n": len(ncri)}
-    out_dir = E.EXP.results / "analysis" / f"{args.stage}_{time.strftime('%Y%m%dT%H%M%S')}"
+    results["_reading"] = {"reading": READING, "grader_version": E.GRADER_VERSION}
+    out_dir = E.EXP.results / "analysis" / f"{args.stage}_{READING}_{time.strftime('%Y%m%dT%H%M%S')}"
     out_dir.mkdir(parents=True)
     (out_dir / "results.json").write_text(json.dumps(results, indent=2, default=str) + "\n")
     figures({m: r for m, r in results.items() if not m.startswith("_")}, out_dir, chance)

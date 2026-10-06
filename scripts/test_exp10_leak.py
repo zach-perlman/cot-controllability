@@ -56,6 +56,22 @@ def test_mask() -> None:
     assert masked == "The potion starts ■, then turns ■ with ash; ■ then ■.", masked
 
 
+def test_intermediate() -> None:
+    mid = {"gold", "pink"}
+    def hit(text):
+        return [leak.text for leak in L.intermediate_leaks(text, mid)]
+    assert hit("It starts red and ends blue.") == []
+    assert hit("red, then GOLD, then pinkish, then blue") == ["GOLD", "pinkish"]
+    assert hit("start R, then P, then B") == ["P"]
+    assert hit("it is now dorado") == ["dorado"]
+    assert hit("p-i-n-k then eulb") == ["p-i-n-k"]
+    assert hit("dlog then eulb") == ["dlog"]
+    assert hit("apply line 3") == ["line 3"]
+    assert hit("state 2 is next") == ["state 2"]
+    assert hit("now orange") == ["orange"]
+    assert hit("now zib", ) == [] and L.intermediate_leaks("zib", {"red"}, allowed=("zib",)) == []
+
+
 def test_summary() -> None:
     s = L.leak_summary("red then line 3")
     assert s["leak"] and s["first_leak"] == 0 and s["n_word"] == 1 and s["n_position"] == 1, s
