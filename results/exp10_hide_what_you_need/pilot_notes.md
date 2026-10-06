@@ -68,3 +68,19 @@ Every pilot generation was regraded with version 2 (no generation rerun). Under 
 are still about 0 at h >= 2 (hidden_correct at h >= 2: Qwen3.8 C4 0.06, C4off 0.05, P+ 0.02; Gemma C4 0.00, C4off
 0.24, P+ 0.04), except pilot 1's P+ for Gemma (0.31: 0.67 at h2, 0.69 at h3, against C0's 0.93 and 0.08). Gemma's
 remaining P+ leaks are mostly its check of the coded computation against the colour-worded rules.
+
+## Pilot 3 (`requests_pilot3_*`: Pcode)
+
+Both models 100% correct (Qwen3.8 0.87 at h2), with almost no colour word, but hidden_correct about 0: the leaks
+were unmapped stand-ins ("Rule 1", "the fifth listed state", "State 0"). Pcode had only C3's requirement, which
+bans "codes of your own" and never said the problem's code words were allowed, so models named the states by
+position instead (which does reveal the state, since the rule lines' order is in the problem).
+
+## Pilot 4 (`requests_pilot4_*`: Pcode with "The code words used in the problem are allowed everywhere")
+
+The instrument check passes. hidden_correct at h >= 2: Qwen3.8 0.88 (correct 0.99), Gemma 0.56 (correct 1.00; its
+misses mostly "Rule N" labels and a few guessed colour words; mapped-only reading 0.81). With every no-CoT baseline
+at about 0.1 from h3, delta_d(Pcode) (analysis/pilot4_hidden_correct_20261006T012924, 300 bootstrap draws): Qwen3.8
++12.3 [+9.5, +14.2] (its fit near the d bound of 16), Gemma +3.1 [+1.0, +5.1]. The same stage's colour-rule
+conditions: delta_d(C4) Qwen3.8 -0.67 [-0.87, -0.31], Gemma -1.50 [-1.76, -1.33]; C3 and P+ lower; C4off -0.21
+and -0.29 (intervals include 0). These are dev-bank numbers that chose the prompts; only the test is evidence.

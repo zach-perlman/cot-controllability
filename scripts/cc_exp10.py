@@ -209,7 +209,7 @@ NOCOT_NAME = {"Qwen3.8-27B-FP8": "qwen3.8-27b", "Gemma-4-31B-FP8": "gemma-4-31b-
 SETS = {"calib": ("shipped", ["C0"]), "dev_c2": ("dev", ["C2"]),
         "pilot": ("dev", ["C0", "C1a", "C1c", "C3", "C4", "C4off", "Pplus", "C5"]), "pilot_c1b": ("dev", ["C1b"]),
         "pilot2": ("dev", ["C3", "C4", "C4off", "Pplus"]), "pilot2_c1b": ("dev", ["C1b"]),
-        "pilot3": ("dev", ["Pcode"]),
+        "pilot3": ("dev", ["Pcode"]), "pilot4": ("dev", ["Pcode"]),
         "test": ("test", ["C0", "C1a", "C1c", "C2", "C3", "C4", "C4off", "Pplus", "Pcode", "C5"]),
         "test_c1b": ("test", ["C1b"])}
 C1B_SOURCE = {"pilot_c1b": "pilot", "pilot2_c1b": "pilot2", "test_c1b": "test"}
