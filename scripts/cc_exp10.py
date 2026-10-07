@@ -433,20 +433,23 @@ D_BOUNDS = (0.0, 16.0)
 S_BOUNDS = (0.2, 10.0)
 
 
-def p_correct(h, d: float, s: float, chance: float):
+def p_correct(h, d: float, s: float, chance: float, lapse: float = 0.0):
+    """P(h) = c + (1 - c - lapse) sigma(s (d - h)); lapse (exp10's depth stage) is a fixed depth-independent error
+    rate, so the ceiling is 1 - lapse."""
     import numpy as np
-    return chance + (1 - chance) / (1 + np.exp(-s * (d - np.asarray(h, dtype=float))))
+    return chance + (1 - chance - lapse) / (1 + np.exp(-s * (d - np.asarray(h, dtype=float))))
 
 
-def fit_depth(h: list[int], y: list[bool], chance: float) -> dict:
-    """Maximum-likelihood (d, s) of P(h) = c + (1-c) sigma(s (d - h)): d is the depth at which accuracy is halfway
-    between chance and 1. Bounded (D_BOUNDS, S_BOUNDS): above-half accuracy at every h fits d at its upper bound."""
+def fit_depth(h: list[int], y: list[bool], chance: float, lapse: float = 0.0) -> dict:
+    """Maximum-likelihood (d, s) of P(h) = c + (1 - c - lapse) sigma(s (d - h)): d is the depth at which accuracy is
+    halfway between chance and the ceiling 1 - lapse (lapse fixed, not fitted). Bounded (D_BOUNDS, S_BOUNDS):
+    above-half accuracy at every h fits d at its upper bound."""
     import numpy as np
     from scipy.optimize import minimize
     h_arr, y_arr = np.asarray(h, dtype=float), np.asarray(y, dtype=float)
 
     def nll(params):
-        p = np.clip(p_correct(h_arr, params[0], params[1], chance), 1e-9, 1 - 1e-9)
+        p = np.clip(p_correct(h_arr, params[0], params[1], chance, lapse), 1e-9, 1 - 1e-9)
         return -np.sum(y_arr * np.log(p) + (1 - y_arr) * np.log(1 - p))
     starts = [(d0, s0) for d0 in (0.5, 2.0, 4.0, 7.0, 10.0) for s0 in (0.5, 1.5, 4.0)]
     best = min((minimize(nll, x0, bounds=[D_BOUNDS, S_BOUNDS], method="L-BFGS-B") for x0 in starts),
