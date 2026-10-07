@@ -85,6 +85,9 @@ EXTRA_SUBJECTS = {
                    "family": "qwen3.5", "gpu_memory_utilization": 0.90},
     "Qwen3.5-4B": {"repo": "Qwen/Qwen3.5-4B", "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
                    "family": "qwen3.5", "gpu_memory_utilization": 0.90},
+    # exp10 depth stage: a size-matched non-looped control (with Qwen3.5-4B) for Ouro and Huginn; pinned 2026-10-07.
+    "Qwen3.5-2B": {"repo": "Qwen/Qwen3.5-2B", "revision": "15852e8c16360a2fea060d615a32b45270f8a8fc",
+                   "family": "qwen3.5", "gpu_memory_utilization": 0.90},
     # exp04 (results/exp04_prefill/manifest.json). Qwen3.8 is the exp03 judge checkpoint, here as a subject.
     # Gemma 4 31B: Google publishes no FP8 checkpoint; RedHatAI's FP8-block quantization (compressed-tensors) is a
     # third-party one (62.5 GB bf16 vs 33.3 GB). Gemma 4 12B in bf16 (23.9 GB). Revisions pinned on 2026-09-30.
@@ -137,6 +140,15 @@ EXTRA_SUBJECTS = {
                            "revision": "3aaa2224253a92ca45cf2e3d427c360e1ef9c93d", "family": "ouro", **_OURO_SERVING},
     "Ouro-2.6B-Thinking": {"repo": "ByteDance/Ouro-2.6B-Thinking",
                            "revision": "f1edd81e7ac41355db670500ceaf204e0f73af68", "family": "ouro", **_OURO_SERVING},
+    # exp10 depth stage, size-matched non-looped controls for Ouro and Huginn (human choice on 2026-10-07: Gemma-4,
+    # no Qwen3), and Huginn's recurrent-depth dial (its custom code runs in transformers only, not vLLM: it is
+    # scored by exp10_answer_logprob, never generated). Revisions pinned on 2026-10-07.
+    "Gemma-4-E2B": {"repo": "google/gemma-4-E2B-it", "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+                    "family": "gemma4", "gpu_memory_utilization": 0.90},
+    "Gemma-4-E4B": {"repo": "google/gemma-4-E4B-it", "revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+                    "family": "gemma4", "gpu_memory_utilization": 0.90},
+    "Huginn-0125": {"repo": "tomg-group-umd/huginn-0125", "revision": "bb6621b65e90b6a4b9b29ef88dc83866d450470c",
+                    "family": "huginn", "trust_remote_code": True},
 }
 # exp10's loop dial: the same checkpoints with fewer recurrent passes (the config field each family reads; vLLM's
 # Ouro runs exactly total_ut_steps passes, its exit gate unused). The unsuffixed models run their trained count
@@ -148,6 +160,13 @@ for _base, _counts in {"Ouro-1.4B-Thinking": (1, 2, 3), "Ouro-2.6B-Thinking": (1
         _spec = EXTRA_SUBJECTS[_base]
         EXTRA_SUBJECTS[f"{_base}-loop{_n}"] = {
             **_spec, "vllm_args": {**_spec.get("vllm_args", {}), "hf_overrides": {LOOP_FIELD[_spec["family"]]: _n}}}
+# Huginn's dial: recurrent steps per token (trained with a random count, mean 32; its card: under 4 is coarse, gains
+# stop near 64). The unsuffixed name runs 32.
+HUGINN_STEPS = (4, 8, 16, 32, 64)
+EXTRA_SUBJECTS["Huginn-0125"]["num_steps"] = 32
+for _n in HUGINN_STEPS:
+    if _n != 32:
+        EXTRA_SUBJECTS[f"Huginn-0125-steps{_n}"] = {**EXTRA_SUBJECTS["Huginn-0125"], "num_steps": _n}
 ALL_MODELS = {**SUBJECTS, **PRECISION_CHECK_MODEL, **EXTRA_SUBJECTS}
 GATE_MODELS = ["Qwen3-8B", "Qwen3-32B"]
 GRID_MODELS = ["Qwen3-8B", "Qwen3-32B", "Qwen3.6-27B"]
@@ -261,6 +280,11 @@ FAMILIES.update({  # exp10's looped models (token ids and templates checked on 2
         "template_opens_think": True,
         "sampling": {"temperature": 1.0, "top_p": 0.7, "top_k": -1, "min_p": 0.0,
                      "presence_penalty": 0.0, "repetition_penalty": 1.0},
+        "chat_template_kwargs": {},
+    },
+    "huginn": {
+        # Scored only (exp10_answer_logprob), never generated: no reasoning tokens, so only thinking-off rows (C0).
+        "template_opens_think": False,
         "chat_template_kwargs": {},
     },
 })

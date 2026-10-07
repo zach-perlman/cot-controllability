@@ -368,11 +368,15 @@ SETS["mhn"]["ctl"] = ("ctl", ["Ctl"])
 #   dev_c2        dev bank x C2 (arithmetic, and chain for the models that have none): the example turns
 #   depth_pilot   dev bank minus the example items x every depth condition but C2
 #   depth_test    test bank x every depth condition
+#   depth_test_direct  test bank x the no-CoT conditions (the IQuest looped/non-looped pair: no example turns)
+#   depth_test_loops   test bank x C0, C2, C4off (Ouro's loop variants; C4off as in the full-loop model's depth_test)
 SETS["arithmetic"] = {"calib": ("shipped", ["C0"]), "dev_c2": ("dev", ["C2"])}
 for _task in T.DEPTH_TASKS:
     SETS[_task]["depth_pilot"] = ("dev", [c for c in T.DEPTH_CONDITIONS if c != "C2"])
     SETS[_task]["depth_test"] = ("test", T.DEPTH_CONDITIONS)
-DEPTH_SETS = {"depth_pilot", "depth_test"}
+    SETS[_task]["depth_test_direct"] = ("test", ["C0", *T.FILLER])
+    SETS[_task]["depth_test_loops"] = ("test", ["C0", "C2", "C4off"])
+DEPTH_SETS = {"depth_pilot", "depth_test", "depth_test_direct", "depth_test_loops"}
 # The depth stage's models: three standard reasoners and the looped arm (cc_config.LOOP_FIELD; "-loop<n>" variants
 # run fewer recurrent passes of the same checkpoint and take its example turns).
 LOOPED = {"Ouro-1.4B-Thinking": (1, 2, 3), "Ouro-2.6B-Thinking": (1, 2, 3), "Nanbeige4.2-3B": (1,),

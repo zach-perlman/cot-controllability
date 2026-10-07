@@ -17,7 +17,8 @@ import cc_config as cfg
 # The looped models' history formats (cc_exp07.HISTORY_REASONING's convention: None where the template keeps
 # reasoning_content). Kept here, not in cc_exp07's dict, which enters exp07/exp09/exp10 output keys;
 # cc_generate_abort adds these to the key of rows of these families only.
-LOOPED_HISTORY_REASONING = {"iquest": None, "nanbeige4.2": None, "ouro": "<think>\n{reasoning}\n</think>\n\n{answer}"}
+LOOPED_HISTORY_REASONING = {"iquest": None, "nanbeige4.2": None, "ouro": "<think>\n{reasoning}\n</think>\n\n{answer}",
+                            "huginn": None}  # Huginn: scored on C0 rows only, which have no reasoning turns
 
 
 def history_formats(family: str) -> tuple[str | None, str]:
