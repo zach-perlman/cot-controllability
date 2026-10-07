@@ -74,6 +74,8 @@ PRECISION_CHECK_MAX_MODEL_LEN = 28800
 # Not used by exp01/exp02. FP8 weights are 31 GB against 56 GB for bf16, which leaves ~2.5x the KV cache for long
 # traces (Qwen3.6-27B in bf16 decodes only ~6 long traces at a time). A run using it needs a bf16 precision check,
 # as Qwen3-32B has. Download with scripts/cc_download.py.
+# Ouro's config and tokenizer ship custom code; vLLM serves it only up to 0.25.1 (VLLM_VENV=/workspace/.venv-vllm025).
+_OURO_SERVING = {"gpu_memory_utilization": 0.90, "trust_remote_code": True, "vllm_args": {"trust_remote_code": True}}
 EXTRA_SUBJECTS = {
     "Qwen3.6-27B-FP8": {"repo": "Qwen/Qwen3.6-27B-FP8", "revision": "e89b16ebf1988b3d6befa7de50abc2d76f26eb09",
                         "family": "qwen3.6", "gpu_memory_utilization": 0.90},
@@ -115,7 +117,7 @@ EXTRA_SUBJECTS = {
                         "family": "gemma4", "gpu_memory_utilization": 0.90, "vllm_args": {"quantization": "fp8"}},
     # exp10 looped-model arm (human choice on 2026-10-06). bf16 checkpoints, revisions pinned on 2026-10-06.
     # IQuest Loop-Thinking runs its 80 layers twice with shared weights; 40B-Thinking is its non-looped sibling.
-    # Ouro was removed from vLLM in 0.26, so the four Ouro checkpoints run under HF transformers, not vLLM.
+    # Ouro was removed from vLLM in 0.26, so the four Ouro checkpoints run under vLLM 0.25.1 (_OURO_SERVING).
     "IQuest-40B-Loop-Thinking": {"repo": "IQuestLab/IQuest-Coder-V1-40B-Loop-Thinking",
                                  "revision": "f5ceb094305504a82a9cb69501da6e8bde89f188",
                                  "family": "iquest", "gpu_memory_utilization": 0.90, "trust_remote_code": True,
@@ -128,13 +130,13 @@ EXTRA_SUBJECTS = {
                        "family": "nanbeige4.2", "gpu_memory_utilization": 0.90, "trust_remote_code": True,
                        "vllm_args": {"trust_remote_code": True}},
     "Ouro-1.4B": {"repo": "ByteDance/Ouro-1.4B", "revision": "574fa66cb8bf5abdc979642d01cf2b79b16bfab1",
-                  "family": "ouro"},
+                  "family": "ouro", **_OURO_SERVING},
     "Ouro-2.6B": {"repo": "ByteDance/Ouro-2.6B", "revision": "1ed04250da1a9936042725d302e81c8fa2ab5abd",
-                  "family": "ouro"},
+                  "family": "ouro", **_OURO_SERVING},
     "Ouro-1.4B-Thinking": {"repo": "ByteDance/Ouro-1.4B-Thinking",
-                           "revision": "3aaa2224253a92ca45cf2e3d427c360e1ef9c93d", "family": "ouro"},
+                           "revision": "3aaa2224253a92ca45cf2e3d427c360e1ef9c93d", "family": "ouro", **_OURO_SERVING},
     "Ouro-2.6B-Thinking": {"repo": "ByteDance/Ouro-2.6B-Thinking",
-                           "revision": "f1edd81e7ac41355db670500ceaf204e0f73af68", "family": "ouro"},
+                           "revision": "f1edd81e7ac41355db670500ceaf204e0f73af68", "family": "ouro", **_OURO_SERVING},
 }
 # exp10's loop dial: the same checkpoints with fewer recurrent passes (the config field each family reads; vLLM's
 # Ouro runs exactly total_ut_steps passes, its exit gate unused). The unsuffixed models run their trained count
