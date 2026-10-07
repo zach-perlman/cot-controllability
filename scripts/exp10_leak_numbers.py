@@ -26,8 +26,13 @@ chain's prompt quotes them, so they cannot be read as leaks, but the hand audit 
 from __future__ import annotations
 
 import re
+import sys
 import unicodedata
 from dataclasses import dataclass
+
+# Degenerate traces (Ouro at 1-2 loops) write digit runs of thousands of digits; Python's default 4300-digit limit on
+# int() would stop the grader on them.
+sys.set_int_max_str_digits(0)
 
 UNITS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve",
          "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"]

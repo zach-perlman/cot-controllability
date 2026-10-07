@@ -26,8 +26,12 @@ model_runs() {  # model
   for task in chain arithmetic; do run "$task" dev_c2 "$model" || return 1; done
   for task in chain arithmetic; do run "$task" depth_pilot "$model" || return 1; done
 }
-for model in Ouro-2.6B-Thinking Ouro-2.6B-Thinking-loop{1,2,3} Ouro-1.4B-Thinking Ouro-1.4B-Thinking-loop{1,2,3} \
-             Nanbeige4.2-3B Nanbeige4.2-3B-loop1 Qwen3.8-27B-FP8 Gemma-4-31B-FP8 Qwen3-32B IQuest-40B-Loop-Thinking; do
+#   Arguments, if any: the models to run instead of the full list (finished sets are skipped either way).
+default_models=(Ouro-2.6B-Thinking Ouro-2.6B-Thinking-loop{1,2,3} Ouro-1.4B-Thinking Ouro-1.4B-Thinking-loop{1,2,3}
+                Nanbeige4.2-3B Nanbeige4.2-3B-loop1 Qwen3.8-27B-FP8 Gemma-4-31B-FP8 Qwen3-32B IQuest-40B-Loop-Thinking)
+models=("$@")
+(( ${#models[@]} )) || models=("${default_models[@]}")
+for model in "${models[@]}"; do
   echo "=== $model $(date +%H:%M)"
   model_runs "$model" || echo "FAILED: $model (skipped)"
 done
