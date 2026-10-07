@@ -74,6 +74,8 @@
   "One sample per item and condition; 40 items per h.",
   "Prompt texts were developed on dev with Qwen3.8 and Gemma-4-31B (earlier stages) and checked on the depth stage's dev runs; the Q2 contrasts were fixed before any dev log-probability results were read except Ouro-2.6B-Thinking's validity check."
  ],
- "deviations_from_plan": [],
+ "deviations_from_plan": [
+  "2026-10-07 19:55 UTC, before any test generation or test scoring: headroom rule added to Q2. A contrast is read only if its stronger arm's d_soft interval lies above 0 (the model is above chance at some h); otherwise it is reported as 'no headroom: uninformative', never as 'no gain'. Reason (dev): Huginn-0125's C0 P(gold) is at chance on both tasks at every step count (d_soft 0 at 4, 8, 16, 32 and 64 steps; arithmetic h = 1 items such as a two-digit product are already beyond it), so its contrast cannot show a gain on these tasks."
+ ],
  "run": "scripts/run_exp10_depth_test.sh: depth_test, depth_test_direct (IQuest Loop), log-prob scoring of the test bank for every model on disk; then (human-approved) delete IQuest-40B-Loop-Thinking's weights, download IQuest-40B-Thinking and Qwen3.5-4B, and run their sets and scores; depth_test_loops last"
 }
