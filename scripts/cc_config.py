@@ -113,6 +113,25 @@ EXTRA_SUBJECTS = {
                           "family": "glm4.7", "gpu_memory_utilization": 0.90, "vllm_args": {"quantization": "fp8"}},
     "Gemma-4-12B-FP8": {"repo": "google/gemma-4-12B-it", "revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
                         "family": "gemma4", "gpu_memory_utilization": 0.90, "vllm_args": {"quantization": "fp8"}},
+    # exp10 looped-model arm (human choice on 2026-10-06). bf16 checkpoints, revisions pinned on 2026-10-06.
+    # IQuest Loop-Thinking runs its 80 layers twice with shared weights; 40B-Thinking is its non-looped sibling.
+    # Ouro was removed from vLLM in 0.26, so the four Ouro checkpoints run under HF transformers, not vLLM.
+    "IQuest-40B-Loop-Thinking": {"repo": "IQuestLab/IQuest-Coder-V1-40B-Loop-Thinking",
+                                 "revision": "f5ceb094305504a82a9cb69501da6e8bde89f188",
+                                 "family": "iquest", "gpu_memory_utilization": 0.90},
+    "IQuest-40B-Thinking": {"repo": "IQuestLab/IQuest-Coder-V1-40B-Thinking",
+                            "revision": "504dc0fa3aac173966e6504756dc7d51c92d8a36",
+                            "family": "iquest", "gpu_memory_utilization": 0.90},
+    "Nanbeige4.2-3B": {"repo": "Nanbeige/Nanbeige4.2-3B", "revision": "b82e54bd609793562a75cbf9337970a93369eab5",
+                       "family": "nanbeige4.2", "gpu_memory_utilization": 0.90},
+    "Ouro-1.4B": {"repo": "ByteDance/Ouro-1.4B", "revision": "574fa66cb8bf5abdc979642d01cf2b79b16bfab1",
+                  "family": "ouro"},
+    "Ouro-2.6B": {"repo": "ByteDance/Ouro-2.6B", "revision": "1ed04250da1a9936042725d302e81c8fa2ab5abd",
+                  "family": "ouro"},
+    "Ouro-1.4B-Thinking": {"repo": "ByteDance/Ouro-1.4B-Thinking",
+                           "revision": "3aaa2224253a92ca45cf2e3d427c360e1ef9c93d", "family": "ouro"},
+    "Ouro-2.6B-Thinking": {"repo": "ByteDance/Ouro-2.6B-Thinking",
+                           "revision": "f1edd81e7ac41355db670500ceaf204e0f73af68", "family": "ouro"},
 }
 ALL_MODELS = {**SUBJECTS, **PRECISION_CHECK_MODEL, **EXTRA_SUBJECTS}
 GATE_MODELS = ["Qwen3-8B", "Qwen3-32B"]
