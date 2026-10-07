@@ -167,8 +167,12 @@ def generate(model: str, loop_num: int | None, suites: list[str] | None, think_t
               seed=cfg.VLLM_ENGINE_SEED, gpu_memory_utilization=spec.get("gpu_memory_utilization", 0.9),
               hf_overrides=overrides, **spec.get("vllm_args", {}))
     card = SAMPLING[spec["family"]]
+    # Ouro's generation_config lists only <|endoftext|> as EOS, so vLLM runs past the end of the turn without this.
+    im_end = llm.get_tokenizer().convert_tokens_to_ids("<|im_end|>")
     params = [SamplingParams(max_tokens=think_tokens if r["mode"] == "think" else MAX_TOKENS["direct"],
-                             seed=SEED + k, **(card if r["mode"] == "think" else {"temperature": 0.0}))
+                             seed=SEED + k, stop_token_ids=[im_end],
+                             skip_special_tokens=False,  # Ouro's </think> is a special token (id 4)
+                             **(card if r["mode"] == "think" else {"temperature": 0.0}))
               for k, r in enumerate(rows)]
     outputs = [out.outputs[0] for out in llm.generate(prompts, params)]
     write_generations(out_path, model, loop_num, rows, prompts, [o.text for o in outputs],
@@ -176,10 +180,11 @@ def generate(model: str, loop_num: int | None, suites: list[str] | None, think_t
 
 
 def generate_hf(model: str, loop_num: int | None, suites: list[str] | None, think_tokens: int,
-                batch_size: int | None = None) -> None:
+                batch_size: int | None = None, shard: tuple[int, int] = (0, 1)) -> None:
     """The same requests under HF transformers (Ouro, which vLLM dropped; and a reference for vLLM's generic
     backend). Batches of similar-length prompts, left-padded (Ouro: one unpadded sequence at a time); one torch
-    seed per batch, so rows are not seed-matched to the vLLM run."""
+    seed per batch, so rows are not seed-matched to the vLLM run. shard (i, n): every n-th request from the i-th,
+    so n processes can share the GPU (batch-1 decoding leaves it mostly idle); grade() merges the shards."""
     import torch
     from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
     spec = cfg.ALL_MODELS[model]
@@ -187,10 +192,14 @@ def generate_hf(model: str, loop_num: int | None, suites: list[str] | None, thin
     default_batch = HF_BATCH_BY_FAMILY.get(spec["family"], HF_BATCH)
     batch_size = batch_size or default_batch
     suffix = "_hf" if batch_size == default_batch else f"_hf_b{batch_size}"
+    shard_i, shard_n = shard
+    if shard_n > 1:
+        suffix += f"_s{shard_i}of{shard_n}"
     out_path = OUT / f"generations_{run_name(model, loop_num)}{suffix}.jsonl"
     if out_path.exists():
         raise SystemExit(f"{out_path} exists")
     rows, prompts = render(model, suites)
+    rows, prompts = rows[shard_i::shard_n], prompts[shard_i::shard_n]
     config = AutoConfig.from_pretrained(path, trust_remote_code=True)
     if loop_num is not None:
         setattr(config, LOOP_FIELD[spec["family"]], loop_num)
@@ -297,7 +306,7 @@ def grade() -> None:
     requests = {r["id"]: r for r in map(json.loads, REQUESTS.open())}
     rows = []
     for path in sorted(glob.glob(str(OUT / "generations_*.jsonl"))):
-        name = Path(path).stem.removeprefix("generations_")
+        name = re.sub(r"_s\d+of\d+$", "", Path(path).stem.removeprefix("generations_"))  # shards: one run
         for gen in map(json.loads, open(path)):
             rows.append({"run": name, **grade_row(requests[gen["id"]], gen)})
     df = pd.DataFrame(rows)
@@ -325,13 +334,15 @@ def main() -> None:
     parser.add_argument("--suites", nargs="+", help="only these suites (default: all)")
     parser.add_argument("--think-tokens", type=int, default=MAX_TOKENS["think"])
     parser.add_argument("--hf-batch", type=int, help="default: HF_BATCH_BY_FAMILY, else HF_BATCH; 1 is unpadded")
+    parser.add_argument("--shard", default="0/1", help="i/n: generate_hf's every n-th request from the i-th")
     args = parser.parse_args()
     if args.command == "requests":
         write_requests()
     elif args.command == "generate":
         generate(args.model, args.loop_num, args.suites, args.think_tokens)
     elif args.command == "generate_hf":
-        generate_hf(args.model, args.loop_num, args.suites, args.think_tokens, args.hf_batch)
+        shard_i, shard_n = map(int, args.shard.split("/"))
+        generate_hf(args.model, args.loop_num, args.suites, args.think_tokens, args.hf_batch, (shard_i, shard_n))
     else:
         grade()
 

@@ -5,7 +5,8 @@
 # (apt package cuda-compat-13-2) goes first on the library path for this process
 # tree only; /venv/main keeps using the host driver.
 set -euo pipefail
-VLLM_VENV=/workspace/.venv-vllm
+# VLLM_VENV overrides the venv: /workspace/.venv-vllm025 has vLLM 0.25.1, the last release that serves Ouro.
+VLLM_VENV="${VLLM_VENV:-/workspace/.venv-vllm}"
 COMPAT_DIR=/usr/local/cuda-13.2/compat
 MIN_NATIVE_DRIVER_MAJOR=595
 
