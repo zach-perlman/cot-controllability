@@ -118,12 +118,15 @@ EXTRA_SUBJECTS = {
     # Ouro was removed from vLLM in 0.26, so the four Ouro checkpoints run under HF transformers, not vLLM.
     "IQuest-40B-Loop-Thinking": {"repo": "IQuestLab/IQuest-Coder-V1-40B-Loop-Thinking",
                                  "revision": "f5ceb094305504a82a9cb69501da6e8bde89f188",
-                                 "family": "iquest", "gpu_memory_utilization": 0.90},
+                                 "family": "iquest", "gpu_memory_utilization": 0.90, "trust_remote_code": True,
+                                 "vllm_args": {"trust_remote_code": True}},
     "IQuest-40B-Thinking": {"repo": "IQuestLab/IQuest-Coder-V1-40B-Thinking",
                             "revision": "504dc0fa3aac173966e6504756dc7d51c92d8a36",
-                            "family": "iquest", "gpu_memory_utilization": 0.90},
+                            "family": "iquest", "gpu_memory_utilization": 0.90, "trust_remote_code": True,
+                            "vllm_args": {"trust_remote_code": True}},
     "Nanbeige4.2-3B": {"repo": "Nanbeige/Nanbeige4.2-3B", "revision": "b82e54bd609793562a75cbf9337970a93369eab5",
-                       "family": "nanbeige4.2", "gpu_memory_utilization": 0.90},
+                       "family": "nanbeige4.2", "gpu_memory_utilization": 0.90, "trust_remote_code": True,
+                       "vllm_args": {"trust_remote_code": True}},
     "Ouro-1.4B": {"repo": "ByteDance/Ouro-1.4B", "revision": "574fa66cb8bf5abdc979642d01cf2b79b16bfab1",
                   "family": "ouro"},
     "Ouro-2.6B": {"repo": "ByteDance/Ouro-2.6B", "revision": "1ed04250da1a9936042725d302e81c8fa2ab5abd",
@@ -133,6 +136,16 @@ EXTRA_SUBJECTS = {
     "Ouro-2.6B-Thinking": {"repo": "ByteDance/Ouro-2.6B-Thinking",
                            "revision": "f1edd81e7ac41355db670500ceaf204e0f73af68", "family": "ouro"},
 }
+# exp10's loop dial: the same checkpoints with fewer recurrent passes (the config field each family reads; vLLM's
+# Ouro runs exactly total_ut_steps passes, its exit gate unused). The unsuffixed models run their trained count
+# (Ouro 4, Nanbeige 2, IQuest 2; IQuest at 1 writes word salad, so it has no variant).
+LOOP_FIELD = {"iquest": "loop_num", "nanbeige4.2": "num_loops", "ouro": "total_ut_steps"}
+for _base, _counts in {"Ouro-1.4B-Thinking": (1, 2, 3), "Ouro-2.6B-Thinking": (1, 2, 3),
+                       "Nanbeige4.2-3B": (1,)}.items():
+    for _n in _counts:
+        _spec = EXTRA_SUBJECTS[_base]
+        EXTRA_SUBJECTS[f"{_base}-loop{_n}"] = {
+            **_spec, "vllm_args": {**_spec.get("vllm_args", {}), "hf_overrides": {LOOP_FIELD[_spec["family"]]: _n}}}
 ALL_MODELS = {**SUBJECTS, **PRECISION_CHECK_MODEL, **EXTRA_SUBJECTS}
 GATE_MODELS = ["Qwen3-8B", "Qwen3-32B"]
 GRID_MODELS = ["Qwen3-8B", "Qwen3-32B", "Qwen3.6-27B"]
@@ -141,6 +154,13 @@ GRID_MODELS = ["Qwen3-8B", "Qwen3-32B", "Qwen3.6-27B"]
 def model_dir(model: str) -> Path:
     spec = ALL_MODELS.get(model) or JUDGE_MODELS[model]
     return HF_HUB_DIR / f"models--{spec['repo'].replace('/', '--')}" / "snapshots" / spec["revision"]
+
+
+def load_tokenizer(model: str):
+    """The model's tokenizer (IQuest's and Nanbeige's ship custom code: spec "trust_remote_code")."""
+    from transformers import AutoTokenizer
+    spec = ALL_MODELS.get(model) or JUDGE_MODELS[model]
+    return AutoTokenizer.from_pretrained(model_dir(model), trust_remote_code=spec.get("trust_remote_code", False))
 
 
 # --- Families: special tokens and card sampling -----------------------------------------------------------------
@@ -212,6 +232,36 @@ FAMILIES = {
 }
 for _effort in ("xhigh", "low"):
     FAMILIES[f"qwen3.8-{_effort}"] = {**FAMILIES["qwen3.8"], "chat_template_kwargs": {"reasoning_effort": _effort}}
+FAMILIES.update({  # exp10's looped models (token ids and templates checked on 2026-10-06)
+    "iquest": {
+        # Qwen-like template; it stops at "<|im_start|>assistant\n" and the model writes "<think>\n" itself. With no
+        # system message the template adds its own ("You are ... IQuest."). Card: T 1.0, top_p 0.95, top_k 20.
+        "think_start": 75872, "think_end": 75873, "im_end": 75864,
+        "template_opens_think": False,
+        "sampling": {"temperature": 1.0, "top_p": 0.95, "top_k": 20, "min_p": 0.0,
+                     "presence_penalty": 0.0, "repetition_penalty": 1.0},
+        "chat_template_kwargs": {},
+    },
+    "nanbeige4.2": {
+        # The template ends with "<|im_start|>assistant\n<think>\n". Card (reasoning and chat): T 0.6, top_p 0.95.
+        "think_start": 166103, "think_end": 166104, "im_end": 166101,
+        "template_opens_think": True,
+        "sampling": {"temperature": 0.6, "top_p": 0.95, "top_k": 20, "min_p": 0.0,
+                     "presence_penalty": 0.0, "repetition_penalty": 1.0},
+        "chat_template_kwargs": {},
+    },
+    "ouro": {
+        # Thinking checkpoints: the template ends with "<|im_start|>assistant\n<think>\n" whatever enable_thinking
+        # says, except that thinking off opens no block at all; it drops earlier turns' reasoning. <think> and
+        # </think> are special tokens (ids 3, 4); generation_config lists only <|endoftext|> as EOS, so im_end must
+        # be a stop token. Card's generate() example: T 1.0, top_p 0.7, no top_k.
+        "think_start": 3, "think_end": 4, "im_end": 2,
+        "template_opens_think": True,
+        "sampling": {"temperature": 1.0, "top_p": 0.7, "top_k": -1, "min_p": 0.0,
+                     "presence_penalty": 0.0, "repetition_penalty": 1.0},
+        "chat_template_kwargs": {},
+    },
+})
 # The paper's setting (Appendix G: greedy decoding throughout), used by the exp01 gate.
 GREEDY_SAMPLING = {"temperature": 0.0, "top_p": 1.0, "top_k": -1, "min_p": 0.0,
                    "presence_penalty": 0.0, "repetition_penalty": 1.0}

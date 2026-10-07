@@ -52,6 +52,18 @@ def n_ops(expr: str) -> int:
     return sum(isinstance(node, ast.BinOp) for node in ast.walk(ast.parse(expr, mode="eval")))
 
 
+def leaf_values(expr: str) -> set[int]:
+    """The absolute values of the expression's numbers (the number grader reads no sign)."""
+    return {abs(node.value) for node in ast.walk(ast.parse(expr, mode="eval")) if isinstance(node, ast.Constant)}
+
+
+def intermediate_values(expr: str) -> set[int]:
+    """The absolute values of every operation but the last (the root): the states a reasoner works out on the way."""
+    root = ast.parse(expr, mode="eval").body
+    nodes = [node for node in ast.walk(root) if isinstance(node, ast.BinOp) and node is not root]
+    return {abs(eval(compile(ast.Expression(node), "<sub>", "eval"))) for node in nodes}
+
+
 def check_item(item: dict) -> dict:
     """Re-derived from the text: nocot-bench's solver gives the gold, and the expression has h operations."""
     solved = arithmetic_module().solve(type("Problem", (), {"problem": item["problem"]})())

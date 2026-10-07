@@ -89,6 +89,11 @@ def output_path(requests_path: Path, model: str, sampling: dict, requests: list[
                                         cc_exp10_render.prompt_ids, cc_exp10_render.job,
                                         cc_exp10_render.generation_result)],
                                     "history_formats": [cc_exp07.HISTORY_REASONING, cc_exp07.HISTORY_EMPTY_THINK]}
+        base_family = cfg.ALL_MODELS[model]["family"].split("-")[0]
+        if base_family in cc_exp10_render.LOOPED_HISTORY_REASONING:  # exp10's looped models only (older keys unchanged)
+            material["exp10_render"]["looped_history"] = {
+                "format": cc_exp10_render.LOOPED_HISTORY_REASONING[base_family],
+                "code": inspect.getsource(cc_exp10_render.history_formats)}
     stem = requests_path.stem.removeprefix("requests")  # exp04's requests_none / requests_repro -> "_none" / "_repro"
     return requests_path.parent / "generations" / f"{model}__card__{ENGINE}{stem}__{cfg.content_key(material)}.jsonl"
 
@@ -448,8 +453,7 @@ def main() -> None:
     print(f"{args.model}: shard {args.shard} of {len(requests)} requests, TP {gen.TENSOR_PARALLEL} -> {out.name}",
           flush=True)
 
-    from transformers import AutoTokenizer
-    tokenizer = AutoTokenizer.from_pretrained(cfg.model_dir(args.model))
+    tokenizer = cfg.load_tokenizer(args.model)
     gen.check_family_tokens(tokenizer, family)
     llm = gen.load_llm(cfg.model_dir(args.model), memory_fraction, cfg.VLLM_MAX_MODEL_LEN,
                        {"scheduling_policy": "priority", **spec.get("vllm_args", {})})

@@ -44,9 +44,9 @@ import exp10_leak_names as names
 import exp10_leak_numbers as numbers
 import exp10_task_conditions as T
 
-TASKS = ("chain", "mhn")
+TASKS = ("chain", "mhn", "arithmetic")  # arithmetic's banks: exp10_arithmetic
 CACHE = {task: E.EXP.cache / task for task in TASKS}
-BANK_NAMES = {"chain": ("dev", "test", "shipped"), "mhn": ("dev", "test", "ctl")}
+BANK_NAMES = {"chain": ("dev", "test", "shipped"), "mhn": ("dev", "test", "ctl"), "arithmetic": ("dev", "test", "shipped")}
 BANK_PATHS = {task: {bank: CACHE[task] / f"items_{bank}.jsonl" for bank in BANK_NAMES[task]} for task in TASKS}
 CHAIN_SEEDS = {"dev": "exp10_chain_dev_20261005", "test": "exp10_chain_test_20261005"}
 CHAIN_PER_H = {"dev": E.DEV_PER_H, "test": E.TEST_PER_H}
@@ -321,6 +321,8 @@ def write_bank(task: str, bank: str, rows: list[dict]) -> None:
 
 
 def write_banks(task: str) -> None:
+    if task == "arithmetic":
+        raise SystemExit("arithmetic's banks are written by exp10_arithmetic.py")
     path = E.EXP.results / f"banks_{task}.json"
     if path.exists():
         raise SystemExit(f"{path} exists")
@@ -359,12 +361,32 @@ _RULE_SET = {"chain": ["C0", "C1a", "C1c", "C3", "C4", "C4off", "Pnull", "C5"],
              "mhn": ["C0", "C1a", "C1c", "C3", "C4", "C4off", "Pnull"]}
 SETS = {task: {"dev_c2": ("dev", ["C2"]), "pilot": ("dev", _RULE_SET[task]), "pilot_c1b": ("dev", ["C1b"]),
                "test": ("test", [c for c in T.CONDITIONS[task] if c not in ("C1b", "Ctl")]),
-               "test_c1b": ("test", ["C1b"])} for task in TASKS}
+               "test_c1b": ("test", ["C1b"])} for task in ("chain", "mhn")}
 SETS["chain"]["calib"] = ("shipped", ["C0"])
 SETS["mhn"]["ctl"] = ("ctl", ["Ctl"])
+# The depth stage (exp10_task_conditions.DEPTH_CONDITIONS; manifest_depth.json):
+#   dev_c2        dev bank x C2 (arithmetic, and chain for the models that have none): the example turns
+#   depth_pilot   dev bank minus the example items x every depth condition but C2
+#   depth_test    test bank x every depth condition
+SETS["arithmetic"] = {"calib": ("shipped", ["C0"]), "dev_c2": ("dev", ["C2"])}
+for _task in T.DEPTH_TASKS:
+    SETS[_task]["depth_pilot"] = ("dev", [c for c in T.DEPTH_CONDITIONS if c != "C2"])
+    SETS[_task]["depth_test"] = ("test", T.DEPTH_CONDITIONS)
+DEPTH_SETS = {"depth_pilot", "depth_test"}
+# The depth stage's models: three standard reasoners and the looped arm (cc_config.LOOP_FIELD; "-loop<n>" variants
+# run fewer recurrent passes of the same checkpoint and take its example turns).
+LOOPED = {"Ouro-1.4B-Thinking": (1, 2, 3), "Ouro-2.6B-Thinking": (1, 2, 3), "Nanbeige4.2-3B": (1,),
+          "IQuest-40B-Loop-Thinking": ()}
+DEPTH_MODELS = (["Gemma-4-31B-FP8", "Qwen3.8-27B-FP8", "Qwen3-32B", "IQuest-40B-Thinking"]
+                + [m for base, counts in LOOPED.items() for m in [base, *(f"{base}-loop{n}" for n in counts)]])
+
+
+def example_model(model: str) -> str:
+    """The model whose dev C2 traces give `model`'s example turns (a loop variant: its full-loop checkpoint)."""
+    return re.sub(r"-loop\d+$", "", model)
 C1B_SOURCE = {"pilot_c1b": "pilot", "test_c1b": "test"}
-EXAMPLE_H = {"chain": (3, 4, 5, 6, 8), "mhn": (2, 3, 4, 5, 6)}
-MODE = {"chain": "exp10_no_number", "mhn": "exp10_no_name"}
+EXAMPLE_H = {"chain": (3, 4, 5, 6, 8), "mhn": (2, 3, 4, 5, 6), "arithmetic": (3, 4, 5, 6, 8)}
+MODE = {"chain": "exp10_no_number", "mhn": "exp10_no_name", "arithmetic": "exp10_no_number"}
 
 
 def requests_path(task: str, set_name: str, model: str) -> Path:
@@ -386,9 +408,10 @@ def load_grades(task: str, set_name: str, model: str, sampling: str = "card") ->
     return [json.loads(l) for l in grades_path(task, set_name, model, sampling).open()]
 
 
-def examples_of(task: str, model: str) -> list[dict]:
+def examples_of(task: str, model: str, colour_free: bool = False) -> list[dict]:
     """The model's C4 example turns: its own correct, closed C2 traces on dev items with h in EXAMPLE_H, round-robin
-    over those depths in dev-bank order; a trace that still leaks after masking is skipped."""
+    over those depths in dev-bank order; a trace that still leaks after masking is skipped, and with `colour_free`
+    (the depth stage, whose Gate shows the traces unmasked under a color ban) one that names a color."""
     grades = {g["request_id"]: g for g in load_grades(task, "dev_c2", model)}
     by_item = {r["item_id"]: r for r in map(json.loads, generation_path(task, "dev_c2", model).open())
                if grades[r["request_id"]]["correct"] and r["think_status"] == "closed"}
@@ -400,9 +423,14 @@ def examples_of(task: str, model: str) -> list[dict]:
             if queues[h] and len(out) < E.N_EXAMPLES:
                 item_id = queues[h].pop(0)
                 try:
-                    out.append(T.example(task, by_item[item_id], items[item_id]))
+                    ex = T.example(task, by_item[item_id], items[item_id])
                 except ValueError as err:
                     print(f"skipped example: {err}")
+                    continue
+                if colour_free and any(f.category in COLOUR_CATEGORIES for f in colour_leak.leaks(ex["unmasked"])):
+                    print(f"skipped example: {item_id} names a color")
+                    continue
+                out.append(ex)
     if len(out) < 3:
         raise SystemExit(f"{task} {model}: only {len(out)} usable example traces")
     return out
@@ -415,20 +443,21 @@ def c1b_filler_tokens(task: str, set_name: str, model: str) -> dict[int, int]:
 
 
 def build_rows(task: str, set_name: str, model: str) -> tuple[list[dict], dict]:
-    from transformers import AutoTokenizer
     import cc_exp10_render
     bank, conditions = SETS[task][set_name]
-    tokenizer = AutoTokenizer.from_pretrained(cfg.model_dir(model))
+    tokenizer = cfg.load_tokenizer(model)
     family = cfg.ALL_MODELS[model]["family"]
     cc_exp10_render.check_history_template(tokenizer, family)
-    needs_examples = "C4" in conditions or "C4off" in conditions
-    examples = examples_of(task, model) if needs_examples else []
+    needs_examples = bool({"C4", "C4off", "Gate", "Code"} & set(conditions))
+    examples = (examples_of(task, example_model(model), colour_free=set_name in DEPTH_SETS)
+                if needs_examples else [])
     example_items = {ex["item"]["item_id"] for ex in examples}
     items = [it for it in evals(task, bank) if not (bank == "dev" and it["item_id"] in example_items)]
+    per_dot = len(tokenizer.encode(C.dots(1000), add_special_tokens=False)) / 1000  # tokens per dot
     filler = {}
     if "C1b" in conditions:
-        per_dot = len(tokenizer.encode(C.dots(1000), add_special_tokens=False)) / 1000
         filler = {h: max(1, round(n / per_dot)) for h, n in c1b_filler_tokens(task, set_name, model).items()}
+    dose_dots = {f: max(1, round(n / per_dot)) for f, n in T.FILLER.items()}
     demo = shots(task, bank)
     rows = []
     for condition in conditions:
@@ -437,7 +466,8 @@ def build_rows(task: str, set_name: str, model: str) -> tuple[list[dict], dict]:
                    "mode": MODE[task], "prompt": condition, "rollout": 0, "abort_on_violation": False,
                    "full_trace_cell": True, "prefill": None, "exp10_render": True,
                    "seed": cfg.rollout_seed(it["item_id"], "exp10", 0),
-                   **T.fields(task, condition, it, demo, examples, filler.get(it["h"]))}
+                   **T.fields(task, condition, it, demo, examples,
+                              dose_dots[condition] if condition in T.FILLER else filler.get(it["h"]))}
             row["request_id"] = cfg.content_key(row)
             rows.append(row)
     if len({r["request_id"] for r in rows}) != len(rows):
@@ -447,6 +477,7 @@ def build_rows(task: str, set_name: str, model: str) -> tuple[list[dict], dict]:
         lengths[r["condition"]].append(len(cc_exp10_render.prompt_ids(tokenizer, family, r)))
     record = {"task": task, "set": set_name, "model": model, "bank": bank, "n_rows": len(rows), "n_items": len(items),
               "example_items": sorted(example_items), "c1b_filler_dots": filler,
+              **({"filler_dose_dots": dose_dots} if set(T.FILLER) & set(conditions) else {}),
               "prompt_tokens": {c: {"mean": round(sum(v) / len(v)), "max": max(v)} for c, v in lengths.items()}}
     longest = max(max(v) for v in lengths.values())
     if longest + max(C.COT_CAP, C.OFF_CAP) + cfg.ANSWER_CAP_TOKENS > cfg.VLLM_MAX_MODEL_LEN:
@@ -489,7 +520,7 @@ def check(task: str, line: str | None, item: dict, direct: bool) -> tuple[object
     if line is None:
         return None, False
     gold = item["answer"]
-    if task == "chain" and direct:
+    if task in ("chain", "arithmetic") and direct:
         return nocot_module("nocot.grade").check_answer(line, gold)
     if isinstance(gold, int) or str(gold).lstrip("-").isdigit():
         m = re.search(r"-?\d+", line.replace(",", ""))
@@ -501,10 +532,29 @@ def check(task: str, line: str | None, item: dict, direct: bool) -> tuple[object
     return text[:40], False
 
 
+def arithmetic_quoted(item: dict) -> set[int]:
+    """The numbers a reasoner may write without writing a state: the expression's own and the answer."""
+    import exp10_arithmetic as A
+    return A.leaf_values(A.expression(item["problem"])) | {abs(item["answer"])}
+
+
+def arithmetic_leaks(text: str, item: dict) -> list:
+    """arithmetic's primary reading: every number but the expression's own and the answer, outside a step position.
+    It flags each intermediate value, and also a computed value the grader cannot match whole ("1,234" is read as 1
+    and 234; "one thousand two hundred" as 1, 2 and 100). It misses an intermediate value equal to a number of the
+    expression (on 173 of the 800 dev and test items one is, often from a % b with a < b): flagging those would flag
+    a quote of the expression. grade_row counts such numbers (n_leaf_valued) for the audit. Operand contexts are not
+    exempt (chain's "add 7" has no counterpart: every operand is a number of the expression or a value)."""
+    quoted = arithmetic_quoted(item)
+    return [f for f in numbers.leaks(text) if not numbers.exempt(text, f, operands=False) and f.value not in quoted]
+
+
 def state_leaks(task: str, text: str, item: dict) -> tuple[list, list]:
     """(the leaks that can name an intermediate state, every match of the rule's categories)."""
     if task == "chain":
         return (numbers.intermediate_leaks(text, chain_values(item), operands=True), numbers.leaks(text))
+    if task == "arithmetic":
+        return arithmetic_leaks(text, item), numbers.leaks(text)
     named = names.entity_leaks(text, item["entities"])
     numbered = numbers.intermediate_leaks(text, set(item["numbers"]), operands=False)
     return (sorted(named + numbered, key=lambda f: f.start),
@@ -544,7 +594,7 @@ def grade_row(task: str, row: dict, item: dict) -> dict:
     found = {where: state_leaks(task, text, item) for where, text in (("reasoning", reasoning), ("answer", rest))}
     primary = {where: f[0] for where, f in found.items()}
     strict = {where: f[1] for where, f in found.items()}
-    if row["condition"] == "Pnull":
+    if row["condition"] in ("Pnull", "Gate"):
         colour = {where: [f for f in colour_leak.leaks(text) if f.category in COLOUR_CATEGORIES]
                   for where, text in (("reasoning", reasoning), ("answer", rest))}
         out.update(task_leak=bool(primary["reasoning"]), task_answer_leak=bool(primary["answer"]))
@@ -560,6 +610,10 @@ def grade_row(task: str, row: dict, item: dict) -> dict:
     out["hidden_correct_strict"] = out["correct"] and not strict["reasoning"] and not strict["answer"]
     if task == "chain":
         out["partial_info"] = numbers.partial_info(reasoning)
+    if task == "arithmetic":
+        import exp10_arithmetic as A
+        coincident = A.intermediate_values(A.expression(item["problem"])) & arithmetic_quoted(item)
+        out["n_leaf_valued"] = sum(f.value in coincident for f in numbers.leaks(reasoning))
     if row["condition"] == "C5":
         written = [f.value for f in numbers.leaks(reasoning) if not numbers.exempt(reasoning, f, operands=True)]
         out["decoy_last_number_not_gold"] = bool(written) and written[-1] != item["answer"]
@@ -621,7 +675,7 @@ def main() -> None:
     parser.add_argument("command", choices=["items", "shipped", "requests", "grade", "calibration"])
     parser.add_argument("--task", choices=TASKS, required=True)
     parser.add_argument("--set")
-    parser.add_argument("--model", choices=E.MODELS)
+    parser.add_argument("--model", choices=E.MODELS + [m for m in DEPTH_MODELS if m not in E.MODELS])
     parser.add_argument("--sampling", choices=["card", "greedy"], default="card")
     args = parser.parse_args()
     if args.set and args.set not in SETS[args.task]:

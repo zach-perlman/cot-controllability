@@ -14,9 +14,18 @@ from __future__ import annotations
 import cc_config as cfg
 
 
+# The looped models' history formats (cc_exp07.HISTORY_REASONING's convention: None where the template keeps
+# reasoning_content). Kept here, not in cc_exp07's dict, which enters exp07/exp09/exp10 output keys;
+# cc_generate_abort adds these to the key of rows of these families only.
+LOOPED_HISTORY_REASONING = {"iquest": None, "nanbeige4.2": None, "ouro": "<think>\n{reasoning}\n</think>\n\n{answer}"}
+
+
 def history_formats(family: str) -> tuple[str | None, str]:
     import cc_exp07
-    return cc_exp07.HISTORY_REASONING[family.split("-")[0]], cc_exp07.HISTORY_EMPTY_THINK.get(family, "")
+    base = family.split("-")[0]
+    if base in LOOPED_HISTORY_REASONING:
+        return LOOPED_HISTORY_REASONING[base], ""
+    return cc_exp07.HISTORY_REASONING[base], cc_exp07.HISTORY_EMPTY_THINK.get(family, "")
 
 
 def prompt_text(tokenizer, family: str, request: dict) -> str:
@@ -70,7 +79,17 @@ def prompt_ids(tokenizer, family: str, request: dict) -> list[int]:
 
 def check_history_template(tokenizer, family: str) -> None:
     import cc_exp07
-    cc_exp07.check_history_template(tokenizer, family)
+    if family.split("-")[0] not in LOOPED_HISTORY_REASONING:
+        cc_exp07.check_history_template(tokenizer, family)
+        return
+    probe = "exp10 probe reasoning"  # cc_exp07.check_history_template's probe, against LOOPED_HISTORY_REASONING
+    messages = [{"role": "user", "content": "u1"}, {"role": "assistant", "content": "a1", "reasoning_content": probe},
+                {"role": "user", "content": "u2"}]
+    kwargs = {**cfg.FAMILIES[family]["chat_template_kwargs"], "enable_thinking": True}
+    kept = probe in tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, **kwargs)
+    if kept != (history_formats(family)[0] is None):
+        raise RuntimeError(f"{family}: template {'keeps' if kept else 'drops'} history reasoning, unlike "
+                           f"LOOPED_HISTORY_REASONING")
 
 
 def job(tokenizer, family: str, request: dict, items: dict) -> dict:
