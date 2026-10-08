@@ -31,7 +31,8 @@ def load(bank: str):
         brew = B.parse(it["problem"])
         probs = torch.softmax(torch.tensor(m["colour_logits"]), -1)
         m.update(brew=brew, gold=it["answer"], hidden=hidden, pred=m["colours"][int(probs.argmax())],
-                 p_pred=float(probs.max()), confident=float(probs.max()) >= 0.5)
+                 p_pred=float(probs.max()), confident=float(probs.max()) >= 0.5, format=it.get("format", "three_first"),
+                 p_gold=float(probs[m["colours"].index(it["answer"])]))
         m["group"] = group(m)
     return metas
 
@@ -54,8 +55,13 @@ def group(m: dict) -> str:
 
 
 def behaviour(metas: list[dict]) -> None:
+    for fmt in sorted({m.get("format", "three_first") for m in metas}):
+        print(f"\n## behaviour, format {fmt} (bf16, exact answer distribution)")
+        behaviour_one([m for m in metas if m.get("format", "three_first") == fmt])
+
+
+def behaviour_one(metas: list[dict]) -> None:
     rng = random.Random(0)
-    print("## behaviour (bf16, exact answer distribution)")
     for h in sorted({m["h"] for m in metas}):
         ms = [m for m in metas if m["h"] == h]
         acc = sum(m["pred"] == m["gold"] for m in ms) / len(ms)

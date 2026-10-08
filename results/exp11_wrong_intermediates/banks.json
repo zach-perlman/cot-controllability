@@ -51,6 +51,19 @@
         "gray": 64
       },
       "content_key": "097972841a68"
+    },
+    "fmt_dev": {
+      "name": "fmt_dev",
+      "seed": "exp11_fmt_dev_20261008",
+      "per_h": 60,
+      "formats": [
+        "three_first",
+        "three_last",
+        "single_first",
+        "single_last"
+      ],
+      "n_eval": 720,
+      "content_key": "2dd750b3d662"
     }
   }
 }

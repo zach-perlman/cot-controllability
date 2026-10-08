@@ -82,6 +82,10 @@ def parse(problem: str) -> Brew:
 # --- The format pilot's generator (manifest deviation 1) ---------------------------------------------------------
 # Table type x start position. three_first is nocot-bench's own wording; single_last is WorkspaceBench's.
 FORMATS = ("three_first", "three_last", "single_first", "single_last")
+# format -> (table type for generate, start position for render); three_same is deviation 2's control: the
+# three-ingredient table and wording with one ingredient stirred every time
+FORMAT_SPEC = {"three_first": ("three", "first"), "three_last": ("three", "last"), "single_first": ("single", "first"),
+               "single_last": ("single", "last"), "three_same": ("three_same", "first")}
 THREE_HEADER = "A potion changes color each time an ingredient is stirred in. The rules:"
 SINGLE_HEADER = "A potion changes color each time it is stirred. The rules:"
 QUESTION = "What color is the potion at the end?"
@@ -98,13 +102,14 @@ def _derangement(rng, n: int) -> list[int]:
 def generate(rng, h: int, table_type: str, colours, ingredients, max_tries: int = 4000) -> dict:
     """One item under nocot-bench's brew rules (datagen/banks/brew.py, _gen_brew): each ingredient a derangement,
     all states distinct, the last-stir-only answer never gold, and (three ingredients) >= 2 distinct ingredients and
-    8 sampled reorderings of the stirs all changing the gold. A single table has one ingredient, SINGLE."""
+    8 sampled reorderings of the stirs all changing the gold. A single table has one ingredient, SINGLE;
+    'three_same' is a three-ingredient table with one of its ingredients stirred every time."""
     n = len(colours)
     for _ in range(max_tries):
-        ings = rng.sample(list(ingredients), 3) if table_type == "three" else [SINGLE]
+        ings = [SINGLE] if table_type == "single" else rng.sample(list(ingredients), 3)
         perms = {ing: _derangement(rng, n) for ing in ings}
         start = rng.randrange(n)
-        seq = [rng.choice(ings) for _ in range(h)]
+        seq = [rng.choice(ings)] * h if table_type == "three_same" else [rng.choice(ings) for _ in range(h)]
         if table_type == "three" and h > 1 and len(set(seq)) < 2:
             continue
         states = [start]
@@ -133,10 +138,10 @@ def generate(rng, h: int, table_type: str, colours, ingredients, max_tries: int 
 
 
 def render(item: dict, fmt: str, colours) -> str:
-    table_type, start_pos = fmt.split("_")
+    table_type, start_pos = FORMAT_SPEC[fmt]
     idx = {c: i for i, c in enumerate(colours)}
     start = f"The potion starts out {colours[item['start']]}."
-    if table_type == "three":
+    if table_type != "single":
         lines = [THREE_HEADER]
         for c in item["line_order"]:
             parts = [f"{colours[item['perms'][ing][idx[c]]]} with {ing}" for ing in item["ings"]]

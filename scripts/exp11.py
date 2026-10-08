@@ -20,8 +20,12 @@ import exp11_brew as B
 EXP = cfg.Exp("exp11_wrong_intermediates", "exp11")
 H_VALUES = (1, 2, 3)
 BANKS = {"dev": {"seed": "exp11_dev_20261008", "per_h": 60}, "test": {"seed": "exp11_test_20261008", "per_h": 250}}
-FMT_BANK = {"name": "fmt_dev", "seed": "exp11_fmt_dev_20261008", "per_h": 60}   # manifest deviation 1
-ALL_BANKS = [*BANKS, FMT_BANK["name"]]
+FMT_BANKS = {   # manifest deviations 1 and 2
+    "fmt_dev": {"seed": "exp11_fmt_dev_20261008", "per_h": 60, "formats": B.FORMATS, "h_values": H_VALUES},
+    "fmt_same_dev": {"seed": "exp11_fmt_same_dev_20261008", "per_h": 60, "formats": ("three_same",),
+                     "h_values": (2, 3)},
+}
+ALL_BANKS = [*BANKS, *FMT_BANKS]
 
 
 def bank_path(bank: str):
@@ -78,33 +82,34 @@ def write_banks() -> None:
     (EXP.results / "banks.json").write_text(json.dumps(record, indent=2) + "\n")
 
 
-def write_fmt_bank() -> None:
-    """The format pilot: FORMATS x H_VALUES x per_h eval items plus one h=2 shot per format, nocot-bench's colours,
-    ingredients and instruction; every gold re-derived by the independent text parser."""
+def write_fmt_bank(name: str) -> None:
+    """A format-pilot bank: formats x h_values x per_h eval items plus one h=2 shot per format, nocot-bench's
+    colours, ingredients and instruction; every gold re-derived by the independent text parser."""
     import random
     brew, _ = E10.nocot_import()
-    path = bank_path(FMT_BANK["name"])
+    spec = FMT_BANKS[name]
+    path = bank_path(name)
     if path.exists():
         raise SystemExit(f"{path} exists; banks are generated once")
     rows = []
-    for fmt in B.FORMATS:
-        rng = random.Random(f"{FMT_BANK['seed']}:{fmt}")
-        cells = [("shot", 2, 0)] + [("eval", h, k) for h in H_VALUES for k in range(FMT_BANK["per_h"])]
+    for fmt in spec["formats"]:
+        rng = random.Random(f"{spec['seed']}:{fmt}")
+        cells = [("shot", 2, 0)] + [("eval", h, k) for h in spec["h_values"] for k in range(spec["per_h"])]
         for split, h, k in cells:
-            gen = B.generate(rng, h, fmt.split("_")[0], brew.COLORS, brew.INGREDIENTS)
+            gen = B.generate(rng, h, B.FORMAT_SPEC[fmt][0], brew.COLORS, brew.INGREDIENTS)
             problem = B.render(gen, fmt, brew.COLORS)
             assert B.parse(problem).path()[-1] == gen["answer"]
-            rows.append({"item_id": f"fmt_dev:{fmt}:{split}:h{h}:{k}", "bank": FMT_BANK["name"], "format": fmt,
+            rows.append({"item_id": f"{name}:{fmt}:{split}:h{h}:{k}", "bank": name, "format": fmt,
                          "split": split, "h": h, "problem": problem, "answer": gen["answer"],
                          "instruction": brew.INSTRUCTION})
     texts = collections.Counter(r["problem"] for r in rows)
-    texts.update(r["problem"] for b in BANKS for r in load_bank(b))
+    texts.update(r["problem"] for b in ALL_BANKS if b != name and bank_path(b).exists() for r in load_bank(b))
     if max(texts.values()) > 1:
         raise SystemExit("a problem text repeats")
     path.write_text("".join(json.dumps(r) + "\n" for r in rows))
     record = json.loads((EXP.results / "banks.json").read_text())
-    record["banks"][FMT_BANK["name"]] = {**FMT_BANK, "formats": B.FORMATS, "n_eval": sum(r["split"] == "eval" for r in rows),
-                                         "content_key": cfg.content_key(rows)}
+    record["banks"][name] = {**spec, "n_eval": sum(r["split"] == "eval" for r in rows),
+                             "content_key": cfg.content_key(rows)}
     (EXP.results / "banks.json").write_text(json.dumps(record, indent=2) + "\n")
     print(f"{len(rows)} rows -> {path}")
 
@@ -208,7 +213,7 @@ def main() -> None:
     if a.cmd == "banks":
         write_banks()
     elif a.cmd == "fmt_bank":
-        write_fmt_bank()
+        write_fmt_bank(a.bank)
     elif a.cmd == "requests":
         write_requests(a.bank)
     else:
