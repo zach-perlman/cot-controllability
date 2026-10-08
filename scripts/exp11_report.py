@@ -1,8 +1,10 @@
 """exp11 test-phase readouts and the pre-registered reading rules (manifest + test addendum).
 
+  q1_single --bank B           Q1, single table: wrong answers by the number of stirs applied along the start's cycle
   q2_three  --probe-file F     Q2, three ingredients: apply the reading rules to a saved probe run
   q2_single --bank B           Q2, single table: J-lens / R-lens answer-relative readouts at the final position
                                (held-state contrast D and the correct-vs-one_short AUC, with the answer-contrast control)
+  q3        --bank B           Q3: apply the addendum's reading rules to the saved patching runs of a bank
 
 Layers are block outputs (layer l = hidden[l + 1]).
 """
@@ -32,22 +34,27 @@ def onset(curve: torch.Tensor) -> int:
     return int((curve > 0.5 * curve.max()).nonzero()[0])
 
 
-def q2_three(probe_file: str, position: str = "final") -> dict:
+def q2_three(probe_file: str, position: str = "final", confident_ids: set[str] | None = None) -> dict:
+    """The reading rules on a saved probe run; with `confident_ids`, every group is restricted to those items (the
+    secondary confident-subset read; the h=1 guard is kept on all h=1 items)."""
     blob = torch.load(probe_file, weights_only=False)
     band = blob["band"]
     res = blob["results"]
     g = torch.Generator().manual_seed(0)
+    keep = (lambda i: True) if confident_ids is None else \
+        (lambda i: res[(2, position, "s1")]["item_ids"][i] in confident_ids)
 
-    def contrast(h, target, members):
-        c_t = res[(h, position, target)]["correct"][members].float()
-        c_d = res[(h, position, "decoy")]["correct"][members].float()
+    def contrast(h, target, members, pos=position):
+        c_t = res[(h, pos, target)]["correct"][members].float()
+        c_d = res[(h, pos, "decoy")]["correct"][members].float()
         return (c_t - c_d)[:, band].mean(1)
 
     out = {}
-    h1 = list(range(len(res[(1, position, "answer")]["groups"])))
-    out["guard_h1"] = boot_mean(contrast(1, "answer", h1), g)
+    h1 = list(range(len(res[(1, "final", "answer")]["groups"])))
+    out["guard_h1"] = boot_mean(contrast(1, "answer", h1, pos="final"), g)        # the guard is read at final
     groups = res[(2, position, "s1")]["groups"]
-    members = {grp: [i for i, x in enumerate(groups) if x == grp] for grp in ("correct", "shortcut", "other_wrong")}
+    members = {grp: [i for i, x in enumerate(groups) if x == grp and keep(i)]
+               for grp in ("correct", "shortcut", "other_wrong")}
     for grp, idx in members.items():
         out[grp] = {"n": len(idx), "s1_minus_decoy": boot_mean(contrast(2, "s1", idx), g) if idx else None}
     # onsets of the s1 accuracy curve, shortcut minus correct, bootstrapped within groups
@@ -61,7 +68,8 @@ def q2_three(probe_file: str, position: str = "final") -> dict:
     out["onset_shortcut_minus_correct"] = (onset(s1[members["shortcut"]].mean(0)) - onset(s1[members["correct"]].mean(0)),
                                            float(diffs.quantile(0.025)), float(diffs.quantile(0.975)))
     out["reading"] = read_three(out)
-    print(f"## Q2 three ingredients, {probe_file}, position {position}, band {band[0]}..{band[-1]}")
+    subset = "" if confident_ids is None else ", confident subset (argmax p >= 0.5)"
+    print(f"## Q2 three ingredients, {probe_file}, position {position}, band {band[0]}..{band[-1]}{subset}")
     for k, v in out.items():
         print(f"  {k}: {v}")
     return out
@@ -155,17 +163,130 @@ def q2_single(bank: str, lens_name: str = "j-lens") -> dict:
     return out
 
 
+# --- Q1, single table -----------------------------------------------------------------------------------------------
+def q1_single(bank: str) -> None:
+    """Each wrong answer by the number of stirs applied along the start colour's cycle, nearest to h when the cycle
+    is short (a colour can sit at several cycle positions); 'off_cycle' if it is on none of 0..h+3."""
+    import json
+    import exp11 as X
+    items = {r["item_id"]: r for r in X.load_bank(bank)}
+    tally = defaultdict(lambda: defaultdict(int))
+    for m in map(json.loads, X.capture_paths(bank)[1].open()):
+        it = items[m["item_id"]]
+        b = B.parse(it["problem"])
+        if B.SINGLE not in b.stirs:
+            continue
+        pred = m["colours"][int(torch.tensor(m["colour_logits"]).argmax())]
+        hops = [k for k in range(it["h"] + 4) if b.apply(b.start, [B.SINGLE] * k) == pred]
+        label = ("correct" if pred == it["answer"] else
+                 f"{min(hops, key=lambda k: abs(k - it['h'])) - it['h']:+d} stirs" if hops else "off_cycle")
+        tally[(it.get("format"), it["h"])][label] += 1
+    print(f"## Q1 single table, {bank}: answers by stirs applied (a random wrong colour: 1/9 per cycle position)")
+    for (fmt, h), c in sorted(tally.items()):
+        n = sum(c.values())
+        print(f"  {fmt} h={h} n={n} acc={c['correct'] / n:.3f} "
+              + " ".join(f"{k}={v}" for k, v in sorted(c.items())))
+
+
+# --- Q3: the addendum's reading rules on saved patching runs ---------------------------------------------------------
+def _argmax(rows, key, k=None):
+    return torch.stack([r[key] if k is None else r[key][k] for r in rows]).argmax(-1)
+
+
+def _paired(a: torch.Tensor, b: torch.Tensor, g) -> tuple[float, float, float]:
+    """Mean of the paired difference of two indicator vectors, with a bootstrap 95% CI."""
+    return boot_mean(a.float() - b.float(), g)
+
+
+def _rescue(name: str, blob: dict, layer_index: int, label: str, g) -> None:
+    """Treatment minus control rate of argmax = the recipient's own gold at one patch setting; rescue iff > 0.05
+    with the CI excluding 0."""
+    colours, res = blob["colours"], blob["results"]
+    gold = torch.tensor([colours.index(r["gold"]) for r in res])
+    t, c = _argmax(res, "treatment", layer_index) == gold, _argmax(res, "control", layer_index) == gold
+    d = _paired(t, c, g)
+    verdict = "rescue" if d[0] > THRESHOLD and d[1] > 0 else "no rescue"
+    print(f"  {name} ({label}, n={len(res)}): gold {float(t.float().mean()):.3f} vs control "
+          f"{float(c.float().mean()):.3f}, diff {d[0]:+.3f} [{d[1]:+.3f},{d[2]:+.3f}] -> {verdict}")
+
+
+def _twin_readings(blob: dict, g, setting_band=range(36, 49)) -> None:
+    """Twin patches: the composition / setting-window / colour-arrival readings (Q3b), and for the count site the
+    read-out layer and the item-independence check (part B)."""
+    colours, res, layers = blob["colours"], blob["results"], blob["layers"]
+    idx = lambda key: torch.tensor([colours.index(r[key]) for r in res])
+    gold, donor_gold, ctrl_gold = idx("gold"), idx("donor_gold"), idx("control_donor_gold")
+    base = _argmax(res, "unpatched")
+    tag = f"site={blob['site']} reverse={blob['reverse']} {blob.get('format', '')} n={len(res)}"
+    if blob["site"] == "final" and not blob["reverse"] and blob.get("format", "three_first") == "three_first":
+        best = max(((l, _paired(_argmax(res, "treatment", k) == gold, base == gold, g))
+                    for k, l in enumerate(layers) if l in setting_band), key=lambda x: x[1][0])
+        comp = best[1][0] > THRESHOLD and best[1][1] > 0
+        print(f"  [{tag}] composition after write-in: best layer {best[0]} gold minus unpatched "
+              f"{best[1][0]:+.3f} [{best[1][1]:+.3f},{best[1][2]:+.3f}] -> {'composition' if comp else 'no composition'}")
+    window, arrival = [], None
+    for k, l in enumerate(layers):
+        c = _argmax(res, "control", k)
+        d = _paired(c == donor_gold, c == ctrl_gold, g)
+        if d[0] > 0.2 and d[1] > 0:
+            window.append(l)
+        if arrival is None and float((c == ctrl_gold).float().mean()) > 0.5:
+            arrival = l
+    print(f"  [{tag}] control: item-independent setting window {window or 'none'}; colour arrival layer {arrival}")
+    if blob["site"] == "count":
+        inc = [float((_argmax(res, "treatment", k) == donor_gold).float().mean() - (base == donor_gold).float().mean())
+               for k in range(len(layers))]
+        k_max = max(range(len(layers)), key=lambda k: inc[k])
+        readout = max(layers[k] for k in range(len(layers)) if k >= k_max and inc[k] >= 0.5 * inc[k_max])
+        d = _paired(_argmax(res, "treatment", k_max) == donor_gold, _argmax(res, "control", k_max) == donor_gold, g)
+        indep = -0.1 <= d[1] and d[2] <= 0.1
+        print(f"  [{tag}] count: max increase {inc[k_max]:+.3f} at layer {layers[k_max]}; read-out layer {readout}; "
+              f"treatment minus control there {d[0]:+.3f} [{d[1]:+.3f},{d[2]:+.3f}] -> "
+              f"{'item-independent count' if indep else 'not shown item-independent'}")
+
+
+def q3(bank: str) -> None:
+    import exp11 as X
+    g = torch.Generator().manual_seed(0)
+    print(f"## Q3 readings, {bank}")
+    for path in sorted(X.EXP.cache.glob("q23_*.pt")):
+        kind = path.name.split("_")[1]
+        if kind == "probe":
+            continue
+        blob = torch.load(path, weights_only=False)
+        if blob["bank"] != bank:
+            continue
+        if kind == "backpatch":
+            k = blob["pairs"].index((32, 48))
+            _rescue("back-patching", blob, k, "primary pair 32<-48", g)
+        elif kind == "modepatch":
+            _rescue(f"mode transplant {blob['format']} h={blob['h']}", blob, blob["layers"].index(40),
+                    "primary layer 40", g)
+        elif kind == "twinpatch":
+            _twin_readings(blob, g)
+
+
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["q2_three", "q2_single"])
+    p.add_argument("cmd", choices=["q1_single", "q2_three", "q2_single", "q3"])
     p.add_argument("--probe-file")
     p.add_argument("--bank")
     p.add_argument("--lens", default="j-lens")
+    p.add_argument("--confident", action="store_true", help="q2_three on the confident subsets")
+    p.add_argument("--position", default="final", help="q2_three: the probe position (h=1 guard read at final)")
     a = p.parse_args()
-    if a.cmd == "q2_three":
-        q2_three(a.probe_file)
-    else:
+    if a.cmd == "q1_single":
+        q1_single(a.bank)
+    elif a.cmd == "q2_three":
+        ids = None
+        if a.confident:
+            bank = torch.load(a.probe_file, weights_only=False)["banks"][0]
+            ids = {m["item_id"] for m in E.load(bank) if m["confident"]}
+        q2_three(a.probe_file, position=a.position, confident_ids=ids)
+    elif a.cmd == "q2_single":
         q2_single(a.bank, a.lens)
+    else:
+        q3(a.bank)
 
 
 if __name__ == "__main__":

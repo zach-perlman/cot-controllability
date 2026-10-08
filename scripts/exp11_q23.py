@@ -89,6 +89,8 @@ def probe(banks: list[str], k_pca: int | None, wd: float, positions=("final",), 
         folds = P.stratified_folds(groups)
         colours = ms[0][0]["colours"]
         for pos in positions:
+            if any(pos not in m["positions"] for m, _ in ms):            # e.g. stir2 at h=1
+                continue
             x = torch.stack([m["hidden"][1:64, list(m["positions"]).index(pos)] for m, _ in ms])   # [n, 63, d]
             for label in ms[0][1]:
                 y = [colours.index(lab[label]) for _, lab in ms]
