@@ -488,25 +488,40 @@ def fig_per_h(res: dict, out: Path) -> None:
     FG.save(fig, out, "3_q2_per_h")
 
 
+# figure 4: one colour per family (standard: open circles; looped: filled diamonds), connected within a family
+SIZE_FAMILIES = {"Gemma-4": (["Gemma-4-E2B", "Gemma-4-E4B", "Gemma-4-12B", "Gemma-4-31B-FP8"], "#0072B2"),
+                 "Qwen3.5 / 3.8": (["Qwen3.5-2B", "Qwen3.5-4B", "Qwen3.8-27B-FP8"], "#56B4E9"),
+                 "IQuest 40B (non-looped twin)": (["IQuest-40B-Thinking"], "#CC79A7"),
+                 "IQuest 40B Loop": (["IQuest-40B-Loop-Thinking"], "#CC79A7"),
+                 "Ouro (1.4B, 2.6B)": (["Ouro-1.4B-Thinking", "Ouro-2.6B-Thinking"], "#D55E00"),
+                 "Huginn 3.5B": (["Huginn-0125"], "#009E73"), "Nanbeige4.2 3B": (["Nanbeige4.2-3B"], "#8C6D31")}
+
+
 def fig_size(res: dict, out: Path) -> None:
     plt = FG.style()
     fig, axes = plt.subplots(1, 2, figsize=(10, 4))
     for ax, t in zip(axes, TASKS):
-        for m, size in SIZE_B.items():
-            s = res["d_soft"][f"{m} | {t} | C0"]
-            looped = m in LOOPED
-            errbar(ax, size, s["d"], s["ci"], fmt="D" if looped else "o", color=COLOR.get(m, "#555555"),
-                   mfc=COLOR.get(m, "#555555") if looped else "white", ms=6)
-            ax.annotate(LABEL[m], (size, s["d"]), textcoords="offset points", xytext=(5, 3), fontsize=7)
+        for family, (models, color) in SIZE_FAMILIES.items():
+            looped = models[0] in LOOPED
+            xs = [SIZE_B[m] for m in models]
+            ys = [res["d_soft"][f"{m} | {t} | C0"] for m in models]
+            ax.plot(xs, [s["d"] for s in ys], color=color, lw=1, alpha=0.6, zorder=1)
+            for x, s in zip(xs, ys):
+                errbar(ax, x, s["d"], s["ci"], fmt="D" if looped else "o", color=color, mfc=color if looped else
+                       "white", ms=6, mew=1.5, zorder=2, label=family if x == xs[0] else None)
         ax.set_xscale("log")
+        ax.set_xticks([1, 2, 4, 10, 40], ["1", "2", "4", "10", "40"])
+        ax.minorticks_off()
         ax.set_xlabel("parameters (billions; Gemma-4 E2B/E4B: effective)")
         ax.set_ylabel(f"no-CoT soft depth d_soft ({STEP[t]})")
         ax.set_title(FG.TASK_LABEL[t].split(" (")[0])
-    fig.suptitle("No-CoT depth by size: looped models (filled diamonds) next to standard ones (circles)",
-                 fontweight="bold")
+    handles, labels = axes[1].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=4, fontsize=8, bbox_to_anchor=(0.5, 1.06))
+    fig.suptitle("No-CoT depth grows with size; looped models sit at or below standard ones of their size",
+                 fontweight="bold", y=1.13)
     fig.text(0.5, -0.06, "Descriptive only: the models differ in training data. Looped models at their trained "
-             "recurrence (Ouro 4 passes, Huginn 32 steps, Nanbeige 2 loops).", ha="center", fontsize=8,
-             color="#555555")
+             "recurrence (Ouro 4 passes, Huginn 32 steps, Nanbeige 2 loops).\nd_soft: the depth fit on "
+             "log P(gold) with no CoT; 0 = at chance on every depth. Bars: 95% paired bootstrap.", ha="center", fontsize=8, color="#555555")
     FG.save(fig, out, "4_dsoft_by_size")
 
 
