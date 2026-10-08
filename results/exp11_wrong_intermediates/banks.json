@@ -64,6 +64,19 @@
       ],
       "n_eval": 720,
       "content_key": "2dd750b3d662"
+    },
+    "fmt_same_dev": {
+      "seed": "exp11_fmt_same_dev_20261008",
+      "per_h": 60,
+      "formats": [
+        "three_same"
+      ],
+      "h_values": [
+        2,
+        3
+      ],
+      "n_eval": 120,
+      "content_key": "ba2813008908"
     }
   }
 }

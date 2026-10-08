@@ -168,6 +168,76 @@ def paired_margins(metas: list[dict], lens_names=("logit", "j-lens", "r-lens"), 
         torch.cuda.empty_cache()
 
 
+@torch.no_grad()
+def paired_single(metas: list[dict], lens_names=("j-lens", "r-lens"), positions=("question_end", "final"),
+                  layers=range(24, 61, 4), n_boot: int = 1000) -> None:
+    """Single-table items: per item, the lens logit of each trajectory state minus the mean logit of the off-path
+    colours (not on the trajectory and not the model's answer); mean over items with a bootstrap 95% CI, per
+    captured position, split into correct / one_short (answer = the state one stir before the end, so that state
+    is the answer) / other_wrong, at h=2 and h=3."""
+    import exp11_model as M
+    tokenizer, model = M.load()
+    colours = metas[0]["colours"]
+    ids = list(M.colour_ids(tokenizer, colours).values())
+    single = [m for m in metas if m["format"].startswith("single") and m["h"] >= 2]
+    g = torch.Generator().manual_seed(0)
+    for name in lens_names:
+        lens = M.Lens(name, model, ids)
+        rows = defaultdict(list)                                   # (position, h, group, target) -> [items] of [layers]
+        for m in single:
+            path = m["brew"].path()
+            off = [colours.index(c) for c in colours if c not in path and c != m["pred"]]
+            grp = ("correct" if m["pred"] == m["gold"] else
+                   "one_short" if m["pred"] == path[-2] else "other_wrong")
+            logits = lens.logits(m["hidden"])                      # [layers, positions, 10]
+            for pos in positions:
+                at = logits[:, list(m["positions"]).index(pos)]    # [layers, 10]
+                base = at[:, off].mean(-1)
+                for k in range(1, m["h"] + 1):
+                    rows[(pos, m["h"], grp, f"s{k}")].append(at[:, colours.index(path[k])] - base)
+        print(f"\n## {name}, single table: logit(state) - mean logit(off-path) [95% CI], layers {list(layers)}")
+        for key, xs in sorted(rows.items()):
+            x = torch.stack(xs)
+            boot = x[torch.randint(len(x), (n_boot, len(x)), generator=g)].mean(1)
+            lo, hi = boot.quantile(0.025, 0), boot.quantile(0.975, 0)
+            print(f"{key[0]:>12} h={key[1]} {key[2]:>11} {key[3]} n={len(x):>3} | "
+                  + " ".join(f"{x[:, l].mean():+.1f}[{lo[l]:+.1f},{hi[l]:+.1f}]" for l in layers))
+        del lens
+        torch.cuda.empty_cache()
+
+
+@torch.no_grad()
+def answer_line_mate(metas: list[dict], n_boot: int = 1000, layers=range(24, 61, 4)) -> None:
+    """Line-mate check, single-table items, final position, J-lens: the logit of the model's answer and of its
+    inverse image f^-1(answer) (the input colour of the rule line that outputs the answer) minus the mean logit of
+    the colours that are neither on the trajectory nor either of those two. If f^-1(answer) rises together with the
+    answer in other_wrong items too, a visible predecessor marks reading the answer's rule line, not a held state."""
+    import exp11_model as M
+    tokenizer, model = M.load()
+    colours = metas[0]["colours"]
+    lens = M.Lens("j-lens", model, list(M.colour_ids(tokenizer, colours).values()))
+    rows = defaultdict(list)
+    g = torch.Generator().manual_seed(0)
+    for m in metas:
+        if not m["format"].startswith("single") or m["h"] < 2:
+            continue
+        b, path = m["brew"], m["brew"].path()
+        pre = b.inverse(m["pred"], B.SINGLE)
+        grp = ("correct" if m["pred"] == m["gold"] else "one_short" if m["pred"] == path[-2] else
+               "other_wrong_offpath_pre" if pre not in path else "other_wrong_onpath_pre")
+        at = lens.logits(m["hidden"])[:, list(m["positions"]).index("final")]
+        base = at[:, [colours.index(c) for c in colours if c not in path and c not in (m["pred"], pre)]].mean(-1)
+        rows[(m["h"], grp, "answer")].append(at[:, colours.index(m["pred"])] - base)
+        rows[(m["h"], grp, "f^-1(answer)")].append(at[:, colours.index(pre)] - base)
+    print(f"\n## j-lens line-mate check, single table, final position, layers {list(layers)}")
+    for key, xs in sorted(rows.items()):
+        x = torch.stack(xs)
+        boot = x[torch.randint(len(x), (n_boot, len(x)), generator=g)].mean(1)
+        lo, hi = boot.quantile(0.025, 0), boot.quantile(0.975, 0)
+        print(f"h={key[0]} {key[1]:>23} {key[2]:>12} n={len(x):>3} | "
+              + " ".join(f"{x[:, l].mean():+.1f}[{lo[l]:+.1f},{hi[l]:+.1f}]" for l in layers))
+
+
 def show(out: dict, band=range(0, 63, 4)) -> None:
     for name in ("logit", "j-lens", "r-lens"):
         print(f"\n## {name}: fraction with the target as top non-answer colour (chance 0.11); layers {list(band)}")
@@ -183,10 +253,20 @@ def main() -> None:
     p.add_argument("--bank", default="dev")
     p.add_argument("--no-lens", action="store_true")
     p.add_argument("--paired", action="store_true", help="only the paired target-minus-decoy margins")
+    p.add_argument("--single", action="store_true", help="only the single-table state margins")
+    p.add_argument("--line-mate", action="store_true", help="answer vs f^-1(answer) at the final position")
+    p.add_argument("--single-positions", action="store_true",
+                   help="single-table state margins at the start-colour and stir-count tokens, J-lens, layers 8..60")
     a = p.parse_args()
     metas = load(a.bank)
     behaviour(metas)
-    if a.paired:
+    if a.single:
+        paired_single(metas)
+    elif a.line_mate:
+        answer_line_mate(metas)
+    elif a.single_positions:
+        paired_single(metas, lens_names=("j-lens",), positions=("start", "stirs"), layers=range(8, 61, 4))
+    elif a.paired:
         paired_margins(metas)
     elif not a.no_lens:
         out = readouts(metas)
