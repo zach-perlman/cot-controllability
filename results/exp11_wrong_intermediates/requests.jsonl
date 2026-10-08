@@ -2,3 +2,5 @@
 {"bank": "test", "n_rows": 750, "file": "cache/exp11/requests_test.jsonl", "content_key": "ec654f755855"}
 {"bank": "fmt_dev", "n_rows": 720, "file": "cache/exp11/requests_fmt_dev.jsonl", "content_key": "038ab54b71ab"}
 {"bank": "fmt_same_dev", "n_rows": 120, "file": "cache/exp11/requests_fmt_same_dev.jsonl", "content_key": "f790ae850879"}
+{"bank": "dev_twins", "n_rows": 60, "file": "cache/exp11/requests_dev_twins.jsonl", "content_key": "2f92b495ce5b"}
+{"bank": "fmt_dev_twins", "n_rows": 240, "file": "cache/exp11/requests_fmt_dev_twins.jsonl", "content_key": "e778c62f3400"}

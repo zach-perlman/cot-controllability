@@ -238,6 +238,43 @@ def answer_line_mate(metas: list[dict], n_boot: int = 1000, layers=range(24, 61,
               + " ".join(f"{x[:, l].mean():+.1f}[{lo[l]:+.1f},{hi[l]:+.1f}]" for l in layers))
 
 
+@torch.no_grad()
+def answer_orbit(metas: list[dict], n_boot: int = 1000, layers=range(24, 61, 4)) -> None:
+    """Single-table items, final position, J-lens: the logit of f^d(answer) for d in -2..+2 (d=-1: the colour that
+    turns into the answer; d=+1: the colour the answer turns into) minus the mean logit of the colours that are none
+    of those and not on the trajectory. In one_short items f^+1(answer) is the gold; in correct items it is a colour
+    the task never needs, so the correct group's f^+1 curve is the rule-line artefact to beat."""
+    import exp11_model as M
+    tokenizer, model = M.load()
+    colours = metas[0]["colours"]
+    lens = M.Lens("j-lens", model, list(M.colour_ids(tokenizer, colours).values()))
+    rows = defaultdict(list)
+    g = torch.Generator().manual_seed(0)
+    for m in metas:
+        if not m["format"].startswith("single") or m["h"] < 2:
+            continue
+        b, path = m["brew"], m["brew"].path()
+        orbit = {0: m["pred"]}
+        for d in (1, 2):
+            orbit[d] = b.apply(orbit[d - 1], [B.SINGLE])
+            orbit[-d] = b.inverse(orbit[-d + 1], B.SINGLE)
+        if len(set(orbit.values())) < 5:
+            continue
+        grp = ("correct" if m["pred"] == m["gold"] else "one_short" if m["pred"] == path[-2] else
+               "one_extra" if orbit[-1] == m["gold"] else "other_wrong")
+        at = lens.logits(m["hidden"])[:, list(m["positions"]).index("final")]
+        base = at[:, [colours.index(c) for c in colours if c not in path and c not in orbit.values()]].mean(-1)
+        for d, c in orbit.items():
+            rows[(m["h"], grp, d)].append(at[:, colours.index(c)] - base)
+    print(f"\n## j-lens answer-relative orbit, single table, final position, layers {list(layers)}")
+    for key, xs in sorted(rows.items()):
+        x = torch.stack(xs)
+        boot = x[torch.randint(len(x), (n_boot, len(x)), generator=g)].mean(1)
+        lo, hi = boot.quantile(0.025, 0), boot.quantile(0.975, 0)
+        print(f"h={key[0]} {key[1]:>11} f^{key[2]:+d}(answer) n={len(x):>3} | "
+              + " ".join(f"{x[:, l].mean():+.1f}[{lo[l]:+.1f},{hi[l]:+.1f}]" for l in layers))
+
+
 def show(out: dict, band=range(0, 63, 4)) -> None:
     for name in ("logit", "j-lens", "r-lens"):
         print(f"\n## {name}: fraction with the target as top non-answer colour (chance 0.11); layers {list(band)}")
@@ -255,6 +292,7 @@ def main() -> None:
     p.add_argument("--paired", action="store_true", help="only the paired target-minus-decoy margins")
     p.add_argument("--single", action="store_true", help="only the single-table state margins")
     p.add_argument("--line-mate", action="store_true", help="answer vs f^-1(answer) at the final position")
+    p.add_argument("--orbit", action="store_true", help="f^d(answer), d in -2..+2, at the final position")
     p.add_argument("--single-positions", action="store_true",
                    help="single-table state margins at the start-colour and stir-count tokens, J-lens, layers 8..60")
     a = p.parse_args()
@@ -264,6 +302,8 @@ def main() -> None:
         paired_single(metas)
     elif a.line_mate:
         answer_line_mate(metas)
+    elif a.orbit:
+        answer_orbit(metas)
     elif a.single_positions:
         paired_single(metas, lens_names=("j-lens",), positions=("start", "stirs"), layers=range(8, 61, 4))
     elif a.paired:

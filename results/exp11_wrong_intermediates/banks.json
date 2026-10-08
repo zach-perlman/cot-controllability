@@ -77,6 +77,16 @@
       ],
       "n_eval": 120,
       "content_key": "ba2813008908"
+    },
+    "dev_twins": {
+      "twins_of": "dev",
+      "n_eval": 60,
+      "content_key": "2c55ef7297e8"
+    },
+    "fmt_dev_twins": {
+      "twins_of": "fmt_dev",
+      "n_eval": 240,
+      "content_key": "fc5c88d0f9ce"
     }
   }
 }

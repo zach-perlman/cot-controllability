@@ -2,6 +2,8 @@
 results/exp11_wrong_intermediates/manifest.json).
 
   banks             generate the dev and test banks (nocot-bench's brew generator, exp10's configuration, h in 1..3)
+  fmt_bank --bank   a bank from exp11's own generator (format pilot, three_same control, single-table test)
+  twins --bank      a twin bank: each parent item with its last stir removed (the donors for patching)
   requests --bank   the C0 rows of a bank (exp10's rendering: one h=2 shot, thinking off, 'Answer:' prefilled)
   capture  --bank   one bf16 forward pass per row: the colour answer distribution, and the residual stream at the
                     start colour, each stir, the end of the question and the final position (cache/exp11, gitignored)
@@ -20,12 +22,19 @@ import exp11_brew as B
 EXP = cfg.Exp("exp11_wrong_intermediates", "exp11")
 H_VALUES = (1, 2, 3)
 BANKS = {"dev": {"seed": "exp11_dev_20261008", "per_h": 60}, "test": {"seed": "exp11_test_20261008", "per_h": 250}}
-FMT_BANKS = {   # manifest deviations 1 and 2
+FMT_BANKS = {   # banks from exp11's own generator: manifest deviations 1 and 2, and the test addendum
     "fmt_dev": {"seed": "exp11_fmt_dev_20261008", "per_h": 60, "formats": B.FORMATS, "h_values": H_VALUES},
     "fmt_same_dev": {"seed": "exp11_fmt_same_dev_20261008", "per_h": 60, "formats": ("three_same",),
                      "h_values": (2, 3)},
+    "single_test": {"seed": "exp11_single_test_20261008", "per_h": 250, "formats": ("single_first",),
+                    "h_values": H_VALUES},
 }
-ALL_BANKS = [*BANKS, *FMT_BANKS]
+# twin bank -> parent bank. A twin is a parent item with its last stir removed (same table, same start): three-
+# ingredient h=2 items get an h=1 twin, single-table h=3 items an h=2 twin. Twins are the donors for patching.
+TWIN_BANKS = {"dev_twins": "dev", "fmt_dev_twins": "fmt_dev", "test_twins": "test",
+              "single_test_twins": "single_test"}
+TWIN_PARENT_H = {"three": 2, "single": 3}
+ALL_BANKS = [*BANKS, *FMT_BANKS, *TWIN_BANKS]
 
 
 def bank_path(bank: str):
@@ -114,18 +123,58 @@ def write_fmt_bank(name: str) -> None:
     print(f"{len(rows)} rows -> {path}")
 
 
+def table_type(problem: str) -> str:
+    return "single" if B.SINGLE in B.parse(problem).stirs else "three"
+
+
+def drop_last_stir(problem: str) -> str:
+    """The same problem text with its last stir removed (only the stir sentence changes)."""
+    brew = B.parse(problem)
+    k = len(brew.stirs)
+    if table_type(problem) == "single":
+        old, new = f"You stir it {B.COUNT_WORDS[k]}.", f"You stir it {B.COUNT_WORDS[k - 1]}."
+    else:
+        old = f"You stir in, one at a time: {', then '.join(brew.stirs)}."
+        new = f"You stir in, one at a time: {', then '.join(brew.stirs[:-1])}."
+    assert problem.count(old) == 1, old
+    out = problem.replace(old, new)
+    assert B.parse(out).path() == brew.path()[:-1]
+    return out
+
+
+def write_twins(name: str) -> None:
+    path = bank_path(name)
+    if path.exists():
+        raise SystemExit(f"{path} exists; banks are generated once")
+    parent = TWIN_BANKS[name]
+    rows = []
+    for it in load_bank(parent):
+        if it["split"] != "eval" or it["h"] != TWIN_PARENT_H[table_type(it["problem"])]:
+            continue
+        problem = drop_last_stir(it["problem"])
+        rows.append({**it, "item_id": f"{it['item_id']}:twin", "bank": name, "h": it["h"] - 1, "problem": problem,
+                     "answer": B.parse(problem).path()[-1], "twin_of": it["item_id"]})
+    path.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    record = json.loads((EXP.results / "banks.json").read_text())
+    record["banks"][name] = {"twins_of": parent, "n_eval": len(rows), "content_key": cfg.content_key(rows)}
+    (EXP.results / "banks.json").write_text(json.dumps(record, indent=2) + "\n")
+    print(f"{len(rows)} twins -> {path}")
+
+
 # --- Requests -------------------------------------------------------------------------------------------------------
 def write_requests(bank: str) -> None:
     path = requests_path(bank)
     if path.exists():
         raise SystemExit(f"{path} exists; request files are fixed once written")
     items = load_bank(bank)
-    shots = {r.get("format"): r for r in items if r["split"] == "shot"}
+    shot_bank = load_bank(TWIN_BANKS[bank]) if bank in TWIN_BANKS else items   # a twin keeps its parent's shot
+    shots = {r.get("format"): r for r in shot_bank if r["split"] == "shot"}
     rows = []
     for it in (r for r in items if r["split"] == "eval"):
         shot = shots[it.get("format")]
         row = {"item_id": it["item_id"], "bank": bank, "h": it["h"], "source": "brew", "exp10_render": True,
-               "seed": 0, **({"format": it["format"]} if "format" in it else {}), **C.fields("C0", it, shot)}
+               "seed": 0, **({"format": it["format"]} if "format" in it else {}),
+               **({"twin_of": it["twin_of"]} if "twin_of" in it else {}), **C.fields("C0", it, shot)}
         row["request_id"] = cfg.content_key(row)
         rows.append(row)
     path.write_text("".join(json.dumps(r) + "\n" for r in rows))
@@ -207,13 +256,15 @@ def capture(bank: str) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["banks", "fmt_bank", "requests", "capture"])
+    p.add_argument("cmd", choices=["banks", "fmt_bank", "twins", "requests", "capture"])
     p.add_argument("--bank", choices=ALL_BANKS)
     a = p.parse_args()
     if a.cmd == "banks":
         write_banks()
     elif a.cmd == "fmt_bank":
         write_fmt_bank(a.bank)
+    elif a.cmd == "twins":
+        write_twins(a.bank)
     elif a.cmd == "requests":
         write_requests(a.bank)
     else:
