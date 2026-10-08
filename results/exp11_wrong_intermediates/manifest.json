@@ -1,0 +1,62 @@
+{
+  "exp_id": "exp11_wrong_intermediates",
+  "status": "written before any exp11 generation (dev or test); the dev phase below is exploratory, the test phase is locked by an addendum written after dev and before any test capture",
+  "written": "2026-10-08",
+  "code_commit": "0b5dfc1 (exp11 code added in the commit that adds this file)",
+  "motivation": "Neel Nanda's no-CoT work (nocot-bench, 'Astra can do a concerning amount with no chain of thought', WorkspaceBench) reads intermediates on items models get RIGHT. Nobody has read what is in the residual stream when a model gets a serial no-CoT item WRONG. Prior work checked before writing this (2026-10-08): WorkspaceBench (Blank, Bhatia, Ong, Nanda; gated to >=8/10 correct), Anthropic's global-workspace paper, Zeisler (Qwen3.6-27B intermediate swaps flip top-1 6-9%), Hu & Greenblatt (verbalizers single out 0/78 wrong no-CoT outputs), Hopping Too Late (Biran et al. 2024), CREME, Brauer/Verdun/Marks (filler: 'fails to compose'), Sun/Stolfo/Sachan (arithmetic error probes).",
+  "already_seen_before_this_manifest": {
+    "what": "scripts/exp11_behaviour_pilot.py over exp10's existing C0 test rows (FP8 checkpoints, one sample per item, 40 items per h). Read-only; no new generation.",
+    "qwen3.6_27b_fp8_accuracy_by_h": {"1": 1.0, "2": 0.23, "3": 0.05, "4": 0.12, "5": 0.15, "6": 0.05, "8": 0.07},
+    "h2_errors": "the 'last stir only' shortcut (start colour with only the last ingredient applied) is the modal error family: Qwen3.6-27B 0.55 of 31 wrong (permutation null 0.12); Qwen3.8-27B 0.55; Qwen3-32B 0.63; Gemma-4-12B 0.84; GLM-4.7-Flash 0.34; Qwen3.6-35B-A3B 0.38. Reporting an intermediate (stop_early) is at the null for Qwen3.6-27B (0.23 vs 0.21).",
+    "h3_errors": "Gemma-4-31B (0.88 at h=2): 0.87 of its h=3 errors skip exactly one stir (null 0.24). Qwen3.6-27B: stop_early 0.53 (null 0.33)."
+  },
+  "questions": {
+    "Q1_behaviour": "In Qwen3.6-27B (bf16, the checkpoint the released lenses were fitted on), what fraction of no-CoT brew errors at h=2 are the last-stir-only shortcut, and at h=3 which family dominates? (Replication of the FP8 pilot on fresh items with exact answer distributions.)",
+    "Q2_representation": "On h=2 items, is the first intermediate s1 = table[s0][stir1] represented in the residual stream, and does that differ between items the model gets right and items where it takes the shortcut? Three readings: 'never computed' (s1 not above the decoy on shortcut items), 'computed too late' (s1 present on shortcut items but at later layers than on correct items), 'computed but unused' (s1 present at the same layers in both groups).",
+    "Q3_causal": "(day 2, after Q2 on dev) Does moving the s1 representation earlier (back-patching, Biran et al. 2024) or writing it in (s1-subspace patching) turn shortcut items correct, beyond a matched control patch?"
+  },
+  "items": {
+    "task": "brew from nocot-bench (pinned commit 634d7de), generated with its own generator in exp10's configuration (10 colours, 3 ingredients per item each a derangement, all trajectory states distinct, last-stir-only answer never gold, every step matters, one h=2 shot); fresh seeds, and no problem text may repeat one in exp10's dev/test/shipped banks",
+    "h_values": [1, 2, 3],
+    "dev": {"seed": "exp11_dev_20261008", "per_h": 60},
+    "test": {"seed": "exp11_test_20261008", "per_h": 250},
+    "why_brew": "each ingredient is a bijection of the colours and every item has its own random table, so (a) a wrong answer back-propagates to a unique colour per stir, and (b) s1 is a lookup in the item's own table: a linear probe cannot get it from the identities of s0 and stir1 without the model having retrieved it",
+    "row_mates": "for h=2 with stirs (a, b) and unused ingredient c, the start colour's rule line holds three colours: s1 = table[s0][a] (correct first hop), the shortcut answer table[s0][b], and the decoy table[s0][c]. The decoy is the matched control for s1: same rule line, same kind of lookup, not needed for the task. Items where any two of {s1, shortcut, decoy} coincide are excluded from the s1-vs-decoy contrasts (counted and reported)."
+  },
+  "model_and_prompt": {
+    "model": "Qwen/Qwen3.6-27B @ 6a9e13bd6fc8f0983b9b99948120bc37f49c13e9, bf16, transformers 5.17.0 (reference PyTorch kernels for the linear-attention layers), one forward pass per item, no sampling",
+    "prompt": "exp10's C0 rendering (cc_exp10_render.prompt_ids, family qwen3.6): the bank's h=2 shot as a one-shot history, thinking off, the response prefix 'Answer:' appended; the model's answer distribution is the softmax over the 10 colour tokens (' red', ' blue', ...) at the final position. The colour tokens' share of the full next-token mass is recorded (it must be ~1 for the restriction to be meaningful).",
+    "captured": "the residual stream (embeddings + output of all 64 blocks) at: the final position; the start-colour word in 'The potion starts out X.'; each stir's ingredient token; the token ending the question. Stored under cache/exp11 (gitignored)."
+  },
+  "groups_h2": {
+    "correct": "argmax over colours = gold",
+    "shortcut": "argmax = table[s0][last stir]",
+    "other_wrong": "any other argmax",
+    "confident": "each group is also reported restricted to argmax probability >= 0.5"
+  },
+  "readouts": {
+    "probe": "per layer and position, a 10-way L2-regularised logistic regression from the residual to a colour label, 5-fold cross-validated over all h=2 items (folds stratified by group); held-out accuracy reported per group. Labels: s1 (target), decoy (control), s0 (sanity: should be high), the model's answer (sanity). Regularisation and any dimensionality reduction are chosen on dev and fixed in the test addendum.",
+    "lenses": "J-lens and R-lens from camilablank/workspace-lenses @ d740106d (qwen3.6-27b; target layer 62, n=25 pile prompts) and the logit lens as baseline, read as softmax(W_U . norm(J_l . h_l)) restricted to the 10 colours. Metric: whether s1 (vs the decoy) is the top colour among the colours other than the model's final answer.",
+    "lens_role": "the probe answers 'is s1 linearly present'; the lenses answer the WorkspaceBench question 'is s1 verbalizable'. Probes are primary for Q2."
+  },
+  "reading_rules_q2": {
+    "unit": "per group, the s1 probe's held-out accuracy minus the decoy probe's, averaged over a layer band fixed on dev (not the max over layers)",
+    "never_computed": "shortcut group: s1 minus decoy <= 0.05 and its 95% bootstrap CI includes 0, while the correct group is > 0.05 with CI excluding 0",
+    "too_late": "both groups above 0.05, and the first layer at which s1 accuracy exceeds half of its own peak is later in the shortcut group, with the bootstrap CI of the onset difference excluding 0",
+    "unused": "both groups above 0.05 and the onset difference CI includes 0",
+    "no_reading": "correct group itself <= 0.05: the probe cannot see s1 at all and Q2 is not answerable at this position; reported as such, not as evidence for 'never computed'",
+    "bootstrap": "1000 resamples of items within group"
+  },
+  "known_confounds": [
+    "Backward inference: a readout of a 'wrong intermediate' could be read back from an answer already committed. Contrasts use s1 vs decoy (both not the answer), and onset layers are compared with the layer at which the model's own answer becomes decodable.",
+    "Computed but unused: decodability is not use (Sun et al. 2025; Venkatesh 2026). Q3 is the causal test.",
+    "Probe drift toward labels it was trained on: the probe is trained on s1 labels from all items, mostly wrong ones; group accuracies are held-out.",
+    "The final position may not be where s1 lives; the other captured positions are read on dev.",
+    "Group sizes are model-determined: correct items may be easier in ways that also make s1 more decodable. Reported: group-matched comparisons on the confident subsets and on items matched for the s0 colour.",
+    "Lens artefacts: lenses fitted on 25 prompts; the colour restriction removes the number/format-token lift Brauer reported for final-layer J-lens reads.",
+    "FP8 vs bf16: the pilot's behaviour came from FP8 sampling; Q1 is re-measured in bf16."
+  ],
+  "dev_phase_may_change": ["the layer band", "probe regularisation / dimensionality reduction", "which captured position is primary for Q2", "the back-patching layer pairs and control patches for Q3"],
+  "dev_phase_may_not_change": ["the items, seeds, model, prompt", "the groups", "the s1-vs-decoy contrast", "the reading rules' thresholds"],
+  "deviations_from_plan": []
+}
