@@ -20,6 +20,8 @@ import exp11_brew as B
 EXP = cfg.Exp("exp11_wrong_intermediates", "exp11")
 H_VALUES = (1, 2, 3)
 BANKS = {"dev": {"seed": "exp11_dev_20261008", "per_h": 60}, "test": {"seed": "exp11_test_20261008", "per_h": 250}}
+FMT_BANK = {"name": "fmt_dev", "seed": "exp11_fmt_dev_20261008", "per_h": 60}   # manifest deviation 1
+ALL_BANKS = [*BANKS, FMT_BANK["name"]]
 
 
 def bank_path(bank: str):
@@ -76,17 +78,49 @@ def write_banks() -> None:
     (EXP.results / "banks.json").write_text(json.dumps(record, indent=2) + "\n")
 
 
+def write_fmt_bank() -> None:
+    """The format pilot: FORMATS x H_VALUES x per_h eval items plus one h=2 shot per format, nocot-bench's colours,
+    ingredients and instruction; every gold re-derived by the independent text parser."""
+    import random
+    brew, _ = E10.nocot_import()
+    path = bank_path(FMT_BANK["name"])
+    if path.exists():
+        raise SystemExit(f"{path} exists; banks are generated once")
+    rows = []
+    for fmt in B.FORMATS:
+        rng = random.Random(f"{FMT_BANK['seed']}:{fmt}")
+        cells = [("shot", 2, 0)] + [("eval", h, k) for h in H_VALUES for k in range(FMT_BANK["per_h"])]
+        for split, h, k in cells:
+            gen = B.generate(rng, h, fmt.split("_")[0], brew.COLORS, brew.INGREDIENTS)
+            problem = B.render(gen, fmt, brew.COLORS)
+            assert B.parse(problem).path()[-1] == gen["answer"]
+            rows.append({"item_id": f"fmt_dev:{fmt}:{split}:h{h}:{k}", "bank": FMT_BANK["name"], "format": fmt,
+                         "split": split, "h": h, "problem": problem, "answer": gen["answer"],
+                         "instruction": brew.INSTRUCTION})
+    texts = collections.Counter(r["problem"] for r in rows)
+    texts.update(r["problem"] for b in BANKS for r in load_bank(b))
+    if max(texts.values()) > 1:
+        raise SystemExit("a problem text repeats")
+    path.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    record = json.loads((EXP.results / "banks.json").read_text())
+    record["banks"][FMT_BANK["name"]] = {**FMT_BANK, "formats": B.FORMATS, "n_eval": sum(r["split"] == "eval" for r in rows),
+                                         "content_key": cfg.content_key(rows)}
+    (EXP.results / "banks.json").write_text(json.dumps(record, indent=2) + "\n")
+    print(f"{len(rows)} rows -> {path}")
+
+
 # --- Requests -------------------------------------------------------------------------------------------------------
 def write_requests(bank: str) -> None:
     path = requests_path(bank)
     if path.exists():
         raise SystemExit(f"{path} exists; request files are fixed once written")
     items = load_bank(bank)
-    shot = next(r for r in items if r["split"] == "shot")
+    shots = {r.get("format"): r for r in items if r["split"] == "shot"}
     rows = []
     for it in (r for r in items if r["split"] == "eval"):
+        shot = shots[it.get("format")]
         row = {"item_id": it["item_id"], "bank": bank, "h": it["h"], "source": "brew", "exp10_render": True,
-               "seed": 0, **C.fields("C0", it, shot)}
+               "seed": 0, **({"format": it["format"]} if "format" in it else {}), **C.fields("C0", it, shot)}
         row["request_id"] = cfg.content_key(row)
         rows.append(row)
     path.write_text("".join(json.dumps(r) + "\n" for r in rows))
@@ -112,14 +146,19 @@ def token_positions(tokenizer, text: str, brew: B.Brew) -> dict[str, int]:
         assert piece and word.endswith(piece), f"token {piece!r} does not end {word!r}"
         return i
 
-    sentence = text.rindex("The potion starts out ")
+    problem = text.rindex("Problem: ")
+    sentence = text.index("The potion starts out ", problem)
     out = {"start": word_token(brew.start, sentence + len("The potion starts out "))}
-    cursor = text.index("one at a time: ", sentence) + len("one at a time: ")
-    for k, ingredient in enumerate(brew.stirs, 1):
-        at = text.index(ingredient, cursor)
-        out[f"stir{k}"] = word_token(ingredient, at)
-        cursor = at + len(ingredient)
-    out["question_end"] = token_ending_at(text.index("?", cursor) + 1)
+    if B.SINGLE in brew.stirs:
+        count = B.COUNT_WORDS[len(brew.stirs)]
+        out["stirs"] = word_token(count, text.index(f"You stir it {count}.", problem) + len("You stir it "))
+    else:
+        cursor = text.index("one at a time: ", problem) + len("one at a time: ")
+        for k, ingredient in enumerate(brew.stirs, 1):
+            at = text.index(ingredient, cursor)
+            out[f"stir{k}"] = word_token(ingredient, at)
+            cursor = at + len(ingredient)
+    out["question_end"] = token_ending_at(text.index(B.QUESTION, problem) + len(B.QUESTION))
     return out
 
 
@@ -163,11 +202,13 @@ def capture(bank: str) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("cmd", choices=["banks", "requests", "capture"])
-    p.add_argument("--bank", choices=list(BANKS))
+    p.add_argument("cmd", choices=["banks", "fmt_bank", "requests", "capture"])
+    p.add_argument("--bank", choices=ALL_BANKS)
     a = p.parse_args()
     if a.cmd == "banks":
         write_banks()
+    elif a.cmd == "fmt_bank":
+        write_fmt_bank()
     elif a.cmd == "requests":
         write_requests(a.bank)
     else:

@@ -1,0 +1,2 @@
+{"bank": "dev", "n_rows": 180, "file": "cache/exp11/requests_dev.jsonl", "content_key": "df5ab59740b9"}
+{"bank": "test", "n_rows": 750, "file": "cache/exp11/requests_test.jsonl", "content_key": "ec654f755855"}

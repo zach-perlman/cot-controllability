@@ -1,0 +1,56 @@
+{
+  "nocot_commit": "634d7de",
+  "h_values": [
+    1,
+    2,
+    3
+  ],
+  "banks": {
+    "dev": {
+      "seed": "exp11_dev_20261008",
+      "per_h": {
+        "1": 60,
+        "2": 60,
+        "3": 60
+      },
+      "n_eval": 180,
+      "n_shot": 1,
+      "gold_counts": {
+        "purple": 25,
+        "pink": 24,
+        "brown": 22,
+        "gold": 18,
+        "green": 17,
+        "black": 16,
+        "red": 16,
+        "blue": 15,
+        "white": 14,
+        "gray": 13
+      },
+      "content_key": "ba4b3774272e"
+    },
+    "test": {
+      "seed": "exp11_test_20261008",
+      "per_h": {
+        "1": 250,
+        "2": 250,
+        "3": 250
+      },
+      "n_eval": 750,
+      "n_shot": 1,
+      "gold_counts": {
+        "black": 91,
+        "green": 81,
+        "red": 81,
+        "white": 75,
+        "pink": 75,
+        "purple": 73,
+        "blue": 72,
+        "brown": 70,
+        "gold": 68,
+        "gray": 64
+      },
+      "content_key": "097972841a68"
+    }
+  }
+}

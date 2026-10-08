@@ -58,5 +58,12 @@
   ],
   "dev_phase_may_change": ["the layer band", "probe regularisation / dimensionality reduction", "which captured position is primary for Q2", "the back-patching layer pairs and control patches for Q3"],
   "dev_phase_may_not_change": ["the items, seeds, model, prompt", "the groups", "the s1-vs-decoy contrast", "the reading rules' thresholds"],
-  "deviations_from_plan": []
+  "deviations_from_plan": [
+    {
+      "written": "2026-10-08, after the dev capture and before any test capture or any format-pilot generation",
+      "what_dev_showed": "bf16 Qwen3.6-27B on the dev bank: h=1 60/60, h=2 6/60 correct (chance 0.10), 41/60 the last-stir-only shortcut (0.76 of errors; null 0.11). With 6 correct items the Q2 correct-vs-shortcut contrast cannot be read. Paired lens margins (s1 minus decoy logit) on the 36 usable shortcut items are ~0 at every captured position and layer for logit lens, J-lens and R-lens, while the same lookup at h=1 (answer minus decoy) is +1.7 logits at layer 40 of the final position (J-lens, CI +1.4 to +2.1).",
+      "change": "Add a dev-only FORMAT PILOT (new banks 'fmt_dev', exp11's own generator with nocot-bench's rules: 10 colours, derangements, all states distinct, last-stir-only never gold) crossing table type {three ingredients (nocot-bench wording), one 'stir' table (WorkspaceBench wording: 'turns X when stirred', 'You stir the potion twice')} x start position {first (nocot-bench), last (WorkspaceBench)}, h in 1..3, 60 items per cell, same instruction and one h=2 shot in the item's own format, same capture. Purpose: find which factor makes the 2-hop composition fail, and a format with a usable correct group for Q2. The pre-registered dev/test banks are unchanged; which bank and format the test phase uses is fixed in the test addendum, before any test capture.",
+      "also": "Q2's 'no_reading' guard, which needed a correct group, gains the h=1 positive control (the same lookup made as the final answer) as an alternative; the addendum fixes which is used."
+    }
+  ]
 }

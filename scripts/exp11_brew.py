@@ -12,8 +12,12 @@ import re
 from dataclasses import dataclass
 
 RULE_LINE = re.compile(r"^A (\w+) potion turns (\w+) with (\w+), (\w+) with (\w+), and (\w+) with (\w+)\.$")
+RULE_SINGLE = re.compile(r"^A (\w+) potion turns (\w+) when stirred\.$")
 START = re.compile(r"The potion starts out (\w+)\.")
 STIRS = re.compile(r"You stir in, one at a time: ([^.\n]+)")
+STIR_COUNT = re.compile(r"You stir it (once|twice|three times)\.")
+COUNT_WORDS = {1: "once", 2: "twice", 3: "three times"}
+SINGLE = "stir"   # the one ingredient of a single-table item
 
 
 @dataclass(frozen=True)
@@ -54,19 +58,97 @@ class Brew:
 
 
 def parse(problem: str) -> Brew:
+    """Both wordings: nocot-bench's three-ingredient table and the single 'stir' table, start sentence anywhere."""
     table, order = {}, []
     for line in problem.splitlines():
-        m = RULE_LINE.match(line.strip())
-        if m:
+        if m := RULE_LINE.match(line.strip()):
             colour, *pairs = m.groups()
             table[colour] = {pairs[i + 1]: pairs[i] for i in range(0, 6, 2)}
             order.append(colour)
+        elif m := RULE_SINGLE.match(line.strip()):
+            table[m.group(1)] = {SINGLE: m.group(2)}
+            order.append(m.group(1))
     start = START.search(problem).group(1)
-    stirs = tuple(s.strip() for s in re.split(r",\s*(?:then\s+)?|\s+then\s+", STIRS.search(problem).group(1).strip())
-                  if s.strip())
+    if m := STIRS.search(problem):
+        stirs = tuple(s.strip() for s in re.split(r",\s*(?:then\s+)?|\s+then\s+", m.group(1).strip()) if s.strip())
+    else:
+        h = {w: n for n, w in COUNT_WORDS.items()}[STIR_COUNT.search(problem).group(1)]
+        stirs = (SINGLE,) * h
     brew = Brew(table, tuple(order), start, stirs)
     assert all(len(set(row[i] for row in table.values())) == len(table) for i in brew.ingredients), "not bijective"
     return brew
+
+
+# --- The format pilot's generator (manifest deviation 1) ---------------------------------------------------------
+# Table type x start position. three_first is nocot-bench's own wording; single_last is WorkspaceBench's.
+FORMATS = ("three_first", "three_last", "single_first", "single_last")
+THREE_HEADER = "A potion changes color each time an ingredient is stirred in. The rules:"
+SINGLE_HEADER = "A potion changes color each time it is stirred. The rules:"
+QUESTION = "What color is the potion at the end?"
+
+
+def _derangement(rng, n: int) -> list[int]:
+    idx = list(range(n))
+    while True:
+        rng.shuffle(idx)
+        if all(idx[i] != i for i in range(n)):
+            return idx[:]
+
+
+def generate(rng, h: int, table_type: str, colours, ingredients, max_tries: int = 4000) -> dict:
+    """One item under nocot-bench's brew rules (datagen/banks/brew.py, _gen_brew): each ingredient a derangement,
+    all states distinct, the last-stir-only answer never gold, and (three ingredients) >= 2 distinct ingredients and
+    8 sampled reorderings of the stirs all changing the gold. A single table has one ingredient, SINGLE."""
+    n = len(colours)
+    for _ in range(max_tries):
+        ings = rng.sample(list(ingredients), 3) if table_type == "three" else [SINGLE]
+        perms = {ing: _derangement(rng, n) for ing in ings}
+        start = rng.randrange(n)
+        seq = [rng.choice(ings) for _ in range(h)]
+        if table_type == "three" and h > 1 and len(set(seq)) < 2:
+            continue
+        states = [start]
+        for ing in seq:
+            states.append(perms[ing][states[-1]])
+        if len(set(states)) != h + 1 or (h > 1 and perms[seq[-1]][start] == states[-1]):
+            continue
+        if table_type == "three" and h > 1:
+            collide = False
+            for _p in range(8):
+                other = seq[:]
+                rng.shuffle(other)
+                if other == seq:
+                    continue
+                w = start
+                for ing in other:
+                    w = perms[ing][w]
+                collide |= w == states[-1]
+            if collide:
+                continue
+        order = list(colours)
+        rng.shuffle(order)
+        return {"ings": ings, "perms": perms, "start": start, "seq": seq, "line_order": order, "h": h,
+                "answer": colours[states[-1]]}
+    raise RuntimeError(f"rejection loop exhausted (h={h}, {table_type})")
+
+
+def render(item: dict, fmt: str, colours) -> str:
+    table_type, start_pos = fmt.split("_")
+    idx = {c: i for i, c in enumerate(colours)}
+    start = f"The potion starts out {colours[item['start']]}."
+    if table_type == "three":
+        lines = [THREE_HEADER]
+        for c in item["line_order"]:
+            parts = [f"{colours[item['perms'][ing][idx[c]]]} with {ing}" for ing in item["ings"]]
+            lines.append(f"A {c} potion turns {parts[0]}, {parts[1]}, and {parts[2]}.")
+        stirs = f"You stir in, one at a time: {', then '.join(item['seq'])}."
+    else:
+        lines = [SINGLE_HEADER] + [f"A {c} potion turns {colours[item['perms'][SINGLE][idx[c]]]} when stirred."
+                                   for c in item["line_order"]]
+        stirs = f"You stir it {COUNT_WORDS[item['h']]}."
+    lines.append(f"{start} {stirs}" if start_pos == "first" else f"{stirs} {start}")
+    lines.append(QUESTION)
+    return "\n".join(lines)
 
 
 def hypotheses(brew: Brew) -> dict[str, set[str]]:
