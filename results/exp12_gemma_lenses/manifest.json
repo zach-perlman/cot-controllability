@@ -225,5 +225,13 @@
       "reports"
     ],
     "eta": "about 2.5 h of GPU after phase 3 (the fit about 2.1 h)"
+  },
+  "phase4_amendment_1": {
+    "written": "2026-10-09T06:46Z, before any phase 4 stage ran (the phase 4 runner was waiting for phase 3; stopped by pid, relaunched with this change). The user asked for it",
+    "change": "the Aya prompts are plain text, not chat-templated: the row's inputs, a blank line, then its targets ('{inputs}\\n\\n{targets}'), with no template markers. Everything else in phase4.arm is unchanged (16 languages, order, seed 0, >= 128 tokens with the BOS the fit tokenizer adds, duplicates and multilingual eval prompts dropped, first 1000 = router pool, first 64 = Jacobian prompts)",
+    "why": "the readout evals are raw text, like WikiText, so a chat-templated arm changed two things at once (language and format) and added a format mismatch with the eval that could depress Aya's scores and hide a language effect; the benchmark cannot reward chat format. Plain text makes the arm a test of one thing: language coverage of the fit text",
+    "names": "cache/exp12/aya_plain_prompts.json, router_aya_plain_K8.pt, lenses experts_aya_plain_64p / rlens_aya_plain_64p / jpp_aya_plain_64p, results eval_aya_plain_v1. cache/exp12/aya_prompts.json (the chat-templated list built at 06:28) is kept, unused",
+    "rules_and_predictions": "phase4.rules A1-A4 and phase4.predictions apply unchanged, with aya_plain in place of aya. The chat-format confound in phase4.confounds no longer applies; the 1/16-English confound still does",
+    "chat_format_question": "left open: testing it needs a chat-wrapped version of the readout evals and a fit-text x format 2x2, which does not fit before the results deadline"
   }
 }

@@ -1,8 +1,9 @@
-"""exp12 phase 4 (results/exp12_gemma_lenses/manifest.json, key "phase4"): does the fit text matter?
-The stages scripts/run_exp12_phase4.sh adds after phase 3.
+"""exp12 phase 4 (results/exp12_gemma_lenses/manifest.json, keys "phase4" and "phase4_amendment_1"): does
+the fit text matter? The stages scripts/run_exp12_phase4.sh adds after phase 3.
 
-  aya-prompts      the 1000-prompt Aya list: rows rendered with Gemma's chat template, at least 128 tokens,
-                   16 languages interleaved round-robin. Written once with a stamp; a rerun must reproduce it.
+  aya-prompts      the 1000-prompt Aya list: rows as plain text (the arm that runs) or in Gemma's chat
+                   template, at least 128 tokens, 16 languages interleaved round-robin. Written once with a
+                   stamp; a rerun must reproduce it.
   fit-router       the K=8 router on those 1000 prompts (jpp_cli.fit_router with router_K8's settings).
   fit              the J++ LRP fit on the first 64, writing only the final experts and pooled R-lens: no
                    raw-sum checkpoint, so the disk needs 4.2 GB instead of 13 (the manifest's deviation_disk).
@@ -62,15 +63,21 @@ def chat_messages(row: dict) -> list[dict[str, str]]:
     return [{"role": "user", "content": row["inputs"]}, {"role": "assistant", "content": row["targets"]}]
 
 
-def render(tokenizer, row: dict) -> str:
-    """The row as a user turn and a model turn in Gemma's chat template, without the leading <bos>:
-    the fit tokenizer adds it (jlens.from_hf sets add_bos_token)."""
+def render(tokenizer, row: dict, text_format: str) -> str:
+    """The row as text for the fit, without a leading <bos> (the fit tokenizer adds it; jlens.from_hf sets
+    add_bos_token). "plain": inputs, a blank line, targets, like the raw-text readout evals. "chat": a user
+    turn and a model turn in Gemma's chat template."""
+    if text_format == "plain":
+        return f"{row['inputs']}\n\n{row['targets']}"
     text = tokenizer.apply_chat_template(chat_messages(row), tokenize=False)
     assert text.startswith(tokenizer.bos_token), text[:20]
     return text[len(tokenizer.bos_token):]
 
 
-def template_ids(tokenizer, row: dict) -> list[int]:
+def expected_ids(tokenizer, row: dict, text_format: str) -> list[int]:
+    """The token ids the fit should see for the row: <bos> plus the plain text, or the chat template's ids."""
+    if text_format == "plain":
+        return [tokenizer.bos_token_id] + tokenizer(render(tokenizer, row, "plain"), add_special_tokens=False)["input_ids"]
     ids = tokenizer.apply_chat_template(chat_messages(row), tokenize=True)
     return list(ids["input_ids"] if hasattr(ids, "keys") else ids)
 
@@ -93,7 +100,7 @@ def aya_prompts(args: argparse.Namespace) -> None:
     for index, row in enumerate(rows):
         if row["language"] not in candidates:
             continue
-        text = render(tokenizer, row)
+        text = render(tokenizer, row, args.format)
         if text in seen or any(prompt in text for prompt in eval_prompts):
             continue
         seen.add(text)
@@ -110,8 +117,10 @@ def aya_prompts(args: argparse.Namespace) -> None:
     chosen = interleaved[: args.num_prompts]
     prompts = [text for _, text in chosen]
 
-    for index, text in chosen:  # what the fit tokenizes is exactly the chat template's token sequence
-        assert tokenizer(text)["input_ids"] == template_ids(tokenizer, rows[index]), index
+    for index, text in chosen:  # what the fit tokenizes is exactly the intended token sequence
+        assert tokenizer(text)["input_ids"] == expected_ids(tokenizer, rows[index], args.format), index
+        if args.format == "plain":
+            assert "<|turn>" not in text and "<turn|>" not in text, index
 
     path = Path(args.out)
     if path.exists():
@@ -122,7 +131,8 @@ def aya_prompts(args: argparse.Namespace) -> None:
     path.write_text(json.dumps(prompts, ensure_ascii=False))
     lengths = sorted(len(tokenizer(text)["input_ids"]) for text in prompts)
     jpp_cli.write_stamp(jpp_cli.stamp_path_beside(str(path)), {
-        "stage": "exp12 aya-prompts", "dataset": AYA, "revision": revision, "languages": list(AYA_LANGUAGES),
+        "stage": "exp12 aya-prompts", "format": args.format, "dataset": AYA, "revision": revision,
+        "languages": list(AYA_LANGUAGES),
         "seed": SEED, "min_tokens": MIN_TOKENS, "num_prompts": len(prompts),
         "usable_rows_per_language": {language: len(rows_) for language, rows_ in candidates.items()},
         "row_indices": [index for index, _ in chosen],
@@ -225,9 +235,10 @@ def fit(args: argparse.Namespace) -> None:
 
 ### per-eval-report
 
-# (lens, reference): the two fit-text contrasts, then the fit-to-fit replicates that serve as their yardstick.
-CONTRASTS = [("jpp_aya_64p", "jpp_64p"), ("rlens_aya_64p", "rlens_64p")]
-REPLICATES = {"jpp_aya_64p": ("jpp_64p_b", "jpp_64p"), "rlens_aya_64p": ("rlens_64p_b", "rlens_64p")}
+def contrasts(arm: str) -> list[tuple[str, str, tuple[str, str]]]:
+    """(arm lens, WikiText lens, the WikiText fit-to-fit replicate pair that is its yardstick), J++ then R."""
+    return [(f"jpp_{arm}_64p", "jpp_64p", ("jpp_64p_b", "jpp_64p")),
+            (f"rlens_{arm}_64p", "rlens_64p", ("rlens_64p_b", "rlens_64p"))]
 
 
 def paired_differences(values: pd.DataFrame, lens: str, reference: str, evals: list[str],
@@ -269,7 +280,9 @@ def per_eval_report(args: argparse.Namespace) -> None:
         for lens in lenses:
             lines.append(f"  {lens:15s}" + "".join(f"{values.loc[lens][e].mean():14.3f}" for e in evals))
         lines.append("")
-        pairs = [p for p in CONTRASTS + list(REPLICATES.values()) if set(p) <= set(lenses)]
+        all_pairs = [(lens, reference) for lens, reference, _ in contrasts(args.arm)]
+        all_pairs += [replicate for _, _, replicate in contrasts(args.arm)]
+        pairs = [p for p in all_pairs if set(p) <= set(lenses)]
         out[metric] = {}
         for lens, reference in pairs:
             result = paired_differences(values, lens, reference, evals, rng)
@@ -281,13 +294,13 @@ def per_eval_report(args: argparse.Namespace) -> None:
 
     recall = out["recall@10"]
     lines.append("## rules (manifest phase4; recall@10)")
-    for rule, (lens, reference) in zip(("A1 (J++)", "A2 (R-lens)"), CONTRASTS):
+    for rule, (lens, reference, replicate) in zip(("A1 (J++)", "A2 (R-lens)"), contrasts(args.arm)):
         key = f"{lens} - {reference}"
         if key not in recall:
             lines.append(f"  {rule}: {lens} missing")
             continue
         d, lo, hi = recall[key]["multilingual"]
-        replicate_key = "{} - {}".format(*REPLICATES[lens])
+        replicate_key = "{} - {}".format(*replicate)
         if replicate_key in recall:
             yardstick = abs(recall[replicate_key]["multilingual"][0])
             helps = lo > 0 and d > yardstick
@@ -296,7 +309,7 @@ def per_eval_report(args: argparse.Namespace) -> None:
             helps = lo > 0
             basis = f"needs CI low end > 0 (is {lo:+.3f}); replicate missing, so CI only (flagged)"
         lines.append(f"  {rule} multilingual {d:+.3f} [{lo:+.3f}, {hi:+.3f}]: {basis} -> "
-                     f"{'Aya helps' if helps else 'no detectable help'}")
+                     f"{'the Aya fit text helps' if helps else 'no detectable help'}")
         e_d, e_lo, e_hi = recall[key]["macro_without_multilingual"]
         lines.append(f"     A3 other evals {e_d:+.3f} [{e_lo:+.3f}, {e_hi:+.3f}] -> "
                      f"{'costs English' if e_hi < 0 else 'no detectable English cost'}")
@@ -314,6 +327,7 @@ def main() -> None:
     sub = parser.add_subparsers(dest="stage", required=True)
 
     p = sub.add_parser("aya-prompts")
+    p.add_argument("--format", choices=["plain", "chat"], required=True)
     p.add_argument("--num-prompts", type=int, default=jpp_cli.NUM_WIKITEXT_FIT_PROMPTS)
     p.add_argument("--out", required=True)
 
@@ -333,6 +347,7 @@ def main() -> None:
     p.add_argument("--artifacts-dir", required=True)
 
     p = sub.add_parser("per-eval-report")
+    p.add_argument("--arm", required=True, help="the lens-name infix, e.g. aya_plain for jpp_aya_plain_64p")
     p.add_argument("--ranks", required=True)
     p.add_argument("--correctness-csv", required=True)
     p.add_argument("--out", required=True)

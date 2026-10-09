@@ -1,5 +1,6 @@
 #!/bin/bash
-# exp12 phase 4 (results/exp12_gemma_lenses/manifest.json, key "phase4"): the Aya fit-text arm. Waits for
+# exp12 phase 4 (results/exp12_gemma_lenses/manifest.json, keys "phase4" and "phase4_amendment_1"): the
+# plain-text Aya fit-text arm. Waits for
 # phase 3 to exit, then runs each stage once (every stage skips when its output exists); exits non-zero
 # on a failure so scripts/run_exp12_phase4_retry.sh reruns it. The fit has no checkpoint: a rerun
 # restarts it.
@@ -17,7 +18,8 @@ MODEL=google/gemma-4-31B-it
 C=cache/exp12
 L=$C/lenses
 R=results/exp12_gemma_lenses
-E=$R/eval_aya_v1
+ARM=aya_plain  # manifest phase4_amendment_1: plain-text Aya, not chat-templated
+E=$R/eval_${ARM}_v1
 CORRECT=$R/model_correctness.csv
 READOUT=8,15,22,30,38,45,52
 ITEMS="--eval-data-dir $JPP/data/jlens/evaluations --correctness-csv $CORRECT"
@@ -43,30 +45,31 @@ existing() { for f in "$@"; do [ "$f" = logit ] || [ -f "$f" ] && echo "$f"; don
 
 while pgrep -f "run_exp12_phase3_retry.sh" > /dev/null; do sleep 60; done
 
-[ -f $C/aya_prompts.json ] || { stage aya prompts; $W4 aya-prompts --out $C/aya_prompts.json; }
+P=$C/${ARM}_prompts.json
+[ -f $P ] || { stage aya prompts; $W4 aya-prompts --format plain --out $P; }
 
 # phase 3's short-replicate raw sums, once merged, free the disk the fit needs
 if [ -f $C/jpp_short_b_checkpoint_dir.txt ] && [ -f $L/experts_64p_b.pt ] && [ -f $L/rlens_64p_b.pt ]; then
   offload "$(cat $C/jpp_short_b_checkpoint_dir.txt)/experts_K8_checkpoint.pt"
 fi
 
-[ -f $C/router_aya_K8.pt ] || { stage aya router; need_gb 1 "the Aya router"
-  $W4 fit-router --prompts-json $C/aya_prompts.json --num-prompts 1000 --layers $READOUT --out $C/router_aya_K8.pt; }
+[ -f $C/router_${ARM}_K8.pt ] || { stage aya router; need_gb 1 "the Aya router"
+  $W4 fit-router --prompts-json $P --num-prompts 1000 --layers $READOUT --out $C/router_${ARM}_K8.pt; }
 
-[ -f $L/rlens_aya_64p.pt ] || { stage aya fit; need_gb 7 "the Aya experts, pooled lens and weights"
-  $W4 fit --prompts-json $C/aya_prompts.json --num-prompts 64 --router-path $C/router_aya_K8.pt --layers $READOUT \
-    --experts-out $L/experts_aya_64p.pt --pooled-out $L/rlens_aya_64p.pt --artifacts-dir $C/fits; }
+[ -f $L/rlens_${ARM}_64p.pt ] || { stage aya fit; need_gb 7 "the Aya experts, pooled lens and weights"
+  $W4 fit --prompts-json $P --num-prompts 64 --router-path $C/router_${ARM}_K8.pt --layers $READOUT \
+    --experts-out $L/experts_${ARM}_64p.pt --pooled-out $L/rlens_${ARM}_64p.pt --artifacts-dir $C/fits; }
 
-[ -f $L/jpp_aya_64p.pt ] || { stage weights aya_64p; need_gb 2 "the aya_64p weights"
-  $CLI fit-weights --hf-model-name $MODEL --layers $READOUT --experts $L/experts_aya_64p.pt $ITEMS --items fit:0 \
-    --cache-path $C/residuals_readout_layers.pt --checkpoint-name jpp_aya_64p --out $L/jpp_aya_64p.pt; }
+[ -f $L/jpp_${ARM}_64p.pt ] || { stage weights ${ARM}_64p; need_gb 2 "the ${ARM}_64p weights"
+  $CLI fit-weights --hf-model-name $MODEL --layers $READOUT --experts $L/experts_${ARM}_64p.pt $ITEMS --items fit:0 \
+    --cache-path $C/residuals_readout_layers.pt --checkpoint-name jpp_${ARM}_64p --out $L/jpp_${ARM}_64p.pt; }
 
-[ -f $E/ranks.csv ] || { stage evaluate aya; mkdir -p $E
+[ -f $E/ranks.csv ] || { stage evaluate $ARM; mkdir -p $E
   $CLI evaluate --hf-model-name $MODEL --layers $READOUT --items held-out:0 $ITEMS --out $E/ranks.csv \
     --lens $(existing logit $L/rlens_64p.pt $L/jpp_64p.pt $L/rlens_64p_b.pt $L/jpp_64p_b.pt \
-      $L/rlens_aya_64p.pt $L/jpp_aya_64p.pt); }
+      $L/rlens_${ARM}_64p.pt $L/jpp_${ARM}_64p.pt); }
 report jpp_64p report_vs_jpp
 report rlens_64p report_vs_rlens
-[ -f $E/per_eval.txt ] || $W4 per-eval-report --ranks $E/ranks.csv --correctness-csv $CORRECT \
+[ -f $E/per_eval.txt ] || $W4 per-eval-report --arm $ARM --ranks $E/ranks.csv --correctness-csv $CORRECT \
   --out $E/per_eval.txt || echo "FAILED: per-eval report (continuing)"
 stage "phase 4 done"
