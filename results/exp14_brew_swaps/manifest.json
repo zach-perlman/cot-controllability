@@ -1,0 +1,74 @@
+{
+  "exp_id": "exp14_brew_swaps",
+  "status": "written before any exp14 capture, swap or readout; the only exp14 model runs before this file are the plumbing checks in already_seen_before_this_manifest",
+  "written": "2026-10-09",
+  "code_commit": "the commit that adds this file (scripts/exp14_brew_swaps.py, scripts/run_exp14.sh)",
+  "motivation": "Gemma-4-31B-it composes two in-context brew lookups without CoT (h=2 accuracy 0.924) and fails at three (0.048), where its errors apply the last stir to the previous state (h=3: 0.74 of errors skip one stir, null 0.25; stir 2 is skipped in 0.57 of errors, exploratory). Two questions. (1) Does the model compute its second lookup from a colour direction that the J++ / R lenses name, i.e. are lens vectors what the model computes with on a hop that is not memorised? Every table is random, so the swapped-in answer table[s1'][stir 2] cannot come from an association between s1' and an answer: it has to be looked up. (2) Is the three-hop failure a missed deadline: does hop 3 read a slot that holds s1 (stale), and does writing s2 into it early enough repair the answer?",
+  "prior_work": {
+    "checked": "2026-10-09",
+    "gurnee_et_al_workspace": "intermediate swaps on 50 memorised two-hop prompts (54-70% on Claude); timing control (intermediate swaps take effect ~17% earlier than answer swaps); probe J-space decomposition; arithmetic intermediates 8 layers apart in one prompt. Memorised facts, Claude only.",
+    "open_models": "Zeisler (LessWrong, 2026-09): J-lens intermediate swaps flip top-1 6-11% on Qwen3.6-27B and Gemma-3-27B; answer swaps beat intermediate swaps in 3 of 4 conditions. J++ post: 59.7% on 67 natural two-hop trials (Qwen3.6-27B).",
+    "workspacebench_brew": "readout only, judge-scored",
+    "layers_per_hop": "Wu, Geiger & Millière 2025 (arXiv 2505.20896): a 12-layer model trained from scratch on variable chains does each hop at a later layer (patching). Hopping Too Late (arXiv 2406.12775): back-patching on natural two-hop failures, best layer pair chosen per item.",
+    "ours": "exp11 back-patched Qwen3.6-27B's h=2 errors: no rescue (Qwen never computes s1).",
+    "identical_work": "none found: lens-vector swaps of an arbitrary in-context intermediate, and a deadline test of three-hop errors in a pretrained model"
+  },
+  "already_seen_before_this_manifest": {
+    "gemma_behaviour": "exp12 G1 on these exact prompts: three-ingredient h=1 1.000, h=2 0.924, h=3 0.048; h=3 error families (gate.txt) and the exploratory per-stir split of h=3 skip-one-stir errors (stir 1 0.378, stir 2 0.567, stir 3 0.298 of errors; overlapping)",
+    "lenses": "exp12 fitted the lenses used here (cache/exp12/lenses/jpp_64p.pt, rlens_64p.pt; 64 WikiText prompts, even layers 0-58 plus 15 and 45) and scored them on jpp_lens's readout evals only; no brew readout with them has been run",
+    "plumbing_checks": "run 2026-10-09 22:17Z on the first h=2 test item (no swap outcome printed): token positions (stir1 ' chalk', stir2 ' dew', post_table 'The', final ':'); edited span = start sentence through 'Answer:'; a clamp whose targets are the clean coordinates changes the final logits by 0.0; a scale-2 J++ swap at layers 24-30 pins the coordinates at layer 24 to the target within 1.2e-3 (relative, bf16) and leaves every position before the start sentence unchanged (0.0); all 4 window layers edited; diffmeans directions unit-norm and the seeded null reproducible (synthetic residuals)"
+  },
+  "items": {
+    "bank": "exp11's test bank, three-ingredient wording (cache/exp11/items_test.jsonl), all 750 eval items (h = 1, 2, 3; 250 each), the prompts of exp12 G1 (exp10's C0 rendering for gemma4: one h=2 shot, thinking off, 'Answer:' prefilled)",
+    "swap_items_h2": "in item order, the first 100 h=2 items the model answers correctly in exp14's own clean pass that have an eligible s1' (swap_target_h2): s1' is off the path s0..s2; a' = table[s1'][stir 2] is not s0, s1, s2 or s1'; s1''s two other entries differ from each other, from a' and from s2. s1' is drawn per item with random.Random('exp14 <item_id>').",
+    "repair_items_h3": "every h=3 item whose clean answer is table[s1][stir 3] and not gold (stir 2 skipped), with an eligible redirect colour c (off the path; table[c][stir 3] not gold, not the clean answer, not on the path, not c), drawn with random.Random('exp14 redirect <item_id>')"
+  },
+  "model": "google/gemma-4-31B-it bf16, transformers 5.17.0, AutoModelForImageTextToText (as exp12 G1 and exp13), sdpa, one forward per pass, answer = argmax over the 10 colour tokens",
+  "directions": {
+    "jpp": "the exp12 J++ lens (64 prompts): v = W_U[colour] @ J_l",
+    "rlens": "the exp12 R-lens (64 prompts): v = W_U[colour] @ J_l",
+    "logit": "v = W_U[colour] (the raw unembedding row; the null basis)",
+    "diffmeans": "supervised control: the mean block-l output over capture items whose colour is c minus the mean over the rest, fit on the half of the 750 items (parity of the item id's trailing index) that does not contain the edited item. For s1 swaps the residual is at the stir-1 token with label s1 (h = 1..3 items); for answer swaps it is at the answer position with label the model's clean answer.",
+    "null": "random_null target: the lens / logit vector of ' table' (jpp, rlens, logit); for diffmeans a seeded random Gaussian direction",
+    "normalisation": "every direction unit-normalised per layer (equal-magnitude edits across directions)"
+  },
+  "intervention": {
+    "clamp_swap": "jpp_lens's clamp swap written out in exp14 (ClampSwap) so that only positions after the table are edited: at each window layer and edited position, h <- h + V (c* - pinv(V) h), V = [u_source, u_target], c* = the clean pass's coordinates on V with source and target exchanged, times the scale. Layers with |cos(u_s, u_t)| > 0.999 are skipped (jpp_lens's constant).",
+    "positions": "from the first token of the start sentence ('The potion starts out ...') to the answer position, inclusive (the table and the shot are never edited)",
+    "windows": "14 windows of 4 even layers, window w = layers 4w, 4w+2, 4w+4, 4w+6 (w = 0..13; 0-6 through 52-58), the layers both 64-prompt lenses are fitted at",
+    "scales": "1, 2, 4 for main, answer_swap, repair and redirect at Gate 1; random_null at 4 only. The repair stage uses, per direction, the one scale with the highest mean column-specific flip over all h=2 swap items and windows (chosen in code from the swaps output before the repair stage runs; ties to the smaller scale)."
+  },
+  "stages": {
+    "capture": "one clean forward per item: colour logits, colour mass, token positions, and the 60 block outputs at each stir token and the answer position (fp16, ~1.5 GB, cache/exp14/capture.pt)",
+    "gate0_readouts": "descriptive; does not gate the swaps. Per item, lens (logit, jpp, rlens), even layer and stored position: the colour logits (the model's final norm and unembedding applied to J_l h). Per state s_j: AUC = P(score(s_j) > score(c)) over the colours c off the item's path. Probe: exp11's 10-way colour probe (k_pca 64, weight decay 1e-3, 5 folds), held-out accuracy per layer for s_j and for a row-mate decoy (the entry of s_{j-1}'s line under another ingredient, off the path).",
+    "gate1_swaps_h2": "variants on each swap item: main (s1 -> s1'), answer_swap (s2 -> a'), random_null (s1 -> null). Per (direction, window, scale): success = argmax is a'; off_column = 0.5 x [argmax is one of s1''s two other entries] (the per-column rate); flip = success - off_column (column-specific: the model applied stir 2 to s1', not merely produced something tied to s1'); changed = argmax differs from clean; s1_prime = argmax is s1'.",
+    "stage2_timing": "for each direction that passes Gate 1, at its chosen scale: the last window whose mean flip is >= half the maximum over windows (s1 deadline) and the same for the answer swap's success (answer deadline); bootstrap over items for (answer deadline - s1 deadline) in windows",
+    "stage3_repair_h3": "variants on each repair item: repair (s1 -> s2; success = argmax is gold) and redirect (s1 -> c; success = argmax is table[c][stir 3]); each variant is the other's control. Run with all four directions at each direction's chosen scale, all 14 windows."
+  },
+  "reading_rules": {
+    "selection": "Gate 1 numbers are held-out: the items are split by index parity, and each half is scored at the (window, scale) that maximises the mean metric on the other half (ties to the smaller scale, then the earlier window)",
+    "gate1_pass": "per direction: held-out flip >= 0.10 with bootstrap 95% CI low end > 0, and held-out answer-swap success >= 0.30 (the edit is strong enough to move the answer at all). A direction that passes is read as 'the model's second lookup takes its input from this direction'.",
+    "gate1_null": "random_null success (argmax = a') should stay near 0; reported, not a gate",
+    "compare_directions": "descriptive: held-out flips of jpp, rlens, logit and diffmeans side by side; diffmeans is the supervised linear reference, logit the null basis",
+    "stage2_prediction": "for a passing direction, the s1 deadline is earlier than the answer deadline (answer - s1 > 0 with CI low end > 0): the intermediate has to be in place before the second lookup reads it, the answer can be written later. Equal or reversed deadlines are reported as such.",
+    "stage3_window": "read at one window per direction fixed by Gate 1 (the window with the highest mean main flip at the chosen scale, on the h=2 items), only for directions that passed Gate 1",
+    "stage3_repairable": "repair gold rate - redirect gold rate >= 0.10 with CI low end > 0",
+    "stage3_slot_read": "redirect's rate of table[c][stir 3] - repair's rate of the same >= 0.10 with CI low end > 0: hop 3 reads a slot that holds s1 and applies stir 3 to whatever is written there",
+    "stage3_reading": "slot_read and repairable together support the stale-state account (hop 3 consumed s1 because s2 was not in its input slot). repairable at early windows only, with the curve falling to 0 at later windows, locates hop 3's read (descriptive). Neither: hop 3 does not read the lens direction of s1 at these positions."
+  },
+  "known_confounds": [
+    "The edited positions include the answer position: a swap could act on the answer readout rather than on the second lookup. The column-specific flip guards against that only partly (a' is the stir-2 entry of s1''s line, which the model can reach only by a lookup); the window timing (Stage 2) is the second guard.",
+    "Lens directions are not orthogonal across colours; a clamp on [u_s, u_t] also moves other colours' coordinates. Equal-norm units and the logit-lens null bound how much a generic colour edit does.",
+    "diffmeans directions are fit on half the items of the same bank (other half), at one position (stir 1 for s1); they may encode correlates of the label (e.g. the row the start colour leads to) rather than s1 alone.",
+    "Gate 0 decodability is not use; the swaps are the causal test. A swap can fail because the edit is too weak (answer-swap ceiling) or because the representation is distributed beyond two directions.",
+    "Stage 3 items are selected by an error pattern; a skip-stir-2 answer can coincide with other families (overlapping categories). The redirect control asks whether hop 3 reads the s1 slot at all, independent of why stir 2 was skipped.",
+    "Multiple windows and scales: Gate 1 uses cross-validated selection; Stage 3 reads one pre-fixed window."
+  ],
+  "outputs": {
+    "cache (gitignored)": "cache/exp14/capture.pt, capture.jsonl, readouts.pt, swaps_h2.pt, swaps_h3.pt",
+    "results": "results/exp14_brew_swaps/report_v1/report.txt (aggregates only, no item text)",
+    "run": "scripts/run_exp14.sh: capture, readouts, swaps, repair, report; log/exp14/run.log"
+  },
+  "costs": "capture ~2 min; readouts ~10 min; swaps 100 items x 4 directions x 14 windows x 7 passes = 39,200 forwards (~70 min); repair ~135 items x 4 x 14 x 2 = ~15,000 forwards (~30 min)",
+  "deviations_from_plan": []
+}
