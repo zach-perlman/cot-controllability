@@ -1,0 +1,74 @@
+{
+  "exp_id": "exp13_lookup_layers",
+  "status": "written before any exp13 generation or model run except the timing and probe re-read listed in already_seen_before_this_manifest",
+  "written": "2026-10-09",
+  "code_commit": "the commit that adds this file (scripts/exp13_lookup_layers.py, scripts/run_exp13.sh)",
+  "motivation": "Without CoT, Gemma-4-31B-it composes two in-context brew lookups (h=2 accuracy 0.924) while Qwen3.6-27B, a model of similar size, does not (0.12). The two differ in architecture: Qwen3.6-27B has 16 full softmax-attention blocks and 48 linear-attention (Gated DeltaNet) blocks; Gemma-4-31B has 50 sliding-window blocks (window 1024 tokens) and 10 global blocks, so on a ~600-token brew prompt all 60 of its blocks can attend to the table. Hypothesis: an in-context lookup needs a block whose attention can reach the table exactly, so the number of such blocks bounds latent in-context hops. Theory: Ye et al. 2026 (arXiv 2602.01763) prove sequential function composition needs a number of full-attention layers growing with the number of steps, however many linear layers are added (no experiments on pretrained models). Empirical work on hybrids (arXiv 2507.06457, models trained from scratch at 0.34-1.3B) measures recall, not multi-hop; the Gemma 3 report ablates the local:global ratio on perplexity only. Prior work checked (2026-10-09): no test of latent multi-hop accuracy against a sliding-window boundary, and no attribution of in-context lookups to block type in a production hybrid, was found.",
+  "already_seen_before_this_manifest": {
+    "gemma_brew_gate": "exp12 G1 (results/exp12_gemma_lenses/brew_gate/gate.txt), the unpadded prompts of this experiment's base condition: three-ingredient h=1 1.000, h=2 0.924, h=3 0.048; single table h=1 1.000, h=2 0.928, h=3 0.760",
+    "qwen_probe_steps": "scripts/exp13_seen_probe_steps.py on exp11's saved probe (cache/exp11/q23_probe_test_k64_wd0.001.pt), exploratory: at the answer position, three-ingredient h=1, the answer-colour probe accuracy rises from 0.20 (block 34) to 0.87 (block 35, full attention), then +0.11 at block 39 and +0.04 at block 43 (both full attention); in blocks 20-56, 93% of the positive per-block gain is at the 9 full-attention blocks (24% of the band). h=2: the model's answer (mostly the last-stir-only shortcut) gains +0.16 at block 47 and +0.41 at block 51, both full attention (69% of the positive gain). One probe configuration; decodability, not use.",
+    "timing": "throwaway timing on dummy text, no brew item: Gemma-4-31B-it bf16 sdpa 0.096 s per 600-token forward, 0.57 s at 3200 tokens; Qwen3.6-27B 0.145 s per 600-token forward (reference PyTorch kernels for the linear attention)",
+    "nothing_else": "no padded prompt and no ablation has been run"
+  },
+  "questions": {
+    "QA1_gemma_window": "When the brew table is placed beyond Gemma-4-31B-it's 1024-token sliding window from every position after it, so that only the 10 global blocks can attend to it directly, does accuracy fall, and does it fall more for two lookups (h=2) than for one (h=1)?",
+    "QA2_qwen_block_type": "In Qwen3.6-27B, is the brew lookup at the answer position carried by the full-attention blocks' token mixers rather than the linear-attention blocks'?"
+  },
+  "items": {
+    "three": "exp11's test bank (cache/exp11/items_test.jsonl; nocot-bench's brew generator, three-ingredient wording, one h=2 shot): all 250 eval items at h=1 and all 250 at h=2. h=3 is omitted (Gemma is at 0.048 unpadded).",
+    "single": "exp11's single_test bank (single table, 'You stir it twice/three times'): all 250 eval items at h=2 and all 250 at h=3",
+    "passage": "one fixed neutral passage for every padded row: WikiText-103 validation records in stream order, headings dropped, detokenised, split into sentences, keeping sentences of >= 40 characters that match no colour, ingredient, potion, stir, colour/color or ingredient word (EXCLUDED_WORDS), until ~3200 Gemma tokens (cache/exp13/passage.txt, written once). A condition uses the longest sentence prefix that fits its length.",
+    "framing": "the passage is framed as '[An unrelated passage follows. It has nothing to do with the problem.]' / passage / '[End of the unrelated passage.]', each on its own line, inside the target problem's text; the shot is unchanged",
+    "conditions": {
+      "base": "unpadded (exp12 G1's prompt)",
+      "between_D": "the framed passage between the last rule line and the start sentence, sized so the answer position is about D tokens after the last table token; D in 700, 800, 900, 950, 1000, 1050, 1100, 1200, 1500, 2500 (passage length fixed per condition from the set's first item; every row's actual token spans are recorded)",
+      "before_1200 / before_2500": "the same passage as between_1200 / between_2500, placed before the table (right after 'Problem: '): the same total length, with the table next to the question",
+      "single_table_conditions": "base, between_0700, between_1200, before_1200 only"
+    },
+    "line_visibility": "for each item the needed rule lines are those of s_0..s_{h-1} (the states the h lookups read). A line is 'visible' if its first token is within WINDOW-1 = 1023 tokens of the answer position (so of every post-table position); 'hidden' if its last token is more than 1023 tokens before the start sentence's first token (so no post-table position can attend to any of it in a sliding block); otherwise 'straddle'. Sliding-window semantics (transformers 5.17 masking_utils.sliding_window_overlay): key k is visible from query q iff k > q - 1024."
+  },
+  "model_and_prompt": {
+    "gemma": "google/gemma-4-31B-it, bf16, transformers 5.17.0, sdpa attention, one forward per row, use_cache off. exp10's C0 rendering (cc_exp10_render.prompt_ids, family gemma4: one-shot history, thinking off, 'Answer:' prefilled), identical to exp12 G1 except the padded problem text. Answer = argmax over the 10 single-token colours (' red', ...) at the answer position; the colours' share of the next-token mass is recorded.",
+    "qwen": "Qwen/Qwen3.6-27B bf16 as exp11 (exp11_model.load), exp11's test-bank request rows (family qwen3.6), h=1 and h=2 (250 each). Resample ablation: for each block b in 16..63, one forward per item with block b's token-mixer output (self_attn for full-attention blocks, linear_attn otherwise; the term added to the residual before the MLP) at the answer position replaced by the same block's clean output at the answer position of a donor item (a fixed derangement within each h, seed 'exp13 qwen h=H')."
+  },
+  "harness_checks": {
+    "mask_check": "before the Gemma run (scripts/run_exp13.sh stops if it fails): on one between_1500 prompt, changing the token at distance 1022 or 1023 before the answer position must change block 0's output there (sliding) and at distance 1024, 1025, 1500 must leave it bitwise unchanged; block 5 (global) must change at every distance. Written to cache/exp13/mask_check.txt and printed in the report.",
+    "rendering": "every row's rendered text must tokenize to the prompt's prefix (raises otherwise); every padded problem must parse to the item's own brew path",
+    "qwen_block_types": "assert that blocks with self_attn are exactly the 16 blocks b % 4 == 3",
+    "qwen_clean_accuracy": "the report prints the clean accuracy; it should reproduce exp11 (h=1 1.00, h=2 ~0.12). A difference > 0.03 at h=1 is reported as a harness failure and the Qwen reading is not made."
+  },
+  "metrics": {
+    "gemma_accuracy": "per (item set, h, condition): accuracy with an item-bootstrap 95% CI (2000 resamples, seed 0)",
+    "gemma_primary_contrast": "three-ingredient items, per h: drop_h = accuracy(between_0700) - accuracy(between_1200), paired over items, bootstrap CI. Length control: accuracy(between_0700) - accuracy(before_1200). The h contrast: drop_2 - drop_1 (different items; unpaired bootstrap).",
+    "gemma_signature": "(S1) the sweep curve, and a plateau check: accuracy at between_1500 and between_2500 against between_1200, before_2500 against base; (S2) in the transition zone (between_0900..between_1100 pooled), accuracy by which needed lines are visible or hidden (items with a straddling needed line dropped)",
+    "qwen": "per h and block: keep = the argmax is unchanged from the clean pass; donor = the argmax becomes the donor's clean argmax (items whose clean argmax equals the donor's excluded). effect = 1 - keep. Summary over blocks 20-56: per item, mean effect at the full-attention blocks minus mean effect at the linear blocks, bootstrap CI; and the block with the largest mean effect."
+  },
+  "reading_rules_gemma": {
+    "applies_to": "three-ingredient items; single-table rows are reported descriptively with the same contrasts",
+    "validity": "V1: at least 95% of between_1200 rows have every needed line 'hidden' and at least 95% of between_0700 rows every needed line 'visible' (else the reading is made but flagged). V2: |accuracy(between_0700) - accuracy(before_1200)| <= 0.10 at the h read; if not, a length or framing effect is confounded with distance and that h is 'not read'.",
+    "lookups_need_sliding": "drop_1 >= 0.25: even a single lookup fails when only the global blocks (or relays through intermediate positions) can reach the table",
+    "composition_needs_sliding": "drop_2 >= 0.25, and drop_2 - drop_1 >= 0.15 with its CI low end > 0: a second lookup needs more reach than the global blocks provide (supports the hypothesis)",
+    "global_layers_suffice": "the CI high end of drop_2 < 0.15: two lookups survive with the table beyond the window (against the hypothesis: 10 lookup-capable blocks are enough for two hops, so the count of such blocks does not explain Qwen's failure)",
+    "otherwise": "inconclusive",
+    "signature_support": "a fall located at the window is supported if (S1) between_1500 and between_2500 are each within 0.10 of between_1200 and before_2500 within 0.10 of base, and the sweep's largest one-step fall lies between between_0900 and between_1100. If accuracy keeps falling past 1200, distance beyond the window also matters and the step is not cleanly the window's."
+  },
+  "reading_rules_qwen": {
+    "lookup_at_full_attention": "h=1: (mean effect at full-attention blocks - mean effect at linear blocks, blocks 20-56) >= 0.10 with CI low end > 0, and the largest single-block effect in 20-56 is at a full-attention block",
+    "not_specific": "h=1: the CI of that difference includes 0, or the largest effect is at a linear block",
+    "h2": "descriptive: where the (mostly shortcut) answer's lookup is carried"
+  },
+  "known_confounds": [
+    "Length and distraction: padding adds text. Controls: between_0700 is padded but keeps the table in the window; before_1200 matches between_1200's length with the table near the question (V2).",
+    "Relay: sliding blocks can pass information forward through intermediate positions (the receptive field grows by up to 1023 tokens per block), so 'hidden' means no direct sliding attention to the table, not that sliding blocks cannot carry table information at all. A survival beyond the window is credited to 'global blocks or relays'; a fall shows neither substitutes.",
+    "The trained model, not architecture in the abstract: Gemma was trained with this mask, and padding is out of distribution for brew. QA1 is within one model; the Gemma-Qwen comparison stays confounded by training.",
+    "One fixed passage and one framing: idiosyncratic effects of the passage are shared by all padded conditions, so they cancel in the between/before and between_0700/between_1200 contrasts but not against base.",
+    "Resample ablation at one position and one block can be compensated by later blocks (redundant lookups), so a small effect does not show a block plays no role; the ablation also misses lookups done at earlier positions and moved later.",
+    "Gemma's global blocks use proportional RoPE on 25% of dimensions; a long-distance fall could come from global blocks attending worse at distance rather than from losing the sliding blocks. The before_2500 control (long prompt, table near) and the plateau check bear on this."
+  ],
+  "outputs": {
+    "cache (gitignored)": "cache/exp13/passage.txt, requests_gemma.jsonl, mask_check.txt, gemma_rows.jsonl, qwen_ablation.pt",
+    "results": "results/exp13_lookup_layers/report_v1/report.txt (aggregates only, no item text)",
+    "run": "scripts/run_exp13.sh: passage, requests, mask-check, gemma, qwen, report; log/exp13/run.log"
+  },
+  "deviations_from_plan": []
+}
