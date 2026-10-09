@@ -1,0 +1,46 @@
+{
+  "git_hash": "93f02cd6c27db765abb127f20eff656bb5d27340",
+  "timestamp": "2026-10-09T19:44:01+00:00",
+  "library_version": null,
+  "stage": "exp12 readouts",
+  "args": {
+    "stage": "readouts",
+    "hf_model_name": "google/gemma-4-31B-it",
+    "lens": [
+      "logit",
+      "cache/exp12/lenses/jlens_16p.pt",
+      "cache/exp12/snapshots/jpp/rlens_16p.pt",
+      "cache/exp12/lenses/rlens_64p.pt",
+      "cache/exp12/lenses/jpp_64p.pt"
+    ],
+    "layers": [
+      8,
+      15,
+      22,
+      30,
+      38,
+      45,
+      52
+    ],
+    "correctness_csv": "results/exp12_gemma_lenses/model_correctness.csv",
+    "reference_ranks": "results/exp12_gemma_lenses/eval_v1/ranks.csv",
+    "out_dir": "results/exp12_gemma_lenses/readouts_gemma"
+  },
+  "lenses": {
+    "logit": "logit",
+    "jlens_16p": "cache/exp12/lenses/jlens_16p.pt",
+    "rlens_16p": "cache/exp12/snapshots/jpp/rlens_16p.pt",
+    "rlens_64p": "cache/exp12/lenses/rlens_64p.pt",
+    "jpp_64p": "cache/exp12/lenses/jpp_64p.pt"
+  },
+  "items": "held-out:0",
+  "num_items": 244,
+  "num_excluded_token_ids": 8439,
+  "ranks_identical_to_reference_for": [
+    "jpp_64p",
+    "logit",
+    "rlens_16p",
+    "rlens_64p"
+  ],
+  "top_k": 5
+}

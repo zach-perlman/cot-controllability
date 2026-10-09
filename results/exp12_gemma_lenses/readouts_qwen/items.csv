@@ -1,0 +1,525 @@
+eval,item,prompt,intermediates,readout_token,model_top_tokens
+multihop,carnival-ocean,Fact: The ocean on the coast of the country where Carnival is most famously celebrated is the ,"[""Brazil""]", ,"["" Atlantic"", ""2"", ""3"", ""4"", "" Pacific""]"
+multihop,amazon-language,Fact: The language spoken in the country where the Amazon River ends is ,"[""Brazil""]", ,"["" Portuguese"", ""1"", "" ______"", ""........................"", "" Brazilian""]"
+multihop,mars-color,Fact: The color of the planet fourth from the Sun is ,"[""Mars""]", ,"["" red"", "" redd"", "" orange"", "" yellow"", "" Red""]"
+multihop,spider-legs,Fact: The number of legs on the animal that spins webs is ,"[""spider""]", ,"[""8"", ""0"", ""4"", ""2"", ""6""]"
+multihop,paper-continent,Fact: The continent where the country that invented paper is located is ,"[""China""]", ,"["" Asia"", ""4"", ""1"", "" the"", ""2""]"
+multihop,atomic-79-symbol,Fact: The chemical symbol for the element with atomic number 79 is ,"[""gold""]", ,"["" Au"", ""7"", "" $"", "" ______"", ""1""]"
+multihop,atomic-29-symbol,Fact: The chemical symbol for the element with atomic number 29 is ,"[""copper""]", ,"["" Cu"", ""2"", "" $"", "" ."", "" ______""]"
+multihop,month-3-godof,Fact: The third month of the year is named after the Roman god of ,"[""March""]", ,"["" war"", "" the"", "" ______"", "" ____"", "" agriculture""]"
+multihop,etym-wargod-month,Fact: The month named after the Roman god of war is month number ,"[""March""]", ,"[""3"", ""7"", ""8"", ""5"", ""4""]"
+multihop,etym-saturn-position,Fact: The planet named after the Roman god of agriculture and time is planet number ,"[""Saturn""]", ,"[""6"", ""5"", ""4"", ""8"", ""7""]"
+multihop,chem-photosynthesis-Z,Fact: The atomic number of the gas that plants release during photosynthesis is ,"[""oxygen""]", ,"[""8"", ""1"", ""6"", ""3"", ""2""]"
+multihop,chem-atmosphere-Z,Fact: The atomic number of the gas that makes up about 78 percent of the atmosphere is ,"[""nitrogen""]", ,"[""7"", ""2"", ""1"", ""6"", ""4""]"
+multihop,chem-organic-Z,Fact: The atomic number of the element present in all organic compounds by definition is ,"[""carbon""]", ,"[""6"", ""1"", ""4"", ""2"", ""0""]"
+multihop,chem-bones-Z,Fact: The atomic number of the metal most abundant in human bones is ,"[""calcium""]", ,"[""2"", ""1"", ""4"", ""8"", ""3""]"
+multihop,func-pumps-chambers,"Fact: In humans, the organ that pumps blood through the body has this many chambers: ","[""heart""]", ,"[""4"", ""1"", ""2"", ""3"", ""0""]"
+multihop,func-filters-count,"Fact: In humans, the number of organs that filter blood to make urine is ","[""kidney""]", ,"[""2"", ""1"", ""0"", ""3"", ""4""]"
+multihop,birthstone-emerald-month,Fact: Emerald is the birthstone for month number ,"[""May""]", ,"[""5"", ""0"", ""4"", ""1"", ""3""]"
+multihop,violin-strings,Fact: The number of strings on the instrument that fiddlers play is ,"[""violin""]", ,"[""4"", ""3"", ""1"", "" "", ""0""]"
+multihop,nhop-guitar-planet,Count the legs on a spider. The planet at that position from the Sun is Neptune. Count the strings on a standard guitar. The planet at that position from the Sun is ,"[""6"", ""six""]", ,"["" Saturn"", ""1"", ""........................"", "" Uran"", ""7""]"
+multihop,nhop-insect-element,Count the items in a dozen. The element at that position on the periodic table is magnesium. Count the legs on an insect. The element at that position on the periodic table is ,"[""6"", ""six""]", ,"["" carbon"", ""6"", ""1"", ""4"", ""2""]"
+multihop,super-largest-country-capital,Fact: The capital city of the largest country by area is ,"[""Russia""]", ,"["" Moscow"", ""1"", ""6"", ""3"", ""2""]"
+multihop,super-smallest-continent,Fact: The smallest country in the world is located on the continent of ,"[""Vatican""]", ,"["" Europe"", "" __"", "" ______"", ""1"", "" Africa""]"
+multihop,super-populous-capital,Fact: The capital city of the most populous country in the world is ,"[""China""]", ,"["" Beijing"", ""\u5317\u4eac"", ""1"", "" New"", ""2""]"
+multihop,holiday-christmas-monthnum,Fact: Christmas Day is celebrated in month number ,"[""December""]", ,"[""1"", ""2"", "" "", ""3"", ""0""]"
+multihop,holiday-valentines-monthnum,Fact: Valentine's Day is celebrated in month number ,"[""February""]", ,"[""2"", ""1"", ""0"", ""3"", ""4""]"
+multihop,month-1-godof,Fact: The first month of the year is named after the Roman god of ,"[""January""]", ,"["" beginnings"", "" doors"", "" door"", "" gates"", "" new""]"
+multihop,inv-roots-opposite,"Fact: The direction opposite to the one tree roots grow is ""","[""down""]"," ""","[""up"", ""down"", "" up"", ""t"", ""Up""]"
+multihop,rhyme-tree-squared,Fact: The square of the number whose name rhymes with tree is ,"[""three""]", ,"[""9"", ""1"", ""4"", ""3"", ""2""]"
+multihop,tajmahal-continent,Fact: The continent where the country that built the Taj Mahal is located is ,"[""India""]", ,"["" Asia"", ""3"", ""2"", ""1"", ""7""]"
+multihop,louvre-language,Fact: The primary language spoken in the country where the Louvre museum is located is ,"[""France""]", ,"["" French"", "" ______"", ""1"", "" ____"", ""........................""]"
+multihop,firstletter-halloween-month,"Fact: The first letter of the month containing Halloween is ""","[""October""]"," ""","[""O"", ""H"", ""N"", ""o"", ""0""]"
+multihop,firstletter-valentines-month,"Fact: The first letter of the month containing Valentine's Day is ""","[""February""]"," ""","[""F"", ""f"", ""J"", ""V"", ""February""]"
+multihop,succ-halloween-nextmonth,Fact: The month immediately after the one containing Halloween is ,"[""October""]", ,"["" November"", ""1"", ""2"", "" the"", "" December""]"
+multihop,pred-valentines-prevmonth,"Fact: The month immediately before the one containing Valentine's Day is ""","[""February""]"," ""","[""January"", ""December"", ""February"", ""the"", ""November""]"
+multihop,dual-stars-visible-opposite,"Fact: The opposite of the time of day when stars are visible is ""","[""night""]"," ""","[""day"", ""mor"", ""night"", ""noon"", ""the""]"
+multihop,dual-photosynthesis-opposite,"Fact: The opposite of the time of day when plants photosynthesize is ""","[""day""]"," ""","[""night"", ""not"", ""dark"", ""the"", "" night""]"
+multihop,double-dice-faces,Fact: Double the number of faces on a standard die is ,"[""6"", ""six""]", ,"[""1"", ""2"", ""6"", ""8"", ""4""]"
+multihop,dbl-armistice-antonym,"Fact: The antonym of what an armistice ends is ""","[""war""]"," ""","[""peace"", ""ag"", ""war"", ""har"", ""co""]"
+multihop,dbl-obituary-antonym,"Fact: The antonym of what an obituary announces is ""","[""death""]"," ""","[""birth"", ""life"", ""living"", ""alive"", ""live""]"
+multihop,dbl-altitude-antonym,"Fact: The antonym of how you would describe an airplane's cruising altitude is ""","[""high""]"," ""","[""low"", ""short"", ""close"", ""very"", ""ground""]"
+multilingual,french-season-summer,La saison après l'été est l',"[""French"", ""season"", ""summer"", ""autumn""]",',"[""automne"", ""\u00e9t\u00e9"", ""\n"", ""autom"", ""occasion""]"
+multilingual,dutch-opposite-big,Het tegenovergestelde van groot is ,"[""Dutch"", ""opposite"", ""big"", ""small""]", ,"["" klein"", ""........................"", ""1"", "" ..."", "" .""]"
+multilingual,hindi-color-snow,बर्फ का रंग ,"[""Hindi"", ""color"", ""snow"", ""white""]", ,"["" \u0938"", ""1"", "" \u0915"", ""\ufffd"", ""2""]"
+multilingual,turkish-opposite-fast,"""Hızlı"" kelimesinin zıttı ""","[""Turkish"", ""opposite"", ""fast"", ""slow""]"," ""","[""y"", ""Y"", ""a"", ""s"", ""G""]"
+multilingual,swedish-opposite-hard,Motsatsen till hård är ,"[""Swedish"", ""opposite"", ""hard"", ""soft""]", ,"["" mj"", ""1"", ""........................"", ""2"", ""5""]"
+multilingual,vietnamese-opposite-heavy,Trái nghĩa của nặng là ,"[""Vietnamese"", ""opposite"", ""heavy"", ""light""]", ,"["" nh\u1eb9"", ""1"", ""2"", ""\u8f7b"", ""3""]"
+multilingual,romanian-opposite-young,Opusul cuvântului tânăr este ,"[""Romanian"", ""opposite"", ""young"", ""old""]", ,"["" b\u0103"", "" v"", ""........................"", ""1"", "" b""]"
+multilingual,hungarian-color-sea,"A ""tenger"" színe ""","[""Hungarian"", ""color"", ""sea"", ""blue""]"," ""","[""k"", ""t"", ""a"", ""sz"", ""z""]"
+multilingual,spanish-number-three,"Después del ""tres"" viene el ""","[""Spanish"", ""number"", ""three"", ""four""]"," ""","[""cu"", ""dos"", ""cin"", ""4"", ""tres""]"
+multilingual,german-number-five,"Nach ""fünf"" kommt ""","[""German"", ""number"", ""five"", ""six""]"," ""","[""se"", ""f"", ""sie"", ""6"", ""z""]"
+multilingual,french-number-seven,"Après ""sept"" vient ""","[""French"", ""number"", ""seven"", ""eight""]"," ""","[""h"", ""six"", ""ne"", ""sept"", ""d""]"
+multilingual,italian-number-two,"Dopo il ""due"" viene il ""","[""Italian"", ""number"", ""two"", ""three""]"," ""","[""tre"", ""qu"", ""ter"", ""due"", ""3""]"
+multilingual,russian-number-four,"После ""четыре"" идёт ""","[""Russian"", ""number"", ""four"", ""five""]"," ""","[""\u043f"", ""\u0442\u0440\u0438"", ""\u0447\u0435\u0442\u044b"", ""\u0448\u0435"", ""\u0441\u0435\u043c""]"
+multilingual,portuguese-direction-up,"O oposto de ""cima"" é ""","[""Portuguese"", ""opposite"", ""up"", ""down""]"," ""","[""ba"", ""em"", ""aba"", ""f"", ""____""]"
+multilingual,dutch-direction-left,"Het tegenovergestelde van ""links"" is ""","[""Dutch"", ""opposite"", ""left"", ""right""]"," ""","[""rechts"", ""re"", ""recht"", ""links"", ""____""]"
+multilingual,polish-direction-left,"Przeciwieństwo ""lewa"" to ""","[""Polish"", ""opposite"", ""left"", ""right""]"," ""","[""pr"", ""praw"", ""P"", ""p"", "" prawa""]"
+multilingual,spanish-family-uncle,"El hermano de tu padre es tu ""","[""Spanish"", ""family"", ""brother"", ""uncle""]"," ""","[""t"", ""____"", ""ab"", ""tio"", ""pad""]"
+multilingual,german-family-aunt,"Die Schwester deiner Mutter ist deine ""","[""German"", ""family"", ""sister"", ""aunt""]"," ""","[""T"", ""M"", ""A"", ""Gro"", ""O""]"
+multilingual,italian-family-grandmother,"La madre di tua madre è tua ""","[""Italian"", ""family"", ""mother"", ""grandmother""]"," ""","[""non"", ""zia"", ""bis"", ""m"", ""b""]"
+multilingual,spanish-phase-water,"Cuando el agua se congela se convierte en ""","[""Spanish"", ""freeze"", ""water"", ""ice""]"," ""","[""hi"", ""c"", ""H"", ""nie"", ""h""]"
+multilingual,german-phase-water,"Wenn Wasser gefriert, wird es zu ""","[""German"", ""freeze"", ""water"", ""ice""]"," ""","[""E"", ""fest"", ""W"", ""normal"", ""sch""]"
+multilingual,bulgarian-color-grass,"Цветът на ""тревата"" е ""","[""Bulgarian"", ""color"", ""grass"", ""green""]"," ""","[""\u0437\u0435\u043b"", ""\u0447\u0435\u0440"", ""\u0441\u0438\u043d"", ""\u0438\u0437"", ""\u0442\u044a""]"
+multilingual,serbian-opposite-day,"Супротно од ""дан"" је ""","[""Serbian"", ""opposite"", ""day"", ""night""]"," ""","[""\u043d\u043e"", ""\u0434\u0430\u043d"", "" \u043d\u043e"", ""\u041d\u043e"", ""\u041d\u041e""]"
+multilingual,croatian-opposite-big,"Suprotno od ""velik"" je ""","[""Croatian"", ""opposite"", ""big"", ""small""]"," ""","[""m"", ""mal"", ""man"", ""sit"", ""male""]"
+multilingual,slovak-opposite-young,"Opak slova ""mladý"" je ""","[""Slovak"", ""opposite"", ""young"", ""old""]"," ""","[""star"", ""st"", ""z"", ""sta"", ""ml""]"
+multilingual,estonian-opposite-open,"Sõna ""avatud"" vastand on ""","[""opposite"", ""open"", ""closed""]"," ""","[""su"", ""s"", ""k"", ""sul"", ""S""]"
+multilingual,irish-opposite-big,"Is é an focal atá contrártha le ""mór"" ná ""","[""Irish"", ""opposite"", ""big"", ""small""]"," ""","[""be"", ""___"", ""____"", ""b"", ""m""]"
+multilingual,fr-month-after-jan,"Le mois après janvier est ""","[""French"", ""month"", ""January"", ""February""]"," ""","[""f\u00e9"", ""F"", ""f"", ""fe"", ""jan""]"
+multilingual,fr-month-after-may,"Le mois après mai est ""","[""French"", ""month"", ""May"", ""June""]"," ""","[""ju"", ""Ju"", ""mai"", ""\n"", ""____""]"
+multilingual,de-month-after-jan,"Der Monat nach Januar ist ""","[""German"", ""month"", ""January"", ""February""]"," ""","[""Fe"", ""February"", ""fe"", ""Feb"", ""Jan""]"
+multilingual,de-month-after-jul,"Der Monat nach Juli ist ""","[""German"", ""month"", ""July"", ""August""]"," ""","[""August"", ""der"", ""September"", ""Aug"", ""J""]"
+multilingual,de-month-before-dec,"Der Monat vor Dezember ist ""","[""German"", ""month"", ""December"", ""November""]"," ""","[""November"", ""der"", ""Nov"", ""N"", ""die""]"
+multilingual,es-month-after-mar,"El mes después de marzo es ""","[""espa\u00f1ol"", ""month"", ""March"", ""April""]"," ""","[""ab"", ""April"", ""Abr"", ""may"", ""ap""]"
+multilingual,es-month-after-sep,"El mes después de septiembre es ""","[""espa\u00f1ol"", ""month"", ""September"", ""October""]"," ""","[""oct"", ""Oct"", ""October"", ""O"", ""nov""]"
+multilingual,es-month-before-jun,"El mes antes de junio es ""","[""espa\u00f1ol"", ""month"", ""June"", ""May""]"," ""","[""may"", ""May"", ""___"", ""____"", ""ma""]"
+multilingual,pt-month-after-apr,"O mês depois de abril é ""","[""portugu\u00eas"", ""month"", ""April"", ""May""]"," ""","[""ma"", ""May"", ""Ma"", ""mai"", ""may""]"
+multilingual,pt-month-after-oct,"O mês depois de outubro é ""","[""portugu\u00eas"", ""month"", ""October"", ""November""]"," ""","[""nov"", ""Nov"", ""o"", ""Out"", ""out""]"
+multilingual,pt-month-before-aug,"O mês antes de agosto é ""","[""portugu\u00eas"", ""month"", ""August"", ""July""]"," ""","[""j"", ""Jul"", ""July"", ""jul"", ""ag""]"
+multilingual,fr-half-six,"Six divisé par deux donne ""","[""French"", ""half"", ""six"", ""three""]"," ""","[""tro"", ""3"", ""six"", ""three"", ""Tro""]"
+multilingual,fr-double-three,"Le double de trois est ""","[""French"", ""double"", ""three"", ""six""]"," ""","[""six"", ""6"", ""double"", ""3"", ""plus""]"
+multilingual,de-double-two,"Das Doppelte von zwei ist ""","[""German"", ""double"", ""two"", ""four""]"," ""","[""vier"", ""4"", ""V"", ""2"", ""z""]"
+multilingual,es-double-three,"El doble de tres es ""","[""espa\u00f1ol"", ""double"", ""three"", ""six""]"," ""","[""se"", ""6"", ""cin"", ""\n"", ""5""]"
+multilingual,pt-half-six,"Seis dividido por dois é ""","[""portugu\u00eas"", ""half"", ""six"", ""three""]"," ""","[""tr"", ""3"", ""um"", ""se"", ""1""]"
+multilingual,fr-number-after-four,"Le nombre après quatre est ""","[""French"", ""number"", ""four"", ""five""]"," ""","[""c"", ""5"", ""qu"", ""cin"", ""five""]"
+multilingual,de-number-after-three,"Die Zahl nach drei ist ""","[""German"", ""number"", ""three"", ""four""]"," ""","[""vier"", ""4"", ""V"", ""d"", ""vi""]"
+multilingual,es-number-after-two,"El número después de dos es ""","[""espa\u00f1ol"", ""number"", ""two"", ""three""]"," ""","[""tres"", ""3"", ""dos"", ""T"", ""uno""]"
+multilingual,pt-number-after-five,"O número depois de cinco é ""","[""portugu\u00eas"", ""number"", ""five"", ""six""]"," ""","[""se"", ""6"", ""cin"", ""Se"", ""six""]"
+multilingual,es-color-night,"El color de la noche es ""","[""espa\u00f1ol"", ""color"", ""night"", ""black""]"," ""","[""neg"", ""az"", ""un"", ""el"", ""Az""]"
+multilingual,fr-time-after-night,"Après la nuit vient le ""","[""French"", ""time"", ""night"", ""day""]"," ""","[""jour"", ""mat"", ""Jour"", ""\n"", ""d""]"
+multilingual,de-time-after-night,"Nach der Nacht kommt der ""","[""German"", ""time"", ""night"", ""day""]"," ""","[""Tag"", ""M"", ""m"", ""T"", ""K""]"
+multilingual,pt-time-after-night,"Depois da noite vem o ""","[""portugu\u00eas"", ""time"", ""night"", ""day""]"," ""","[""dia"", ""Dia"", ""d"", ""D"", ""day""]"
+multilingual,fr-size-big-small,"Le contraire de ""grand"" est ""","[""French"", ""size"", ""big"", ""small""]"," ""","[""pet"", ""grand"", ""court"", ""long"", ""____""]"
+multilingual,de-size-big-small,"Das Gegenteil von ""groß"" ist ""","[""German"", ""size"", ""big"", ""small""]"," ""","[""kle"", ""____"", ""gro"", ""___"", ""\n""]"
+multilingual,pt-size-big-small,"O contrário de ""grande"" é ""","[""portugu\u00eas"", ""size"", ""big"", ""small""]"," ""","[""pe"", ""grande"", ""men"", ""____"", ""\n""]"
+multilingual,de-place-up-down,"Das Gegenteil von ""oben"" ist ""","[""German"", ""place"", ""up"", ""down""]"," ""","[""un"", ""___"", ""____"", ""oben"", ""unter""]"
+multilingual,es-place-up-down,"Lo contrario de ""arriba"" es ""","[""espa\u00f1ol"", ""place"", ""up"", ""down""]"," ""","[""abajo"", ""deb"", ""ab"", ""ar"", ""____""]"
+multilingual,pt-place-up-down,"O contrário de ""cima"" é ""","[""portugu\u00eas"", ""place"", ""up"", ""down""]"," ""","[""ba"", ""em"", ""aba"", ""____"", ""f""]"
+multilingual,fr-place-near-far,"Le contraire de ""près"" est ""","[""French"", ""place"", ""near"", ""far""]"," ""","[""lo"", ""\u00e9lo"", "" loin"", ""L"", ""____""]"
+multilingual,de-place-near-far,"Das Gegenteil von ""nah"" ist ""","[""German"", ""place"", ""near"", ""far""]"," ""","[""fern"", ""weit"", ""fer"", ""ent"", ""weg""]"
+multilingual,pt-place-near-far,"O contrário de ""perto"" é ""","[""portugu\u00eas"", ""place"", ""near"", ""far""]"," ""","[""long"", ""dist"", ""af"", ""____"", ""LONG""]"
+multilingual,fr-time-old-young,"Le contraire de ""vieux"" est ""","[""French"", ""time"", ""old"", ""young""]"," ""","[""je"", ""nou"", ""ne"", ""\n\n"", ""\n""]"
+multilingual,fr-order-first-last,"Le contraire de ""premier"" est ""","[""French"", ""order"", ""first"", ""last""]"," ""","[""dern"", ""der"", ""second"", ""de"", ""d""]"
+multilingual,de-order-first-last,"Das Gegenteil von ""erste"" ist ""","[""German"", ""order"", ""first"", ""last""]"," ""","[""let"", ""z"", ""letz"", ""Let"", ""erste""]"
+multilingual,pt-order-first-last,"O contrário de ""primeiro"" é ""","[""portugu\u00eas"", ""order"", ""first"", ""last""]"," ""","[""\u00falt"", ""seg"", ""por"", ""ultimo"", ""ter""]"
+multilingual,frn-number-after-one,"Le nombre après un est ""","[""fran\u00e7ais"", ""number"", ""one"", ""two""]"," ""","[""de"", ""un"", ""2"", ""De"", ""1""]"
+typo,typo-language,The course required that every student learn a second langauge,"[""language""]",auge,"[""."", "","", ""\n"", "" in"", "" and""]"
+typo,typo-government,The new policy was announced last week by the federal goverment,"[""government""]",ment,"[""."", "","", "" and"", "" in"", "" to""]"
+typo,typo-address,Please write your full name and your current adress,"[""address""]", adress,"[""\n\n"", ""."", "" in"", "" on"", "",""]"
+typo,typo-because,He said he was going to be late becuase,"[""because""]",ase,"["" he"", "" of"", "" his"", "" the"", "" it""]"
+typo,typo-until,The library will stay open every night untill,"[""until""]",ill,"["" "", "" the"", "" midnight"", "" it"", "" late""]"
+typo,typo-something,He paused at the door as if he had forgotten somthing,"[""something""]",thing,"[""."", "" "", ""\n"", ""\n\n"", "",""]"
+typo,typo-business,After college she moved to the city and started her own buisness,"[""business""]",ness,"[""."", ""\n"", "","", ""\n\n"", "" ""]"
+typo,typo-different,The second draft of the essay took a completely diferent,"[""different""]",ent,"["" direction"", "" approach"", "" route"", "" tack"", "" form""]"
+typo,typo-field,The players jogged out onto the freshly mowed feild,"[""field""]",ild,"[""."", "","", "" and"", "" for"", ""s""]"
+typo,typo-height,He was surprised by the building's enormous hieght,"[""height""]",ght,"[""."", "","", ""\n"", "" "", ""\n\n""]"
+typo,typo-science,Her favorite subject in school was always sceince,"[""science""]",ince,"[""."", "","", ""\n\n"", "" and"", ""\n""]"
+typo,typo-library,She returned the overdue books to the local libary,"[""library""]",ary,"[""."", "","", ""\n"", "" last"", "" and""]"
+typo,typo-together,The family finally sat down to eat togther,"[""together""]",ther,"[""."", "","", "" after"", "" for"", ""\n""]"
+typo,typo-account,She could not remember the password for her bank acount,"[""account""]",ount,"[""."", "","", ""\n"", "" and"", ""\n\n""]"
+typo,typo-function,The programmer wrote a small helper funtion,"[""function""]",tion,"["" to"", "" that"", "" for"", "" which"", "",""]"
+typo,typo-against,The final vote was nine to two aganst,"[""against""]",anst,"["" the"", ""."", "","", "" it"", "" a""]"
+typo,typo-important,The first page contained the most importnt,"[""important""]",nt,"["" information"", "" data"", "" part"", "" info"", "" things""]"
+typo,typo-building,The fire alarm rang throughout the entire bulding,"[""building""]",ding,"[""."", "","", ""\n"", "" and"", "" ""]"
+typo,typo-without,He left the house in a hurry and withot,"[""without""]",ot,"["" a"", ""ut"", "" any"", "" thinking"", "" checking""]"
+typo,typo-several,The delay lasted for sevral,"[""several""]",ral,"["" days"", "" hours"", "" months"", "" years"", "" minutes""]"
+typo,typo-special,The chef prepared a dish for the specal,"[""special""]",al,"["" guest"", "" occasion"", "" customer"", "" day"", "" dinner""]"
+typo,typo-country,She had never traveled outside of her own contry,"[""country""]",try,"[""."", "","", "" before"", ""\n"", "" ""]"
+typo,typo-company,He worked at the same software compny,"[""company""]",ny,"["" as"", "" for"", "" that"", "" with"", "" where""]"
+typo,typo-already,By noon the tickets were alredy,"[""already""]",y,"["" sold"", "" gone"", "" on"", "" all"", "" ___""]"
+typo,typo-which,She could not decide whhich,"[""which""]",ich,"["" of"", "" one"", "" was"", "" dress"", "" to""]"
+typo,typo-running,The water in the sink was still runing,"[""running""]",ing,"[""."", "","", "" when"", ""\n"", "" and""]"
+typo,typo-college,After high school she applied to colege,"[""college""]",lege,"[""."", "" and"", "","", ""\n"", "" but""]"
+typo,typo-million,The painting sold for over ten milion,"[""million""]", milion,"["" dollars"", "" pounds"", "" yuan"", "" euros"", "" at""]"
+typo,typo-village,They stayed in a small fishing vilage,"[""village""]",age,"[""."", "" in"", "","", "" on"", "" near""]"
+typo,typo-message,He checked his phone and saw a new mesage,"[""message""]",age,"["" from"", ""."", "","", "" on"", ""\n""]"
+typo,typo-success,The party was considered a great succes,"[""success""]", succes,"[""."", "","", "" and"", "" by"", ""\n""]"
+typo,typo-length,She measured the table's exact lentgh,"[""length""]",gh,"[""."", "" and"", "","", "" with"", ""\n""]"
+typo,typo-always,She said she would alwyas,"[""always""]",as,"["" be"", "" come"", "" help"", "" remember"", "" keep""]"
+typo,typo-island,The ferry took them out to the small isalnd,"[""island""]",nd,"[""."", "" of"", "","", "" where"", "" and""]"
+typo,typo-single,She did not want to waste a sinlge,"[""single""]",ge,"["" second"", "" moment"", "" minute"", "" penny"", "" drop""]"
+typo,typo-already2,By the time she arrived the food was allready,"[""already""]",ready,"["" gone"", "" eaten"", "" cold"", "" served"", "" on""]"
+typo,typo-although,She agreed to help even allthough,"[""although""]",though,"["" she"", "" it"", "" her"", "" he"", "" I""]"
+typo,typo-again,He promised he would never do it agian,"[""again""]",ian,"[""."", "","", ""\n"", ""\n\n"", "" ""]"
+typo,typo-model,The engineer built a scale moddel,"[""model""]",del,"["" of"", "" that"", "" with"", ""."", "" to""]"
+typo,typo-family,He spent the holidays with his entire familly,"[""family""]",illy,"[""."", "","", "" in"", ""\n"", "" and""]"
+typo,typo-future,Nobody could predict what lay in the futture,"[""future""]",ture,"[""."", "","", "" for"", "" of"", ""\n""]"
+typo,typo-level,The water rose to a dangerous levell,"[""level""]",ell,"[""."", "","", ""\n"", "" in"", "" and""]"
+typo,typo-local,She bought vegetables at the locall,"[""local""]",all,"["" market"", "" store"", ""____"", "" __"", ""and""]"
+typo,typo-order,He placed the same lunch ordder,"[""order""]",er,"["" as"", "" every"", "" for"", "" with"", "" on""]"
+typo,typo-power,The storm knocked out the powwer,"[""power""]",wer,"["" supply"", "" lines"", ""."", "","", "" line""]"
+typo,typo-study,She stayed up all night to studdy,"[""study""]",uddy,"["" for"", ""."", ""\n"", "" the"", "",""]"
+typo,typo-write,The teacher asked them to writte,"[""write""]",te,"["" a"", "" an"", "" the"", "" down"", "" their""]"
+typo,typo-young,She started playing piano when she was very younng,"[""young""]",ng,"[""."", "","", ""\n"", "" and"", "" ""]"
+typo,typo-human,The discovery changed the course of humman,"[""human""]",man,"["" history"", ""ity"", "" civilization"", "" evolution"", "" life""]"
+typo,typo-often,She said she did not visit very offten,"[""often""]",ften,"[""."", "","", "" because"", ""\n"", "" but""]"
+typo,typo-present,He unwrapped the birthday pressent,"[""present""]",ent,"[""."", "" and"", "" with"", "" from"", "",""]"
+typo,typo-product,The company released its newest prodduct,"[""product""]",uct,"[""s"", "","", "" on"", ""."", "" in""]"
+typo,typo-project,She spent three months on the projject,"[""project""]",ject,"[""."", "","", "" and"", "" "", ""\n""]"
+typo,typo-support,He called the help line for technical suport,"[""support""]", suport,"[""."", "" and"", "","", ""\n"", "" for""]"
+typo,typo-division,The company announced a new sales divission,"[""division""]",ission,"[""."", "","", "" in"", "" that"", "" to""]"
+typo,typo-position,She accepted the new possition,"[""position""]",ition,"[""."", "" with"", "","", "" without"", "" in""]"
+typo,typo-material,The dress was made of a soft matterial,"[""material""]",ial,"[""."", "" that"", "","", "" and"", "" which""]"
+typo,typo-security,The building hired extra securrity,"[""security""]",ity,"["" guards"", "" to"", "" for"", "" staff"", "".""]"
+typo,typo-training,The new employees completed their trainning,"[""training""]",ning,"["" and"", "" in"", ""."", "" program"", "" on""]"
+typo,typo-football,Every Sunday he watched footbal,"[""football""]",bal,"["" on"", ""lo"", ""\n"", "" matches"", "".""]"
+typo,typo-course,She signed up for the evening coruse,"[""course""]",use,"[""."", "","", "" of"", "" and"", ""\n\n""]"
+typo,typo-house,They moved into the new hosue,"[""house""]",ue,"[""."", "" last"", "","", "" yesterday"", "" and""]"
+typo,typo-great,The view from the top was graet,"[""great""]",et,"[""."", "","", "" and"", ""\n"", ""!""]"
+typo,typo-night,He worked late into the nigth,"[""night""]",th,"["","", ""."", "" ,"", ""\uff0c"", "" and""]"
+typo,typo-control,The pilot fought hard to regain contorl,"[""control""]",l,"["" of"", ""."", "","", "" but"", "" and""]"
+typo,typo-would,He asked whether she still woudl,"[""would""]",l,"["" like"", "" be"", "" have"", "" love"", "" come""]"
+typo,typo-world,He wanted to travel all over the wolrd,"[""world""]",rd,"["","", ""."", "" but"", ""\n"", ""\n\n""]"
+typo,typo-water,She poured a glass of cold watre,"[""water""]",atre,"[""."", "" and"", "" for"", "","", ""\n\n""]"
+typo,typo-market,Every Saturday they visited the farmers makret,"[""market""]",ret,"[""."", "" and"", "" to"", "","", "" ""]"
+typo,typo-person,She was the last perosn,"[""person""]",n,"["" to"", "" who"", "" I"", "" in"", "" on""]"
+typo,typo-number,He wrote down her phone numbr,"[""number""]",br,"[""."", "" and"", ""\n\n"", ""\n"", "",""]"
+typo,typo-within,The package should arrive wihtin,"[""within""]",in,"["" "", "" the"", "" a"", "" two"", "" one""]"
+typo,typo-second,He finished the race in secnod,"[""second""]",nod,"["" place"", "" position"", ""."", "" "", "",""]"
+typo,typo-source,The reporter refused to name her soruce,"[""source""]",uce,"[""."", "","", "" of"", "" because"", ""\n""]"
+typo,typo-first,She was the one who arrived frist,"[""first""]",ist,"[""."", "","", ""\n"", ""\n\n"", "" and""]"
+typo,typo-those,He pointed across the room and said he wanted thsoe,"[""those""]",e,"["" two"", ""."", "" books"", "" chairs"", "" things""]"
+typo,typo-short,The meeting was kept shrot,"[""short""]",rot,"[""."", "" and"", "","", "" due"", ""\n""]"
+association,grief,"She kept his coffee mug on the counter, washed it every morning and put it back, though no one had used it in eleven months.","[""grief""]",.,"[""\n"", ""\n\n"", "" The"", "" \n"", "" ""]"
+association,pregnant,"She turned down the wine with a small smile and kept one hand on the table edge, not quite touching her stomach.","[""pregnant""]",.,"[""\n"", ""\n\n"", "" "", "" \"""", "" The""]"
+association,lie,"He couldn't meet her eyes when she asked, and the answer came out a half-second too fast.","[""lie""]",.,"[""\n"", ""\n\n"", ""<|im_end|>"", "" "", "" \""""]"
+association,poverty,"She did the math twice before the cashier scanned the last item, and put the cereal back without explaining.","[""poverty""]",.,"[""\n"", ""\n\n"", "" The"", "" "", "" \n""]"
+association,proposal,"He touched his jacket pocket for the fourth time that evening, rehearsing the words again while the waiter cleared the plates.","[""proposal""]",.,"["" \u201c"", ""\n"", "" He"", "" The"", ""\n\n""]"
+association,divorce,"She signed on the line her lawyer pointed to, slid the pen across the table, and didn't wait for him to pick it up.","[""divorce""]",.,"[""\n"", ""\n\n"", "" She"", "" \"""", "" ""]"
+association,relief,"She read the line twice before she let herself breathe, and the paper shook a little as she set it down.","[""relief""]",.,"[""\n"", ""\n\n"", "" The"", "" \u201c"", "" \n\n""]"
+association,darwin,"He reread the letter and felt twenty years of notes collapse — someone else had seen it too, and written it down first.","[""Darwin""]",.,"[""\n"", ""\n\n"", "" "", "" \n\n"", "" The""]"
+association,lincoln,"He folded the two pages back into his coat — the other man had spoken for two hours, and he would need about two minutes.","[""Lincoln""]",.,"[""\n"", ""\n\n"", "" He"", "" \n\n"", "" The""]"
+association,obama,"The portraits on the wall had all been one color, and the desk was smaller than he'd expected when he sat down that first January morning.","[""Obama""]",.,"[""\n"", "" The"", ""\n\n"", "" He"", "" But""]"
+association,churchill,"He lit another cigar in the war room and leaned into the microphone, knowing the sirens above ground were doing half his work for him.","[""Churchill""]",.,"[""\n\n"", ""\n"", "" The"", "" \"""", "" \u201c""]"
+association,newton,He watched the white light split into seven on the far wall and reached for a fresh page before the sun moved.,"[""Newton""]",.,"[""\n\n"", ""\n"", "" The"", "" He"", "" ""]"
+association,mozart,"The boy's feet didn't reach the pedals, but the emperor stopped talking when the first chord landed.","[""Mozart""]",.,"[""\n"", ""\n\n"", "" The"", "" It"", "" He""]"
+association,armstrong,His boot sank an inch into the gray dust and the flag behind him wouldn't hang right with nothing there to move it.,"[""Armstrong""]",.,"[""\n"", "" He"", ""\n\n"", "" The"", "" It""]"
+association,wright,"Twelve seconds, his brother shouted from the dune, and the machine was already back on the sand — but for twelve seconds it hadn't been.","[""Wright""]",.,"[""\n"", ""\n\n"", "" It"", "" The"", "" \n\n""]"
+association,gandhi,He reached the sea after three weeks on foot and bent to lift a handful of what the law said he could not make.,"[""Gandhi""]",.,"[""\n"", ""\n\n"", "" He"", "" The"", "" \n""]"
+association,edison,Filament nine hundred and something — he'd stopped counting the exact number — and this one held its glow past the first minute.,"[""Edison""]",.,"[""\n"", ""\n\n"", "" Past"", "" The"", "" A""]"
+association,cia,"He'd used three names in as many cities and the folder on the table had more black bars than words, and none of them were his either.","[""CIA""]",.,"[""\n"", ""\n\n"", "" \n"", "" He"", "" \n\n""]"
+association,vatican,"The doors had been sealed for two days when the smoke finally changed color, and the crowd in the square knew before the bells did.","[""Vatican""]",.,"[""\n"", ""\n\n"", "" The"", ""<|im_end|>"", "" They""]"
+association,pentagon,"The building had five sides and she'd walked the inside of all of them that morning, and the badge at her neck still didn't open the door she needed.","[""Pentagon""]",.,"[""\n"", ""\n\n"", "" She"", "" The"", "" \n\n""]"
+association,unesco,"The emblem had been Julian Huxley's idea, or near enough, and now it hung beside a thousand temple gates and a thousand ruins the world had agreed to keep.","[""UNESCO""]",.,"[""\n"", "" The"", "" It"", ""\n\n"", "" \n""]"
+association,anger,"""It's fine,"" she said, and set the cup down so carefully it didn't make a sound.","[""anger""]",.,"["" \"""", ""\n\n"", ""\n"", "" She"", "" The""]"
+association,frustrated,"He explained it a third time, slower, and watched her eyes go to the clock again.","[""frustrated""]",.,"[""\n"", ""\n\n"", "" \"""", "" \n\n"", "" \u201c""]"
+association,lonely,He cooked for two out of habit and scraped the second plate into the bin before sitting down.,"[""lonely""]",.,"[""\n"", ""\n\n"", "" The"", ""\u8fd9\u53e5\u8bdd"", "" He""]"
+association,shame,"She paid in cash and didn't meet the clerk's eyes, the small bag tucked inside her coat before she reached the door.","[""shame""]",.,"[""\n"", ""\n\n"", "" \n"", "" The"", "" \n\n""]"
+association,noir,"The neon bled through the blinds in stripes across the desk, and the dame in the doorway had a problem and a cigarette and no intention of telling him which was which.","[""noir""]",.,"[""\n"", ""\n\n"", "" She"", "" He"", "" \""""]"
+association,horror,"The phone line had been cut sometime after midnight, and now the scratching in the walls had moved from the attic to just behind the bedroom door.","[""horror""]",.,"[""\n"", ""\n\n"", "" I"", "" \n\n"", "" It""]"
+association,rivals,"They shook hands for the cameras and held it a beat too long, each waiting for the other to let go first.","[""rivals""]",.,"[""\n"", ""\n\n"", "" "", "" The"", ""\u8fd9\u53e5\u8bdd""]"
+association,boss,"She kept typing while he stood in her doorway, and he waited, because the meeting didn't start until she closed the laptop.","[""boss""]",.,"[""\n"", ""\n\n"", "" \n\n"", "" He"", "" \n""]"
+association,neighbors,"She knew what time his car left and what night the bins went out, and had waved at him for six years without learning either of his names.","[""neighbors""]",.,"[""\n"", ""\n\n"", "" "", "" \n\n"", "" \n""]"
+association,teacher,"She circled the same mistake in the same red ink she'd used on the last thirty, and reached for the next one on the pile.","[""teacher""]",.,"[""\n"", ""\n\n"", "" The"", "" She"", "" \n\n""]"
+association,underwater,"Every sound reached her a half-second late and muffled, and the pressure behind her eyes grew with each meter down.","[""underwater""]",.,"[""\n"", ""\n\n"", "" She"", "" The"", "" \n""]"
+association,desert,"The horizon shook in the heat and his shadow had shrunk to a puddle at his feet; the last of the water was three swallows, maybe four.","[""desert""]",.,"["" He"", ""\n"", "" The"", ""\n\n"", "" His""]"
+association,chess,"Neither of them had spoken in forty minutes when she finally moved the knight, and he tapped the clock without looking up.","[""chess""]",.,"[""\n"", ""\n\n"", "" The"", ""<|im_end|>"", "" \n\n""]"
+association,poker,He pushed the last of his chips to the center and kept his face the way it had been for the last three hands — which was the problem.,"[""poker""]",.,"[""\n"", "" He"", ""\n\n"", "" The"", "" It""]"
+association,interview,"The question hung there and he realized the pause had already gone on too long; across the table, a pen hovered over a page he couldn't read.","[""interview""]",.,"[""\n"", ""\n\n"", "" He"", "" The"", "" \""""]"
+association,dawn,"The first bird started before the sky did, and the cold had that thin quality that wouldn't last another hour.","[""dawn""]",.,"[""\n"", "" The"", ""\n\n"", "" "", "" I""]"
+association,winter,The light was already failing by four and the radiators clanked awake one by one through the building.,"[""winter""]",.,"[""\n"", "" The"", "" I"", ""\n\n"", "" It""]"
+association,death-h,"The flowers on the table had been changed twice already, and the black dress still hung on the closet door where she'd put it out the night before the service.","[""death""]",.,"[""\n"", "" The"", ""\n\n"", "" \n"", "" She""]"
+association,war-h,"The letters stopped coming after the telegram, and she kept the ration book in the drawer where his photograph used to be.","[""war""]",.,"[""\n"", ""\n\n"", "" The"", "" She"", "" ""]"
+association,love-h,"They'd reached the point where silences didn't need filling, and her hand found his across the table without either of them looking.","[""love""]",.,"[""\n\n"", ""\n"", "" \n\n"", "" It"", "" The""]"
+association,home-h,"The smell hit him before the door was fully open — something his mother had made a thousand times, and he was seven years old again for exactly as long as it lasted.","[""home""]",.,"[""\n"", ""\n\n"", "" The"", "" He"", "" \n""]"
+association,school-h,"The bell rang and thirty chairs scraped at once, but she stayed at her desk, still staring at the red marks on page three.","[""school""]",.,"[""\n\n"", "" Her"", ""\n"", "" The"", "" \u201c""]"
+association,office-h,"The coffee in the break room had been sitting since nine, and the clock above the copier ticked louder than anyone's typing.","[""office""]",.,"["" I"", "" Maya"", ""\n"", ""\n\n"", "" You""]"
+association,court-h,"The gavel came down twice and she felt her lawyer's hand on her arm, but she couldn't read the verdict in his face.","[""court""]",.,"[""\n"", ""\n\n"", "" She"", "" The"", "" \n""]"
+association,park-h,"The bench had been there longer than she had, and the brass plaque said it had been someone's favorite spot before it was hers.","[""park""]",.,"[""\n"", ""\n\n"", "" She"", "" The"", "" It""]"
+association,city-h,"The noise never stopped, just changed shape — sirens into traffic into construction into the 3 a.m. garbage truck she'd learned to sleep through.","[""city""]",.,"[""\n"", "" She"", "" But"", ""\n\n"", "" The""]"
+association,town-h,"Everyone knew which house had the dog that barked and which porch light meant someone was still up, and the new family hadn't figured out yet that the curtains were optional.","[""town""]",.,"[""\n"", ""\n\n"", "" "", "" The"", "" They""]"
+association,field-h,"The stalks went past her shoulders and the path behind her had already closed, but the farmhouse roof was still visible if she stood on her toes.","[""field""]",.,"[""\n"", ""\n\n"", "" She"", "" The"", "" \n""]"
+association,store-h,"The cart had a wheel that pulled left, and by aisle six she'd given up fighting it and just let it lead.","[""store""]",.,"[""\n"", ""\n\n"", "" She"", "" It"", "" The""]"
+association,art-h,"She stepped back three paces, tilted her head, then stepped forward and scraped the whole left corner back to canvas.","[""art""]",.,"[""\n"", ""\n\n"", "" She"", "" The"", "" \u201c""]"
+association,music-h,"The conductor's hand hung in the air one extra beat, and in the silence before it fell, two thousand people held their breath.","[""music""]",.,"[""\n\n"", ""\n"", "" The"", "" Then"", "" That""]"
+association,math-h,"He filled the third board, capped the marker, and stood back — somewhere in those six hundred symbols was either the proof or the mistake.","[""math""]",.,"[""\n\n"", ""\n"", "" If"", "" He"", "" The""]"
+association,science-h,"The result came back the same the fourth time, and she stared at the readout until it stopped meaning anything, because if it was right, the textbook was wrong.","[""science""]",.,"[""\n"", ""\n\n"", "" The"", "" \n\n"", "" She""]"
+association,law-h,"She read the clause a third time, initialed where the tab pointed, and tried not to think about what 4(b) would mean if anyone ever invoked it.","[""law""]",.,"[""\n"", ""\n\n"", "" \n\n"", "" "", "" The""]"
+association,film-h,"The lights went down and the logo came up, and for two hours the whole room forgot it had bodies.","[""film""]",.,"[""\n"", ""\n\n"", "" The"", "" \n"", "" ""]"
+association,code-h,"The test went green on the forty-third run, and she immediately distrusted it — green after forty-two reds meant she'd fixed the wrong thing.","[""code""]",.,"[""\n\n"", "" She"", ""\n"", "" The"", "" But""]"
+association,news-h,"The anchor's voice cracked on the second sentence, and by the third you could hear papers shuffling off-camera as someone handed her an update.","[""news""]",.,"[""\n"", "" The"", ""\n\n"", "" \"""", "" She""]"
+association,night-h,"The last porch light on the street clicked off, and the dark filled in so completely that the fence three feet away might as well have been a mile.","[""night""]",.,"[""\n"", "" The"", "" I"", ""\n\n"", "" \n\n""]"
+association,past-h,"The photograph was from before color, and she had to squint to see her own face under all those years.","[""past""]",.,"[""\n"", ""\n\n"", "" She"", "" The"", "" It""]"
+association,future-h,"The child asked what she wanted to be, and she answered with the certainty of someone who had never yet been told no.","[""future""]",.,"[""\n"", ""\n\n"", "" She"", "" "", "" \n""]"
+association,race-h,"The tape was fifty meters away and his lungs were already done, but the footsteps behind him were getting louder and that was all that mattered.","[""race""]",.,"[""\n"", ""\n\n"", "" He"", "" The"", "" \n""]"
+association,game-h,"She moved the piece, looked up, and waited — and in his face she saw exactly the three moves he hadn't seen coming.","[""game""]",.,"[""\n"", ""\n\n"", "" \n"", "" "", "" \n\n""]"
+association,test-h,"She filled in the last bubble, checked the clock, and decided that whatever she didn't know by now, thirty more seconds wasn't going to fix.","[""test""]",.,"[""\n"", "" She"", ""\n\n"", "" The"", "" So""]"
+association,search-h,"They'd walked the same grid four times since sunrise, and the dog kept pulling toward the creek that wasn't on anyone's map.","[""search""]",.,"[""\n"", ""\n\n"", "" The"", "" \n\n"", "" ""]"
+association,free-h,The gate buzzed and the first thing he noticed was how big the sky looked without a fence cutting it in half.,"[""free""]",.,"[""\n"", ""\n\n"", "" The"", "" He"", "" Then""]"
+association,found-h,"The dog came back muddy with something in its mouth, and she knew before she'd unwrapped it that this was what three weeks of posters had been for.","[""found""]",.,"[""\n"", ""\n\n"", "" \n\n"", ""\u5206\u6790"", "" ""]"
+association,king-h,"He sat where his father had sat, and his grandfather before that, and felt the weight of every eye in the hall waiting for the word that would become command.","[""king""]",.,"["" The"", ""\n"", ""\n\n"", "" He"", "" ""]"
+association,child-h,The crayon drawings on the fridge had started with houses and suns and now included something that was either a dragon or a truck — she'd learned not to ask which.,"[""child""]",.,"[""\n"", ""\n\n"", "" The"", "" She"", "" \n\n""]"
+association,air-h,"The tank gauge dropped past the red line and every breath became a calculation — how many more before the surface, and whether that math worked out.","[""air""]",.,"[""\n"", "" The"", ""\n\n"", ""<|im_end|>"", "" \n\n""]"
+association,france-h,"The waiter corrected her pronunciation without looking up from the pad, and she felt every flat American syllable she'd ever spoken stack up behind her.","[""France""]",.,"[""\n"", ""\n\n"", "" She"", "" The"", "" ""]"
+association,china-h,"The characters on every sign meant nothing to him, and the crowd moved with a rhythm he kept half a beat behind, a billion people who all knew something he didn't.","[""China""]",.,"[""\n"", ""\n\n"", "" He"", "" "", "" The""]"
+association,london-h,"She'd learned to carry the umbrella even when the forecast said clear, and to call the elevator something else entirely.","[""London""]",.,"[""\n"", ""\n\n"", "" She"", "" \n\n"", "" \n""]"
+association,book-h,"She dog-eared the page, set it facedown on the arm of the chair, and told herself just one more chapter three chapters ago.","[""book""]",.,"[""\n"", ""\n\n"", "" She"", "" The"", "" Then""]"
+association,time-h,"She caught her reflection in the shop window and for a second didn't recognize the face — not older exactly, just further along than she'd noticed getting.","[""time""]",.,"[""\n"", "" The"", ""\n\n"", "" "", "" \n\n""]"
+association,fr-ecole,"La sonnerie retentit et trente chaises raclèrent en même temps, mais elle resta à son pupitre, les yeux fixés sur les corrections rouges de la page trois.","[""\u00e9cole""]",.,"[""\n"", ""\n\n"", "" Elle"", "" Le"", "" La""]"
+association,fr-eglise,"L'orgue tint la dernière note plus longtemps que prévu, et elle garda la tête baissée jusqu'à ce que l'écho se soit complètement éteint.","[""\u00e9glise""]",.,"["" Elle"", ""\n"", "" Puis"", ""\n\n"", "" Le""]"
+association,fr-pere,"Il lui montra comment tenir la clé comme son vieux le lui avait montré, sans dire que c'était la troisième fois ce mois-ci qu'elle demandait.","[""p\u00e8re""]",.,"[""\n"", ""\n\n"", "" \n\n"", "" \n"", "" ""]"
+association,de-konig,"Er saß, wo sein Vater gesessen hatte, und spürte das Gewicht jedes Blickes im Saal, der auf das Wort wartete, das zum Befehl würde.","[""K\u00f6nig""]",.,"[""\n"", ""\n\n"", "" Er"", "" Der"", "" Die""]"
+association,es-dia,"El primer pájaro empezó antes que el cielo, y el frío tenía esa cualidad fina que no duraría otra hora.","[""d\u00eda""]",.,"[""\n"", ""\n\n"", "" La"", "" El"", "" Los""]"
+association,pt-agua,"Ela prendeu a respiração sem querer e contou as bolhas subindo pela máscara, cada uma um segundo que não voltava.","[""\u00e1gua""]",.,"[""\n"", ""\n\n"", ""<|im_end|>"", "" Ela"", "" O""]"
+association,es-musica,"La mano del director quedó suspendida un instante de más, y en el silencio antes de caer, dos mil personas contuvieron el aliento.","[""m\u00fasica""]",.,"[""\n"", ""\n\n"", "" Luego"", "" La"", "" El""]"
+poetry,couplet-stone-bone,"A rhyming couplet:
+The ancient tomb was sealed with heavy stone,
+Inside was nothing left but dust and ","[""bone""]","
+","[""Its"", ""The"", ""A"", ""No"", ""Where""]"
+poetry,couplet-divine-wine,"A rhyming couplet:
+The chapel glowed with light almost divine,
+The priest raised up the consecrated ","[""wine""]","
+","[""The"", ""And"", ""As"", ""A"", ""Where""]"
+poetry,couplet-sleep-deep,"A rhyming couplet:
+She drifted off into a dreamless sleep,
+Her breathing slow, her slumber long and ","[""deep""]","
+","[""And"", ""The"", ""Her"", ""With"", ""A""]"
+poetry,couplet-flight-night,"A rhyming couplet:
+The owl spread wide its wings and took to flight,
+A silent hunter, swallowed by the ","[""night""]","
+","[""The"", ""A"", ""It"", ""And"", ""Its""]"
+poetry,couplet-true-through,"A rhyming couplet:
+The arrow flew so straight, its aim was true,
+It struck the target, passing cleanly ","[""through""]","
+","[""It"", ""And"", ""The"", ""But"", ""A""]"
+poetry,couplet-divine-wine-to-sign,"A rhyming couplet:
+The chapel glowed with light almost divine,
+The priest raised up the consecrated ","[""wine""]","
+","[""The"", ""And"", ""As"", ""A"", ""Where""]"
+poetry,couplet-dust-trust,"A rhyming couplet:
+The vow he made had long since turned to dust,
+And she would never give him back her ","[""trust""]","
+","[""His"", ""He"", ""Yet"", ""And"", ""The""]"
+poetry,couplet-ground-sound,"A rhyming couplet:
+The tree fell hard and shook the frozen ground,
+But no one near had heard a single ","[""sound""]","
+","[""The"", ""A"", ""And"", ""Its"", ""It""]"
+poetry,couplet-bed-dead,"A rhyming couplet:
+She found him cold and still upon the bed,
+And knew before she touched him he was ","[""dead""]","
+","[""His"", ""Her"", ""The"", ""A"", ""And""]"
+poetry,couplet-sea-free,"A rhyming couplet:
+The dolphin leapt and shimmered in the sea,
+A creature never meant but to be ","[""free""]","
+","[""A"", ""Its"", ""With"", ""The"", ""B""]"
+poetry,couplet-moon-soon,"A rhyming couplet:
+The clouds drew back and gave us up the moon,
+But dawn would come and take her all too ","[""soon""]","
+","[""Which"", ""The"", ""And"", ""That"", ""A""]"
+poetry,couplet-art-heart,"A rhyming couplet:
+She poured her every sorrow into art,
+And let the canvas hold her broken ","[""heart""]","
+","[""A"", ""Her"", ""And"", ""With"", ""The""]"
+poetry,couplet-rain-pain,"A rhyming couplet:
+She pressed her palm against the window's rain,
+As if the glass could wash away her ","[""pain""]","
+","[""And"", ""A"", ""The"", ""Her"", ""To""]"
+poetry,couplet-shore-more,"A rhyming couplet:
+She gathered shells along the empty shore,
+And wished the tide would bring her something ","[""more""]","
+","[""And"", ""The"", ""She"", ""Her"", ""Then""]"
+poetry,couplet-heart-apart,"A rhyming couplet:
+She held the photo tight against her heart,
+And felt the years that kept them both ","[""apart""]","
+","[""A"", ""The"", ""And"", ""Her"", ""As""]"
+poetry,couplet-fall-wall,"A rhyming couplet:
+He lost his grip and started down the fall,
+His fingers scraping bloody down the ","[""wall""]","
+","[""He"", ""His"", ""The"", ""And"", ""A""]"
+poetry,couplet-chase-face,"A rhyming couplet:
+Through alleys dark she led him on the chase,
+But turned at last and let him see her ","[""face""]","
+","[""Her"", ""And"", ""With"", ""A"", ""The""]"
+poetry,couplet-trap-map,"A rhyming couplet:
+He should have known the treasure was a trap,
+The moment that he'd trusted that old ","[""map""]","
+","[""But"", ""He"", ""The"", ""His"", ""And""]"
+poetry,couplet-told-gold,"A rhyming couplet:
+Of all the stories ever to be told,
+The oldest ones were never writ in ","[""gold""]","
+","[""The"", ""This"", ""I"", ""None"", ""Of""]"
+poetry,couplet-mind-find,"A rhyming couplet:
+She searched the corridors of her own mind,
+For something she was never meant to ","[""find""]","
+","[""To"", ""And"", ""Where"", ""For"", ""In""]"
+poetry,couplet-time-climb,"A rhyming couplet:
+He watched the shadows mark the crawl of time,
+And knew the hill was still too steep to ","[""climb""]","
+","[""And"", ""As"", ""The"", ""A"", ""He""]"
+poetry,couplet-war-door,"A rhyming couplet:
+He'd given both his sons now to the war,
+And couldn't bear a third knock at his ","[""door""]","
+","[""And"", ""He"", ""But"", ""The"", ""His""]"
+poetry,couplet-head-bed,"A rhyming couplet:
+The fever burned and pounded in his head,
+He hadn't strength to rise up from the ","[""bed""]","
+","[""He"", ""His"", ""The"", ""And"", ""A""]"
+poetry,couplet-deep-keep,"A rhyming couplet:
+The miners dug three hundred meters deep,
+For something that the earth had meant to ","[""keep""]","
+","[""They"", ""And"", ""The"", ""To"", ""But""]"
+poetry,couplet-cat-mat,"A rhyming couplet:
+She tripped across the sleeping family cat,
+And swore revenge upon the doorway ","[""mat""]","
+","[""And"", ""The"", ""and"", ""A"", ""She""]"
+poetry,couplet-cake-mistake,"A rhyming couplet:
+She eyed the last surviving slice of cake,
+And knew that eating it would be a ","[""mistake""]","
+","[""And"", ""Her"", ""The"", ""A"", ""She""]"
+poetry,couplet-shoe-blue,"A rhyming couplet:
+She searched the closet for the missing shoe,
+And found it hiding, painted oddly ","[""blue""]","
+","[""But"", ""And"", ""She"", ""Her"", ""The""]"
+poetry,couplet-foam-home,"A rhyming couplet:
+She watched the tide reclaim the crumbling foam,
+And knew the sea would never be her ","[""home""]","
+","[""And"", ""A"", ""The"", ""As"", ""Her""]"
+poetry,couplet-clear-year,"A rhyming couplet:
+The lake at dawn was glassy, still, and clear,
+And she would come to find it every ","[""year""]","
+","[""The"", ""A"", ""Its"", ""With"", ""As""]"
+poetry,couplet-star-far,"A rhyming couplet:
+He traced the tail of one collapsing star,
+And wondered if she watched it from as ","[""far""]","
+","[""And"", ""To"", ""A"", ""The"", ""Then""]"
+poetry,couplet-bend-end,"A rhyming couplet:
+The river curved and vanished round the bend,
+Where all roads meet the same and certain ","[""end""]","
+","[""The"", ""A"", ""And"", ""Where"", ""Its""]"
+poetry,couplet-bright-sight,"A rhyming couplet:
+The flare went up, a burst of phosphor bright,
+And burned itself forever in her ","[""sight""]","
+","[""A"", ""And"", ""The"", ""It"", ""Its""]"
+poetry,couplet-white-write,"A rhyming couplet:
+The page before her lay unmarked and white,
+And all she had were words she could not ","[""write""]","
+","[""She"", ""The"", ""Her"", ""And"", ""But""]"
+poetry,couplet-away-way,"A rhyming couplet:
+The traveler had wandered far away,
+But always knew the forest showed the ","[""way""]","
+","[""He"", ""And"", ""His"", ""But"", ""The""]"
+poetry,couplet-chase-place,"A rhyming couplet:
+The hounds set out upon the morning chase,
+But found the fox had vanished from its ","[""place""]","
+","[""And"", ""The"", ""They"", ""Their"", ""With""]"
+poetry,couplet-pace-race,"A rhyming couplet:
+The runner pushed to set a faster pace,
+Determined that he would not lose the ","[""race""]","
+","[""He"", ""But"", ""His"", ""The"", ""And""]"
+poetry,couplet-base-case,"A rhyming couplet:
+The lawyer built her argument from base,
+And stone by stone constructed her whole ","[""case""]","
+","[""She"", ""And"", ""Her"", ""The"", ""But""]"
+poetry,couplet-blame-game,"A rhyming couplet:
+They pointed fingers, passing round the blame,
+But knew that they were playing the same ","[""game""]","
+","[""And"", ""But"", ""Each"", ""While"", ""The""]"
+poetry,couplet-frame-same,"A rhyming couplet:
+He hung a second picture in a frame,
+But found the two were utterly the ","[""same""]","
+","[""And"", ""A"", ""The"", ""To"", ""He""]"
+poetry,couplet-scar-star,"A rhyming couplet:
+The telescope revealed a distant scar,
+A wound of light that once had been a ","[""star""]","
+","[""A"", ""Where"", ""The"", ""And"", ""As""]"
+poetry,couplet-jar-car,"A rhyming couplet:
+The engine sputtered with a sudden jar,
+She pulled aside and stepped out of the ","[""car""]","
+","[""The"", ""And"", ""A"", ""As"", ""Then""]"
+poetry,couplet-sea-see,"A rhyming couplet:
+The lighthouse beam swept out across the sea,
+A hundred miles of water it could ","[""see""]","
+","[""A"", ""Its"", ""Guid"", ""And"", ""I""]"
+poetry,couplet-lock-key,"A rhyming couplet:
+The treasure chest was bound by iron lock,
+And nowhere could she find the golden ","[""key""]","
+","[""The"", ""And"", ""But"", ""A"", ""Its""]"
+poetry,couplet-crown-town,"A rhyming couplet:
+The king rode through in velvet robe and crown,
+To greet the people gathered in the ","[""town""]","
+","[""The"", ""And"", ""His"", ""He"", ""With""]"
+poetry,couplet-gown-down,"A rhyming couplet:
+She tripped upon the hem of her long gown,
+And, stumbling on the stairway, tumbled ","[""down""]","
+","[""And"", ""Her"", ""The"", ""A"", ""She""]"
+poetry,couplet-sold-told,"A rhyming couplet:
+The merchant swore the goods could not be sold,
+A secret that he never should have ","[""told""]","
+","[""The"", ""He"", ""But"", ""For"", ""And""]"
+poetry,couplet-regret-met,"A rhyming couplet:
+She turned away and whispered her regret,
+For wishing that the two had never ","[""met""]","
+","[""The"", ""Her"", ""A"", ""And"", ""As""]"
+poetry,couplet-hook-book,"A rhyming couplet:
+The opening line had caught her like a hook,
+She could not put aside the fascinating ","[""book""]","
+","[""And"", ""She"", ""But"", ""The"", ""A""]"
+poetry,couplet-brook-look,"A rhyming couplet:
+He paused beside the slowly winding brook,
+And cast across the water one last ","[""look""]","
+","[""And"", ""The"", ""His"", ""Where"", ""A""]"
+poetry,couplet-above-love,"A rhyming couplet:
+The couple gazed at constellations above,
+And in the starlight, quietly spoke of ","[""love""]","
+","[""Their"", ""And"", ""As"", ""The"", ""They""]"
+poetry,couplet-heart-art,"A rhyming couplet:
+The painter poured emotion from his heart,
+And made of every canvas, living ","[""art""]","
+","[""His"", ""And"", ""A"", ""The"", ""He""]"
+poetry,couplet-apart-part,"A rhyming couplet:
+The machinist pulled the engine all apart,
+Then labeled and examined every ","[""part""]","
+","[""He"", ""And"", ""Then"", ""To"", ""The""]"
+poetry,couplet-depart-start,"A rhyming couplet:
+The runners gathered, ready to depart,
+And waited for the gunshot at the ","[""start""]","
+","[""The"", ""Their"", ""They"", ""As"", ""With""]"
+poetry,couplet-hall-call,"A rhyming couplet:
+Her voice rang out and echoed through the hall,
+But no one there would answer to her ","[""call""]","
+","[""A"", ""The"", ""Her"", ""As"", ""She""]"
+poetry,couplet-tall-small,"A rhyming couplet:
+The giant loomed above them, dark and tall,
+And made the bravest knight feel very ","[""small""]","
+","[""Its"", ""His"", ""A"", ""He"", ""With""]"
+poetry,couplet-hand-land,"A rhyming couplet:
+The pilot gripped the lever in his hand,
+And brought the failing aircraft down to ","[""land""]","
+","[""And"", ""He"", ""The"", ""As"", ""A""]"
+poetry,couplet-fun-won,"A rhyming couplet:
+The children played their games and had their fun,
+But no one cared to count which team had ","[""won""]","
+","[""And"", ""Then"", ""The"", ""Until"", ""They""]"
+poetry,couplet-mistake-make,"A rhyming couplet:
+The student learned from every old mistake,
+And vowed a better effort he would ","[""make""]","
+","[""He"", ""And"", ""The"", ""His"", ""So""]"
+poetry,couplet-slow-low,"A rhyming couplet:
+The submarine was sinking, smooth and slow,
+Descending through the darkness, deep and ","[""low""]","
+","[""The"", ""With"", ""And"", ""Its"", ""A""]"
+poetry,couplet-grow-show,"A rhyming couplet:
+The actor practiced, letting talent grow,
+Until the night arrived to start the ","[""show""]","
+","[""He"", ""His"", ""But"", ""And"", ""The""]"
+poetry,couplet-below-know,"A rhyming couplet:
+The scholars dug through layers far below,
+To find the truth that only stones could ","[""know""]","
+","[""To"", ""Un"", ""And"", ""Where"", ""They""]"
+poetry,couplet-dead-red,"A rhyming couplet:
+The roses on the grave had long been dead,
+But once had bloomed a brilliant shade of ","[""red""]","
+","[""The"", ""And"", ""But"", ""Their"", ""I""]"
+poetry,couplet-ahead-head,"A rhyming couplet:
+The captain pointed at the route ahead,
+And told his crew to follow where he'd ","[""led""]","
+","[""And"", ""The"", ""He"", ""S"", ""A""]"
+poetry,couplet-wait-late,"A rhyming couplet:
+She checked her watch and settled in to wait,
+But knew already that he'd be quite ","[""late""]","
+","[""The"", ""She"", ""A"", ""Her"", ""For""]"
+poetry,couplet-sound-found,"A rhyming couplet:
+The searchers followed every distant sound,
+And deep within the cave, the child was ","[""found""]","
+","[""They"", ""And"", ""But"", ""Until"", ""The""]"

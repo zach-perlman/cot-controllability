@@ -1,0 +1,44 @@
+{
+  "git_hash": "93f02cd6c27db765abb127f20eff656bb5d27340",
+  "timestamp": "2026-10-09T19:11:44+00:00",
+  "library_version": null,
+  "stage": "exp12 readouts",
+  "args": {
+    "stage": "readouts",
+    "hf_model_name": "Qwen/Qwen3.6-27B",
+    "lens": [
+      "logit",
+      "cache/exp12/qwen_check/jlens_camila.pt",
+      "cache/exp12/qwen_check/rlens_camila.pt",
+      "cache/exp12/qwen_check/jpp_released.pt"
+    ],
+    "layers": [
+      8,
+      16,
+      24,
+      32,
+      40,
+      48,
+      56
+    ],
+    "correctness_csv": "third_party/jpp_lens/data/jlens/evaluations/model_correctness.csv",
+    "reference_ranks": "results/exp12_gemma_lenses/eval_qwen_check/ranks.csv",
+    "out_dir": "results/exp12_gemma_lenses/readouts_qwen"
+  },
+  "lenses": {
+    "logit": "logit",
+    "jlens_camila": "cache/exp12/qwen_check/jlens_camila.pt",
+    "rlens_camila": "cache/exp12/qwen_check/rlens_camila.pt",
+    "jpp_released": "cache/exp12/qwen_check/jpp_released.pt"
+  },
+  "items": "held-out:0",
+  "num_items": 329,
+  "num_excluded_token_ids": 6116,
+  "ranks_identical_to_reference_for": [
+    "jlens_camila",
+    "jpp_released",
+    "logit",
+    "rlens_camila"
+  ],
+  "top_k": 5
+}
