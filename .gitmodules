@@ -1,3 +1,6 @@
 [submodule "third_party/CoTControl"]
 	path = third_party/CoTControl
 	url = https://github.com/YuehHanChen/CoTControl.git
+[submodule "third_party/jpp_lens"]
+	path = third_party/jpp_lens
+	url = https://github.com/safety-research/jpp_lens

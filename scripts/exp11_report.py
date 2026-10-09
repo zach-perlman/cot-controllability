@@ -107,8 +107,8 @@ def auc(pos: torch.Tensor, neg: torch.Tensor) -> float:
 
 
 @torch.no_grad()
-def q2_single(bank: str, lens_name: str = "j-lens") -> dict:
-    """Per single-table item at h in {2, 3}, final position, lens margins over SINGLE_BAND of the colours f^d(answer)
+def q2_single(bank: str, lens_name: str = "j-lens", band=SINGLE_BAND) -> dict:
+    """Per single-table item at h in {2, 3}, final position, lens margins over `band` of the colours f^d(answer)
     (d = -1, 0) and of the trajectory states, each minus the mean of the colours that are neither on the trajectory
     nor within two stirs of the answer.
       D   = margin(f^-1(answer)) - margin(answer): a held state that precedes the answer (> 0)
@@ -120,7 +120,7 @@ def q2_single(bank: str, lens_name: str = "j-lens") -> dict:
     metas = [m for m in E.load(bank) if m["format"].startswith("single") and m["h"] >= 2]
     colours = metas[0]["colours"]
     lens = M.Lens(lens_name, model, list(M.colour_ids(tokenizer, colours).values()))
-    band = list(SINGLE_BAND)
+    band = list(band)
     per = defaultdict(lambda: defaultdict(list))
     for m in metas:
         b, path = m["brew"], m["brew"].path()

@@ -1,8 +1,9 @@
 """exp11: Qwen3.6-27B (bf16, transformers) forward passes with residual capture, and the J-lens / R-lens readouts.
 
-Residual convention: hidden[l + 1] is the output of decoder block l (hidden[0] is the embeddings). The lens files map
-the block-l output to the block-62 output (`target_layer` 62, whose row is the identity), and are read as
-softmax(W_U . norm(J_l . h_l)), restricted here to the brew colour tokens.
+Residual convention: hidden[l + 1] is the output of decoder block l (hidden[0] is the embeddings). The J-lens and
+R-lens files map the block-l output to the block-62 output (`target_layer` 62, whose row is the identity); the J++
+lens maps it to the final block's (63). All are read as softmax(W_U . norm(J_l . h_l)), restricted here to the brew
+colour tokens.
 """
 from __future__ import annotations
 
@@ -15,6 +16,8 @@ import cc_config as cfg
 MODEL = "Qwen3.6-27B"
 FAMILY = "qwen3.6"
 LENS_DIR = glob.glob(f"{cfg.HF_HUB_DIR}/models--camilablank--workspace-lenses/snapshots/*/qwen3.6-27b")[0]
+JPP_FILE = (f"{cfg.HF_HUB_DIR}/models--koayon--jpp-lenses/snapshots/6c96867a91c43c14cec17cf0f6d157b933c5fee5"
+            "/qwen3.6-27b/lens.pt")
 
 
 def model_path() -> str:
@@ -54,11 +57,19 @@ def forward(model, ids: list[int], positions: list[int]) -> tuple[torch.Tensor, 
     return hidden, out.logits[0, -1].float().cpu()
 
 
+def load_jacobians(kind: str) -> dict[int, torch.Tensor]:
+    """{layer: J_l} in layer order. 'j-lens', 'r-lens': camilablank/workspace-lenses; 'jpp': koayon/jpp-lenses."""
+    if kind == "jpp":
+        jacobians = torch.load(JPP_FILE, map_location="cpu", weights_only=True, mmap=True)["parameters"]["jacobians"]
+        return {l: jacobians[l] for l in sorted(jacobians)}
+    blob = torch.load(f"{LENS_DIR}/{kind}/lens.pt", map_location="cpu", weights_only=False)
+    return {l: blob["J"][l] for l in blob["source_layers"]}
+
+
 class Lens:
     def __init__(self, kind: str, model, readout_ids: list[int]):
-        blob = torch.load(f"{LENS_DIR}/{kind}/lens.pt", map_location="cpu", weights_only=False)
-        self.layers = list(blob["source_layers"])
-        self.J = {l: blob["J"][l].to("cuda", torch.float32) for l in self.layers}
+        self.J = {l: J.to("cuda", torch.float32) for l, J in load_jacobians(kind).items()}
+        self.layers = list(self.J)
         _, self.norm, w_u = text_parts(model)
         self.w_u = w_u[readout_ids].float()
 
