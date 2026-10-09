@@ -4,3 +4,6 @@
 {"bank": "fmt_same_dev", "n_rows": 120, "file": "cache/exp11/requests_fmt_same_dev.jsonl", "content_key": "f790ae850879"}
 {"bank": "dev_twins", "n_rows": 60, "file": "cache/exp11/requests_dev_twins.jsonl", "content_key": "2f92b495ce5b"}
 {"bank": "fmt_dev_twins", "n_rows": 240, "file": "cache/exp11/requests_fmt_dev_twins.jsonl", "content_key": "e778c62f3400"}
+{"bank": "test_twins", "n_rows": 250, "file": "cache/exp11/requests_test_twins.jsonl", "content_key": "d464b5424cb7"}
+{"bank": "single_test", "n_rows": 750, "file": "cache/exp11/requests_single_test.jsonl", "content_key": "f6dbe90774ce"}
+{"bank": "single_test_twins", "n_rows": 250, "file": "cache/exp11/requests_single_test_twins.jsonl", "content_key": "c052f7f51d1b"}

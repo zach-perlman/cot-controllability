@@ -1,0 +1,273 @@
+=== Q1
+
+## behaviour, format three_first (bf16, exact answer distribution)
+h=1: n=250 acc=1.00 min_colour_mass=0.9999 confident=1.00 groups={'correct': 0, 'shortcut': 0, 'other_wrong': 0}
+h=2: n=250 acc=0.12 min_colour_mass=0.9970 confident=0.59 groups={'correct': 30, 'shortcut': 164, 'other_wrong': 56}
+   wrong: 220 stop_early=0.21(p0.22) skip_one_stir=0.85(p0.20) reverse_order=0.03(p0.12) last_stir_only=0.75(p0.11) wrong_column=0.30(p0.34) inverse_lookup=0.16(p0.20)
+h=3: n=250 acc=0.05 min_colour_mass=0.9959 confident=0.10 groups={'correct': 12, 'shortcut': 104, 'other_wrong': 134}
+   wrong: 238 stop_early=0.33(p0.34) skip_one_stir=0.26(p0.25) reverse_order=0.09(p0.09) last_stir_only=0.44(p0.11) wrong_column=0.45(p0.46) inverse_lookup=0.38(p0.23)
+## Q1 single table, single_test: answers by stirs applied (a random wrong colour: 1/9 per cycle position)
+  single_first h=1 n=250 acc=1.000 correct=250
+  single_first h=2 n=250 acc=0.764 +1 stirs=30 +2 stirs=7 +3 stirs=3 -1 stirs=3 -2 stirs=2 correct=191 off_cycle=14
+  single_first h=3 n=250 acc=0.352 +1 stirs=31 +2 stirs=20 +3 stirs=15 -1 stirs=41 -2 stirs=2 -3 stirs=2 correct=88 off_cycle=51
+=== Q2 three ingredients
+
+## probe h=1 position=final k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+           h1 n=250 answer=0.65 decoy=0.17 answer-decoy=+0.480[+0.453,+0.509]
+
+## probe h=1 position=question_end k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+           h1 n=250 answer=0.51 decoy=0.16 answer-decoy=+0.342[+0.307,+0.373]
+
+## probe h=2 position=final k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+      correct n= 19 s1=0.13 decoy=0.22 s0=0.92 answer=0.12 s1-decoy=-0.096[-0.240,+0.035]
+  other_wrong n= 42 s1=0.14 decoy=0.15 s0=0.95 answer=0.19 s1-decoy=-0.006[-0.103,+0.089]
+     shortcut n=107 s1=0.15 decoy=0.13 s0=0.96 answer=0.26 s1-decoy=+0.017[-0.034,+0.069]
+
+## probe h=2 position=stir2 k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+      correct n= 19 s1=0.12 decoy=0.11 s0=0.67 answer=0.20 s1-decoy=+0.002[-0.123,+0.134]
+  other_wrong n= 42 s1=0.09 decoy=0.16 s0=0.71 answer=0.18 s1-decoy=-0.072[-0.179,+0.027]
+     shortcut n=107 s1=0.09 decoy=0.10 s0=0.70 answer=0.17 s1-decoy=-0.010[-0.064,+0.046]
+
+## probe h=2 position=question_end k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+      correct n= 19 s1=0.16 decoy=0.16 s0=0.97 answer=0.20 s1-decoy=-0.007[-0.136,+0.145]
+  other_wrong n= 42 s1=0.16 decoy=0.12 s0=0.97 answer=0.20 s1-decoy=+0.039[-0.047,+0.124]
+     shortcut n=107 s1=0.15 decoy=0.11 s0=0.97 answer=0.28 s1-decoy=+0.044[-0.005,+0.097]
+## Q2 three ingredients, ../cache/exp11/q23_probe_test_k64_wd0.001.pt, position final, band 24..52
+  guard_h1: (0.47999998927116394, 0.4497896432876587, 0.5096586346626282)
+  correct: {'n': 19, 's1_minus_decoy': (-0.0961887463927269, -0.22690561413764954, 0.04723234847187996)}
+  shortcut: {'n': 107, 's1_minus_decoy': (0.017402512952685356, -0.03578794747591019, 0.06673382222652435)}
+  other_wrong: {'n': 42, 's1_minus_decoy': (-0.005747128743678331, -0.09690066426992416, 0.09607964754104614)}
+  onset_shortcut_minus_correct: (49, -28.0, 50.0)
+  reading: never_computed (correct group not itself above threshold)
+## Q2 three ingredients, ../cache/exp11/q23_probe_test_k64_wd0.001.pt, position stir2, band 24..52
+  guard_h1: (0.47999998927116394, 0.4497896432876587, 0.5096586346626282)
+  correct: {'n': 19, 's1_minus_decoy': (0.0018148861126974225, -0.13071687519550323, 0.14169706404209137)}
+  shortcut: {'n': 107, 's1_minus_decoy': (-0.010312599129974842, -0.06156139075756073, 0.04093620181083679)}
+  other_wrong: {'n': 42, 's1_minus_decoy': (-0.07224958389997482, -0.17653940618038177, 0.02957719750702381)}
+  onset_shortcut_minus_correct: (0, -13.0, 2.0)
+  reading: never_computed (correct group not itself above threshold)
+## Q2 three ingredients, ../cache/exp11/q23_probe_test_k64_wd0.001.pt, position question_end, band 24..52
+  guard_h1: (0.47999998927116394, 0.4497896432876587, 0.5096586346626282)
+  correct: {'n': 19, 's1_minus_decoy': (-0.007259528152644634, -0.13071689009666443, 0.14523598551750183)}
+  shortcut: {'n': 107, 's1_minus_decoy': (0.04447308927774429, -0.004197549074888229, 0.09314373135566711)}
+  other_wrong: {'n': 42, 's1_minus_decoy': (0.03858784958720207, -0.048460591584444046, 0.12563630938529968)}
+  onset_shortcut_minus_correct: (42, -16.0, 51.0)
+  reading: never_computed (correct group not itself above threshold)
+## Q2 three ingredients, ../cache/exp11/q23_probe_test_k64_wd0.001.pt, position final, band 24..52, confident subset (argmax p >= 0.5)
+  guard_h1: (0.47999998927116394, 0.4497896432876587, 0.5096586346626282)
+  correct: {'n': 7, 's1_minus_decoy': (-0.1231527179479599, -0.3497536778450012, 0.10837437212467194)}
+  shortcut: {'n': 77, 's1_minus_decoy': (0.021047918125987053, -0.04165920615196228, 0.07972459495067596)}
+  other_wrong: {'n': 19, 's1_minus_decoy': (-0.049001820385456085, -0.13797640800476074, 0.03448276221752167)}
+  onset_shortcut_minus_correct: (34, -24.0, 50.0)
+  reading: never_computed (correct group not itself above threshold)
+
+## behaviour, format three_first (bf16, exact answer distribution)
+h=1: n=250 acc=1.00 min_colour_mass=0.9999 confident=1.00 groups={'correct': 0, 'shortcut': 0, 'other_wrong': 0}
+h=2: n=250 acc=0.12 min_colour_mass=0.9970 confident=0.59 groups={'correct': 30, 'shortcut': 164, 'other_wrong': 56}
+   wrong: 220 stop_early=0.21(p0.22) skip_one_stir=0.85(p0.20) reverse_order=0.03(p0.12) last_stir_only=0.75(p0.11) wrong_column=0.30(p0.34) inverse_lookup=0.16(p0.20)
+h=3: n=250 acc=0.05 min_colour_mass=0.9959 confident=0.10 groups={'correct': 12, 'shortcut': 104, 'other_wrong': 134}
+   wrong: 238 stop_early=0.33(p0.34) skip_one_stir=0.26(p0.25) reverse_order=0.09(p0.09) last_stir_only=0.44(p0.11) wrong_column=0.45(p0.46) inverse_lookup=0.38(p0.23)
+
+## logit: mean logit(target) - logit(decoy) [95% CI], layers 8..60 step 8
+      h1 answer        final n=250 | -0.00[-0.08,+0.08] +0.04[-0.05,+0.12] +0.03[-0.12,+0.17] -0.04[-0.15,+0.07] +0.68[+0.60,+0.76] +0.58[+0.50,+0.67] +6.44[+6.04,+6.83]
+      h1 answer question_end n=250 | -0.02[-0.11,+0.07] +0.02[-0.08,+0.13] +0.01[-0.08,+0.09] -0.01[-0.13,+0.10] +0.17[+0.10,+0.24] +0.38[+0.26,+0.52] +6.18[+5.76,+6.58]
+      h1 answer        start n=250 | -0.03[-0.12,+0.07] -0.04[-0.16,+0.09] -0.07[-0.20,+0.07] -0.09[-0.21,+0.03] -0.08[-0.25,+0.08] -0.04[-0.17,+0.10] -0.36[-0.56,-0.15]
+      h1 answer        stir1 n=250 | -0.08[-0.16,+0.01] -0.05[-0.13,+0.04] -0.03[-0.18,+0.12] +0.03[-0.10,+0.14] +0.16[+0.03,+0.30] +0.19[+0.04,+0.33] +0.23[+0.05,+0.38]
+ h2 shortcut s1        final n=107 | +0.08[-0.05,+0.20] +0.05[-0.07,+0.16] +0.15[-0.08,+0.35] +0.21[+0.00,+0.41] +0.01[-0.14,+0.15] -0.15[-0.36,+0.05] +1.03[+0.49,+1.58]
+ h2 shortcut s1 question_end n=107 | +0.10[-0.05,+0.26] +0.02[-0.16,+0.20] +0.06[-0.07,+0.19] +0.13[-0.02,+0.28] +0.01[-0.16,+0.17] -0.11[-0.40,+0.18] -0.00[-0.84,+0.77]
+ h2 shortcut s1        start n=107 | +0.13[-0.03,+0.30] +0.07[-0.12,+0.28] +0.23[-0.00,+0.47] +0.05[-0.13,+0.25] -0.27[-0.53,-0.00] -0.14[-0.37,+0.08] -0.08[-0.40,+0.23]
+ h2 shortcut s1        stir1 n=107 | +0.07[-0.09,+0.22] +0.06[-0.10,+0.23] +0.18[-0.06,+0.41] +0.13[-0.05,+0.31] +0.22[-0.01,+0.44] +0.02[-0.21,+0.26] +0.19[-0.09,+0.49]
+ h2 shortcut s1        stir2 n=107 | +0.02[-0.12,+0.19] +0.01[-0.13,+0.17] +0.13[-0.07,+0.36] +0.08[-0.09,+0.25] -0.08[-0.23,+0.11] -0.17[-0.40,+0.06] +0.09[-0.18,+0.39]
+
+## j-lens: mean logit(target) - logit(decoy) [95% CI], layers 8..60 step 8
+      h1 answer        final n=250 | -0.03[-0.18,+0.13] -0.02[-0.28,+0.26] +0.07[-0.14,+0.27] +0.01[-0.05,+0.07] +1.62[+1.46,+1.78] +0.90[+0.81,+0.99] +5.61[+5.27,+5.98]
+      h1 answer question_end n=250 | -0.00[-0.16,+0.14] -0.07[-0.21,+0.08] +0.03[-0.17,+0.22] +0.01[-0.13,+0.15] +0.22[+0.10,+0.35] +0.56[+0.47,+0.64] +6.07[+5.67,+6.48]
+      h1 answer        start n=250 | +0.09[-0.10,+0.27] +0.05[-0.12,+0.23] +0.12[-0.05,+0.31] +0.02[-0.12,+0.19] -0.14[-0.29,+0.03] -0.06[-0.20,+0.10] -0.29[-0.51,-0.05]
+      h1 answer        stir1 n=250 | -0.03[-0.23,+0.20] -0.05[-0.24,+0.15] +0.04[-0.16,+0.23] +0.10[-0.10,+0.29] +0.33[+0.12,+0.52] +0.28[+0.13,+0.44] +0.24[+0.08,+0.41]
+ h2 shortcut s1        final n=107 | +0.13[-0.11,+0.34] -0.15[-0.58,+0.23] -0.43[-0.75,-0.10] -0.04[-0.15,+0.07] +0.25[-0.04,+0.53] +0.08[-0.08,+0.24] +1.12[+0.58,+1.66]
+ h2 shortcut s1 question_end n=107 | +0.15[-0.10,+0.41] +0.07[-0.18,+0.30] -0.23[-0.54,+0.08] -0.03[-0.19,+0.12] +0.32[+0.11,+0.52] +0.09[-0.15,+0.35] +0.18[-0.64,+1.02]
+ h2 shortcut s1        start n=107 | +0.11[-0.24,+0.47] +0.06[-0.25,+0.39] -0.05[-0.31,+0.25] -0.06[-0.36,+0.26] -0.12[-0.45,+0.21] -0.13[-0.41,+0.16] -0.08[-0.51,+0.41]
+ h2 shortcut s1        stir1 n=107 | +0.33[-0.03,+0.69] +0.33[+0.06,+0.61] +0.15[-0.15,+0.45] +0.05[-0.29,+0.38] +0.51[+0.13,+0.85] +0.31[+0.01,+0.58] +0.22[-0.13,+0.54]
+ h2 shortcut s1        stir2 n=107 | +0.15[-0.16,+0.50] +0.18[-0.10,+0.48] +0.05[-0.28,+0.37] +0.01[-0.33,+0.32] +0.15[-0.25,+0.54] -0.00[-0.31,+0.30] +0.06[-0.27,+0.39]
+
+## r-lens: mean logit(target) - logit(decoy) [95% CI], layers 8..60 step 8
+      h1 answer        final n=250 | +0.01[-0.15,+0.16] +0.01[-0.13,+0.15] +0.05[-0.10,+0.17] -0.02[-0.11,+0.07] +1.59[+1.45,+1.74] +0.90[+0.79,+1.01] +5.25[+4.92,+5.60]
+      h1 answer question_end n=250 | +0.01[-0.07,+0.09] +0.00[-0.10,+0.10] +0.02[-0.10,+0.15] +0.01[-0.08,+0.09] +0.28[+0.19,+0.38] +0.64[+0.53,+0.76] +5.94[+5.54,+6.37]
+      h1 answer        start n=250 | +0.04[-0.12,+0.21] +0.06[-0.08,+0.20] +0.10[-0.13,+0.33] -0.03[-0.18,+0.13] -0.11[-0.27,+0.05] -0.05[-0.20,+0.11] -0.28[-0.49,-0.04]
+      h1 answer        stir1 n=250 | -0.02[-0.18,+0.14] -0.01[-0.18,+0.15] +0.06[-0.16,+0.27] +0.08[-0.12,+0.27] +0.32[+0.14,+0.49] +0.32[+0.14,+0.49] +0.24[+0.07,+0.42]
+ h2 shortcut s1        final n=107 | -0.21[-0.46,+0.04] -0.19[-0.40,+0.01] -0.01[-0.22,+0.20] +0.12[-0.03,+0.30] +0.21[-0.03,+0.44] -0.02[-0.18,+0.15] +0.95[+0.47,+1.45]
+ h2 shortcut s1 question_end n=107 | -0.08[-0.21,+0.06] -0.05[-0.21,+0.11] +0.05[-0.14,+0.26] +0.10[-0.02,+0.22] +0.29[+0.10,+0.47] -0.02[-0.27,+0.24] +0.14[-0.62,+0.96]
+ h2 shortcut s1        start n=107 | +0.05[-0.20,+0.30] +0.01[-0.21,+0.25] +0.21[-0.09,+0.50] +0.07[-0.18,+0.33] -0.10[-0.39,+0.18] -0.16[-0.46,+0.11] -0.09[-0.51,+0.31]
+ h2 shortcut s1        stir1 n=107 | +0.11[-0.15,+0.35] +0.12[-0.14,+0.37] +0.24[-0.07,+0.55] +0.10[-0.21,+0.41] +0.48[+0.16,+0.78] +0.25[-0.05,+0.54] +0.20[-0.11,+0.51]
+ h2 shortcut s1        stir2 n=107 | +0.05[-0.22,+0.30] +0.14[-0.11,+0.38] +0.20[-0.11,+0.51] +0.15[-0.14,+0.44] +0.12[-0.18,+0.45] -0.08[-0.41,+0.23] +0.05[-0.28,+0.37]
+=== Q2 single table
+## Q2 single table, single_test, j-lens, final position, band 36..48
+  h=2     correct n=191 D = (0.37614887952804565, 0.25669553875923157, 0.5050370097160339)
+  h=2   one_extra n= 30 D = (0.48391544818878174, 0.20719505846500397, 0.7696529030799866)
+  h=2   one_short n=  3 D = (-0.11559303849935532, -1.9309444427490234, 1.316057801246643)
+  h=2 other_wrong n= 26 D = (0.508511483669281, 0.1964174509048462, 0.8111987709999084)
+  h=3     correct n= 88 D = (0.47673147916793823, 0.3152281939983368, 0.6425178647041321)
+  h=3   one_extra n= 31 D = (0.28390976786613464, 0.0006122149643488228, 0.5617529153823853)
+  h=3   one_short n= 41 D = (-0.0062348670326173306, -0.29177501797676086, 0.2644061744213104)
+  h=3 other_wrong n= 90 D = (0.02484554797410965, -0.12117237597703934, 0.17241957783699036)
+  h=3 correct (n=88) vs one_short (n=41): AUC(R) = 0.590 (0.4835989475250244, 0.6951358318328857), AUC(A) = 0.357 (0.25165605545043945, 0.4640660583972931), AUC(R) - AUC(A) CI (0.048177674412727356, 0.4124445617198944)
+## Q2 single table, single_test, r-lens, final position, band 36..48
+  h=2     correct n=191 D = (0.2906912565231323, 0.1848103255033493, 0.3960767686367035)
+  h=2   one_extra n= 30 D = (0.12385328114032745, -0.11139464378356934, 0.37098491191864014)
+  h=2   one_short n=  3 D = (0.03292306140065193, -1.2146122455596924, 1.4643360376358032)
+  h=2 other_wrong n= 26 D = (0.2600085437297821, -0.02809900790452957, 0.5471860766410828)
+  h=3     correct n= 88 D = (0.3303600549697876, 0.15894144773483276, 0.4997754991054535)
+  h=3   one_extra n= 31 D = (0.2151786834001541, -0.08961166441440582, 0.4759024381637573)
+  h=3   one_short n= 41 D = (0.17183659970760345, -0.09125179797410965, 0.40528106689453125)
+  h=3 other_wrong n= 90 D = (-0.075443334877491, -0.21839094161987305, 0.08673573285341263)
+  h=3 correct (n=88) vs one_short (n=41): AUC(R) = 0.673 (0.5684520602226257, 0.771064281463623), AUC(A) = 0.388 (0.2773558795452118, 0.496147483587265), AUC(R) - AUC(A) CI (0.10482260584831238, 0.47314998507499695)
+=== Q3
+
+## back-patching, 164 shortcut items; unpatched argmax = gold 0.00
+pair (l1<-l2): rescued to gold, treatment vs control, paired difference [95% CI]
+   8<-12: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+   8<-16: 0.006 vs 0.006  diff +0.000 [+0.000,+0.000]
+   8<-24: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+  16<-20: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+  16<-24: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+  16<-32: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+  24<-28: 0.024 vs 0.024  diff +0.000 [+0.000,+0.000]
+  24<-32: 0.006 vs 0.006  diff +0.000 [+0.000,+0.000]
+  24<-40: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+  32<-36: 0.024 vs 0.043  diff -0.018 [-0.055,+0.018]
+  32<-40: 0.012 vs 0.043  diff -0.030 [-0.061,+0.000]
+  32<-48: 0.098 vs 0.091  diff +0.006 [-0.043,+0.049]
+  40<-44: 0.012 vs 0.049  diff -0.037 [-0.067,-0.012]
+  40<-48: 0.055 vs 0.073  diff -0.018 [-0.061,+0.024]
+  40<-56: 0.000 vs 0.030  diff -0.030 [-0.061,-0.006]
+  48<-52: 0.012 vs 0.085  diff -0.073 [-0.122,-0.030]
+  48<-56: 0.000 vs 0.067  diff -0.067 [-0.110,-0.030]
+
+## twin patch, site=final reverse=False, 250 recipients; unpatched: argmax = own gold 0.11, = donor's gold 0.17
+layer: treatment -> donor's gold | control -> recipient's donor-gold colour, -> control donor's gold | own gold kept (treatment, control)
+   0: 0.18 | 0.17, 0.10 | 0.10, 0.11
+   4: 0.18 | 0.17, 0.09 | 0.10, 0.11
+   8: 0.17 | 0.16, 0.10 | 0.12, 0.11
+  12: 0.17 | 0.17, 0.10 | 0.11, 0.11
+  16: 0.17 | 0.16, 0.10 | 0.12, 0.11
+  20: 0.18 | 0.18, 0.09 | 0.10, 0.10
+  24: 0.16 | 0.17, 0.09 | 0.12, 0.11
+  28: 0.17 | 0.17, 0.09 | 0.12, 0.11
+  32: 0.23 | 0.23, 0.09 | 0.11, 0.12
+  36: 0.71 | 0.59, 0.12 | 0.02, 0.01
+  40: 0.86 | 0.48, 0.14 | 0.01, 0.02
+  44: 0.98 | 0.31, 0.16 | 0.00, 0.09
+  48: 0.97 | 0.25, 0.22 | 0.00, 0.13
+  52: 1.00 | 0.18, 0.86 | 0.00, 0.14
+  56: 1.00 | 0.13, 1.00 | 0.00, 0.14
+  60: 1.00 | 0.13, 1.00 | 0.00, 0.14
+
+## mode transplant, test three_first h=2: 164 shortcut recipients, 30 correct donors
+layer: own gold, treatment vs control, paired diff [95% CI] | own wrong answer kept (t, c) | donor's gold (t)
+  28: 0.00 vs 0.00 diff +0.00 [+0.00,+0.00] | 0.99, 0.99 | 0.13
+  32: 0.00 vs 0.01 diff -0.01 [-0.02,+0.00] | 0.97, 0.97 | 0.12
+  36: 0.05 vs 0.06 diff -0.01 [-0.04,+0.03] | 0.76, 0.80 | 0.14
+  40: 0.07 vs 0.07 diff -0.01 [-0.04,+0.03] | 0.75, 0.74 | 0.12
+  44: 0.04 vs 0.07 diff -0.03 [-0.07,+0.01] | 0.64, 0.71 | 0.10
+  48: 0.10 vs 0.10 diff +0.00 [-0.07,+0.07] | 0.32, 0.44 | 0.09
+  52: 0.12 vs 0.10 diff +0.01 [-0.04,+0.08] | 0.24, 0.18 | 0.42
+
+## twin patch, site=count reverse=False, 250 recipients; unpatched: argmax = own gold 0.35, = donor's gold 0.17
+layer: treatment -> donor's gold | control -> recipient's donor-gold colour, -> control donor's gold | own gold kept (treatment, control)
+   0: 0.22 | 0.23, 0.10 | 0.24, 0.24
+   4: 0.24 | 0.22, 0.10 | 0.23, 0.22
+   8: 0.34 | 0.35, 0.11 | 0.30, 0.29
+  12: 0.51 | 0.50, 0.12 | 0.26, 0.26
+  16: 0.42 | 0.43, 0.12 | 0.34, 0.33
+  20: 0.46 | 0.46, 0.12 | 0.32, 0.31
+  24: 0.47 | 0.47, 0.10 | 0.30, 0.30
+  28: 0.45 | 0.46, 0.11 | 0.29, 0.29
+  32: 0.38 | 0.36, 0.10 | 0.29, 0.30
+  36: 0.18 | 0.16, 0.09 | 0.33, 0.31
+  40: 0.17 | 0.15, 0.09 | 0.34, 0.32
+  44: 0.16 | 0.15, 0.10 | 0.35, 0.35
+  48: 0.18 | 0.17, 0.10 | 0.35, 0.35
+  52: 0.17 | 0.17, 0.10 | 0.35, 0.35
+  56: 0.17 | 0.17, 0.10 | 0.36, 0.36
+  60: 0.17 | 0.17, 0.10 | 0.35, 0.36
+
+## twin patch, site=final reverse=False, 250 recipients; unpatched: argmax = own gold 0.35, = donor's gold 0.17
+layer: treatment -> donor's gold | control -> recipient's donor-gold colour, -> control donor's gold | own gold kept (treatment, control)
+   0: 0.17 | 0.17, 0.10 | 0.35, 0.36
+   4: 0.18 | 0.18, 0.10 | 0.35, 0.36
+   8: 0.17 | 0.17, 0.11 | 0.35, 0.36
+  12: 0.16 | 0.17, 0.11 | 0.36, 0.35
+  16: 0.17 | 0.18, 0.10 | 0.36, 0.36
+  20: 0.17 | 0.16, 0.10 | 0.35, 0.35
+  24: 0.18 | 0.18, 0.09 | 0.34, 0.34
+  28: 0.17 | 0.19, 0.10 | 0.35, 0.33
+  32: 0.21 | 0.22, 0.09 | 0.36, 0.34
+  36: 0.44 | 0.36, 0.10 | 0.31, 0.26
+  40: 0.51 | 0.31, 0.10 | 0.24, 0.23
+  44: 0.56 | 0.18, 0.09 | 0.20, 0.18
+  48: 0.60 | 0.13, 0.18 | 0.18, 0.16
+  52: 0.66 | 0.11, 0.56 | 0.16, 0.14
+  56: 0.68 | 0.13, 0.64 | 0.15, 0.10
+  60: 0.68 | 0.12, 0.71 | 0.16, 0.09
+
+## twin patch, site=count reverse=True, 250 recipients; unpatched: argmax = own gold 0.76, = donor's gold 0.10
+layer: treatment -> donor's gold | control -> recipient's donor-gold colour, -> control donor's gold | own gold kept (treatment, control)
+   0: 0.03 | 0.03, 0.08 | 0.14, 0.14
+   4: 0.20 | 0.21, 0.14 | 0.56, 0.54
+   8: 0.33 | 0.33, 0.11 | 0.20, 0.20
+  12: 0.33 | 0.35, 0.11 | 0.22, 0.22
+  16: 0.24 | 0.24, 0.14 | 0.51, 0.50
+  20: 0.17 | 0.16, 0.12 | 0.60, 0.62
+  24: 0.11 | 0.10, 0.11 | 0.71, 0.72
+  28: 0.20 | 0.20, 0.12 | 0.59, 0.59
+  32: 0.30 | 0.30, 0.10 | 0.50, 0.48
+  36: 0.12 | 0.12, 0.12 | 0.77, 0.77
+  40: 0.10 | 0.10, 0.11 | 0.78, 0.78
+  44: 0.10 | 0.10, 0.11 | 0.78, 0.78
+  48: 0.10 | 0.10, 0.12 | 0.77, 0.77
+  52: 0.10 | 0.11, 0.12 | 0.76, 0.76
+  56: 0.10 | 0.10, 0.12 | 0.76, 0.76
+  60: 0.10 | 0.10, 0.12 | 0.76, 0.76
+
+## twin patch, site=final reverse=True, 250 recipients; unpatched: argmax = own gold 0.76, = donor's gold 0.10
+layer: treatment -> donor's gold | control -> recipient's donor-gold colour, -> control donor's gold | own gold kept (treatment, control)
+   0: 0.10 | 0.10, 0.08 | 0.76, 0.76
+   4: 0.11 | 0.10, 0.08 | 0.76, 0.76
+   8: 0.11 | 0.10, 0.08 | 0.76, 0.76
+  12: 0.11 | 0.10, 0.08 | 0.75, 0.76
+  16: 0.11 | 0.10, 0.08 | 0.75, 0.75
+  20: 0.10 | 0.11, 0.08 | 0.76, 0.75
+  24: 0.11 | 0.11, 0.08 | 0.75, 0.75
+  28: 0.12 | 0.12, 0.08 | 0.75, 0.75
+  32: 0.16 | 0.16, 0.09 | 0.69, 0.68
+  36: 0.23 | 0.18, 0.08 | 0.52, 0.52
+  40: 0.27 | 0.20, 0.09 | 0.47, 0.47
+  44: 0.29 | 0.17, 0.10 | 0.42, 0.38
+  48: 0.23 | 0.13, 0.11 | 0.47, 0.41
+  52: 0.23 | 0.09, 0.24 | 0.43, 0.42
+  56: 0.25 | 0.08, 0.28 | 0.39, 0.34
+  60: 0.26 | 0.08, 0.30 | 0.34, 0.26
+
+## mode transplant, single_test single_first h=3: 41 one_short recipients, 88 correct donors
+layer: own gold, treatment vs control, paired diff [95% CI] | own wrong answer kept (t, c) | donor's gold (t)
+  28: 0.00 vs 0.00 diff +0.00 [+0.00,+0.00] | 1.00, 0.98 | 0.05
+  32: 0.02 vs 0.02 diff +0.00 [+0.00,+0.00] | 0.90, 0.90 | 0.05
+  36: 0.02 vs 0.02 diff +0.00 [-0.07,+0.07] | 0.71, 0.71 | 0.10
+  40: 0.02 vs 0.05 diff -0.02 [-0.07,+0.00] | 0.66, 0.73 | 0.07
+  44: 0.00 vs 0.00 diff +0.00 [+0.00,+0.00] | 0.59, 0.63 | 0.10
+  48: 0.00 vs 0.00 diff +0.00 [+0.00,+0.00] | 0.41, 0.37 | 0.05
+  52: 0.07 vs 0.10 diff -0.02 [-0.12,+0.07] | 0.20, 0.32 | 0.41
+## Q3 readings, test
+  back-patching (primary pair 32<-48, n=164): gold 0.098 vs control 0.091, diff +0.006 [-0.037,+0.043] -> no rescue
+  mode transplant three_first h=2 (primary layer 40, n=164): gold 0.067 vs control 0.073, diff -0.006 [-0.043,+0.030] -> no rescue
+  [site=final reverse=False three_first n=250] composition after write-in: best layer 36 gold minus unpatched -0.096 [-0.136,-0.060] -> no composition
+  [site=final reverse=False three_first n=250] control: item-independent setting window [36, 40]; colour arrival layer 52
+## Q3 readings, single_test
+  mode transplant single_first h=3 (primary layer 40, n=41): gold 0.024 vs control 0.049, diff -0.024 [-0.098,+0.000] -> no rescue
+  [site=count reverse=False single_first n=250] control: item-independent setting window [8, 12, 16, 20, 24, 28, 32]; colour arrival layer None
+  [site=count reverse=False single_first n=250] count: max increase +0.336 at layer 12; read-out layer 32; treatment minus control there +0.008 [-0.012,+0.028] -> item-independent count
+  [site=count reverse=True single_first n=250] control: item-independent setting window [8, 12, 32]; colour arrival layer None
+  [site=count reverse=True single_first n=250] count: max increase +0.228 at layer 8; read-out layer 32; treatment minus control there +0.000 [-0.016,+0.016] -> item-independent count
+  [site=final reverse=False single_first n=250] control: item-independent setting window [36, 40]; colour arrival layer 52
+  [site=final reverse=True single_first n=250] control: item-independent setting window none; colour arrival layer None
+DONE

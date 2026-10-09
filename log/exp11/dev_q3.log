@@ -1,0 +1,179 @@
+Loading weights:   0%|          | 0/1184 [00:00<?, ?it/s]Loading weights:   1%|          | 10/1184 [00:00<00:11, 99.15it/s]Loading weights:   3%|▎         | 40/1184 [00:00<00:05, 212.34it/s]Loading weights:   6%|▌         | 68/1184 [00:00<00:04, 233.25it/s]Loading weights:   8%|▊         | 99/1184 [00:00<00:04, 259.69it/s]Loading weights:  11%|█         | 133/1184 [00:00<00:03, 274.98it/s]Loading weights:  14%|█▎        | 161/1184 [00:00<00:03, 276.20it/s]Loading weights:  16%|█▋        | 194/1184 [00:00<00:03, 292.44it/s]Loading weights:  19%|█▉        | 224/1184 [00:00<00:03, 291.55it/s]Loading weights:  21%|██▏       | 254/1184 [00:00<00:03, 286.20it/s]Loading weights:  25%|██▍       | 292/1184 [00:01<00:02, 303.14it/s]Loading weights:  28%|██▊       | 330/1184 [00:01<00:02, 323.16it/s]Loading weights:  31%|███       | 363/1184 [00:01<00:02, 303.89it/s]Loading weights:  34%|███▎      | 397/1184 [00:01<00:02, 311.79it/s]Loading weights:  36%|███▌      | 429/1184 [00:01<00:02, 295.22it/s]Loading weights:  39%|███▉      | 465/1184 [00:01<00:02, 307.57it/s]Loading weights:  42%|████▏     | 496/1184 [00:01<00:02, 298.38it/s]Loading weights:  45%|████▍     | 527/1184 [00:01<00:02, 281.61it/s]Loading weights:  47%|████▋     | 559/1184 [00:01<00:02, 284.83it/s]Loading weights:  50%|████▉     | 591/1184 [00:02<00:02, 289.95it/s]Loading weights:  52%|█████▏    | 621/1184 [00:02<00:01, 286.85it/s]Loading weights:  55%|█████▍    | 650/1184 [00:02<00:01, 267.99it/s]Loading weights:  57%|█████▋    | 678/1184 [00:02<00:01, 259.83it/s]Loading weights:  60%|█████▉    | 705/1184 [00:02<00:01, 245.00it/s]Loading weights:  62%|██████▏   | 730/1184 [00:02<00:01, 234.79it/s]Loading weights:  64%|██████▍   | 758/1184 [00:02<00:01, 246.74it/s]Loading weights:  67%|██████▋   | 788/1184 [00:02<00:01, 258.59it/s]Loading weights:  69%|██████▉   | 822/1184 [00:02<00:01, 280.35it/s]Loading weights:  73%|███████▎  | 859/1184 [00:03<00:01, 305.45it/s]Loading weights: 100%|██████████| 1184/1184 [00:03<00:00, 378.80it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+0/60
+20/60
+40/60
+
+## back-patching, 60 shortcut items; unpatched argmax = gold 0.00
+pair (l1<-l2): rescued to gold, treatment vs control, paired difference [95% CI]
+   8<-12: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+   8<-16: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+   8<-24: 0.017 vs 0.033  diff -0.017 [-0.050,+0.000]
+  16<-20: 0.017 vs 0.017  diff +0.000 [+0.000,+0.000]
+  16<-24: 0.017 vs 0.017  diff +0.000 [+0.000,+0.000]
+  16<-32: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+  24<-28: 0.033 vs 0.017  diff +0.017 [+0.000,+0.050]
+  24<-32: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+  24<-40: 0.050 vs 0.067  diff -0.017 [-0.050,+0.000]
+  32<-36: 0.067 vs 0.067  diff +0.000 [-0.050,+0.050]
+  32<-40: 0.033 vs 0.067  diff -0.033 [-0.100,+0.033]
+  32<-48: 0.067 vs 0.083  diff -0.017 [-0.100,+0.067]
+  40<-44: 0.000 vs 0.083  diff -0.083 [-0.150,-0.017]
+  40<-48: 0.033 vs 0.083  diff -0.050 [-0.117,+0.000]
+  40<-56: 0.000 vs 0.017  diff -0.017 [-0.050,+0.000]
+  48<-52: 0.033 vs 0.050  diff -0.017 [-0.083,+0.033]
+  48<-56: 0.017 vs 0.050  diff -0.033 [-0.083,+0.000]
+Loading weights:   0%|          | 0/1184 [00:00<?, ?it/s]Loading weights:   1%|          | 9/1184 [00:00<00:14, 83.55it/s]Loading weights:   3%|▎         | 41/1184 [00:00<00:05, 214.38it/s]Loading weights:   6%|▌         | 68/1184 [00:00<00:04, 230.95it/s]Loading weights:   8%|▊         | 99/1184 [00:00<00:04, 259.38it/s]Loading weights:  11%|█         | 133/1184 [00:00<00:03, 285.88it/s]Loading weights:  14%|█▎        | 162/1184 [00:00<00:03, 277.03it/s]Loading weights:  17%|█▋        | 196/1184 [00:00<00:03, 296.27it/s]Loading weights:  19%|█▉        | 226/1184 [00:00<00:03, 285.64it/s]Loading weights:  22%|██▏       | 258/1184 [00:00<00:03, 290.44it/s]Loading weights:  25%|██▍       | 293/1184 [00:01<00:02, 306.01it/s]Loading weights:  28%|██▊       | 330/1184 [00:01<00:02, 322.60it/s]Loading weights:  31%|███       | 363/1184 [00:01<00:02, 304.34it/s]Loading weights:  34%|███▎      | 397/1184 [00:01<00:02, 312.56it/s]Loading weights:  36%|███▌      | 429/1184 [00:01<00:02, 296.10it/s]Loading weights:  39%|███▉      | 465/1184 [00:01<00:02, 309.74it/s]Loading weights:  42%|████▏     | 497/1184 [00:01<00:02, 302.72it/s]Loading weights:  45%|████▍     | 528/1184 [00:01<00:02, 285.47it/s]Loading weights:  47%|████▋     | 558/1184 [00:01<00:02, 283.72it/s]Loading weights:  50%|████▉     | 590/1184 [00:02<00:02, 289.42it/s]Loading weights:  52%|█████▏    | 620/1184 [00:02<00:01, 289.98it/s]Loading weights:  55%|█████▍    | 650/1184 [00:02<00:01, 270.04it/s]Loading weights:  57%|█████▋    | 678/1184 [00:02<00:02, 252.73it/s]Loading weights:  59%|█████▉    | 704/1184 [00:02<00:01, 246.73it/s]Loading weights:  62%|██████▏   | 731/1184 [00:02<00:01, 249.91it/s]Loading weights:  64%|██████▍   | 757/1184 [00:02<00:01, 243.78it/s]Loading weights:  67%|██████▋   | 788/1184 [00:02<00:01, 258.82it/s]Loading weights:  69%|██████▉   | 822/1184 [00:02<00:01, 279.44it/s]Loading weights:  72%|███████▏  | 856/1184 [00:03<00:01, 296.62it/s]Loading weights: 100%|██████████| 1184/1184 [00:03<00:00, 380.38it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+0/69
+20/69
+40/69
+60/69
+
+## back-patching, 69 shortcut items; unpatched argmax = gold 0.00
+pair (l1<-l2): rescued to gold, treatment vs control, paired difference [95% CI]
+   8<-12: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+   8<-16: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+   8<-24: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+  16<-20: 0.000 vs 0.014  diff -0.014 [-0.043,+0.000]
+  16<-24: 0.014 vs 0.014  diff +0.000 [-0.043,+0.043]
+  16<-32: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+  24<-28: 0.043 vs 0.029  diff +0.014 [+0.000,+0.043]
+  24<-32: 0.000 vs 0.000  diff +0.000 [+0.000,+0.000]
+  24<-40: 0.000 vs 0.014  diff -0.014 [-0.043,+0.000]
+  32<-36: 0.029 vs 0.029  diff +0.000 [-0.043,+0.043]
+  32<-40: 0.000 vs 0.043  diff -0.043 [-0.087,+0.000]
+  32<-48: 0.043 vs 0.072  diff -0.029 [-0.101,+0.043]
+  40<-44: 0.029 vs 0.043  diff -0.014 [-0.072,+0.029]
+  40<-48: 0.043 vs 0.072  diff -0.029 [-0.101,+0.029]
+  40<-56: 0.000 vs 0.043  diff -0.043 [-0.101,+0.000]
+  48<-52: 0.014 vs 0.072  diff -0.058 [-0.130,+0.000]
+  48<-56: 0.014 vs 0.058  diff -0.043 [-0.101,+0.014]
+Loading weights:   0%|          | 0/1184 [00:00<?, ?it/s]Loading weights:   1%|          | 8/1184 [00:00<00:14, 79.20it/s]Loading weights:   3%|▎         | 41/1184 [00:00<00:05, 221.76it/s]Loading weights:   6%|▌         | 68/1184 [00:00<00:04, 234.64it/s]Loading weights:   8%|▊         | 99/1184 [00:00<00:04, 262.30it/s]Loading weights:  11%|█         | 133/1184 [00:00<00:03, 287.62it/s]Loading weights:  14%|█▎        | 162/1184 [00:00<00:03, 277.88it/s]Loading weights:  17%|█▋        | 197/1184 [00:00<00:03, 300.43it/s]Loading weights:  19%|█▉        | 228/1184 [00:00<00:03, 281.40it/s]Loading weights:  22%|██▏       | 259/1184 [00:00<00:03, 278.22it/s]Loading weights:  26%|██▌       | 303/1184 [00:01<00:02, 322.73it/s]Loading weights:  28%|██▊       | 336/1184 [00:01<00:02, 311.65it/s]Loading weights:  31%|███       | 368/1184 [00:01<00:02, 294.39it/s]Loading weights:  34%|███▍      | 400/1184 [00:01<00:02, 299.64it/s]Loading weights:  37%|███▋      | 436/1184 [00:01<00:02, 315.28it/s]Loading weights:  40%|███▉      | 468/1184 [00:01<00:02, 303.40it/s]Loading weights:  42%|████▏     | 503/1184 [00:01<00:02, 314.50it/s]Loading weights:  45%|████▌     | 535/1184 [00:01<00:02, 296.06it/s]Loading weights:  48%|████▊     | 567/1184 [00:01<00:02, 297.36it/s]Loading weights:  50%|█████     | 597/1184 [00:02<00:02, 276.39it/s]Loading weights:  53%|█████▎    | 626/1184 [00:02<00:02, 269.86it/s]Loading weights:  55%|█████▌    | 656/1184 [00:02<00:01, 271.84it/s]Loading weights:  58%|█████▊    | 684/1184 [00:02<00:02, 240.15it/s]Loading weights:  60%|██████    | 716/1184 [00:02<00:01, 258.51it/s]Loading weights:  63%|██████▎   | 743/1184 [00:02<00:01, 236.69it/s]Loading weights:  65%|██████▌   | 775/1184 [00:02<00:01, 256.76it/s]Loading weights:  68%|██████▊   | 802/1184 [00:02<00:01, 211.61it/s]Loading weights:  71%|███████   | 835/1184 [00:03<00:01, 235.96it/s]Loading weights:  92%|█████████▏| 1095/1184 [00:03<00:00, 825.80it/s]Loading weights: 100%|██████████| 1184/1184 [00:03<00:00, 368.02it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+0/60
+20/60
+40/60
+
+## twin patch, site=final reverse=False, 60 recipients; unpatched: argmax = own gold 0.10, = donor's gold 0.10
+layer: treatment -> donor's gold | control -> recipient's donor-gold colour, -> control donor's gold | own gold kept (treatment, control)
+   0: 0.10 | 0.10, 0.15 | 0.10, 0.10
+   4: 0.10 | 0.10, 0.15 | 0.10, 0.10
+   8: 0.10 | 0.10, 0.15 | 0.10, 0.10
+  12: 0.12 | 0.12, 0.15 | 0.08, 0.08
+  16: 0.10 | 0.10, 0.15 | 0.10, 0.10
+  20: 0.12 | 0.10, 0.15 | 0.10, 0.10
+  24: 0.10 | 0.10, 0.15 | 0.10, 0.10
+  28: 0.10 | 0.10, 0.15 | 0.10, 0.10
+  32: 0.12 | 0.15, 0.17 | 0.07, 0.12
+  36: 0.77 | 0.67, 0.10 | 0.00, 0.02
+  40: 0.90 | 0.52, 0.15 | 0.00, 0.00
+  44: 0.98 | 0.28, 0.15 | 0.00, 0.03
+  48: 0.97 | 0.15, 0.22 | 0.00, 0.12
+  52: 1.00 | 0.10, 0.88 | 0.00, 0.12
+  56: 1.00 | 0.08, 1.00 | 0.00, 0.13
+  60: 1.00 | 0.08, 1.00 | 0.00, 0.13
+Loading weights:   0%|          | 0/1184 [00:00<?, ?it/s]Loading weights:   1%|          | 10/1184 [00:00<00:11, 98.28it/s]Loading weights:   3%|▎         | 41/1184 [00:00<00:05, 218.39it/s]Loading weights:   6%|▌         | 68/1184 [00:00<00:04, 234.19it/s]Loading weights:   8%|▊         | 99/1184 [00:00<00:04, 262.73it/s]Loading weights:  11%|█         | 133/1184 [00:00<00:03, 288.66it/s]Loading weights:  14%|█▎        | 162/1184 [00:00<00:03, 279.53it/s]Loading weights:  17%|█▋        | 197/1184 [00:00<00:03, 301.77it/s]Loading weights:  19%|█▉        | 228/1184 [00:00<00:03, 283.25it/s]Loading weights:  22%|██▏       | 259/1184 [00:00<00:03, 279.79it/s]Loading weights:  25%|██▌       | 300/1184 [00:01<00:02, 314.77it/s]Loading weights:  28%|██▊       | 332/1184 [00:01<00:02, 313.05it/s]Loading weights:  31%|███       | 364/1184 [00:01<00:02, 303.17it/s]Loading weights:  34%|███▎      | 398/1184 [00:01<00:02, 312.11it/s]Loading weights:  36%|███▋      | 430/1184 [00:01<00:02, 304.67it/s]Loading weights:  39%|███▉      | 465/1184 [00:01<00:02, 312.60it/s]Loading weights:  42%|████▏     | 497/1184 [00:01<00:02, 304.60it/s]Loading weights:  45%|████▍     | 528/1184 [00:01<00:02, 283.47it/s]Loading weights:  47%|████▋     | 559/1184 [00:01<00:02, 284.71it/s]Loading weights:  50%|████▉     | 591/1184 [00:02<00:02, 289.13it/s]Loading weights:  52%|█████▏    | 621/1184 [00:02<00:01, 285.96it/s]Loading weights:  55%|█████▍    | 650/1184 [00:02<00:02, 266.87it/s]Loading weights:  57%|█████▋    | 677/1184 [00:02<00:01, 265.93it/s]Loading weights:  59%|█████▉    | 704/1184 [00:02<00:01, 240.32it/s]Loading weights:  62%|██████▏   | 730/1184 [00:02<00:01, 242.08it/s]Loading weights:  64%|██████▍   | 756/1184 [00:02<00:01, 244.30it/s]Loading weights:  66%|██████▋   | 785/1184 [00:02<00:01, 254.95it/s]Loading weights:  69%|██████▉   | 820/1184 [00:02<00:01, 279.88it/s]Loading weights:  72%|███████▏  | 849/1184 [00:03<00:01, 276.28it/s]Loading weights: 100%|██████████| 1184/1184 [00:03<00:00, 379.75it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+0/60
+20/60
+40/60
+
+## twin patch, site=count reverse=False, 60 recipients; unpatched: argmax = own gold 0.40, = donor's gold 0.23
+layer: treatment -> donor's gold | control -> recipient's donor-gold colour, -> control donor's gold | own gold kept (treatment, control)
+   0: 0.23 | 0.25, 0.12 | 0.27, 0.27
+   4: 0.27 | 0.27, 0.18 | 0.20, 0.23
+   8: 0.25 | 0.25, 0.10 | 0.35, 0.35
+  12: 0.45 | 0.47, 0.13 | 0.23, 0.22
+  16: 0.43 | 0.42, 0.08 | 0.32, 0.32
+  20: 0.45 | 0.47, 0.08 | 0.30, 0.30
+  24: 0.40 | 0.43, 0.08 | 0.35, 0.32
+  28: 0.45 | 0.42, 0.08 | 0.33, 0.33
+  32: 0.42 | 0.42, 0.10 | 0.33, 0.35
+  36: 0.15 | 0.15, 0.08 | 0.40, 0.40
+  40: 0.17 | 0.15, 0.08 | 0.40, 0.40
+  44: 0.23 | 0.20, 0.10 | 0.38, 0.40
+  48: 0.22 | 0.23, 0.12 | 0.40, 0.40
+  52: 0.23 | 0.23, 0.12 | 0.38, 0.40
+  56: 0.23 | 0.23, 0.12 | 0.40, 0.40
+  60: 0.23 | 0.23, 0.10 | 0.38, 0.42
+Loading weights:   0%|          | 0/1184 [00:00<?, ?it/s]Loading weights:   1%|          | 11/1184 [00:00<00:10, 109.90it/s]Loading weights:   4%|▎         | 42/1184 [00:00<00:05, 216.40it/s]Loading weights:   6%|▌         | 73/1184 [00:00<00:04, 253.45it/s]Loading weights:   8%|▊         | 100/1184 [00:00<00:04, 244.54it/s]Loading weights:  11%|█▏        | 134/1184 [00:00<00:03, 275.67it/s]Loading weights:  14%|█▍        | 171/1184 [00:00<00:03, 294.34it/s]Loading weights:  17%|█▋        | 201/1184 [00:00<00:03, 294.42it/s]Loading weights:  20%|█▉        | 234/1184 [00:00<00:03, 300.21it/s]Loading weights:  22%|██▏       | 265/1184 [00:00<00:03, 283.89it/s]Loading weights:  26%|██▌       | 302/1184 [00:01<00:02, 308.45it/s]Loading weights:  28%|██▊       | 334/1184 [00:01<00:02, 297.00it/s]Loading weights:  31%|███       | 364/1184 [00:01<00:02, 290.18it/s]Loading weights:  34%|███▎      | 398/1184 [00:01<00:02, 291.17it/s]Loading weights:  36%|███▌      | 428/1184 [00:01<00:02, 292.93it/s]Loading weights:  39%|███▉      | 461/1184 [00:01<00:02, 303.29it/s]Loading weights:  42%|████▏     | 492/1184 [00:01<00:02, 285.64it/s]Loading weights:  44%|████▍     | 523/1184 [00:01<00:02, 288.41it/s]Loading weights:  47%|████▋     | 555/1184 [00:01<00:02, 293.86it/s]Loading weights:  49%|████▉     | 585/1184 [00:02<00:02, 271.37it/s]Loading weights:  52%|█████▏    | 613/1184 [00:02<00:02, 271.07it/s]Loading weights:  54%|█████▍    | 641/1184 [00:02<00:01, 273.02it/s]Loading weights:  57%|█████▋    | 669/1184 [00:02<00:01, 265.70it/s]Loading weights:  59%|█████▉    | 696/1184 [00:02<00:01, 257.68it/s]Loading weights:  61%|██████    | 722/1184 [00:02<00:01, 245.90it/s]Loading weights:  63%|██████▎   | 747/1184 [00:02<00:01, 239.45it/s]Loading weights:  66%|██████▌   | 780/1184 [00:02<00:01, 261.19it/s]Loading weights:  68%|██████▊   | 808/1184 [00:02<00:01, 265.83it/s]Loading weights:  71%|███████   | 838/1184 [00:03<00:01, 273.76it/s]Loading weights: 100%|██████████| 1184/1184 [00:03<00:00, 376.33it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+0/60
+20/60
+40/60
+
+## twin patch, site=final reverse=False, 60 recipients; unpatched: argmax = own gold 0.40, = donor's gold 0.23
+layer: treatment -> donor's gold | control -> recipient's donor-gold colour, -> control donor's gold | own gold kept (treatment, control)
+   0: 0.23 | 0.23, 0.07 | 0.40, 0.40
+   4: 0.23 | 0.23, 0.07 | 0.40, 0.38
+   8: 0.23 | 0.23, 0.08 | 0.40, 0.40
+  12: 0.23 | 0.23, 0.07 | 0.38, 0.40
+  16: 0.23 | 0.23, 0.07 | 0.40, 0.40
+  20: 0.23 | 0.23, 0.07 | 0.40, 0.40
+  24: 0.23 | 0.23, 0.07 | 0.40, 0.40
+  28: 0.25 | 0.23, 0.07 | 0.40, 0.38
+  32: 0.25 | 0.27, 0.08 | 0.42, 0.38
+  36: 0.48 | 0.40, 0.13 | 0.27, 0.28
+  40: 0.53 | 0.38, 0.13 | 0.23, 0.20
+  44: 0.57 | 0.25, 0.18 | 0.22, 0.10
+  48: 0.57 | 0.12, 0.17 | 0.20, 0.08
+  52: 0.63 | 0.12, 0.57 | 0.17, 0.12
+  56: 0.63 | 0.12, 0.72 | 0.18, 0.13
+  60: 0.63 | 0.12, 0.72 | 0.18, 0.17
+Loading weights:   0%|          | 0/1184 [00:00<?, ?it/s]Loading weights:   1%|          | 13/1184 [00:00<00:09, 126.21it/s]Loading weights:   4%|▎         | 42/1184 [00:00<00:05, 215.86it/s]Loading weights:   6%|▋         | 76/1184 [00:00<00:04, 262.52it/s]Loading weights:   9%|▊         | 103/1184 [00:00<00:04, 250.77it/s]Loading weights:  11%|█▏        | 134/1184 [00:00<00:03, 269.82it/s]Loading weights:  14%|█▍        | 170/1184 [00:00<00:03, 286.58it/s]Loading weights:  17%|█▋        | 200/1184 [00:00<00:03, 287.19it/s]Loading weights:  20%|█▉        | 233/1184 [00:00<00:03, 289.80it/s]Loading weights:  22%|██▏       | 262/1184 [00:00<00:03, 288.95it/s]Loading weights:  26%|██▌       | 302/1184 [00:01<00:02, 316.87it/s]Loading weights:  28%|██▊       | 334/1184 [00:01<00:02, 308.13it/s]Loading weights:  31%|███       | 365/1184 [00:01<00:02, 289.03it/s]Loading weights:  34%|███▎      | 399/1184 [00:01<00:02, 302.15it/s]Loading weights:  37%|███▋      | 436/1184 [00:01<00:02, 320.41it/s]Loading weights:  40%|███▉      | 469/1184 [00:01<00:02, 310.69it/s]Loading weights:  42%|████▏     | 503/1184 [00:01<00:02, 317.81it/s]Loading weights:  45%|████▌     | 535/1184 [00:01<00:02, 299.59it/s]Loading weights:  48%|████▊     | 567/1184 [00:01<00:02, 296.29it/s]Loading weights:  50%|█████     | 597/1184 [00:02<00:02, 279.79it/s]Loading weights:  53%|█████▎    | 626/1184 [00:02<00:02, 271.59it/s]Loading weights:  55%|█████▌    | 654/1184 [00:02<00:01, 272.85it/s]Loading weights:  58%|█████▊    | 682/1184 [00:02<00:01, 252.17it/s]Loading weights:  60%|█████▉    | 708/1184 [00:02<00:01, 253.37it/s]Loading weights:  62%|██████▏   | 734/1184 [00:02<00:01, 242.11it/s]Loading weights:  64%|██████▍   | 759/1184 [00:02<00:01, 244.10it/s]Loading weights:  67%|██████▋   | 788/1184 [00:02<00:01, 253.06it/s]Loading weights:  69%|██████▉   | 822/1184 [00:02<00:01, 273.37it/s]Loading weights:  72%|███████▏  | 854/1184 [00:03<00:01, 286.34it/s]Loading weights: 100%|██████████| 1184/1184 [00:03<00:00, 380.77it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+0/60
+20/60
+40/60
+
+## twin patch, site=count reverse=True, 60 recipients; unpatched: argmax = own gold 0.78, = donor's gold 0.12
+layer: treatment -> donor's gold | control -> recipient's donor-gold colour, -> control donor's gold | own gold kept (treatment, control)
+   0: 0.02 | 0.02, 0.13 | 0.17, 0.17
+   4: 0.23 | 0.25, 0.10 | 0.47, 0.47
+   8: 0.40 | 0.37, 0.12 | 0.17, 0.17
+  12: 0.33 | 0.35, 0.07 | 0.30, 0.30
+  16: 0.22 | 0.22, 0.08 | 0.50, 0.47
+  20: 0.15 | 0.15, 0.08 | 0.60, 0.60
+  24: 0.12 | 0.12, 0.08 | 0.67, 0.65
+  28: 0.18 | 0.18, 0.12 | 0.60, 0.60
+  32: 0.23 | 0.23, 0.13 | 0.55, 0.58
+  36: 0.17 | 0.17, 0.13 | 0.77, 0.77
+  40: 0.13 | 0.13, 0.12 | 0.77, 0.77
+  44: 0.12 | 0.12, 0.12 | 0.75, 0.77
+  48: 0.10 | 0.10, 0.12 | 0.80, 0.80
+  52: 0.12 | 0.12, 0.12 | 0.78, 0.78
+  56: 0.12 | 0.12, 0.12 | 0.77, 0.78
+  60: 0.12 | 0.12, 0.12 | 0.78, 0.78
+Loading weights:   0%|          | 0/1184 [00:00<?, ?it/s]Loading weights:   0%|          | 2/1184 [00:00<01:04, 18.22it/s]Loading weights:   3%|▎         | 40/1184 [00:00<00:05, 219.24it/s]Loading weights:   6%|▌         | 67/1184 [00:00<00:04, 233.51it/s]Loading weights:   8%|▊         | 94/1184 [00:00<00:04, 245.20it/s]Loading weights:  11%|█         | 132/1184 [00:00<00:03, 290.23it/s]Loading weights:  14%|█▎        | 162/1184 [00:00<00:03, 273.94it/s]Loading weights:  17%|█▋        | 198/1184 [00:00<00:03, 300.25it/s]Loading weights:  19%|█▉        | 229/1184 [00:00<00:03, 282.26it/s]Loading weights:  22%|██▏       | 259/1184 [00:00<00:03, 283.13it/s]Loading weights:  25%|██▍       | 293/1184 [00:01<00:02, 297.68it/s]Loading weights:  28%|██▊       | 331/1184 [00:01<00:02, 317.94it/s]Loading weights:  31%|███       | 364/1184 [00:01<00:02, 298.19it/s]Loading weights:  34%|███▎      | 398/1184 [00:01<00:02, 306.22it/s]Loading weights:  36%|███▌      | 429/1184 [00:01<00:02, 297.12it/s]Loading weights:  39%|███▉      | 464/1184 [00:01<00:02, 307.23it/s]Loading weights:  42%|████▏     | 495/1184 [00:01<00:02, 292.74it/s]Loading weights:  44%|████▍     | 525/1184 [00:01<00:02, 276.01it/s]Loading weights:  47%|████▋     | 558/1184 [00:01<00:02, 283.39it/s]Loading weights:  50%|████▉     | 587/1184 [00:02<00:02, 283.52it/s]Loading weights:  52%|█████▏    | 616/1184 [00:02<00:02, 283.68it/s]Loading weights:  54%|█████▍    | 645/1184 [00:02<00:01, 276.18it/s]Loading weights:  57%|█████▋    | 673/1184 [00:02<00:01, 269.71it/s]Loading weights:  59%|█████▉    | 701/1184 [00:02<00:01, 255.86it/s]Loading weights:  61%|██████▏   | 727/1184 [00:02<00:01, 247.16it/s]Loading weights:  64%|██████▎   | 752/1184 [00:02<00:01, 239.31it/s]Loading weights:  66%|██████▌   | 783/1184 [00:02<00:01, 253.74it/s]Loading weights:  68%|██████▊   | 810/1184 [00:02<00:01, 253.17it/s]Loading weights:  71%|███████   | 842/1184 [00:03<00:01, 263.05it/s]Loading weights: 100%|██████████| 1184/1184 [00:03<00:00, 375.35it/s]
+[transformers] `causal_conv1d_fn` is falling back to its reference PyTorch implementation because `causal_conv1d` is not installed. This is correct but much slower; install `causal_conv1d` for the optimized kernel.
+[transformers] `chunk_gated_delta_rule` is falling back to its reference PyTorch implementation because `flash-linear-attention` is not installed. This is correct but much slower; install `flash-linear-attention` for the optimized kernel.
+0/60
+20/60
+40/60
+
+## twin patch, site=final reverse=True, 60 recipients; unpatched: argmax = own gold 0.78, = donor's gold 0.12
+layer: treatment -> donor's gold | control -> recipient's donor-gold colour, -> control donor's gold | own gold kept (treatment, control)
+   0: 0.12 | 0.12, 0.05 | 0.77, 0.77
+   4: 0.12 | 0.12, 0.05 | 0.78, 0.78
+   8: 0.12 | 0.12, 0.05 | 0.78, 0.78
+  12: 0.12 | 0.12, 0.05 | 0.78, 0.77
+  16: 0.12 | 0.12, 0.05 | 0.77, 0.78
+  20: 0.12 | 0.12, 0.05 | 0.78, 0.78
+  24: 0.12 | 0.12, 0.05 | 0.78, 0.77
+  28: 0.12 | 0.12, 0.05 | 0.78, 0.78
+  32: 0.18 | 0.18, 0.05 | 0.67, 0.65
+  36: 0.30 | 0.22, 0.08 | 0.48, 0.50
+  40: 0.32 | 0.23, 0.08 | 0.48, 0.48
+  44: 0.33 | 0.25, 0.10 | 0.45, 0.38
+  48: 0.30 | 0.10, 0.07 | 0.47, 0.37
+  52: 0.32 | 0.12, 0.13 | 0.42, 0.35
+  56: 0.33 | 0.12, 0.27 | 0.40, 0.18
+  60: 0.35 | 0.12, 0.32 | 0.37, 0.13
+DONE

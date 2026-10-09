@@ -1,0 +1,8 @@
+
+## probe h=1 position=stir1 k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+           h1 n=120 answer=0.15 decoy=0.10 answer-decoy=+0.055[-0.012,+0.122]
+
+## probe h=2 position=stir1 k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+      correct n=  8 s1=0.08 decoy=0.00 s0=0.70 answer=0.00 s1-decoy=+0.078[+0.013,+0.181]
+  other_wrong n= 18 s1=0.13 decoy=0.06 s0=0.69 answer=0.15 s1-decoy=+0.071[-0.048,+0.199]
+     shortcut n= 61 s1=0.10 decoy=0.04 s0=0.71 answer=0.16 s1-decoy=+0.060[+0.004,+0.124]

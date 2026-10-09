@@ -87,6 +87,30 @@
       "twins_of": "fmt_dev",
       "n_eval": 240,
       "content_key": "fc5c88d0f9ce"
+    },
+    "test_twins": {
+      "twins_of": "test",
+      "n_eval": 250,
+      "content_key": "2ae3e3d49a80"
+    },
+    "single_test": {
+      "seed": "exp11_single_test_20261008",
+      "per_h": 250,
+      "formats": [
+        "single_first"
+      ],
+      "h_values": [
+        1,
+        2,
+        3
+      ],
+      "n_eval": 750,
+      "content_key": "1ce826315f38"
+    },
+    "single_test_twins": {
+      "twins_of": "single_test",
+      "n_eval": 250,
+      "content_key": "8ae053f1940d"
     }
   }
 }
