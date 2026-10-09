@@ -54,5 +54,76 @@
   },
   "disk": "peak during the J++ fit ~73 GB (checkpoint 29.6 GB, doubled during its atomic rewrite, plus ~13 GB of snapshots); the run script stops before a stage when free space is below its need",
   "not_changed": "no edits to third_party/jpp_lens, cc_config or any hashed experiment code; nothing outside cache/exp12, results/exp12_gemma_lenses and log/exp12 is written",
-  "order": ["correctness", "router K=8", "J++ LRP fit (64 prompts, snapshots 8/16/32)", "merge -> experts + rlens_64p", "fit-weights 64p + snapshots", "evaluate + reports", "choose n_J", "router K=1", "J-lens fit", "merge -> jlens", "evaluate + report"]
+  "order": ["correctness", "router K=8", "J++ LRP fit (64 prompts, snapshots 8/16/32)", "merge -> experts + rlens_64p", "fit-weights 64p + snapshots", "evaluate + reports", "choose n_J", "router K=1", "J-lens fit", "merge -> jlens", "evaluate + report"],
+  "phase2": {
+    "written": "2026-10-09T05:10Z, while the 64-prompt fit was at prompt 52/64, before any 64-prompt lens or any lens below was scored; the user approved these changes after reading the J++ paper (Ayonrinde & Lindsey 2026) and the koayon/jpp-lenses page",
+    "status": "pre-registered",
+    "code": {
+      "wrapper": "scripts/exp12_phase2.py (evaluate-transfer, fit-long, offload); scripts/exp12_lenses.py unchanged",
+      "run": "scripts/run_exp12_phase2.sh; log/exp12/phase2.log. run_exp12_lenses.sh was stopped (its bash only, by pid) during the fit, which carried on unaffected; phase 1 stages 4-6 run from the new script with the same commands"
+    },
+    "dropped": "the J-lens stages (order steps 7-11), choose-n and D2. The paper's Gemma 4 31B table has J ~ logit (34.9 vs 34.8 recall@10), so a J-lens adds little here; the R-lens is the label-free baseline",
+    "B1_base_lens_transfer": {
+      "lens": "koayon/jpp-lenses gemma-4-31b/lens.pt @ 6c96867a91c43c14cec17cf0f6d157b933c5fee5: J++ condensed to one map per layer, fitted on the base google/gemma-4-31B with the same recipe as ours (rlens LRP, 64 WikiText prompts x 128 tokens, skip 16, final-block target, all 59 layers; config differs from ours only in rows per pass 24 vs 16 and names/paths)",
+      "how": "scored on gemma-4-31B-it at the readout layers on held-out:0 with -it's correctness filter, beside logit, rlens_64p and jpp_64p in one run (eval_transfer_v1). Its config names the base model, so evaluate-transfer relabels it -it in memory; nothing else changes",
+      "question": "is the released base-model lens a usable reader for the instruct model (no fit needed for Gemma variants)?",
+      "rule": "usable if jpp_base - jpp_64p >= -0.01 on headline recall@10 or its 95% CI includes 0; otherwise per-model fits are needed",
+      "prediction": "jpp_base < jpp_64p (post-training moves the residual geometry the experts and weights were fitted on) but jpp_base > logit",
+      "confounds": [
+        "the base lens's expert weights were fitted on the fit:0 split of the base model's correctness-filtered items; under -it's filter the split differs, so some of our held-out items may be in its weight-fitting set (favours jpp_base). Checked only if jpp_base wins: the released file carries no item names",
+        "jpp_base and jpp_64p differ in fit model and in fit-weight items, so a gap is a transfer effect plus weight-fit noise"
+      ],
+      "consistency_check": "rlens_64p and jpp_64p are re-scored in this run; their recall must equal eval_v1's exactly (same items, same code)"
+    },
+    "long_fit": {
+      "why": "paper Fig 19 (Qwen3.6-27B): at a fixed number of positions, longer fit sequences give a better lens and are not plateauing at ~7,100 positions; FLOPs scale with positions",
+      "data": "the first 14 WikiText-103 records of >= 3000 chars (jlens load_wikitext_prompts order; all 588-965 Gemma tokens, none shared with the 64 short prompts), truncated to 512 tokens, first 16 positions skipped: 14 x 495 = 6,930 source positions vs 7,104 for the 64 x 128 fit (2.5% fewer, against the long fit). Saved to cache/exp12/long_prompts.json",
+      "routers": "the existing K=8 router and a new K=16 router (seed 0), both fitted on the same first 1000 short WikiText prompts (128 tokens); routers are fixed, so between the K=8 lenses only the fit data differ",
+      "fit": "one LRP (rlens) backward pass set shared by both routers; readout layers only (8,15,22,30,38,45,52); 4 Jacobian rows per pass (4 x 512 = 2048 tokens per pass, as 16 x 128); checkpoint every prompt; snapshot after 7 prompts (3,465 positions) of the K=8 experts and the pooled R-lens; min_kept_positions 50",
+      "lenses": [
+        "rlens_long_07p",
+        "rlens_long_14p",
+        "jpp_long_k8_07p",
+        "jpp_long_k8_14p",
+        "jpp_long_k16_14p"
+      ],
+      "expert_weights": "fit-weights on fit:0 at the readout layers, as for the phase 1 snapshots",
+      "evaluation": "eval_long_v1: held-out:0, readout layers, with logit, rlens_64p and jpp_64p re-scored; reports vs jpp_64p, rlens_64p and jpp_long_k8_14p; headline recall@10 with paired item-bootstrap CIs, log10 rank and per-layer recall secondary",
+      "comparisons": {
+        "L1_sequence_length_jpp": "jpp_long_k8_14p vs jpp_64p",
+        "L2_experts": "jpp_long_k16_14p vs jpp_long_k8_14p, with fallback counts from the merge stamps",
+        "L3_sequence_length_rlens": "rlens_long_14p vs rlens_64p",
+        "L4_still_improving": "rlens_long_14p vs rlens_long_07p and jpp_long_k8_14p vs jpp_long_k8_07p"
+      },
+      "predictions": {
+        "L1": "> 0 (paper Fig 19)",
+        "L3": "> 0, smaller than L1",
+        "L2": "smaller than the paper's +2.9 (Qwen, E=16 vs E=8 at their data) and possibly <= 0: 6,930 positions over 16 experts is ~430 per expert per layer, and more experts fall back",
+        "L4": "14p > 07p for both kinds (not saturated at 14 records)"
+      },
+      "decision_rule": "future Gemma lenses use long sequences if the L1 CI excludes 0 in favour of long, and K=16 if the L2 CI does; otherwise the 64 x 128 K=8 recipe stays",
+      "confounds": [
+        "long records (>= 3000 chars) are a different slice of WikiText than >= 600-char records, so L1/L3 compare 'long records at 512 tokens' with 'short records at 128', not sequence length alone",
+        "the routers were fitted on positions < 128; positions up to 511 are routed by them (if anything a handicap for the long fit)",
+        "one prompt order and one fit per arm: no between-fit variance; CIs cover item sampling only",
+        "the eval prompts are short, so the readout positions are early-context positions"
+      ]
+    },
+    "offload": "after the merge of the 64-prompt fit, its K=8 raw-sum checkpoint (29.6 GB) is uploaded to the private HF dataset zachperlman20/cot-controllability-cache under its repo-relative path (dataset privacy checked first), the remote LFS sha256 is checked against the local file, then the local file is deleted (user-approved). Nothing else is deleted",
+    "disk": "free before phase 2 ~41 GB after the base-lens download (6.8 GB); merge + weights ~24 GB; offload frees 29.6 GB; long fit peak ~36 GB (K=8 + K=16 fp32 sums 19.4 GB, the K=16 file doubled during its atomic rewrite, snapshot ~4 GB); ~12 GB free at the end. The script stops before a stage when free space is below its need",
+    "order": [
+      "wait for the 64-prompt fit",
+      "merge -> experts_64p + rlens_64p",
+      "offload the 64-prompt checkpoint (background)",
+      "fit-weights 64p + 08/16/32p",
+      "evaluate v1 + reports",
+      "B1 evaluate-transfer + report",
+      "router K=16",
+      "wait for the offload",
+      "long fit (K=8 and K=16, snapshot at 7)",
+      "merge K=8 (+ rlens_long_14p) and K=16",
+      "fit-weights long_k8_14p, long_k16_14p, long_k8_07p",
+      "evaluate long + reports"
+    ]
+  }
 }
