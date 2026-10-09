@@ -5,6 +5,9 @@ secondary lens margins, which showed s1 above the decoy at the first ingredient'
           ingredient's token, per h=2 group, with h=1 (the same lookup as the answer) as the reference
   checks  CPU-only checks on saved outputs: whether the h=2 correct group beats chance, and whether the twin
           patch's stir-count setting is the donor's count or generic disruption (two-stir donors as the contrast)
+  columns (added after the J++ run, whose column-order check split the J-lens first-ingredient margin unevenly)
+          the first-ingredient s1-minus-decoy contrast split by whether s1's column is printed before the decoy's:
+          the saved lens margins (J-lens, R-lens, J++; bank test) and the stir1 probe (banks test and dev)
 """
 from __future__ import annotations
 
@@ -88,7 +91,60 @@ def setting_vs_disruption(metas: list[dict]) -> None:
     print(f"  baseline: s1 equals the shortcut answer on {base:.2f} of these items")
 
 
+def column_order() -> None:
+    """A real lookup at the first ingredient's token makes s1 readable whichever column is printed first; a reader
+    that favours the earlier-printed entry of the start colour's rule line makes a margin of opposite sign in the two
+    halves. Lookup part = the mean of the two halves; column part = half their difference."""
+    import exp11_jpp as J
+    g = torch.Generator().manual_seed(0)
+    halves = lambda x, first: (Q.mean_ci(x[first], g), Q.mean_ci(x[~first], g))
+    show = lambda c: f"{c[0]:+.3f}[{c[1]:+.3f},{c[2]:+.3f}]"
+    blob = torch.load(X.EXP.cache / "jpp_three_test.pt", weights_only=False)
+    first, groups = torch.tensor(blob["column_first"]), blob["groups"]
+    print("## lens margins at the first ingredient's token (bank test): s1 (h=1: answer) minus decoy, band means, "
+          "split by column order [95% CI]")
+    for name in J.LENSES:
+        x = blob["margins"][name][:, :, J.POSITIONS.index("stir1")]
+        for grp in ("h1", "shortcut", "correct"):
+            idx = torch.tensor([i for i, g_ in enumerate(groups) if g_ == grp])
+            for band in ("early", "mid"):
+                (a, b) = halves(x[idx][:, list(J.BANDS[band])].mean(1), first[idx])
+                print(f"  {name:>6} {grp:>8} {band:>5}: s1 column first {show(a)} (n={int(first[idx].sum())}), "
+                      f"decoy column first {show(b)} (n={int((~first[idx]).sum())}); "
+                      f"lookup {(a[0] + b[0]) / 2:+.3f}, column {(a[0] - b[0]) / 2:+.3f}")
+    probe_column_split(["test"])
+    probe_column_split(["dev", "fmt_dev"])
+
+
+def probe_column_split(banks: list[str]) -> None:
+    """The stir1 probe (pooled over `banks`, as in the dev replication: 'dev' alone is too small for the probe to
+    read even the start colour) split by column order."""
+    import exp11_jpp as J
+    g = torch.Generator().manual_seed(0)
+    show = lambda c: f"{c[0]:+.3f}[{c[1]:+.3f},{c[2]:+.3f}]"
+    metas = {m["item_id"]: m for bank in banks for m in E.load(bank)}
+    res = Q.probe(banks, k_pca=64, wd=1e-3, positions=("stir1",), save=False)["results"]
+    print(f"\n## stir1 probe (banks {'+'.join(banks)}): s1 (h=1: answer) minus decoy held-out accuracy, band "
+          f"{Q.BAND.start}..{Q.BAND.stop - 1}, split by column order [95% CI]")
+    for h, target in ((1, "answer"), (2, "s1")):
+        r = res[(h, "stir1", target)]
+        d = (r["correct"].float() - res[(h, "stir1", "decoy")]["correct"].float())[:, list(Q.BAND)].mean(1)
+        col = torch.tensor([J.column_first(metas[i]) for i in r["item_ids"]])
+        for grp in sorted(set(r["groups"])):
+            idx = torch.tensor([i for i, g_ in enumerate(r["groups"]) if g_ == grp])
+            a, b = Q.mean_ci(d[idx][col[idx]], g), Q.mean_ci(d[idx][~col[idx]], g)
+            print(f"  {grp:>11}: s1 column first {show(a)} (n={int(col[idx].sum())}), decoy column first "
+                  f"{show(b)} (n={int((~col[idx]).sum())}); lookup {(a[0] + b[0]) / 2:+.3f}, "
+                  f"column {(a[0] - b[0]) / 2:+.3f}")
+
+
 def main() -> None:
+    if sys.argv[1:] == ["columns"]:
+        column_order()
+        return
+    if sys.argv[1:] == ["columns_dev"]:
+        probe_column_split(["dev", "fmt_dev"])
+        return
     if sys.argv[1:] == ["checks"]:
         metas = E.load("test")
         correct_vs_chance(metas)

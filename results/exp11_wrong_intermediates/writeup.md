@@ -4,8 +4,9 @@
 prefilled), read with the released J/R lenses. Pre-registration: `manifest.json` (questions, groups, reading rules),
 its two deviations and the `test_addendum` (probe settings, Q3 tests and their reading rules), all committed before
 any test capture. Outputs: `analysis/test_v1/` (`test_analysis.txt` = every pre-registered test number;
-`exploratory_*.txt` = the follow-ups marked exploratory below; `fig_twinpatch.png`). Raw outputs:
-`cache/exp11/q23_*.pt` (private HF dataset). No item text appears anywhere.
+`exploratory_*.txt` = the follow-ups marked exploratory below; `fig_twinpatch.png`). The J++ re-read (section 5) has
+its own addendum (`jpp_addendum`, committed before any J++ readout) and outputs in `analysis/jpp_v1/`. Raw outputs:
+`cache/exp11/q23_*.pt`, `cache/exp11/jpp_three_test.pt` (private HF dataset). No item text appears anywhere.
 
 ## TL;DR
 
@@ -22,6 +23,8 @@ somewhere and then lost, or never computed?
 3. **Exploratory: s1 *is* looked up locally at the first ingredient's token** (probe s1-minus-decoy +0.13
    [+0.07,+0.20] on shortcut items, about the size of the same lookup on one-stir items, +0.08), before the model
    has seen the second stir. It is not found at the second ingredient's token, the question end or the answer.
+   The probe effect is the same whichever column is printed first; the J-lens margin that seemed to agree is not
+   (it sits in the items whose s1 column comes first), so the support for this is the probe alone.
 4. **No answer-position patch rescues a wrong answer**: neither the item's own later state written into an earlier
    layer, nor a correct item's state at layer 40. Both are clean nulls against matched controls.
 5. **What the answer position carries at layers 36–40 is a stir-count setting, not a colour.** An unrelated item's
@@ -29,6 +32,11 @@ somewhere and then lost, or never computed?
    donor's colour 0.12); the colour itself arrives only from layer 52. Two-stir donors do not do this, so it is the
    donor's count, not disruption. The single table shows the same, and its count word ("twice") is a generic,
    item-independent quantity read between layers 12 and 32.
+6. **The J++ lens reads nothing earlier on this task** (pre-registered re-read). The J-lens, R-lens and J++ all
+   first read the one-stir answer colour at layer 36, and so does the probe: the lookup itself appears between
+   layers 32 and 36, so there is nothing earlier for any reader to find. In the mid band at the
+   answer position, J++ agrees that s1 is absent on shortcut items (at most 0.35 of the one-stir lookup's size).
+   On the single table it does not reproduce the J-lens "held predecessor" reading.
 
 Reading: the answer position decides *how many* stirs to apply and then fetches a colour from the prompt. In
 shortcut items the first lookup exists locally, but no composed colour (s1 fed into the second lookup) is found
@@ -91,11 +99,20 @@ Why this reading is weak (most likely confound first):
 
 **Exploratory (not pre-registered; chosen after seeing the secondary lens margins): the first ingredient's token.**
 Probe s1-minus-decoy, shortcut **+0.132 [+0.065,+0.202]** (n=107), correct +0.118 [−0.044,+0.291] (n=19), h=1
-reference (the same lookup) +0.080 [+0.041,+0.119]; J/R-lens agree (shortcut +0.51/+0.48 at layer 40). On the
-independent dev items: shortcut +0.060 [+0.004,+0.124] (a weaker probe: start colour 0.71 vs 0.93). Checked
-confound: column order is balanced (if anything the decoy's column is listed first more often, which works against
-this). Note the timing: at this token the model has not read the second stir, so this is an automatic local lookup,
-not evidence about the decision to shortcut.
+reference (the same lookup) +0.080 [+0.041,+0.119]. On the independent dev items: shortcut +0.060 [+0.004,+0.124]
+(a weaker probe: start colour 0.71 vs 0.93). Note the timing: at this token the model has not read the second stir,
+so this is an automatic local lookup, not evidence about the decision to shortcut.
+
+Column order (s1 and the decoy are entries of the same printed rule line, so a reader that favours the earlier
+column makes a margin without any lookup). This paragraph first said "J/R-lens agree (+0.51/+0.48 at layer 40)" and
+"column order is balanced", which checked only the item counts (50 vs 57). Splitting the effect itself
+(`analysis/jpp_v1/exploratory_column_order*.txt`, band means, s1's column printed first vs the decoy's first):
+- probe, test shortcut: +0.138 [+0.040,+0.246] vs +0.127 [+0.042,+0.223]; dev (dev + fmt_dev, as above):
+  +0.035 vs +0.091 [+0.022,+0.174]. No column effect; the probe result stands.
+- J-lens, test shortcut, band 24..52: +0.52 [+0.15,+0.90] vs +0.00 [−0.34,+0.35] (8..20: +0.72 vs −0.04). The
+  J-lens's h=1 control shows no such split (+0.20 vs +0.20), so this is not a general lens bias; but the J-lens
+  margin on shortcut items cannot count as agreement. R-lens: +0.42 vs +0.11 (between the two). The split was not
+  pre-registered for the J/R lenses and n is 50/57, so this is a flag, not a finding.
 
 ### 3. Single table: is the colour before the answer held? (Q2, J-lens, answer position, band 36..48)
 
@@ -106,6 +123,10 @@ not evidence about the decision to shortcut.
 - Falsification flag on D: at h=2, D is positive in every group with n > 3, including off-cycle wrong answers
   (+0.51 [+0.20,+0.81], n=26). So D alone cannot separate a held trajectory state from reading the answer's own
   rule line; only the h=3 group contrast is informative, and its pre-registered test fails on the primary lens.
+- J++ (jpp_addendum, same band and rules): held predecessor **not met**, h=3 correct D +0.07 [−0.23,+0.35]; AUC(R)
+  0.54 [0.43,0.66], AUC(R) − AUC(A) CI [−0.15,+0.27]. At h=2, J++ D is positive only in the correct group (+0.38
+  [+0.21,+0.56]; one_extra −0.27, other_wrong −0.19), so the J-lens flag above does not recur. The held-predecessor
+  reading therefore depends on the lens (met with the J-lens and R-lens, not with J++) and should not be relied on.
 
 ### 4. Causal tests (Q3)
 
@@ -138,6 +159,35 @@ answer; dashed = unpatched.
   item-independent count, read out by layer 32. Reverse ("three times" into "twice") peaks at layer 8 (+0.23) with a
   second bump at 28–32 (unexplained; exploratory).
 
+### 5. Re-read with the J++ lens (pre-registered: `jpp_addendum`)
+
+Why: with the J-lens and R-lens, layers before ~36 were never tested for s1, and the J++ paper reports reading
+intermediates on this model from layer 24 (recall@10 0.55 vs 0.36 J-lens / 0.38 R-lens, the authors' exact-token
+metric, not an LLM judge). Lens: `koayon/jpp-lenses` qwen3.6-27b (target block 63), the same colour-restricted
+readout as the other lenses, on the existing test captures. These items had already been read with the other
+readers; only the J++ numbers were unseen when the addendum was written.
+
+- **Loader gate** (`gate.txt`): on the paper's own example our reader puts "heart", "cardiac" and "心脏" at the top at
+  layers 24 and 32 (the model answers "4"). Passed.
+- **Onset**: the one-stir control (answer minus decoy) is first readable at **layer 36** for all three lenses, at
+  both the first ingredient's token and the answer position. "J++ reads earlier": no.
+- **Primary cells** (shortcut s1 minus decoy, band means, Bonferroni 98.75% CIs; guard = the one-stir control at the
+  same cell):
+
+| position, band | J++ shortcut s1 − decoy | J++ one-stir guard | reading |
+|---|---|---|---|
+| first ingredient, 8..20 | −0.18 [−0.89,+0.55] | +0.00 [−0.42,+0.41] | no reading |
+| first ingredient, 24..52 | +0.19 [−0.32,+0.73] | +0.30 [−0.04,+0.59] | no reading |
+| answer, 8..20 | −0.42 [−1.04,+0.28] | −0.06 [−0.45,+0.29] | no reading |
+| answer, 24..52 | +0.10 [−0.15,+0.34] | +0.96 [+0.77,+1.16] | absent (≤ 0.35 of the guard) |
+
+At the answer position in the mid band, J++ agrees with the probe and the other lenses: no s1 when the model
+shortcuts. Everything else is unreadable: the early band fails the guard at both positions, and so does the first
+ingredient's token in the mid band (it would pass at 95%). The most likely reason is that there is nothing to read
+before layer 36, not that the lenses fail there: the trained probe (no lens involved) gives the same onset. Its
+one-stir answer-minus-decoy accuracy at the answer position is +0.09 at layer 32 and +0.70 at layer 36
+(`test_v1` probe file). J++ is no worse a reader here, but no better.
+
 ## What this does and does not show
 
 - Supported (causal, matched controls, replicated dev → test): the answer position at layers 36–40 holds an
@@ -150,6 +200,9 @@ answer; dashed = unpatched.
   a positive test would patch prompt-position states from correct items, which we did not run.
 - One model, one task family, no CoT. Lens readouts are suggestive; the probe and patching numbers are the hard
   evidence. No LLM-judge scores are used.
+- Layers before 36 are untested by every lens (J-lens, R-lens, J++): none reads even the one-stir control there,
+  and neither does the probe (the lookup appears between layers 32 and 36). The single-table "held predecessor"
+  depends on which lens is used.
 
 ## Open
 

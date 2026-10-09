@@ -1,0 +1,10 @@
+## gate: J++ top 10 at the final position of 'Fact: In humans, the organ that pumps blood through the body has this many chambers: ', Readout Filtering on
+  model's own top 10: ['4', '1', '2', '3', '0', ' ', ' Four', '<think>', ' four', '四']
+  layer  8   [' Wichita', ' Arizona', ' Colorado', ' sold', ' numbers', ' SOLD', ' billed', '_SDK', ' Medal', ' medals']
+  layer 16   [' Texas', ' and', ' the', ' Big', ' Arizona', ' Missouri', ' a', ' Austin', ' All', ' Vegas']
+  layer 24 * [' heart', ' cardiac', '心脏', '的心脏', ' cardiovascular', ' hearts', ' card', ' Heart', ' cardi', 'heart']
+  layer 32 * [' cardiac', ' heart', ' Heart', '心脏', '的心脏', ' hearts', ' Cardinal', ' Card', ' cardiovascular', ' Cardio']
+  layer 40 * [' cardiac', ' heart', '心脏', '的心脏', ' cardiovascular', ' cardi', ' hearts', ' Heart', 'Heart', 'heart']
+  layer 48 * [' cardiac', '心脏', ' heart', ' lungs', '的心脏', ' cardi', ' hearts', ' cardiovascular', '-heart', ' myocard']
+  layer 56 * [' cardiac', ' heart', ' Heart', ' chambers', ' chamber', '心脏', 'Heart', '的心脏', ' cardi', 'card']
+  gate PASSED: a heart token in the top 10 at layer 24 or 32

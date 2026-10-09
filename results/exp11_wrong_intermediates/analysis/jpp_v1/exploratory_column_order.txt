@@ -1,0 +1,47 @@
+## lens margins at the first ingredient's token (bank test): s1 (h=1: answer) minus decoy, band means, split by column order [95% CI]
+  j-lens       h1 early: s1 column first -0.202[-0.530,+0.102] (n=78), decoy column first +0.001[-0.205,+0.217] (n=172); lookup -0.100, column -0.102
+  j-lens       h1   mid: s1 column first +0.196[-0.120,+0.503] (n=78), decoy column first +0.196[+0.003,+0.382] (n=172); lookup +0.196, column -0.000
+  j-lens shortcut early: s1 column first +0.723[+0.348,+1.108] (n=50), decoy column first -0.035[-0.335,+0.266] (n=57); lookup +0.344, column +0.379
+  j-lens shortcut   mid: s1 column first +0.515[+0.149,+0.897] (n=50), decoy column first +0.003[-0.343,+0.349] (n=57); lookup +0.259, column +0.256
+  j-lens  correct early: s1 column first -0.192[-1.221,+0.823] (n=11), decoy column first +0.164[-0.479,+0.874] (n=8); lookup -0.014, column -0.178
+  j-lens  correct   mid: s1 column first +0.214[-0.593,+1.084] (n=11), decoy column first +0.619[-0.273,+1.529] (n=8); lookup +0.417, column -0.202
+  r-lens       h1 early: s1 column first +0.007[-0.285,+0.314] (n=78), decoy column first -0.024[-0.219,+0.163] (n=172); lookup -0.009, column +0.016
+  r-lens       h1   mid: s1 column first +0.249[-0.068,+0.558] (n=78), decoy column first +0.193[-0.001,+0.395] (n=172); lookup +0.221, column +0.028
+  r-lens shortcut early: s1 column first +0.273[-0.126,+0.698] (n=50), decoy column first +0.007[-0.337,+0.370] (n=57); lookup +0.140, column +0.133
+  r-lens shortcut   mid: s1 column first +0.419[+0.017,+0.800] (n=50), decoy column first +0.108[-0.257,+0.483] (n=57); lookup +0.263, column +0.156
+  r-lens  correct early: s1 column first +0.048[-0.789,+1.118] (n=11), decoy column first +0.369[-0.318,+1.035] (n=8); lookup +0.208, column -0.160
+  r-lens  correct   mid: s1 column first +0.451[-0.227,+1.227] (n=11), decoy column first +0.513[-0.409,+1.440] (n=8); lookup +0.482, column -0.031
+     jpp       h1 early: s1 column first +0.260[-0.305,+0.899] (n=78), decoy column first -0.114[-0.483,+0.245] (n=172); lookup +0.073, column +0.187
+     jpp       h1   mid: s1 column first +0.395[-0.035,+0.871] (n=78), decoy column first +0.257[-0.031,+0.548] (n=172); lookup +0.326, column +0.069
+     jpp shortcut early: s1 column first -0.045[-0.774,+0.668] (n=50), decoy column first -0.291[-0.997,+0.405] (n=57); lookup -0.168, column +0.123
+     jpp shortcut   mid: s1 column first +0.269[-0.364,+0.878] (n=50), decoy column first +0.113[-0.438,+0.664] (n=57); lookup +0.191, column +0.078
+     jpp  correct early: s1 column first +1.244[+0.117,+2.559] (n=11), decoy column first +0.965[-0.158,+2.621] (n=8); lookup +1.105, column +0.139
+     jpp  correct   mid: s1 column first +1.168[+0.387,+1.983] (n=11), decoy column first +0.113[-1.035,+1.293] (n=8); lookup +0.641, column +0.528
+
+## probe h=1 position=stir1 k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+           h1 n=250 answer=0.22 decoy=0.14 answer-decoy=+0.080[+0.041,+0.119]
+
+## probe h=2 position=stir1 k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+      correct n= 19 s1=0.19 decoy=0.07 s0=0.89 answer=0.21 s1-decoy=+0.118[-0.044,+0.291]
+  other_wrong n= 42 s1=0.13 decoy=0.08 s0=0.83 answer=0.17 s1-decoy=+0.052[-0.027,+0.130]
+     shortcut n=107 s1=0.22 decoy=0.09 s0=0.93 answer=0.19 s1-decoy=+0.132[+0.065,+0.202]
+
+## stir1 probe (bank test): s1 (h=1: answer) minus decoy held-out accuracy, band 24..52, split by column order [95% CI]
+           h1: s1 column first +0.121[+0.038,+0.194] (n=78), decoy column first +0.061[+0.014,+0.108] (n=172); lookup +0.091, column +0.030
+      correct: s1 column first +0.100[-0.163,+0.373] (n=11), decoy column first +0.142[-0.004,+0.310] (n=8); lookup +0.121, column -0.021
+  other_wrong: s1 column first +0.143[-0.096,+0.363] (n=13), decoy column first +0.011[-0.051,+0.069] (n=29); lookup +0.077, column +0.066
+     shortcut: s1 column first +0.138[+0.040,+0.246] (n=50), decoy column first +0.127[+0.042,+0.223] (n=57); lookup +0.132, column +0.005
+
+## probe h=1 position=stir1 k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+           h1 n= 60 answer=0.10 decoy=0.09 answer-decoy=+0.012[-0.011,+0.034]
+
+## probe h=2 position=stir1 k_pca=64 wd=0.001: band 24..52 mean held-out accuracy (chance 0.10) [95% CI]
+      correct n=  4 s1=0.07 decoy=0.12 s0=0.10 answer=0.15 s1-decoy=-0.052[-0.112,+0.009]
+  other_wrong n=  7 s1=0.06 decoy=0.05 s0=0.08 answer=0.09 s1-decoy=+0.005[-0.039,+0.069]
+     shortcut n= 36 s1=0.08 decoy=0.09 s0=0.10 answer=0.11 s1-decoy=-0.009[-0.034,+0.015]
+
+## stir1 probe (bank dev): s1 (h=1: answer) minus decoy held-out accuracy, band 24..52, split by column order [95% CI]
+           h1: s1 column first +0.021[-0.013,+0.057] (n=18), decoy column first +0.008[-0.021,+0.037] (n=42); lookup +0.015, column +0.006
+      correct: s1 column first -0.052[-0.069,-0.034] (n=2), decoy column first -0.052[-0.138,+0.034] (n=2); lookup -0.052, column +0.000
+  other_wrong: s1 column first +0.069[-0.034,+0.172] (n=2), decoy column first -0.021[-0.048,+0.007] (n=5); lookup +0.024, column +0.045
+     shortcut: s1 column first -0.004[-0.040,+0.031] (n=19), decoy column first -0.014[-0.051,+0.020] (n=17); lookup -0.009, column +0.005
