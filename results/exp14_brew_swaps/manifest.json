@@ -70,5 +70,7 @@
     "run": "scripts/run_exp14.sh: capture, readouts, swaps, repair, report; log/exp14/run.log"
   },
   "costs": "capture ~2 min; readouts ~10 min; swaps 100 items x 4 directions x 14 windows x 7 passes = 39,200 forwards (~70 min); repair ~135 items x 4 x 14 x 2 = ~15,000 forwards (~30 min)",
-  "deviations_from_plan": []
+  "deviations_from_plan": [
+    "2026-10-09 23:35Z, after capture and readouts finished and before any swap result was written: the swaps stage ran out of GPU memory twice within its first item (22:53Z sharing the GPU with exp13's Qwen stage; 23:29Z alone) because run_trials ran the edited forwards with autograd on, and the saved colour logits kept every pass's graph alive. Fix: run_trials is decorated with torch.no_grad(). No design, item, direction or analysis change; the capture and readouts outputs are unaffected (both already ran without gradients). Failed attempt's log kept at log/exp14/run_oom_attempt1.log and run_oom_attempt2.log."
+  ]
 }

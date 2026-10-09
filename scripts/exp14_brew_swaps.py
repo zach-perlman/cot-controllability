@@ -352,6 +352,7 @@ def redirect_target_h3(brew: B.Brew, item_id: str, predicted: str) -> str | None
     return random.Random(f"exp14 redirect {item_id}").choice(eligible) if eligible else None
 
 
+@torch.no_grad()
 def run_trials(model, tokenizer, dirs: Directions, jobs: list[dict], out: Path, scales_by_kind: dict) -> None:
     """jobs: one per item, {item_id, row, brew, variants: {name: (source, target)}}. For each item: a clean
     forward, then one edited forward per (direction, window, scale, variant)."""
