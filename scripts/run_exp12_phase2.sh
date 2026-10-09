@@ -2,7 +2,9 @@
 # exp12 phase 2 (results/exp12_gemma_lenses/manifest.json, key "phase2"): phase 1's stages 4-6
 # as pre-registered, then the base-lens transfer check (B1), the offload of the 64-prompt raw
 # sums, and the long-sequence J++ fit (L1-L4). run_exp12_lenses.sh was stopped during its fit,
-# which carried on, so its J-lens stage never runs. Every stage skips when its output exists.
+# which carried on, so its J-lens stage never runs. Every stage skips when its output exists, so
+# scripts/run_exp12_phase2_retry.sh reruns this to continue after a failure. B1 and the reports
+# are not needed by later stages, so their failures are logged ("FAILED") and the run goes on.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 export HF_HOME=${HF_HOME:-/workspace/.hf_home}
@@ -28,7 +30,8 @@ need_gb() {  # need_gb <GB> <what>: stop rather than fill the disk mid-write
   if (( free < $1 )); then echo "STOP: ${free} GB free, ${1} GB needed for $2"; exit 1; fi
 }
 report() {  # report <eval dir> <reference lens> <file stem>
-  [ -f $1/$3.txt ] || $W report --ranks $1/ranks.csv --reference $2 --correctness-csv $CORRECT --out $1/$3.txt
+  [ -f $1/$3.txt ] || $W report --ranks $1/ranks.csv --reference $2 --correctness-csv $CORRECT \
+    --out $1/$3.txt || echo "FAILED: report $1/$3 (continuing)"
 }
 
 # 0. wait for the 64-prompt fit to finish and free the GPU
@@ -44,14 +47,6 @@ CKPT_FILE=$CKPT/experts_K8_checkpoint.pt
 [ -f $L/rlens_64p.pt ] || { stage merge jpp; need_gb 20 "the merge"
   $CLI merge-experts --checkpoint-dirs "$CKPT" --num-clusters 8 \
     --checkpoint-name jpp_experts --out $L/experts_64p.pt --pooled-lens-out $L/rlens_64p.pt; }
-
-# offload the 64-prompt raw sums: upload, check the remote sha256, delete (in the background)
-OFFLOAD_PID=
-if [ -f "$CKPT_FILE" ]; then
-  stage offload "$CKPT_FILE (background; log/exp12/offload.log)"
-  $W2 offload --delete "$CKPT_FILE" > log/exp12/offload.log 2>&1 &
-  OFFLOAD_PID=$!
-fi
 
 # 5. (phase 1) J++ expert weights on the fit:0 items
 [ -f $L/jpp_64p.pt ] || { stage weights 64p
@@ -76,17 +71,23 @@ report $E rlens_64p report_vs_rlens
 E=$R/eval_transfer_v1
 [ -f $E/ranks.csv ] || { stage evaluate transfer
   $W2 evaluate-transfer --lens logit $L/rlens_64p.pt $L/jpp_64p.pt --transferred jpp_base=$BASE_LENS \
-    --correctness-csv $CORRECT --out $E/ranks.csv; }
-report $E jpp_64p report_vs_jpp
+    --correctness-csv $CORRECT --out $E/ranks.csv || echo "FAILED: evaluate transfer (continuing)"; }
+[ ! -f $E/ranks.csv ] || report $E jpp_64p report_vs_jpp
 
 # 8. a K=16 router on the same 1000 short prompts as the K=8 one, at the readout layers
 [ -f $C/router_K16.pt ] || { stage router K16
   $CLI fit-router --hf-model-name $MODEL --layers $READOUT --num-prompts 1000 --num-clusters 16 \
     --out $C/router_K16.pt; }
 
-# 9. the long-sequence fit: 14 records x 512 tokens, routers K=8 and K=16, snapshot at 7
-if [ -n "$OFFLOAD_PID" ]; then stage wait for the offload; wait $OFFLOAD_PID; fi
+# offload the 64-prompt raw sums for the long fit's disk: upload, check the remote sha256, delete
+for attempt in 1 2 3; do
+  [ -f "$CKPT_FILE" ] || break
+  stage offload "$CKPT_FILE, attempt $attempt (log/exp12/offload.log)"
+  $W2 offload --delete "$CKPT_FILE" >> log/exp12/offload.log 2>&1 || sleep 300
+done
 [ ! -f "$CKPT_FILE" ] || { echo "STOP: $CKPT_FILE is still on disk (log/exp12/offload.log)"; exit 1; }
+
+# 9. the long-sequence fit: 14 records x 512 tokens, routers K=8 and K=16, snapshot at 7
 if [ ! -f $C/jpp_long_checkpoint_dir.txt ]; then
   stage fit jpp_long
   if compgen -G "$C/fits/*/jpp_long/shard0of1/experts_K8_checkpoint.pt" > /dev/null; then
