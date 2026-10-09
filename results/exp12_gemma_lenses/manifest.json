@@ -182,5 +182,48 @@
       "weights",
       "evaluate eval_rep_short_v1 + reports"
     ]
+  },
+  "phase4": {
+    "written": "2026-10-09T06:30Z, while phase 2 ran (long fit at record 6 of 14); nothing of phase 4 run or scored. The user approved this arm ('queue it'), including upload-then-delete of the raw sums it needs",
+    "status": "pre-registered",
+    "question": "does the fit text matter? The recipe (and the paper) fit on English WikiText-103. The multilingual task (Spanish/French/German/Portuguese prompts, English intermediates) is where J++ adds nothing over the logit lens in eval_v1 (0.322 vs 0.317), and exp11-style readouts use chat-templated prompts that WikiText never contains",
+    "arm": {
+      "data": "CohereLabs/aya_dataset train (Apache-2.0, ungated; revision in the prompt stamp): inputs and targets rendered as a user turn and a model turn with google/gemma-4-31B-it's chat template, leading <bos> removed (the fit tokenizer adds it; the ids are checked equal to apply_chat_template's), kept if >= 128 tokens. 16 languages in this order: English, Spanish, French, German, Portuguese, Italian, Dutch, Polish, Russian, Simplified Chinese, Japanese, Korean, Standard Arabic, Hindi, Turkish, Vietnamese; each language's rows shuffled with seed 0, then interleaved round-robin; exact duplicates dropped; rows containing a multilingual eval prompt dropped. The first 1000 = the router pool, the first 64 = the Jacobian prompts (the WikiText recipe's nesting)",
+      "router": "jpp_cli.fit_router on the 1000 prompts at the readout layers: K=8, PCA 64, seed 0, 128 tokens, first 16 positions skipped (router_K8's settings)",
+      "jacobians": "ExpertJacobianRelPTrainer (lrp rlens) on the 64 prompts at the readout layers, 128 tokens, 16 rows per pass, first 16 positions skipped (the jpp_64p recipe). Experts and the pooled R-lens from ExpertJacobians.from_sums with min kept positions 50, as phase 1's snapshots were built",
+      "names": "rlens_aya_64p; jpp_aya_64p (expert weights fitted on fit:0, as for every J++ lens)"
+    },
+    "deviation_disk": "no raw-sum checkpoint is written: about 5 GB is free after phase 3, and a checkpoint plus its atomic rewrite needs 13 GB. The experts and pooled lens are written once at the end, so the fit is not resumable (a crash restarts it). Before the fit, phase 3's short-replicate raw sums (6.5 GB) are uploaded to the private dataset, the remote sha256 checked, then deleted locally (private dataset about 91 GB of 100 after)",
+    "evaluation": "eval_aya_v1: jpp_cli evaluate, held-out:0, readout layers; lenses logit, rlens_64p, jpp_64p, rlens_64p_b and jpp_64p_b (when phase 3 made them), rlens_aya_64p, jpp_aya_64p. Reports: macro vs jpp_64p and vs rlens_64p (exp12_lenses report); per eval (exp12_phase4 per-eval-report): recall@10 and mean log10 rank, paired item bootstrap, 2000 resamples, 95% percentile",
+    "rules": {
+      "A1_primary": "Aya helps the multilingual task if jpp_aya_64p - jpp_64p (multilingual recall@10) has its CI above 0 AND is larger than |jpp_64p_b - jpp_64p| on multilingual (the fit-to-fit yardstick; CI only, flagged, if jpp_64p_b is missing)",
+      "A2": "the same for the R-lens (rlens_aya_64p - rlens_64p against |rlens_64p_b - rlens_64p|). The R-lens has no router, so A2 isolates the Jacobians' fit text from the router's",
+      "A3": "English cost: macro over the other macro evals (multihop, typo, association), Aya minus WikiText, for J++ and R; 'costs English' if the CI is below 0",
+      "A4": "overall: macro recall@10, Aya minus WikiText, with CI, for J++ and R",
+      "reading": "A1 yes and A3 no: prefer mixed multilingual chat text for downstream fits. A1 no: the fit text is not the bottleneck on these tasks (the multilingual gap is the task's, not WikiText's). A3 yes: the fit text matters but trades languages"
+    },
+    "predictions": "A1: multilingual up by >= 0.03 for J++. A2: similar or smaller. A3: English tasks flat or down by <= 0.03 (typo is at ceiling, so it can only fall). A4: within +-0.02",
+    "confounds": [
+      "two changes at once (languages and chat format): a positive A1 does not say which; a follow-up would split them",
+      "Aya is 1/16 English, so an A3 drop may reflect less English rather than chat format",
+      "power: 52 multilingual held-out items, so a paired CI half-width near 0.05 is expected; a null rules out only large effects. Mean log10 rank (continuous) is the more sensitive secondary",
+      "the router is refit on Aya, so J++ differences mix router and Jacobians; A2 (no router) separates them",
+      "fit-to-fit noise is judged against the phase 3 replicate (jpp_64p_b), itself a single draw"
+    ],
+    "no_llm_judge": "rank metrics only",
+    "code": {
+      "wrapper": "scripts/exp12_phase4.py (aya-prompts, fit-router, fit, per-eval-report); earlier exp12 scripts unchanged",
+      "run": "scripts/run_exp12_phase4_retry.sh -> scripts/run_exp12_phase4.sh, started after phase 3 exits; log/exp12/phase4.log"
+    },
+    "order": [
+      "wait for phase 3",
+      "offload the short-replicate raw sums",
+      "Aya router",
+      "Aya Jacobian fit",
+      "weights",
+      "evaluate eval_aya_v1",
+      "reports"
+    ],
+    "eta": "about 2.5 h of GPU after phase 3 (the fit about 2.1 h)"
   }
 }
