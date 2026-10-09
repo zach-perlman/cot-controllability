@@ -1,0 +1,58 @@
+{
+  "written": "2026-10-09T03:05Z, after the 2-layer smoke test (cache/exp12/smoke, log/exp12/smoke_*.log) and before any full-size stage; the smoke run's correctness CSV is not reused (stage 1 re-grades into results/)",
+  "status": "pre-registered",
+  "smoke_test": "2 fit layers (0, 30), 1-3 prompts: every stage ran end to end; 117 s per prompt; the report's macro reproduces jpp_lens's item-weighted macro exactly when given the same five evals; a fit resumed from its checkpoint (2/3 -> 3/3, 333 = 3 x 111 positions) and left existing snapshots alone. The smoke tensors were then deleted for disk; logs, ranks and reports are kept in cache/exp12/smoke",
+  "why": [
+    "Lenses for google/gemma-4-31B-it, the model the brew/no-CoT experiments use, so exp11-style residual readouts can be repeated on a second model. The released J++ lens (koayon/jpp-lenses) is for the base google/gemma-4-31B, not the instruct model.",
+    "The user's question: does a small fit set do almost as well as a large one? Answered here for these lenses by scoring lenses built from the first 8, 16 and 32 of the 64 fit prompts against the 64-prompt lens."
+  ],
+  "model": {"hf": "google/gemma-4-31B-it", "revision": "842da3794eaa0b77d5f08bae87a17459d91ff475", "dtype": "bf16", "layers": 60, "d_model": 5376},
+  "code": {
+    "jpp_lens": "third_party/jpp_lens (safety-research/jpp_lens @ 93f02cd), unmodified",
+    "wrapper": "scripts/exp12_lenses.py (correctness, resumable fit with snapshots, report, choose-n)",
+    "run": "scripts/run_exp12_lenses.sh; log/exp12/run.log"
+  },
+  "fit": {
+    "recipe": "the J++ recipe of jpp_cli (koayon/jpp-lenses README): LRP backward lrp_mode=rlens, target = final block (relative_end_transport_layer -1, block 59), WikiText-103 prompts in load_wikitext_prompts order (>= 600 chars), first 64, truncated to 128 tokens, first 16 positions skipped, 16 Jacobian rows per backward pass, checkpoint every 4 prompts",
+    "router": "per-layer unit norm + PCA to 64 + k-means K=8 (seed 0) over the source positions of the first 1000 WikiText prompts",
+    "source_layers": [0, 2, 4, 6, 8, 10, 12, 14, 15, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 45, 46, 48, 50, 52, 54, 56, 58],
+    "readout_layers": [8, 15, 22, 30, 38, 45, 52],
+    "experts": "merge-experts, min_kept_positions 50 (sparser experts fall back to the layer's pooled Jacobian)",
+    "r_lens": "the pooled Jacobian of the same 64-prompt LRP sums (merge-experts --pooled-lens-out)",
+    "expert_weights": "fit-weights on the fit:0 split (20% of the scoreable correctness-filtered items, seed 0), default CondenseConfig; the 64-prompt lens at every source layer, snapshot lenses at the readout layers (weights are fitted per layer)",
+    "snapshots": "after 8, 16 and 32 prompts the running K=8 sums at the readout layers are turned into experts and a pooled R-lens by the library's ExpertJacobians.from_sums; the snapshot J++ lenses get their own fit:0 expert weights. Snapshots are prefixes of the same prompt stream as the 64-prompt fit.",
+    "j_lens": "plain gradient fit (lrp_mode none), K=1 router (every position in one cluster), same prompts/settings otherwise, n_J prompts by the rule in data_efficiency.D2, with a snapshot at n_J/2"
+  },
+  "deviations_from_the_released_recipe": [
+    "instruct model (gemma-4-31B-it), not the base model",
+    "32 of the 59 lens layers (even layers 0-58 plus the readout layers 15 and 45): the fp32 K=8 checkpoint is 0.925 GB per layer and the disk holds ~88 GB",
+    "the correctness column for gemma-4-31B-it is graded here with jpp_lens's own grader (one greedy step on the raw prompt), since jpp_lens ships a Qwen column only"
+  ],
+  "evaluation": {
+    "items": "held-out:0 split (the 80% not used for expert weights), scored with jpp_cli evaluate at the readout layers, Readout Filtering on",
+    "headline": "recall@10: per (item, intermediate) the min rank over the 7 readout layers, hit if <= 10, averaged within item, then over an eval's items, then macro over evals (the README metric, pass_at_k_over_layers)",
+    "macro_evals": "MACRO_EVALS (multihop, multilingual, typo, association, poetry) restricted to evals with >= 20 items kept by the correctness filter (ungradeable evals keep every item). Graded during the smoke test: poetry 9/98 passes, so it is expected to drop, as the paper drops it for base Gemma (1/98)",
+    "secondary": ["mean log10 of the min-over-layers rank (continuous; moves before a rank crosses 10)", "per-layer recall@10"],
+    "cis": "paired bootstrap over items, resampled within eval, 2000 resamples, 95% percentile; CIs cover item sampling only, not the choice of fit prompts",
+    "lenses": ["logit", "rlens_08p", "rlens_16p", "rlens_32p", "rlens_64p", "jpp_08p", "jpp_16p", "jpp_32p", "jpp_64p", "then jlens_<n_J>p and its n_J/2 snapshot"],
+    "not_llm_judged": "every number is an exact-token rank; no LLM judge anywhere"
+  },
+  "checks": {
+    "V1_ordering": "expected jpp_64p > rlens_64p > logit on headline recall@10. If the jpp_64p - rlens_64p CI includes 0, J++ adds nothing measurable on this model and the R-lens becomes the default reader for Gemma work (it needs no labels).",
+    "V2_reference": "the paper's 58% (J++, base gemma-4-31B, poetry dropped) is descriptive only: different model and a different correctness filter",
+    "V3_fallbacks": "number of experts that fell back to the pooled Jacobian at 64 prompts, from the merge stamp; expected few. Many fallbacks mean J++ degenerates toward the R-lens"
+  },
+  "data_efficiency": {
+    "D1": "headline recall@10 and log10 rank of rlens_{08,16,32}p and jpp_{08,16,32}p against the 64-prompt lens of the same kind, with paired CIs. A count n 'suffices' when its headline recall@10 is within 1.0 point of the 64-prompt lens of its kind.",
+    "D1_prediction": "the R-lens (one average per layer) is within 1 point by 16 prompts; J++ needs more than the R-lens at the same count (each expert averages ~1/8 of the positions, and sparse experts fall back), i.e. |jpp_16p - jpp_64p| > |rlens_16p - rlens_64p|",
+    "D2": "n_J = the smallest of 8, 16, 32 whose rlens snapshot is within 1.0 point of rlens_64p on headline recall@10, else 64 (exp12_lenses.py choose-n). The R-lens stands in for the J-lens here (both are one average per layer, from different backward rules); jlens_<n_J/2>p vs jlens_<n_J>p is reported as a check on that stand-in, not used to change n_J",
+    "caveats": [
+      "convergence is measured relative to the 64-prompt lens, not to an infinite-data lens",
+      "one prompt order: snapshots are nested prefixes, so there is no between-sample variance estimate",
+      "recall@10 over min-of-7-layers is coarse; the log10 rank and per-layer recall are reported because a downstream use (per-layer token margins as in exp11) can be more sensitive than the headline"
+    ]
+  },
+  "disk": "peak during the J++ fit ~73 GB (checkpoint 29.6 GB, doubled during its atomic rewrite, plus ~13 GB of snapshots); the run script stops before a stage when free space is below its need",
+  "not_changed": "no edits to third_party/jpp_lens, cc_config or any hashed experiment code; nothing outside cache/exp12, results/exp12_gemma_lenses and log/exp12 is written",
+  "order": ["correctness", "router K=8", "J++ LRP fit (64 prompts, snapshots 8/16/32)", "merge -> experts + rlens_64p", "fit-weights 64p + snapshots", "evaluate + reports", "choose n_J", "router K=1", "J-lens fit", "merge -> jlens", "evaluate + report"]
+}
