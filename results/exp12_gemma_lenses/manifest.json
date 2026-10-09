@@ -233,5 +233,19 @@
     "names": "cache/exp12/aya_plain_prompts.json, router_aya_plain_K8.pt, lenses experts_aya_plain_64p / rlens_aya_plain_64p / jpp_aya_plain_64p, results eval_aya_plain_v1. cache/exp12/aya_prompts.json (the chat-templated list built at 06:28) is kept, unused",
     "rules_and_predictions": "phase4.rules A1-A4 and phase4.predictions apply unchanged, with aya_plain in place of aya. The chat-format confound in phase4.confounds no longer applies; the 1/16-English confound still does",
     "chat_format_question": "left open: testing it needs a chat-wrapped version of the readout evals and a fit-text x format 2x2, which does not fit before the results deadline"
+  },
+  "phase4_status_1": {
+    "written": "2026-10-09T19:08Z, after phase 4's three attempts stopped at the short_b offload (HF 'Private storage limit reached' at 81.9 GB of LFS) and before any phase-4 lens was fitted",
+    "hf_deletion": "user-approved: cache/exp12/fits/2026-10-09/jpp_long/shard0of1/experts_K16_checkpoint.pt (12.9 GB, sha256 4faf176e4fa8...) deleted from the private HF dataset and its LFS object permanently deleted; LFS 81.9 -> 68.9 GB. K=16 lost to K=8 (L2: -0.020 [-0.052, +0.013]); the merged experts_long_k16_14p.pt and jpp_long_k16_14p.pt are kept locally. Its raw sums were needed only to add data to the K=16 fit",
+    "status": "phase 4 is on hold at the user's request (not relaunched); its scripts, rules and the plain-text prompt list are unchanged"
+  },
+  "readouts": {
+    "written": "2026-10-09T19:10Z, before the J-lens fit and the readout runs below",
+    "status": "descriptive, for the exp12 notebook (notebooks/exp12_lenses.ipynb); no decision rule",
+    "why": "the user asked to browse J++, J-lens and R-lens readouts across layers; Gemma had no J-lens (phase2.dropped)",
+    "jlens": "cache/exp12/lenses/jlens_16p.pt: the plain J-lens (gradient fit, lrp_mode none) of google/gemma-4-31B-it on the first 16 recipe WikiText prompts, the same prompts as the rlens_16p snapshot, at the readout layers, recipe otherwise (128 tokens, skip 16, 16 rows per pass); the pooled lens from the K=8 router's sums, as the R-lens snapshots are built. 16 prompts, not 64, to keep the fit near 30 min: compare it with rlens_16p (same data, other backward rule), not rlens_64p",
+    "readouts": "scripts/exp12_readouts.py readouts: held-out:0 items, Readout Filtering on, jpp_cli evaluate's position, candidates and rank rule; per (item, layer, lens) the intermediates' ranks and the top 5 tokens, plus the model's own top 5 at the readout position. Gemma (results/exp12_gemma_lenses/readouts_gemma): logit, jlens_16p, rlens_16p, rlens_64p, jpp_64p at 8,15,22,30,38,45,52. Qwen3.6-27B (readouts_qwen): logit, jlens_camila, rlens_camila, jpp_released at 8..56 step 8",
+    "check": "every rank of a lens also in the reference ranks file (eval_v1 for Gemma, eval_qwen_check for Qwen) must be identical, else the stage fails",
+    "run": "scripts/run_exp12_readouts.sh; log/exp12/readouts.log"
   }
 }
