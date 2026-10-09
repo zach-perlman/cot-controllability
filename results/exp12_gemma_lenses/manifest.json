@@ -125,5 +125,62 @@
       "fit-weights long_k8_14p, long_k16_14p, long_k8_07p",
       "evaluate long + reports"
     ]
+  },
+  "phase3": {
+    "written": "2026-10-09T06:05Z, while phase 2 ran (64-prompt expert weights fitted, nothing scored); the user approved these three additions and the upload-then-delete of raw-sum checkpoints they need",
+    "status": "pre-registered",
+    "code": {
+      "wrapper": "scripts/exp12_phase3.py (qwen-summary, brew-gate, brew-gate-report, fit-replicate); exp12_lenses.py and exp12_phase2.py unchanged",
+      "run": "scripts/run_exp12_phase3_retry.sh -> scripts/run_exp12_phase3.sh, started after phase 2 exits; log/exp12/phase3.log. Four independent groups in this order (each its own process, so one failing does not stop the others): qwen_check, brew_gate, long_replicate, short_replicate"
+    },
+    "P1_pipeline_check_on_qwen": {
+      "why": "every exp12 number goes through jpp_cli evaluate plus our correctness file; reproducing the paper's Qwen3.6-27B row with its released lens checks items, Readout Filtering and the metric end to end",
+      "how": "jpp_cli evaluate, Qwen/Qwen3.6-27B (bf16, local cache, HF_HUB_OFFLINE=1), its recipe readout layers (8..56 step 8), held-out:0, the shipped Qwen correctness column; lenses: logit, koayon/jpp-lenses qwen3.6-27b (jpp_released), camilablank/workspace-lenses qwen3.6-27b j-lens (jlens_camila) and r-lens (rlens_camila). Metric: the macro row of jpp_cli's recall table (k=10, item weighting)",
+      "paper_values": {
+        "logit": 31.1,
+        "J": 35.7,
+        "R": 37.7,
+        "J++": 55.2
+      },
+      "rule": "pipeline validated if |logit - 31.1| <= 1.0 and |jpp_released - 55.2| <= 1.5 points. The camila J/R lenses are descriptive (the paper's J/R rows may be the authors' own fits); expected below 35.7/37.7 (exp11 caveat: released lenses fitted on fewer prompts)",
+      "if_failed": "every exp12 recall is reported as unvalidated until the gap is explained"
+    },
+    "G1_gemma_brew_behaviour": {
+      "why": "the Gemma lenses are for exp11-style readouts of no-CoT brew errors; that needs Gemma to make structured errors",
+      "how": "one bf16 forward pass per row of exp11's test bank (three columns, h=1..3, 250 per h) and single_test bank (single table), exp11's request rows rendered for the gemma4 family (exp10's renderer, thinking off, 'Answer:' prefilled), google/gemma-4-31B-it via transformers. Answer = argmax over the 10 colour tokens (exp11's rule); colour mass and the full-vocabulary top token reported as checks",
+      "metrics": "accuracy per format and h; three columns h>=2: share of wrong answers in each exp11 shortcut family (exp11_brew.hypotheses, gold removed) vs the permutation null of exp11_behaviour_pilot (another same-h item's family set, 200 permutations), with a 95% bootstrap CI over wrong items; single table: wrong answers by stirs applied (exp11 q1_single)",
+      "qwen_reference": "Qwen3.6-27B (exp11): three columns 1.00 / 0.12 / 0.05; last_stir_only 0.75 of h=2 errors vs null 0.11; single table 1.00 / 0.76 / 0.35",
+      "gate": "an exp11 replication on Gemma is worth its own manifest if (a) three-column h=2 accuracy <= 0.5 with >= 100 wrong answers and (b) one family's share exceeds its permutation null by >= 0.20 with the CI's lower end above the null. (a) without (b): errors are unstructured and exp11's s1-vs-shortcut contrasts do not transfer. Not (a): Gemma composes, nothing to read",
+      "no_llm_judge": "exact colour-token argmax; no judge"
+    },
+    "R_fit_to_fit_replicates": {
+      "why": "the item-bootstrap CIs treat each lens as fixed; a second fit of the same recipe on different text measures how much a score moves with the fit text, the most likely confound for every phase 2 comparison",
+      "long_replicate": "records 15-28 of the >= 3000-char WikiText list (disjoint from records 1-14, checked), 512 tokens, 4 rows per pass, the K=8 router, readout layers, 6,930 positions; lenses rlens_long_b_14p, jpp_long_b_k8_14p. Records 1-28 merged (the two fits' sums added, exact): rlens_long_28p, jpp_long_k8_28p (13,860 positions)",
+      "short_replicate": "prompts 65-128 of the recipe's WikiText order (>= 600 chars; disjoint from 1-64, checked), 128 tokens, 16 rows per pass, the K=8 router, readout layers; lenses rlens_64p_b, jpp_64p_b",
+      "expert_weights_and_scoring": "fit-weights on fit:0 at the readout layers; held-out:0, readout layers; eval_rep_long_v1 (with rlens_64p, jpp_64p, rlens_long_14p, jpp_long_k8_14p) and eval_rep_short_v1 (with rlens_64p, jpp_64p, rlens_64p_b, jpp_64p_b, rlens_long_14p, rlens_long_b_14p, jpp_long_k8_14p, jpp_long_b_k8_14p)",
+      "readings": {
+        "fit_noise": "|A - B| per recipe (short J++, short R, long J++, long R) on headline recall@10; the replicate gap is the scale against which phase 2's differences are read",
+        "L1_robust": "long beats short (J++ K=8) only if it does in all four pairings {long A, long B} x {short A, short B} with the paired CI excluding 0; same for the R-lens (L3)",
+        "L2_L4_read_against_noise": "a phase 2 K=16 vs K=8 or 7- vs 14-record difference smaller than the replicate gap is reported as within fit noise",
+        "more_long_data": "28 records vs both 14-record halves: still improving if rlens_long_28p and jpp_long_k8_28p beat both halves (paired CIs)"
+      },
+      "confound": "two draws per recipe estimate the fit noise roughly (one difference per recipe); it is a scale, not a variance estimate"
+    },
+    "disk_and_offload": "upload-then-delete (private dataset checked, remote sha256 checked; user-approved) for raw-sum checkpoints only: the long fit's K=16 checkpoint before the long replicate, both long K=8 checkpoints after the 28-record merge. Private dataset ~85 GB of 100 after these. Each fit stage stops below 15 GB free",
+    "order": [
+      "wait for phase 2",
+      "P1 qwen check",
+      "G1 brew capture + report",
+      "offload long K=16 sums",
+      "long replicate fit",
+      "merges (B alone; A+B)",
+      "weights",
+      "offload long K=8 sums",
+      "evaluate eval_rep_long_v1 + reports",
+      "short replicate fit",
+      "merge",
+      "weights",
+      "evaluate eval_rep_short_v1 + reports"
+    ]
   }
 }
