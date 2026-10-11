@@ -1,0 +1,322 @@
+=== 2026-10-11T18:57:54Z swaps
+Loading weights:   0%|          | 0/1188 [00:00<?, ?it/s]Loading weights:   0%|          | 2/1188 [00:00<01:04, 18.27it/s]Loading weights:   2%|▏         | 26/1188 [00:00<00:08, 143.49it/s]Loading weights:   4%|▍         | 49/1188 [00:00<00:06, 175.08it/s]Loading weights:   6%|▋         | 76/1188 [00:00<00:05, 194.91it/s]Loading weights:   9%|▊         | 103/1188 [00:00<00:05, 211.71it/s]Loading weights:  11%|█         | 131/1188 [00:00<00:04, 215.74it/s]Loading weights:  13%|█▎        | 159/1188 [00:00<00:04, 233.91it/s]Loading weights:  16%|█▌        | 185/1188 [00:00<00:04, 236.16it/s]Loading weights:  18%|█▊        | 213/1188 [00:00<00:04, 240.12it/s]Loading weights:  20%|██        | 241/1188 [00:01<00:03, 242.43it/s]Loading weights:  22%|██▏       | 266/1188 [00:01<00:03, 239.41it/s]Loading weights:  24%|██▍       | 290/1188 [00:01<00:03, 235.67it/s]Loading weights:  26%|██▋       | 314/1188 [00:01<00:03, 234.01it/s]Loading weights:  28%|██▊       | 338/1188 [00:01<00:03, 230.49it/s]Loading weights:  31%|███       | 366/1188 [00:01<00:03, 235.75it/s]Loading weights:  33%|███▎      | 394/1188 [00:01<00:03, 239.84it/s]Loading weights:  35%|███▌      | 420/1188 [00:01<00:03, 240.14it/s]Loading weights:  38%|███▊      | 448/1188 [00:01<00:03, 243.03it/s]Loading weights:  40%|████      | 476/1188 [00:02<00:02, 244.31it/s]Loading weights:  42%|████▏     | 501/1188 [00:02<00:02, 240.76it/s]Loading weights:  44%|████▍     | 526/1188 [00:02<00:02, 240.52it/s]Loading weights:  46%|████▋     | 551/1188 [00:02<00:02, 239.90it/s]Loading weights:  48%|████▊     | 575/1188 [00:02<00:02, 224.29it/s]Loading weights:  51%|█████     | 601/1188 [00:02<00:02, 226.85it/s]Loading weights:  53%|█████▎    | 628/1188 [00:02<00:02, 238.64it/s]Loading weights:  55%|█████▍    | 653/1188 [00:02<00:02, 239.94it/s]Loading weights:  57%|█████▋    | 678/1188 [00:02<00:02, 224.93it/s]Loading weights:  59%|█████▉    | 701/1188 [00:03<00:02, 223.01it/s]Loading weights:  61%|██████    | 726/1188 [00:03<00:02, 221.12it/s]Loading weights:  63%|██████▎   | 752/1188 [00:03<00:01, 226.67it/s]Loading weights:  66%|██████▌   | 780/1188 [00:03<00:01, 233.20it/s]Loading weights:  68%|██████▊   | 805/1188 [00:03<00:01, 237.86it/s]Loading weights:  70%|██████▉   | 829/1188 [00:03<00:01, 215.26it/s]Loading weights: 100%|██████████| 1188/1188 [00:03<00:00, 317.79it/s]
+swaps_h2.pt 0/100
+swaps_h2.pt 5/100
+swaps_h2.pt 10/100
+swaps_h2.pt 15/100
+swaps_h2.pt 20/100
+swaps_h2.pt 25/100
+swaps_h2.pt 30/100
+swaps_h2.pt 35/100
+swaps_h2.pt 40/100
+swaps_h2.pt 45/100
+swaps_h2.pt 50/100
+swaps_h2.pt 55/100
+swaps_h2.pt 60/100
+swaps_h2.pt 65/100
+swaps_h2.pt 70/100
+swaps_h2.pt 75/100
+swaps_h2.pt 80/100
+swaps_h2.pt 85/100
+swaps_h2.pt 90/100
+swaps_h2.pt 95/100
+-> /workspace/cot-controllability/cache/exp14/swaps_h2.pt
+=== 2026-10-11T20:05:01Z repair
+Loading weights:   0%|          | 0/1188 [00:00<?, ?it/s]Loading weights:   0%|          | 4/1188 [00:00<00:34, 34.57it/s]Loading weights:   3%|▎         | 34/1188 [00:00<00:06, 180.44it/s]Loading weights:   5%|▌         | 62/1188 [00:00<00:05, 222.85it/s]Loading weights:   7%|▋         | 88/1188 [00:00<00:04, 234.21it/s]Loading weights:  10%|▉         | 116/1188 [00:00<00:04, 247.16it/s]Loading weights:  12%|█▏        | 144/1188 [00:00<00:04, 253.70it/s]Loading weights:  14%|█▍        | 170/1188 [00:00<00:04, 237.62it/s]Loading weights:  16%|█▋        | 196/1188 [00:00<00:04, 243.73it/s]Loading weights:  19%|█▉        | 224/1188 [00:00<00:03, 253.49it/s]Loading weights:  21%|██        | 250/1188 [00:01<00:04, 232.88it/s]Loading weights:  23%|██▎       | 279/1188 [00:01<00:03, 248.45it/s]Loading weights:  26%|██▌       | 307/1188 [00:01<00:03, 256.51it/s]Loading weights:  28%|██▊       | 334/1188 [00:01<00:03, 237.61it/s]Loading weights:  30%|███       | 362/1188 [00:01<00:03, 248.55it/s]Loading weights:  33%|███▎      | 391/1188 [00:01<00:03, 260.16it/s]Loading weights:  35%|███▌      | 418/1188 [00:01<00:03, 240.57it/s]Loading weights:  38%|███▊      | 448/1188 [00:01<00:02, 248.80it/s]Loading weights:  40%|████      | 476/1188 [00:01<00:02, 253.65it/s]Loading weights:  42%|████▏     | 502/1188 [00:02<00:02, 237.27it/s]Loading weights:  45%|████▍     | 531/1188 [00:02<00:02, 251.44it/s]Loading weights:  47%|████▋     | 559/1188 [00:02<00:02, 256.88it/s]Loading weights:  49%|████▉     | 586/1188 [00:02<00:02, 249.73it/s]Loading weights:  52%|█████▏    | 614/1188 [00:02<00:02, 257.57it/s]Loading weights:  54%|█████▍    | 642/1188 [00:02<00:02, 261.86it/s]Loading weights:  56%|█████▋    | 669/1188 [00:02<00:02, 252.47it/s]Loading weights:  59%|█████▊    | 697/1188 [00:02<00:01, 259.29it/s]Loading weights:  61%|██████    | 725/1188 [00:02<00:01, 262.61it/s]Loading weights:  63%|██████▎   | 752/1188 [00:03<00:01, 252.94it/s]Loading weights:  66%|██████▌   | 780/1188 [00:03<00:01, 259.66it/s]Loading weights:  68%|██████▊   | 808/1188 [00:03<00:01, 263.98it/s]Loading weights:  70%|███████   | 835/1188 [00:03<00:01, 262.47it/s]Loading weights: 100%|██████████| 1188/1188 [00:03<00:00, 345.30it/s]
+swaps_h3.pt 0/135
+swaps_h3.pt 5/135
+swaps_h3.pt 10/135
+swaps_h3.pt 15/135
+swaps_h3.pt 20/135
+swaps_h3.pt 25/135
+swaps_h3.pt 30/135
+swaps_h3.pt 35/135
+swaps_h3.pt 40/135
+swaps_h3.pt 45/135
+swaps_h3.pt 50/135
+swaps_h3.pt 55/135
+swaps_h3.pt 60/135
+swaps_h3.pt 65/135
+swaps_h3.pt 70/135
+swaps_h3.pt 75/135
+swaps_h3.pt 80/135
+swaps_h3.pt 85/135
+swaps_h3.pt 90/135
+swaps_h3.pt 95/135
+swaps_h3.pt 100/135
+swaps_h3.pt 105/135
+swaps_h3.pt 110/135
+swaps_h3.pt 115/135
+swaps_h3.pt 120/135
+swaps_h3.pt 125/135
+swaps_h3.pt 130/135
+-> /workspace/cot-controllability/cache/exp14/swaps_h3.pt
+=== 2026-10-11T20:31:43Z report
+exp14 report (report_v1); manifest results/exp14_brew_swaps/manifest.json
+
+clean accuracy h=1: 1.000 (n=250; exp12 G1: 1.000)
+clean accuracy h=2: 0.924 (n=250; exp12 G1: 0.924)
+clean accuracy h=3: 0.048 (n=250; exp12 G1: 0.048)
+
+## Gate 0 (descriptive): readability of each state
+lens AUC = P(score(state) > score(c)) for c off the item's path, averaged over items (0.5 = chance); probe = held-out accuracy of the exp11 colour probe, state minus row-mate decoy
+
+### h=1 position=stir1 state s1
+  logit  best layer 54 AUC 0.89 | 0:0.52 6:0.49 12:0.46 18:0.48 24:0.50 30:0.52 36:0.60 42:0.61 48:0.60 54:0.89
+  jpp    best layer 54 AUC 0.85 | 0:0.48 6:0.52 12:0.50 18:0.49 24:0.48 30:0.58 36:0.67 42:0.82 48:0.69 54:0.85
+  rlens  best layer 54 AUC 0.84 | 0:0.49 6:0.51 12:0.50 18:0.50 24:0.49 30:0.53 36:0.69 42:0.72 48:0.69 54:0.84
+  probe  best layer 52 state 0.93 decoy 0.14 | 0:+0.01 6:+0.01 12:+0.01 18:+0.03 24:-0.03 30:+0.42 36:+0.69 42:+0.78 48:+0.73 54:+0.76
+
+### h=1 position=final state s1
+  logit  best layer 50 AUC 1.00 | 0:0.49 6:0.48 12:0.48 18:0.49 24:0.50 30:0.55 36:0.61 42:0.84 48:1.00 54:1.00
+  jpp    best layer 42 AUC 1.00 | 0:0.49 6:0.50 12:0.51 18:0.51 24:0.50 30:0.55 36:0.65 42:1.00 48:1.00 54:1.00
+  rlens  best layer 42 AUC 1.00 | 0:0.50 6:0.50 12:0.51 18:0.50 24:0.51 30:0.52 36:0.63 42:1.00 48:1.00 54:1.00
+  probe  best layer 54 state 1.00 decoy 0.16 | 0:-0.00 6:-0.03 12:-0.03 18:-0.01 24:-0.02 30:+0.57 36:+0.82 42:+0.72 48:+0.76 54:+0.84
+
+### h=2 position=stir1 state s1
+  logit  best layer 54 AUC 0.89 | 0:0.50 6:0.47 12:0.47 18:0.46 24:0.46 30:0.52 36:0.57 42:0.58 48:0.57 54:0.89
+  jpp    best layer 56 AUC 0.85 | 0:0.52 6:0.49 12:0.49 18:0.49 24:0.49 30:0.55 36:0.64 42:0.82 48:0.69 54:0.84
+  rlens  best layer 54 AUC 0.83 | 0:0.51 6:0.50 12:0.49 18:0.48 24:0.47 30:0.50 36:0.67 42:0.74 48:0.69 54:0.83
+  probe  best layer 38 state 0.98 decoy 0.18 | 0:-0.04 6:-0.04 12:-0.00 18:+0.04 24:-0.05 30:+0.49 36:+0.77 42:+0.78 48:+0.71 54:+0.76
+
+### h=2 position=stir1 state s2
+  logit  best layer 58 AUC 0.53 | 0:0.53 6:0.49 12:0.48 18:0.49 24:0.49 30:0.52 36:0.53 42:0.52 48:0.49 54:0.45
+  jpp    best layer 58 AUC 0.53 | 0:0.52 6:0.50 12:0.46 18:0.47 24:0.46 30:0.46 36:0.47 42:0.51 48:0.49 54:0.47
+  rlens  best layer 58 AUC 0.52 | 0:0.50 6:0.47 12:0.47 18:0.47 24:0.47 30:0.47 36:0.46 42:0.51 48:0.49 54:0.49
+  probe  best layer 27 state 0.12 decoy 0.10 | 0:-0.01 6:-0.05 12:-0.01 18:+0.02 24:-0.03 30:-0.01 36:-0.03 42:-0.04 48:-0.01 54:-0.02
+
+### h=2 position=stir2 state s1
+  logit  best layer 56 AUC 0.70 | 0:0.53 6:0.48 12:0.47 18:0.47 24:0.48 30:0.48 36:0.49 42:0.51 48:0.51 54:0.69
+  jpp    best layer 56 AUC 0.67 | 0:0.52 6:0.52 12:0.51 18:0.50 24:0.51 30:0.50 36:0.51 42:0.65 48:0.60 54:0.65
+  rlens  best layer 56 AUC 0.67 | 0:0.52 6:0.52 12:0.51 18:0.50 24:0.51 30:0.49 36:0.56 42:0.64 48:0.61 54:0.65
+  probe  best layer 40 state 0.80 decoy 0.10 | 0:+0.03 6:+0.01 12:-0.03 18:-0.02 24:-0.01 30:+0.02 36:+0.37 42:+0.47 48:+0.26 54:+0.16
+
+### h=2 position=stir2 state s2
+  logit  best layer 54 AUC 0.84 | 0:0.51 6:0.51 12:0.48 18:0.50 24:0.50 30:0.53 36:0.54 42:0.61 48:0.65 54:0.84
+  jpp    best layer 56 AUC 0.84 | 0:0.54 6:0.51 12:0.54 18:0.54 24:0.53 30:0.54 36:0.53 42:0.75 48:0.70 54:0.83
+  rlens  best layer 56 AUC 0.83 | 0:0.55 6:0.55 12:0.55 18:0.54 24:0.55 30:0.54 36:0.55 42:0.74 48:0.71 54:0.83
+  probe  best layer 56 state 0.46 decoy 0.11 | 0:-0.02 6:-0.04 12:-0.07 18:+0.00 24:-0.02 30:-0.01 36:-0.03 42:+0.14 48:+0.19 54:+0.29
+
+### h=2 position=final state s1
+  logit  best layer 40 AUC 0.66 | 0:0.51 6:0.52 12:0.50 18:0.50 24:0.55 30:0.48 36:0.50 42:0.62 48:0.45 54:0.55
+  jpp    best layer 40 AUC 0.66 | 0:0.47 6:0.52 12:0.51 18:0.50 24:0.51 30:0.48 36:0.56 42:0.56 48:0.51 54:0.54
+  rlens  best layer 40 AUC 0.66 | 0:0.47 6:0.48 12:0.49 18:0.49 24:0.50 30:0.49 36:0.57 42:0.53 48:0.52 54:0.53
+  probe  best layer 44 state 1.00 decoy 0.11 | 0:+0.02 6:-0.01 12:+0.04 18:-0.02 24:-0.01 30:+0.08 36:+0.75 42:+0.85 48:+0.85 54:+0.86
+
+### h=2 position=final state s2
+  logit  best layer 58 AUC 0.99 | 0:0.51 6:0.47 12:0.50 18:0.50 24:0.48 30:0.53 36:0.54 42:0.84 48:0.93 54:0.98
+  jpp    best layer 54 AUC 0.98 | 0:0.46 6:0.48 12:0.49 18:0.49 24:0.50 30:0.52 36:0.52 42:0.97 48:0.96 54:0.98
+  rlens  best layer 54 AUC 0.99 | 0:0.47 6:0.50 12:0.49 18:0.49 24:0.51 30:0.52 36:0.53 42:0.97 48:0.95 54:0.99
+  probe  best layer 43 state 0.92 decoy 0.12 | 0:+0.02 6:+0.00 12:-0.00 18:-0.00 24:-0.05 30:-0.02 36:-0.00 42:+0.74 48:+0.78 54:+0.70
+
+### h=3 position=stir1 state s1
+  logit  best layer 54 AUC 0.89 | 0:0.48 6:0.51 12:0.52 18:0.51 24:0.50 30:0.53 36:0.59 42:0.61 48:0.61 54:0.89
+  jpp    best layer 56 AUC 0.86 | 0:0.51 6:0.53 12:0.51 18:0.51 24:0.51 30:0.60 36:0.69 42:0.82 48:0.70 54:0.86
+  rlens  best layer 54 AUC 0.86 | 0:0.49 6:0.48 12:0.49 18:0.50 24:0.50 30:0.55 36:0.70 42:0.74 48:0.68 54:0.86
+  probe  best layer 43 state 0.99 decoy 0.15 | 0:+0.04 6:+0.02 12:+0.04 18:+0.04 24:-0.01 30:+0.54 36:+0.72 42:+0.81 48:+0.77 54:+0.76
+
+### h=3 position=stir1 state s2
+  logit  best layer 10 AUC 0.53 | 0:0.48 6:0.53 12:0.53 18:0.53 24:0.50 30:0.47 36:0.47 42:0.49 48:0.47 54:0.50
+  jpp    best layer 20 AUC 0.51 | 0:0.50 6:0.51 12:0.50 18:0.51 24:0.50 30:0.50 36:0.48 42:0.48 48:0.51 54:0.50
+  rlens  best layer 54 AUC 0.52 | 0:0.50 6:0.50 12:0.52 18:0.51 24:0.50 30:0.50 36:0.49 42:0.49 48:0.50 54:0.52
+  probe  best layer 20 state 0.13 decoy 0.06 | 0:+0.03 6:+0.00 12:+0.01 18:+0.02 24:+0.03 30:-0.01 36:+0.01 42:+0.01 48:+0.02 54:+0.01
+
+### h=3 position=stir1 state s3
+  logit  best layer 16 AUC 0.53 | 0:0.49 6:0.52 12:0.52 18:0.52 24:0.52 30:0.48 36:0.48 42:0.49 48:0.49 54:0.51
+  jpp    best layer 34 AUC 0.51 | 0:0.44 6:0.48 12:0.47 18:0.48 24:0.47 30:0.48 36:0.50 42:0.49 48:0.47 54:0.49
+  rlens  best layer 34 AUC 0.50 | 0:0.46 6:0.48 12:0.47 18:0.47 24:0.47 30:0.47 36:0.49 42:0.47 48:0.48 54:0.49
+  probe  best layer 0 state 0.14 decoy 0.06 | 0:+0.07 6:-0.01 12:+0.01 18:-0.03 24:-0.02 30:-0.02 36:-0.01 42:+0.00 48:+0.02 54:-0.00
+
+### h=3 position=stir2 state s1
+  logit  best layer 54 AUC 0.59 | 0:0.50 6:0.52 12:0.51 18:0.51 24:0.49 30:0.51 36:0.52 42:0.51 48:0.51 54:0.59
+  jpp    best layer 56 AUC 0.57 | 0:0.54 6:0.49 12:0.51 18:0.51 24:0.51 30:0.50 36:0.51 42:0.55 48:0.51 54:0.55
+  rlens  best layer 56 AUC 0.58 | 0:0.52 6:0.51 12:0.52 18:0.52 24:0.52 30:0.50 36:0.54 42:0.55 48:0.52 54:0.58
+  probe  best layer 40 state 0.56 decoy 0.12 | 0:+0.02 6:+0.01 12:-0.01 18:-0.00 24:+0.02 30:+0.04 36:+0.25 42:+0.25 48:+0.12 54:+0.10
+
+### h=3 position=stir2 state s2
+  logit  best layer 56 AUC 0.74 | 0:0.52 6:0.50 12:0.52 18:0.52 24:0.50 30:0.47 36:0.46 42:0.54 48:0.57 54:0.73
+  jpp    best layer 56 AUC 0.74 | 0:0.52 6:0.50 12:0.51 18:0.52 24:0.52 30:0.52 36:0.52 42:0.69 48:0.65 54:0.73
+  rlens  best layer 54 AUC 0.74 | 0:0.53 6:0.51 12:0.52 18:0.52 24:0.53 30:0.51 36:0.53 42:0.67 48:0.65 54:0.74
+  probe  best layer 55 state 0.34 decoy 0.08 | 0:+0.08 6:+0.02 12:+0.01 18:+0.02 24:+0.05 30:+0.03 36:-0.03 42:+0.06 48:+0.11 54:+0.25
+
+### h=3 position=stir2 state s3
+  logit  best layer 8 AUC 0.52 | 0:0.48 6:0.52 12:0.51 18:0.51 24:0.51 30:0.47 36:0.47 42:0.49 48:0.48 54:0.51
+  jpp    best layer 56 AUC 0.51 | 0:0.45 6:0.50 12:0.50 18:0.49 24:0.48 30:0.47 36:0.47 42:0.49 48:0.50 54:0.51
+  rlens  best layer 46 AUC 0.50 | 0:0.46 6:0.49 12:0.48 18:0.47 24:0.48 30:0.45 36:0.45 42:0.46 48:0.48 54:0.50
+  probe  best layer 1 state 0.09 decoy 0.07 | 0:-0.03 6:+0.01 12:-0.02 18:-0.07 24:-0.02 30:-0.00 36:+0.00 42:-0.01 48:-0.06 54:-0.01
+
+### h=3 position=stir3 state s1
+  logit  best layer 24 AUC 0.52 | 0:0.50 6:0.51 12:0.52 18:0.50 24:0.52 30:0.52 36:0.51 42:0.49 48:0.48 54:0.48
+  jpp    best layer 0 AUC 0.55 | 0:0.55 6:0.52 12:0.53 18:0.53 24:0.53 30:0.53 36:0.53 42:0.53 48:0.51 54:0.52
+  rlens  best layer 44 AUC 0.55 | 0:0.54 6:0.54 12:0.54 18:0.54 24:0.54 30:0.53 36:0.52 42:0.55 48:0.52 54:0.51
+  probe  best layer 40 state 0.19 decoy 0.08 | 0:+0.01 6:-0.01 12:+0.01 18:+0.00 24:-0.02 30:-0.01 36:+0.03 42:+0.04 48:+0.03 54:+0.02
+
+### h=3 position=stir3 state s2
+  logit  best layer 16 AUC 0.53 | 0:0.51 6:0.51 12:0.51 18:0.53 24:0.50 30:0.47 36:0.46 42:0.48 48:0.47 54:0.47
+  jpp    best layer 44 AUC 0.53 | 0:0.51 6:0.50 12:0.52 18:0.52 24:0.52 30:0.52 36:0.51 42:0.52 48:0.52 54:0.48
+  rlens  best layer 16 AUC 0.54 | 0:0.51 6:0.50 12:0.52 18:0.53 24:0.52 30:0.51 36:0.53 42:0.52 48:0.52 54:0.50
+  probe  best layer 11 state 0.13 decoy 0.07 | 0:-0.03 6:+0.04 12:+0.00 18:-0.02 24:+0.02 30:-0.05 36:-0.03 42:+0.00 48:-0.03 54:-0.03
+
+### h=3 position=stir3 state s3
+  logit  best layer 6 AUC 0.52 | 0:0.48 6:0.52 12:0.51 18:0.52 24:0.51 30:0.47 36:0.47 42:0.49 48:0.49 54:0.48
+  jpp    best layer 28 AUC 0.50 | 0:0.47 6:0.50 12:0.48 18:0.48 24:0.47 30:0.49 36:0.49 42:0.47 48:0.48 54:0.48
+  rlens  best layer 56 AUC 0.49 | 0:0.47 6:0.48 12:0.49 18:0.49 24:0.47 30:0.47 36:0.47 42:0.45 48:0.47 54:0.48
+  probe  best layer 1 state 0.09 decoy 0.04 | 0:+0.02 6:-0.01 12:+0.02 18:-0.03 24:-0.02 30:-0.00 36:-0.03 42:-0.01 48:+0.01 54:-0.00
+
+### h=3 position=final state s1
+  logit  best layer 40 AUC 0.59 | 0:0.51 6:0.53 12:0.54 18:0.54 24:0.51 30:0.49 36:0.51 42:0.52 48:0.45 54:0.38
+  jpp    best layer 40 AUC 0.56 | 0:0.51 6:0.48 12:0.49 18:0.51 24:0.51 30:0.52 36:0.53 42:0.45 48:0.42 54:0.39
+  rlens  best layer 40 AUC 0.55 | 0:0.51 6:0.53 12:0.52 18:0.52 24:0.53 30:0.52 36:0.53 42:0.44 48:0.43 54:0.38
+  probe  best layer 40 state 0.95 decoy 0.10 | 0:+0.01 6:+0.01 12:-0.03 18:-0.05 24:-0.00 30:+0.01 36:+0.09 42:+0.74 48:+0.61 54:+0.52
+
+### h=3 position=final state s2
+  logit  best layer 58 AUC 0.72 | 0:0.51 6:0.55 12:0.55 18:0.55 24:0.53 30:0.46 36:0.46 42:0.57 48:0.52 54:0.66
+  jpp    best layer 58 AUC 0.73 | 0:0.50 6:0.50 12:0.51 18:0.50 24:0.50 30:0.48 36:0.51 42:0.69 48:0.59 54:0.65
+  rlens  best layer 58 AUC 0.72 | 0:0.51 6:0.50 12:0.51 18:0.51 24:0.49 30:0.48 36:0.49 42:0.67 48:0.58 54:0.65
+  probe  best layer 44 state 0.35 decoy 0.13 | 0:-0.03 6:-0.00 12:+0.01 18:+0.03 24:+0.04 30:-0.00 36:+0.02 42:+0.14 48:+0.14 54:+0.07
+
+### h=3 position=final state s3
+  logit  best layer 54 AUC 0.56 | 0:0.46 6:0.51 12:0.51 18:0.51 24:0.52 30:0.47 36:0.47 42:0.45 48:0.45 54:0.56
+  jpp    best layer 54 AUC 0.54 | 0:0.51 6:0.52 12:0.49 18:0.47 24:0.47 30:0.46 36:0.49 42:0.47 48:0.47 54:0.54
+  rlens  best layer 54 AUC 0.54 | 0:0.49 6:0.47 12:0.47 18:0.46 24:0.45 30:0.46 36:0.46 42:0.45 48:0.46 54:0.54
+  probe  best layer 58 state 0.15 decoy 0.06 | 0:+0.01 6:-0.06 12:+0.02 18:-0.02 24:-0.04 30:-0.00 36:-0.01 42:+0.06 48:+0.06 54:+0.05
+
+## Gate 1: s1 swaps on 100 correct h=2 items (windows of 4 even layers; window w starts at layer 4w)
+flip = P(answer = table[s1'][stir 2]) - P(answer = one given other entry of s1''s line); held-out = each half of the items scored at the other half's best (window, scale)
+  jpp       held-out flip +0.000 [+0.000, +0.000] at [(0, 2.0), (0, 1.0)]; answer-swap ceiling +0.100 [+0.050, +0.160] at [(13, 4.0), (12, 4.0)]; random-null success max over windows 0.030; chosen scale for the repair stage 1.0 -> fail
+  rlens     held-out flip -0.025 [-0.050, -0.005] at [(2, 2.0), (0, 1.0)]; answer-swap ceiling +0.100 [+0.050, +0.160] at [(13, 2.0), (13, 4.0)]; random-null success max over windows 0.040; chosen scale for the repair stage 1.0 -> fail
+  logit     held-out flip +0.015 [-0.060, +0.090] at [(0, 2.0), (0, 1.0)]; answer-swap ceiling +1.000 [+1.000, +1.000] at [(13, 1.0), (13, 1.0)]; random-null success max over windows 0.140; chosen scale for the repair stage 1.0 -> fail
+  diffmeans held-out flip +0.185 [+0.090, +0.290] at [(9, 1.0), (9, 1.0)]; answer-swap ceiling +0.990 [+0.970, +1.000] at [(13, 2.0), (13, 1.0)]; random-null success max over windows 0.170; chosen scale for the repair stage 4.0 -> PASS
+
+### per window (scale = the direction's chosen scale): main flip / main success / answer-swap success / changed (main)
+  jpp, scale 1.0:
+    layers  0- 6: flip +0.000  success 0.000  answer-swap 0.000  changed 0.020
+    layers  4-10: flip -0.010  success 0.000  answer-swap 0.000  changed 0.020
+    layers  8-14: flip -0.010  success 0.000  answer-swap 0.000  changed 0.070
+    layers 12-18: flip -0.020  success 0.000  answer-swap 0.010  changed 0.190
+    layers 16-22: flip -0.005  success 0.010  answer-swap 0.020  changed 0.110
+    layers 20-26: flip +0.000  success 0.000  answer-swap 0.000  changed 0.030
+    layers 24-30: flip +0.000  success 0.000  answer-swap 0.000  changed 0.010
+    layers 28-34: flip +0.000  success 0.000  answer-swap 0.000  changed 0.010
+    layers 32-38: flip +0.000  success 0.000  answer-swap 0.000  changed 0.000
+    layers 36-42: flip +0.000  success 0.000  answer-swap 0.000  changed 0.010
+    layers 40-46: flip +0.000  success 0.000  answer-swap 0.000  changed 0.010
+    layers 44-50: flip +0.000  success 0.000  answer-swap 0.000  changed 0.010
+    layers 48-54: flip +0.000  success 0.000  answer-swap 0.000  changed 0.000
+    layers 52-58: flip +0.000  success 0.000  answer-swap 0.000  changed 0.000
+  rlens, scale 1.0:
+    layers  0- 6: flip -0.005  success 0.000  answer-swap 0.000  changed 0.050
+    layers  4-10: flip -0.005  success 0.000  answer-swap 0.010  changed 0.050
+    layers  8-14: flip +0.000  success 0.000  answer-swap 0.000  changed 0.070
+    layers 12-18: flip +0.005  success 0.020  answer-swap 0.000  changed 0.140
+    layers 16-22: flip -0.020  success 0.000  answer-swap 0.000  changed 0.160
+    layers 20-26: flip -0.015  success 0.000  answer-swap 0.000  changed 0.110
+    layers 24-30: flip +0.000  success 0.000  answer-swap 0.000  changed 0.010
+    layers 28-34: flip +0.000  success 0.000  answer-swap 0.000  changed 0.000
+    layers 32-38: flip +0.000  success 0.000  answer-swap 0.000  changed 0.000
+    layers 36-42: flip +0.000  success 0.000  answer-swap 0.000  changed 0.000
+    layers 40-46: flip +0.000  success 0.000  answer-swap 0.000  changed 0.000
+    layers 44-50: flip +0.000  success 0.000  answer-swap 0.000  changed 0.000
+    layers 48-54: flip +0.000  success 0.000  answer-swap 0.000  changed 0.000
+    layers 52-58: flip +0.000  success 0.000  answer-swap 0.000  changed 0.000
+  logit, scale 1.0:
+    layers  0- 6: flip +0.080  success 0.140  answer-swap 0.060  changed 0.670
+    layers  4-10: flip +0.010  success 0.070  answer-swap 0.090  changed 0.650
+    layers  8-14: flip +0.030  success 0.110  answer-swap 0.030  changed 0.730
+    layers 12-18: flip -0.040  success 0.030  answer-swap 0.000  changed 0.570
+    layers 16-22: flip -0.060  success 0.000  answer-swap 0.000  changed 0.510
+    layers 20-26: flip -0.035  success 0.000  answer-swap 0.000  changed 0.330
+    layers 24-30: flip +0.000  success 0.000  answer-swap 0.000  changed 0.090
+    layers 28-34: flip -0.015  success 0.000  answer-swap 0.010  changed 0.150
+    layers 32-38: flip -0.020  success 0.010  answer-swap 0.040  changed 0.470
+    layers 36-42: flip -0.010  success 0.030  answer-swap 0.000  changed 0.510
+    layers 40-46: flip -0.045  success 0.030  answer-swap 0.010  changed 0.410
+    layers 44-50: flip -0.010  success 0.030  answer-swap 0.090  changed 0.410
+    layers 48-54: flip -0.010  success 0.050  answer-swap 0.840  changed 0.680
+    layers 52-58: flip +0.025  success 0.060  answer-swap 1.000  changed 0.610
+  diffmeans, scale 4.0:
+    layers  0- 6: flip -0.060  success 0.080  answer-swap 0.070  changed 0.930
+    layers  4-10: flip -0.080  success 0.060  answer-swap 0.110  changed 0.940
+    layers  8-14: flip -0.010  success 0.090  answer-swap 0.120  changed 0.900
+    layers 12-18: flip -0.010  success 0.090  answer-swap 0.140  changed 0.840
+    layers 16-22: flip -0.020  success 0.090  answer-swap 0.140  changed 0.870
+    layers 20-26: flip -0.020  success 0.120  answer-swap 0.110  changed 0.890
+    layers 24-30: flip +0.015  success 0.130  answer-swap 0.130  changed 0.930
+    layers 28-34: flip +0.060  success 0.160  answer-swap 0.140  changed 0.880
+    layers 32-38: flip +0.030  success 0.110  answer-swap 0.200  changed 0.870
+    layers 36-42: flip -0.020  success 0.040  answer-swap 0.490  changed 0.960
+    layers 40-46: flip -0.050  success 0.010  answer-swap 0.530  changed 0.860
+    layers 44-50: flip -0.015  success 0.000  answer-swap 0.720  changed 0.540
+    layers 48-54: flip -0.015  success 0.000  answer-swap 0.970  changed 0.220
+    layers 52-58: flip -0.005  success 0.000  answer-swap 1.000  changed 0.080
+
+## Stage 2: timing (directions that passed Gate 1; first/last window with value >= half the maximum; bootstrap over items)
+  diffmeans: last window, s1 swap layers (32, 34, 36, 38), answer swap layers (52, 54, 56, 58); (answer - s1) in windows +5 [+4, +8]
+
+## Stage 3: h=3 items answered table[s1][stir 3] (stir 2 skipped), n=135
+repair = swap s1 -> s2, scored as answer = gold; redirect = swap s1 -> c, scored as answer = table[c][stir 3] (and its gold rate)
+  jpp (did not pass Gate 1: not read), scale 1.0:
+    layers  0- 6: repair gold 0.015 (minus redirect gold +0.007 [+0.000, +0.022])  redirect to table[c][stir 3] 0.015
+    layers  4-10: repair gold 0.015 (minus redirect gold -0.007 [-0.022, +0.000])  redirect to table[c][stir 3] 0.022
+    layers  8-14: repair gold 0.044 (minus redirect gold +0.015 [-0.015, +0.044])  redirect to table[c][stir 3] 0.037
+    layers 12-18: repair gold 0.030 (minus redirect gold -0.007 [-0.044, +0.030])  redirect to table[c][stir 3] 0.044
+    layers 16-22: repair gold 0.030 (minus redirect gold -0.022 [-0.059, +0.007])  redirect to table[c][stir 3] 0.059
+    layers 20-26: repair gold 0.044 (minus redirect gold +0.007 [-0.022, +0.044])  redirect to table[c][stir 3] 0.015
+    layers 24-30: repair gold 0.015 (minus redirect gold +0.007 [-0.015, +0.030])  redirect to table[c][stir 3] 0.007
+    layers 28-34: repair gold 0.007 (minus redirect gold +0.007 [+0.000, +0.022])  redirect to table[c][stir 3] 0.007
+    layers 32-38: repair gold 0.007 (minus redirect gold +0.007 [+0.000, +0.022])  redirect to table[c][stir 3] 0.007
+    layers 36-42: repair gold 0.000 (minus redirect gold -0.007 [-0.022, +0.000])  redirect to table[c][stir 3] 0.007
+    layers 40-46: repair gold 0.000 (minus redirect gold -0.007 [-0.022, +0.000])  redirect to table[c][stir 3] 0.000
+    layers 44-50: repair gold 0.000 (minus redirect gold -0.007 [-0.022, +0.000])  redirect to table[c][stir 3] 0.000
+    layers 48-54: repair gold 0.007 (minus redirect gold +0.007 [+0.000, +0.022])  redirect to table[c][stir 3] 0.007
+    layers 52-58: repair gold 0.030 (minus redirect gold +0.030 [+0.007, +0.059])  redirect to table[c][stir 3] 0.015
+    reading at layers (0, 2, 4, 6): repairable (repair gold - redirect gold >= 0.10, CI low > 0) +0.007 [+0.000, +0.022] -> False; slot_read (redirect to table[c][stir 3] - the same under repair >= 0.10, CI low > 0) +0.007 [+0.000, +0.022] -> False
+  rlens (did not pass Gate 1: not read), scale 1.0:
+    layers  0- 6: repair gold 0.015 (minus redirect gold -0.007 [-0.037, +0.015])  redirect to table[c][stir 3] 0.015
+    layers  4-10: repair gold 0.015 (minus redirect gold -0.015 [-0.044, +0.007])  redirect to table[c][stir 3] 0.007
+    layers  8-14: repair gold 0.022 (minus redirect gold -0.015 [-0.044, +0.015])  redirect to table[c][stir 3] 0.044
+    layers 12-18: repair gold 0.030 (minus redirect gold -0.007 [-0.037, +0.015])  redirect to table[c][stir 3] 0.037
+    layers 16-22: repair gold 0.030 (minus redirect gold -0.022 [-0.059, +0.007])  redirect to table[c][stir 3] 0.022
+    layers 20-26: repair gold 0.037 (minus redirect gold -0.015 [-0.059, +0.030])  redirect to table[c][stir 3] 0.044
+    layers 24-30: repair gold 0.022 (minus redirect gold +0.022 [+0.000, +0.052])  redirect to table[c][stir 3] 0.000
+    layers 28-34: repair gold 0.000 (minus redirect gold +0.000 [+0.000, +0.000])  redirect to table[c][stir 3] 0.015
+    layers 32-38: repair gold 0.000 (minus redirect gold +0.000 [+0.000, +0.000])  redirect to table[c][stir 3] 0.007
+    layers 36-42: repair gold 0.015 (minus redirect gold +0.007 [+0.000, +0.022])  redirect to table[c][stir 3] 0.007
+    layers 40-46: repair gold 0.007 (minus redirect gold +0.000 [-0.022, +0.022])  redirect to table[c][stir 3] 0.007
+    layers 44-50: repair gold 0.000 (minus redirect gold -0.007 [-0.022, +0.000])  redirect to table[c][stir 3] 0.007
+    layers 48-54: repair gold 0.007 (minus redirect gold +0.007 [+0.000, +0.022])  redirect to table[c][stir 3] 0.007
+    layers 52-58: repair gold 0.022 (minus redirect gold +0.022 [+0.000, +0.052])  redirect to table[c][stir 3] 0.007
+    reading at layers (12, 14, 16, 18): repairable (repair gold - redirect gold >= 0.10, CI low > 0) -0.007 [-0.030, +0.015] -> False; slot_read (redirect to table[c][stir 3] - the same under repair >= 0.10, CI low > 0) -0.052 [-0.104, +0.000] -> False
+  logit (did not pass Gate 1: not read), scale 1.0:
+    layers  0- 6: repair gold 0.141 (minus redirect gold +0.119 [+0.059, +0.178])  redirect to table[c][stir 3] 0.111
+    layers  4-10: repair gold 0.104 (minus redirect gold +0.089 [+0.037, +0.148])  redirect to table[c][stir 3] 0.104
+    layers  8-14: repair gold 0.089 (minus redirect gold +0.052 [-0.007, +0.111])  redirect to table[c][stir 3] 0.089
+    layers 12-18: repair gold 0.022 (minus redirect gold +0.015 [-0.015, +0.044])  redirect to table[c][stir 3] 0.022
+    layers 16-22: repair gold 0.000 (minus redirect gold -0.022 [-0.052, +0.000])  redirect to table[c][stir 3] 0.022
+    layers 20-26: repair gold 0.030 (minus redirect gold +0.000 [-0.044, +0.044])  redirect to table[c][stir 3] 0.022
+    layers 24-30: repair gold 0.007 (minus redirect gold -0.022 [-0.059, +0.007])  redirect to table[c][stir 3] 0.015
+    layers 28-34: repair gold 0.044 (minus redirect gold +0.015 [-0.022, +0.052])  redirect to table[c][stir 3] 0.030
+    layers 32-38: repair gold 0.044 (minus redirect gold +0.022 [-0.022, +0.067])  redirect to table[c][stir 3] 0.030
+    layers 36-42: repair gold 0.067 (minus redirect gold +0.007 [-0.052, +0.067])  redirect to table[c][stir 3] 0.074
+    layers 40-46: repair gold 0.044 (minus redirect gold -0.015 [-0.067, +0.037])  redirect to table[c][stir 3] 0.096
+    layers 44-50: repair gold 0.037 (minus redirect gold -0.015 [-0.059, +0.030])  redirect to table[c][stir 3] 0.074
+    layers 48-54: repair gold 0.081 (minus redirect gold +0.015 [-0.030, +0.059])  redirect to table[c][stir 3] 0.030
+    layers 52-58: repair gold 0.015 (minus redirect gold -0.037 [-0.074, +0.000])  redirect to table[c][stir 3] 0.030
+    reading at layers (0, 2, 4, 6): repairable (repair gold - redirect gold >= 0.10, CI low > 0) +0.119 [+0.059, +0.178] -> True; slot_read (redirect to table[c][stir 3] - the same under repair >= 0.10, CI low > 0) +0.059 [+0.007, +0.119] -> False
+  diffmeans (passed Gate 1), scale 4.0:
+    layers  0- 6: repair gold 0.067 (minus redirect gold +0.030 [-0.022, +0.081])  redirect to table[c][stir 3] 0.081
+    layers  4-10: repair gold 0.074 (minus redirect gold +0.000 [-0.059, +0.067])  redirect to table[c][stir 3] 0.119
+    layers  8-14: repair gold 0.081 (minus redirect gold +0.007 [-0.044, +0.059])  redirect to table[c][stir 3] 0.141
+    layers 12-18: repair gold 0.089 (minus redirect gold +0.030 [-0.030, +0.089])  redirect to table[c][stir 3] 0.133
+    layers 16-22: repair gold 0.111 (minus redirect gold +0.067 [+0.007, +0.126])  redirect to table[c][stir 3] 0.163
+    layers 20-26: repair gold 0.089 (minus redirect gold +0.007 [-0.059, +0.074])  redirect to table[c][stir 3] 0.104
+    layers 24-30: repair gold 0.074 (minus redirect gold -0.015 [-0.089, +0.059])  redirect to table[c][stir 3] 0.074
+    layers 28-34: repair gold 0.089 (minus redirect gold -0.022 [-0.104, +0.052])  redirect to table[c][stir 3] 0.089
+    layers 32-38: repair gold 0.067 (minus redirect gold -0.015 [-0.081, +0.052])  redirect to table[c][stir 3] 0.119
+    layers 36-42: repair gold 0.052 (minus redirect gold +0.000 [-0.059, +0.052])  redirect to table[c][stir 3] 0.052
+    layers 40-46: repair gold 0.015 (minus redirect gold -0.007 [-0.037, +0.022])  redirect to table[c][stir 3] 0.022
+    layers 44-50: repair gold 0.037 (minus redirect gold -0.015 [-0.052, +0.022])  redirect to table[c][stir 3] 0.022
+    layers 48-54: repair gold 0.030 (minus redirect gold +0.000 [-0.030, +0.030])  redirect to table[c][stir 3] 0.015
+    layers 52-58: repair gold 0.007 (minus redirect gold -0.030 [-0.059, -0.007])  redirect to table[c][stir 3] 0.015
+    reading at layers (28, 30, 32, 34): repairable (repair gold - redirect gold >= 0.10, CI low > 0) -0.022 [-0.096, +0.052] -> False; slot_read (redirect to table[c][stir 3] - the same under repair >= 0.10, CI low > 0) +0.015 [-0.052, +0.089] -> False
+=== 2026-10-11T20:31:49Z done

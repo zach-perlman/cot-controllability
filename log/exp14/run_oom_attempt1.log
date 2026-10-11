@@ -1,0 +1,108 @@
+=== 2026-10-09T22:16:40Z capture
+Loading weights:   0%|          | 0/1188 [00:00<?, ?it/s]Loading weights:   0%|          | 4/1188 [00:00<00:34, 33.83it/s]Loading weights:   3%|▎         | 34/1188 [00:00<00:06, 175.47it/s]Loading weights:   5%|▌         | 62/1188 [00:00<00:05, 213.29it/s]Loading weights:   7%|▋         | 86/1188 [00:00<00:04, 221.89it/s]Loading weights:   9%|▉         | 110/1188 [00:00<00:04, 224.08it/s]Loading weights:  12%|█▏        | 138/1188 [00:00<00:04, 239.13it/s]Loading weights:  14%|█▎        | 163/1188 [00:00<00:04, 235.45it/s]Loading weights:  16%|█▌        | 187/1188 [00:00<00:04, 225.08it/s]Loading weights:  18%|█▊        | 215/1188 [00:00<00:04, 237.07it/s]Loading weights:  20%|██        | 242/1188 [00:01<00:03, 242.93it/s]Loading weights:  23%|██▎       | 268/1188 [00:01<00:03, 243.65it/s]Loading weights:  25%|██▍       | 296/1188 [00:01<00:03, 246.25it/s]Loading weights:  27%|██▋       | 324/1188 [00:01<00:03, 246.77it/s]Loading weights:  29%|██▉       | 349/1188 [00:01<00:03, 239.80it/s]Loading weights:  31%|███▏      | 374/1188 [00:01<00:03, 238.61it/s]Loading weights:  34%|███▍      | 401/1188 [00:01<00:03, 245.35it/s]Loading weights:  36%|███▌      | 426/1188 [00:01<00:03, 237.95it/s]Loading weights:  38%|███▊      | 450/1188 [00:01<00:03, 234.48it/s]Loading weights:  40%|████      | 478/1188 [00:02<00:02, 240.04it/s]Loading weights:  42%|████▏     | 504/1188 [00:02<00:02, 239.30it/s]Loading weights:  45%|████▍     | 532/1188 [00:02<00:02, 245.08it/s]Loading weights:  47%|████▋     | 559/1188 [00:02<00:02, 251.64it/s]Loading weights:  49%|████▉     | 585/1188 [00:02<00:02, 245.03it/s]Loading weights:  51%|█████▏    | 610/1188 [00:02<00:02, 242.01it/s]Loading weights:  54%|█████▎    | 636/1188 [00:02<00:02, 245.48it/s]Loading weights:  56%|█████▌    | 661/1188 [00:02<00:02, 237.93it/s]Loading weights:  58%|█████▊    | 685/1188 [00:02<00:02, 227.64it/s]Loading weights:  60%|██████    | 713/1188 [00:03<00:02, 235.25it/s]Loading weights:  62%|██████▏   | 740/1188 [00:03<00:01, 241.77it/s]Loading weights:  64%|██████▍   | 766/1188 [00:03<00:01, 241.75it/s]Loading weights:  67%|██████▋   | 794/1188 [00:03<00:01, 246.53it/s]Loading weights:  69%|██████▉   | 820/1188 [00:03<00:01, 249.69it/s]Loading weights:  75%|███████▌  | 896/1188 [00:03<00:00, 394.90it/s]Loading weights:  91%|█████████ | 1077/1188 [00:03<00:00, 805.57it/s]Loading weights: 100%|██████████| 1188/1188 [00:03<00:00, 318.69it/s]
+capture 0/750
+capture 100/750
+capture 200/750
+capture 300/750
+capture 400/750
+capture 500/750
+capture 600/750
+capture 700/750
+750 items -> /workspace/cot-controllability/cache/exp14/capture.pt
+=== 2026-10-09T22:21:28Z readouts
+Loading weights:   0%|          | 0/1188 [00:00<?, ?it/s]Loading weights:   0%|          | 3/1188 [00:00<00:45, 25.95it/s]Loading weights:   3%|▎         | 34/1188 [00:00<00:06, 173.85it/s]Loading weights:   5%|▌         | 62/1188 [00:00<00:05, 210.08it/s]Loading weights:   7%|▋         | 86/1188 [00:00<00:04, 220.68it/s]Loading weights:   9%|▉         | 112/1188 [00:00<00:04, 231.29it/s]Loading weights:  12%|█▏        | 137/1188 [00:00<00:04, 235.53it/s]Loading weights:  14%|█▎        | 161/1188 [00:00<00:04, 231.54it/s]Loading weights:  16%|█▌        | 186/1188 [00:00<00:04, 235.72it/s]Loading weights:  18%|█▊        | 214/1188 [00:00<00:04, 240.68it/s]Loading weights:  20%|██        | 241/1188 [00:01<00:03, 248.43it/s]Loading weights:  22%|██▏       | 266/1188 [00:01<00:03, 240.64it/s]Loading weights:  24%|██▍       | 291/1188 [00:01<00:03, 242.25it/s]Loading weights:  27%|██▋       | 316/1188 [00:01<00:03, 244.43it/s]Loading weights:  29%|██▊       | 341/1188 [00:01<00:03, 230.71it/s]Loading weights:  31%|███       | 367/1188 [00:01<00:03, 234.16it/s]Loading weights:  33%|███▎      | 395/1188 [00:01<00:03, 239.88it/s]Loading weights:  35%|███▌      | 421/1188 [00:01<00:03, 238.00it/s]Loading weights:  38%|███▊      | 449/1188 [00:01<00:03, 245.83it/s]Loading weights:  40%|████      | 477/1188 [00:02<00:02, 248.80it/s]Loading weights:  42%|████▏     | 503/1188 [00:02<00:02, 245.00it/s]Loading weights:  45%|████▍     | 531/1188 [00:02<00:02, 248.89it/s]Loading weights:  47%|████▋     | 559/1188 [00:02<00:02, 250.30it/s]Loading weights:  49%|████▉     | 585/1188 [00:02<00:02, 247.09it/s]Loading weights:  51%|█████▏    | 610/1188 [00:02<00:02, 244.10it/s]Loading weights:  53%|█████▎    | 635/1188 [00:02<00:02, 244.80it/s]Loading weights:  56%|█████▌    | 660/1188 [00:02<00:02, 240.84it/s]Loading weights:  58%|█████▊    | 685/1188 [00:02<00:02, 234.49it/s]Loading weights:  60%|██████    | 713/1188 [00:03<00:01, 239.94it/s]Loading weights:  62%|██████▏   | 740/1188 [00:03<00:01, 247.93it/s]Loading weights:  64%|██████▍   | 766/1188 [00:03<00:01, 243.96it/s]Loading weights:  67%|██████▋   | 794/1188 [00:03<00:01, 246.28it/s]Loading weights:  69%|██████▉   | 822/1188 [00:03<00:01, 247.33it/s]Loading weights:  77%|███████▋  | 920/1188 [00:03<00:00, 450.41it/s]Loading weights:  93%|█████████▎| 1102/1188 [00:03<00:00, 837.23it/s]Loading weights: 100%|██████████| 1188/1188 [00:03<00:00, 320.62it/s]
+probe h=1 stir1
+probe h=1 final
+probe h=2 stir1
+probe h=2 stir2
+probe h=2 final
+probe h=3 stir1
+probe h=3 stir2
+probe h=3 stir3
+probe h=3 final
+-> /workspace/cot-controllability/cache/exp14/readouts.pt
+=== 2026-10-09T22:53:32Z swaps
+Loading weights:   0%|          | 0/1188 [00:00<?, ?it/s]Loading weights:   0%|          | 3/1188 [00:00<00:42, 28.03it/s]Loading weights:   3%|▎         | 31/1188 [00:00<00:06, 171.87it/s]Loading weights:   5%|▍         | 56/1188 [00:00<00:05, 206.73it/s]Loading weights:   6%|▋         | 77/1188 [00:00<00:05, 204.42it/s]Loading weights:   9%|▊         | 103/1188 [00:00<00:04, 222.61it/s]Loading weights:  11%|█         | 131/1188 [00:00<00:04, 235.86it/s]Loading weights:  13%|█▎        | 158/1188 [00:00<00:04, 243.98it/s]Loading weights:  15%|█▌        | 183/1188 [00:00<00:04, 240.95it/s]Loading weights:  18%|█▊        | 208/1188 [00:00<00:04, 241.92it/s]Loading weights:  20%|█▉        | 234/1188 [00:01<00:03, 247.16it/s]Loading weights:  22%|██▏       | 259/1188 [00:01<00:03, 233.21it/s]Loading weights:  24%|██▍       | 284/1188 [00:01<00:03, 235.11it/s]Loading weights:  26%|██▋       | 312/1188 [00:01<00:03, 241.19it/s]Loading weights:  28%|██▊       | 338/1188 [00:01<00:03, 242.50it/s]Loading weights:  31%|███       | 366/1188 [00:01<00:03, 246.71it/s]Loading weights:  33%|███▎      | 394/1188 [00:01<00:03, 248.07it/s]Loading weights:  35%|███▌      | 420/1188 [00:01<00:03, 244.83it/s]Loading weights:  38%|███▊      | 448/1188 [00:01<00:02, 251.98it/s]Loading weights:  40%|████      | 476/1188 [00:02<00:02, 255.29it/s]Loading weights:  42%|████▏     | 502/1188 [00:02<00:02, 249.25it/s]Loading weights:  44%|████▍     | 527/1188 [00:02<00:02, 246.80it/s]Loading weights:  47%|████▋     | 553/1188 [00:02<00:02, 248.28it/s]Loading weights:  49%|████▊     | 578/1188 [00:02<00:02, 245.72it/s]Loading weights:  51%|█████     | 603/1188 [00:02<00:02, 234.65it/s]Loading weights:  53%|█████▎    | 630/1188 [00:02<00:02, 240.17it/s]Loading weights:  55%|█████▌    | 657/1188 [00:02<00:02, 246.65it/s]Loading weights:  57%|█████▋    | 683/1188 [00:02<00:02, 246.64it/s]Loading weights:  60%|█████▉    | 711/1188 [00:02<00:01, 249.91it/s]Loading weights:  62%|██████▏   | 739/1188 [00:03<00:01, 249.25it/s]Loading weights:  64%|██████▍   | 764/1188 [00:03<00:01, 240.30it/s]Loading weights:  66%|██████▋   | 790/1188 [00:03<00:01, 243.97it/s]Loading weights:  69%|██████▊   | 815/1188 [00:03<00:01, 243.04it/s]Loading weights:  73%|███████▎  | 868/1188 [00:03<00:00, 323.81it/s]Loading weights:  88%|████████▊ | 1050/1188 [00:03<00:00, 756.91it/s]Loading weights: 100%|██████████| 1188/1188 [00:03<00:00, 321.77it/s]
+/workspace/cot-controllability/scripts/exp14_brew_swaps.py:243: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  if float((u_s @ u_t).abs()) > NEAR_PARALLEL_ABS_COSINE:
+Traceback (most recent call last):
+  File "/workspace/cot-controllability/scripts/exp14_brew_swaps.py", line 669, in <module>
+    main()
+  File "/workspace/cot-controllability/scripts/exp14_brew_swaps.py", line 664, in main
+    {"capture": capture, "readouts": readouts, "swaps": swaps, "repair": repair,
+  File "/workspace/cot-controllability/scripts/exp14_brew_swaps.py", line 419, in swaps
+    run_trials(model, tokenizer, dirs, jobs, out, {k: SCALES for k in DIRECTIONS})
+  File "/workspace/cot-controllability/scripts/exp14_brew_swaps.py", line 379, in run_trials
+    logits = model(input_ids=torch.tensor([ids], device="cuda"),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/utils/generic.py", line 939, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/models/gemma4/modeling_gemma4.py", line 2558, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/utils/generic.py", line 1068, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/utils/generic.py", line 939, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/models/gemma4/modeling_gemma4.py", line 2406, in forward
+    outputs = self.language_model(
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/utils/generic.py", line 1068, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 286, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/models/gemma4/modeling_gemma4.py", line 1692, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/modeling_layers.py", line 109, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1885, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1833, in inner
+    result = forward_call(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/models/gemma4/modeling_gemma4.py", line 1428, in forward
+    hidden_states = self.post_feedforward_layernorm(hidden_states)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/models/gemma4/modeling_gemma4.py", line 212, in forward
+    normed_output = self._norm(hidden_states.float())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/transformers/models/gemma4/modeling_gemma4.py", line 207, in _norm
+    mean_squared = hidden_states.pow(2).mean(-1, keepdim=True) + self.eps
+                   ^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 14.00 MiB. GPU 0 has a total capacity of 139.81 GiB of which 4.12 MiB is free. Process 3470487 has 52.82 GiB memory in use. Process 3506994 has 86.97 GiB memory in use. Of the allocated memory 84.21 GiB is allocated by PyTorch, and 1.81 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)

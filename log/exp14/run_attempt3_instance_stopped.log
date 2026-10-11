@@ -1,0 +1,18 @@
+=== 2026-10-09T23:30:37Z swaps
+Loading weights:   0%|          | 0/1188 [00:00<?, ?it/s]Loading weights:   0%|          | 3/1188 [00:00<00:40, 29.51it/s]Loading weights:   3%|▎         | 33/1188 [00:00<00:06, 186.38it/s]Loading weights:   5%|▌         | 60/1188 [00:00<00:05, 222.89it/s]Loading weights:   7%|▋         | 85/1188 [00:00<00:04, 230.24it/s]Loading weights:  10%|▉         | 113/1188 [00:00<00:04, 247.21it/s]Loading weights:  12%|█▏        | 141/1188 [00:00<00:04, 257.57it/s]Loading weights:  14%|█▍        | 167/1188 [00:00<00:04, 252.76it/s]Loading weights:  16%|█▌        | 193/1188 [00:00<00:03, 251.64it/s]Loading weights:  19%|█▊        | 221/1188 [00:00<00:03, 254.22it/s]Loading weights:  21%|██        | 248/1188 [00:01<00:03, 254.75it/s]Loading weights:  23%|██▎       | 275/1188 [00:01<00:03, 259.15it/s]Loading weights:  25%|██▌       | 302/1188 [00:01<00:03, 257.97it/s]Loading weights:  28%|██▊       | 328/1188 [00:01<00:03, 257.39it/s]Loading weights:  30%|██▉       | 354/1188 [00:01<00:03, 250.75it/s]Loading weights:  32%|███▏      | 381/1188 [00:01<00:03, 256.32it/s]Loading weights:  34%|███▍      | 409/1188 [00:01<00:03, 256.50it/s]Loading weights:  37%|███▋      | 436/1188 [00:01<00:02, 254.05it/s]Loading weights:  39%|███▉      | 463/1188 [00:01<00:02, 257.71it/s]Loading weights:  41%|████▏     | 492/1188 [00:01<00:02, 261.40it/s]Loading weights:  44%|████▎     | 519/1188 [00:02<00:02, 256.94it/s]Loading weights:  46%|████▌     | 546/1188 [00:02<00:02, 260.53it/s]Loading weights:  48%|████▊     | 575/1188 [00:02<00:02, 263.14it/s]Loading weights:  51%|█████     | 602/1188 [00:02<00:02, 258.59it/s]Loading weights:  53%|█████▎    | 630/1188 [00:02<00:02, 264.15it/s]Loading weights:  55%|█████▌    | 658/1188 [00:02<00:02, 262.45it/s]Loading weights:  58%|█████▊    | 685/1188 [00:02<00:01, 258.03it/s]Loading weights:  60%|██████    | 713/1188 [00:02<00:01, 264.09it/s]Loading weights:  62%|██████▏   | 741/1188 [00:02<00:01, 262.56it/s]Loading weights:  65%|██████▍   | 768/1188 [00:03<00:01, 257.83it/s]Loading weights:  67%|██████▋   | 796/1188 [00:03<00:01, 263.42it/s]Loading weights:  69%|██████▉   | 823/1188 [00:03<00:01, 257.50it/s]Loading weights: 100%|██████████| 1188/1188 [00:03<00:00, 355.22it/s]
+swaps_h2.pt 0/100
+swaps_h2.pt 5/100
+swaps_h2.pt 10/100
+swaps_h2.pt 15/100
+swaps_h2.pt 20/100
+swaps_h2.pt 25/100
+swaps_h2.pt 30/100
+swaps_h2.pt 35/100
+swaps_h2.pt 40/100
+swaps_h2.pt 45/100
+swaps_h2.pt 50/100
+swaps_h2.pt 55/100
+swaps_h2.pt 60/100
+swaps_h2.pt 65/100
+swaps_h2.pt 70/100
+swaps_h2.pt 75/100
