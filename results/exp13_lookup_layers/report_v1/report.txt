@@ -1,0 +1,181 @@
+exp13 report (report_v1); manifest results/exp13_lookup_layers/manifest.json
+
+## harness: sliding-window mask check
+prompt of 2031 tokens (row brew_exp11_test:1 C0); answer position q=2030
+  d=1022: block 0 max|diff| 0.25 (expected >0), block 5 0.0625 (expected >0) ok
+  d=1023: block 0 max|diff| 0.25 (expected >0), block 5 0.0625 (expected >0) ok
+  d=1024: block 0 max|diff| 0 (expected 0), block 5 0.125 (expected >0) ok
+  d=1025: block 0 max|diff| 0 (expected 0), block 5 0.125 (expected >0) ok
+  d=1500: block 0 max|diff| 0 (expected 0), block 5 0.0312 (expected >0) ok
+MASK CHECK PASSED
+
+## Gemma-4-31B-it: accuracy by padding condition (argmax over the 10 colours; chance 0.10)
+distance = answer position minus the last table token (median over items); 'window' = every needed line visible / every needed line hidden from all post-table positions
+
+### single h=2
+  base          n=250 tokens~  396 distance    33  accuracy 0.928 [0.896, 0.956]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  between_0700  n=250 tokens~ 1053 distance   690  accuracy 0.836 [0.788, 0.880]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  between_1200  n=250 tokens~ 1553 distance  1190  accuracy 0.796 [0.744, 0.844]  colour mass 1.000  needed lines all visible 0.00 / all hidden 1.00
+  before_1200   n=250 tokens~ 1553 distance    33  accuracy 0.956 [0.928, 0.980]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+
+### single h=3
+  base          n=250 tokens~  397 distance    34  accuracy 0.760 [0.704, 0.808]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  between_0700  n=250 tokens~ 1054 distance   691  accuracy 0.880 [0.840, 0.920]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  between_1200  n=250 tokens~ 1554 distance  1191  accuracy 0.868 [0.824, 0.908]  colour mass 1.000  needed lines all visible 0.00 / all hidden 1.00
+  before_1200   n=250 tokens~ 1554 distance    34  accuracy 0.532 [0.468, 0.596]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+
+### three h=1
+  base          n=250 tokens~  595 distance    39  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  between_0700  n=250 tokens~ 1252 distance   696  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  between_0800  n=250 tokens~ 1334 distance   778  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  between_0900  n=250 tokens~ 1438 distance   882  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 0.73 / all hidden 0.00
+  between_0950  n=250 tokens~ 1497 distance   941  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 0.46 / all hidden 0.27
+  between_1000  n=250 tokens~ 1531 distance   975  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 0.20 / all hidden 0.45
+  between_1050  n=250 tokens~ 1602 distance  1046  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 0.00 / all hidden 0.89
+  between_1100  n=250 tokens~ 1635 distance  1079  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 0.00 / all hidden 1.00
+  between_1200  n=250 tokens~ 1752 distance  1196  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 0.00 / all hidden 1.00
+  between_1500  n=250 tokens~ 2031 distance  1475  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 0.00 / all hidden 1.00
+  between_2500  n=250 tokens~ 3055 distance  2499  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 0.00 / all hidden 1.00
+  before_1200   n=250 tokens~ 1752 distance    39  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  before_2500   n=250 tokens~ 3055 distance    39  accuracy 1.000 [1.000, 1.000]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+
+### three h=2
+  base          n=250 tokens~  598 distance    42  accuracy 0.924 [0.892, 0.956]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  between_0700  n=250 tokens~ 1255 distance   699  accuracy 0.852 [0.808, 0.896]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  between_0800  n=250 tokens~ 1337 distance   781  accuracy 0.804 [0.752, 0.852]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  between_0900  n=250 tokens~ 1441 distance   885  accuracy 0.772 [0.720, 0.824]  colour mass 1.000  needed lines all visible 0.48 / all hidden 0.00
+  between_0950  n=250 tokens~ 1500 distance   944  accuracy 0.708 [0.656, 0.760]  colour mass 1.000  needed lines all visible 0.12 / all hidden 0.07
+  between_1000  n=250 tokens~ 1534 distance   978  accuracy 0.744 [0.692, 0.796]  colour mass 1.000  needed lines all visible 0.01 / all hidden 0.24
+  between_1050  n=250 tokens~ 1605 distance  1049  accuracy 0.688 [0.632, 0.744]  colour mass 1.000  needed lines all visible 0.00 / all hidden 0.82
+  between_1100  n=250 tokens~ 1638 distance  1082  accuracy 0.712 [0.656, 0.764]  colour mass 1.000  needed lines all visible 0.00 / all hidden 1.00
+  between_1200  n=250 tokens~ 1755 distance  1199  accuracy 0.668 [0.608, 0.724]  colour mass 1.000  needed lines all visible 0.00 / all hidden 1.00
+  between_1500  n=250 tokens~ 2034 distance  1478  accuracy 0.652 [0.592, 0.712]  colour mass 1.000  needed lines all visible 0.00 / all hidden 1.00
+  between_2500  n=250 tokens~ 3058 distance  2502  accuracy 0.432 [0.372, 0.488]  colour mass 1.000  needed lines all visible 0.00 / all hidden 1.00
+  before_1200   n=250 tokens~ 1755 distance    42  accuracy 0.700 [0.644, 0.756]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+  before_2500   n=250 tokens~ 3058 distance    42  accuracy 0.540 [0.476, 0.604]  colour mass 1.000  needed lines all visible 1.00 / all hidden 0.00
+
+## primary contrasts (paired over items; positive = accuracy lost)
+  single h=2: within-window (between_0700) - beyond-window (between_1200) 0.040 [-0.008, 0.088]; within-window - matched-length table-near (before_1200) -0.120 [-0.168, -0.076]
+  single h=3: within-window (between_0700) - beyond-window (between_1200) 0.012 [-0.028, 0.052]; within-window - matched-length table-near (before_1200) 0.348 [0.288, 0.408]
+  three h=1: within-window (between_0700) - beyond-window (between_1200) 0.000 [0.000, 0.000]; within-window - matched-length table-near (before_1200) 0.000 [0.000, 0.000]
+  three h=2: within-window (between_0700) - beyond-window (between_1200) 0.184 [0.132, 0.240]; within-window - matched-length table-near (before_1200) 0.152 [0.096, 0.212]
+  three: (h=2 drop) - (h=1 drop) 0.184 [0.128, 0.236]
+
+## reading rules (manifest 'reading_rules_gemma'), three-ingredient items
+  lookups_need_sliding (h=1 drop >= 0.25): False
+  composition_needs_sliding (h=2 drop >= 0.25 and exceeds the h=1 drop by >= 0.15, CI low end > 0): False
+  global_layers_suffice (h=2 drop CI high end < 0.15): False
+
+## per-line visibility in the transition zone (between_0900 .. between_1100 pooled), three-ingredient items: accuracy by which needed lines are hidden
+  h=1 s0:HID                 n= 652 accuracy 1.000 [1.000, 1.000]
+  h=1 s0:vis                 n= 346 accuracy 1.000 [1.000, 1.000]
+  h=2 s0:HID+s1:HID          n= 533 accuracy 0.709 [0.668, 0.747]
+  h=2 s0:HID+s1:vis          n=  59 accuracy 0.831 [0.729, 0.932]
+  h=2 s0:vis+s1:HID          n=  53 accuracy 0.642 [0.509, 0.774]
+  h=2 s0:vis+s1:vis          n= 152 accuracy 0.757 [0.684, 0.829]
+
+## Qwen3.6-27B: resample ablation of one block's token mixer at the answer position
+keep = argmax unchanged from the clean pass; donor = argmax becomes the donor item's clean argmax (items whose clean argmax equals the donor's excluded from 'donor'); F = full attention
+
+### h=1: n=250, clean accuracy 1.000
+  block 16  keep 1.000  donor 0.000
+  block 17  keep 1.000  donor 0.000
+  block 18  keep 1.000  donor 0.000
+  block 19F keep 1.000  donor 0.000
+  block 20  keep 1.000  donor 0.000
+  block 21  keep 1.000  donor 0.000
+  block 22  keep 1.000  donor 0.000
+  block 23F keep 1.000  donor 0.000
+  block 24  keep 1.000  donor 0.000
+  block 25  keep 1.000  donor 0.000
+  block 26  keep 1.000  donor 0.000
+  block 27F keep 1.000  donor 0.000
+  block 28  keep 1.000  donor 0.000
+  block 29  keep 1.000  donor 0.000
+  block 30  keep 1.000  donor 0.000
+  block 31F keep 1.000  donor 0.000
+  block 32  keep 1.000  donor 0.000
+  block 33  keep 1.000  donor 0.000
+  block 34  keep 1.000  donor 0.000
+  block 35F keep 1.000  donor 0.000
+  block 36  keep 1.000  donor 0.000
+  block 37  keep 1.000  donor 0.000
+  block 38  keep 1.000  donor 0.000
+  block 39F keep 1.000  donor 0.000
+  block 40  keep 1.000  donor 0.000
+  block 41  keep 1.000  donor 0.000
+  block 42  keep 1.000  donor 0.000
+  block 43F keep 1.000  donor 0.000
+  block 44  keep 1.000  donor 0.000
+  block 45  keep 1.000  donor 0.000
+  block 46  keep 1.000  donor 0.000
+  block 47F keep 1.000  donor 0.000
+  block 48  keep 1.000  donor 0.000
+  block 49  keep 1.000  donor 0.000
+  block 50  keep 1.000  donor 0.000
+  block 51F keep 1.000  donor 0.000
+  block 52  keep 1.000  donor 0.000
+  block 53  keep 1.000  donor 0.000
+  block 54  keep 1.000  donor 0.000
+  block 55F keep 1.000  donor 0.000
+  block 56  keep 1.000  donor 0.000
+  block 57  keep 1.000  donor 0.000
+  block 58  keep 1.000  donor 0.000
+  block 59F keep 1.000  donor 0.000
+  block 60  keep 1.000  donor 0.000
+  block 61  keep 1.000  donor 0.000
+  block 62  keep 1.000  donor 0.000
+  block 63F keep 1.000  donor 0.000
+  blocks 20-56: mean effect (1 - keep) at full-attention blocks minus at linear blocks 0.000 [0.000, 0.000]; largest single-block effect at block 20 (linear)
+  reading rule 'lookup_at_full_attention' (difference >= 0.10 with CI low end > 0 and the largest effect at a full-attention block): False
+
+### h=2: n=250, clean accuracy 0.120
+  block 16  keep 0.984  donor 0.004
+  block 17  keep 0.996  donor 0.004
+  block 18  keep 0.988  donor 0.004
+  block 19F keep 0.976  donor 0.013
+  block 20  keep 0.992  donor 0.004
+  block 21  keep 0.988  donor 0.009
+  block 22  keep 0.992  donor 0.000
+  block 23F keep 0.984  donor 0.004
+  block 24  keep 0.996  donor 0.000
+  block 25  keep 0.996  donor 0.004
+  block 26  keep 0.972  donor 0.009
+  block 27F keep 0.984  donor 0.000
+  block 28  keep 0.972  donor 0.013
+  block 29  keep 0.988  donor 0.009
+  block 30  keep 0.948  donor 0.013
+  block 31F keep 0.964  donor 0.009
+  block 32  keep 0.948  donor 0.013
+  block 33  keep 0.964  donor 0.022
+  block 34  keep 0.944  donor 0.013
+  block 35F keep 0.812  donor 0.036
+  block 36  keep 0.952  donor 0.022
+  block 37  keep 0.984  donor 0.000
+  block 38  keep 0.976  donor 0.004
+  block 39F keep 0.908  donor 0.013
+  block 40  keep 0.984  donor 0.004
+  block 41  keep 0.984  donor 0.009
+  block 42  keep 0.900  donor 0.018
+  block 43F keep 0.848  donor 0.040
+  block 44  keep 0.920  donor 0.013
+  block 45  keep 0.960  donor 0.009
+  block 46  keep 0.876  donor 0.022
+  block 47F keep 0.748  donor 0.036
+  block 48  keep 0.944  donor 0.018
+  block 49  keep 0.900  donor 0.022
+  block 50  keep 0.916  donor 0.013
+  block 51F keep 0.764  donor 0.151
+  block 52  keep 0.956  donor 0.018
+  block 53  keep 0.984  donor 0.000
+  block 54  keep 0.956  donor 0.009
+  block 55F keep 0.888  donor 0.036
+  block 56  keep 0.992  donor 0.009
+  block 57  keep 0.976  donor 0.009
+  block 58  keep 0.988  donor 0.009
+  block 59F keep 0.860  donor 0.062
+  block 60  keep 0.988  donor 0.009
+  block 61  keep 0.972  donor 0.022
+  block 62  keep 0.960  donor 0.018
+  block 63F keep 0.944  donor 0.013
+  blocks 20-56: mean effect (1 - keep) at full-attention blocks minus at linear blocks 0.082 [0.067, 0.098]; largest single-block effect at block 47 (full attention)
