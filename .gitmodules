@@ -4,3 +4,6 @@
 [submodule "third_party/jpp_lens"]
 	path = third_party/jpp_lens
 	url = https://github.com/safety-research/jpp_lens
+[submodule "third_party/easynla"]
+	path = third_party/easynla
+	url = https://github.com/asherps/EasyNLA.git

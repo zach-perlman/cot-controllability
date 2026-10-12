@@ -1,0 +1,410 @@
+{
+  "hypothesis": "the AR head reads the backbone's final hidden state for every tag",
+  "n_spans": 200,
+  "reads": {
+    "block_L": {
+      "20": {
+        "ours_whitened": {
+          "ret1": 0.805,
+          "diag_cos": 0.148,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.53,
+          "diag_cos": 0.22,
+          "offdiag_cos": -0.005
+        }
+      },
+      "24": {
+        "ours_whitened": {
+          "ret1": 0.69,
+          "diag_cos": 0.129,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.445,
+          "diag_cos": 0.206,
+          "offdiag_cos": -0.007
+        }
+      },
+      "28": {
+        "ours_whitened": {
+          "ret1": 0.63,
+          "diag_cos": 0.108,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.415,
+          "diag_cos": 0.191,
+          "offdiag_cos": -0.005
+        }
+      },
+      "32": {
+        "ours_whitened": {
+          "ret1": 0.57,
+          "diag_cos": 0.086,
+          "offdiag_cos": 0.0
+        },
+        "raw_centered": {
+          "ret1": 0.365,
+          "diag_cos": 0.162,
+          "offdiag_cos": -0.001
+        }
+      },
+      "36": {
+        "ours_whitened": {
+          "ret1": 0.63,
+          "diag_cos": 0.098,
+          "offdiag_cos": 0.0
+        },
+        "raw_centered": {
+          "ret1": 0.345,
+          "diag_cos": 0.19,
+          "offdiag_cos": 0.001
+        }
+      },
+      "40": {
+        "ours_whitened": {
+          "ret1": 0.58,
+          "diag_cos": 0.086,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.255,
+          "diag_cos": 0.168,
+          "offdiag_cos": -0.002
+        }
+      },
+      "44": {
+        "ours_whitened": {
+          "ret1": 0.48,
+          "diag_cos": 0.071,
+          "offdiag_cos": -0.001
+        },
+        "raw_centered": {
+          "ret1": 0.225,
+          "diag_cos": 0.155,
+          "offdiag_cos": -0.003
+        }
+      },
+      "48": {
+        "ours_whitened": {
+          "ret1": 0.405,
+          "diag_cos": 0.06,
+          "offdiag_cos": 0.0
+        },
+        "raw_centered": {
+          "ret1": 0.205,
+          "diag_cos": 0.14,
+          "offdiag_cos": 0.001
+        }
+      },
+      "52": {
+        "ours_whitened": {
+          "ret1": 0.485,
+          "diag_cos": 0.08,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.26,
+          "diag_cos": 0.177,
+          "offdiag_cos": -0.0
+        }
+      },
+      "56": {
+        "ours_whitened": {
+          "ret1": 0.5,
+          "diag_cos": 0.079,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.27,
+          "diag_cos": 0.166,
+          "offdiag_cos": -0.001
+        }
+      },
+      "60": {
+        "ours_whitened": {
+          "ret1": 0.43,
+          "diag_cos": 0.053,
+          "offdiag_cos": 0.001
+        },
+        "raw_centered": {
+          "ret1": 0.145,
+          "diag_cos": 0.107,
+          "offdiag_cos": -0.0
+        }
+      }
+    },
+    "final_normed": {
+      "20": {
+        "ours_whitened": {
+          "ret1": 0.525,
+          "diag_cos": 0.083,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.215,
+          "diag_cos": 0.135,
+          "offdiag_cos": -0.006
+        }
+      },
+      "24": {
+        "ours_whitened": {
+          "ret1": 0.49,
+          "diag_cos": 0.083,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.225,
+          "diag_cos": 0.135,
+          "offdiag_cos": -0.007
+        }
+      },
+      "28": {
+        "ours_whitened": {
+          "ret1": 0.475,
+          "diag_cos": 0.07,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.21,
+          "diag_cos": 0.126,
+          "offdiag_cos": -0.004
+        }
+      },
+      "32": {
+        "ours_whitened": {
+          "ret1": 0.435,
+          "diag_cos": 0.061,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.21,
+          "diag_cos": 0.119,
+          "offdiag_cos": -0.001
+        }
+      },
+      "36": {
+        "ours_whitened": {
+          "ret1": 0.57,
+          "diag_cos": 0.093,
+          "offdiag_cos": 0.0
+        },
+        "raw_centered": {
+          "ret1": 0.28,
+          "diag_cos": 0.177,
+          "offdiag_cos": 0.003
+        }
+      },
+      "40": {
+        "ours_whitened": {
+          "ret1": 0.53,
+          "diag_cos": 0.081,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.225,
+          "diag_cos": 0.151,
+          "offdiag_cos": -0.001
+        }
+      },
+      "44": {
+        "ours_whitened": {
+          "ret1": 0.47,
+          "diag_cos": 0.063,
+          "offdiag_cos": -0.001
+        },
+        "raw_centered": {
+          "ret1": 0.14,
+          "diag_cos": 0.129,
+          "offdiag_cos": -0.003
+        }
+      },
+      "48": {
+        "ours_whitened": {
+          "ret1": 0.375,
+          "diag_cos": 0.057,
+          "offdiag_cos": 0.0
+        },
+        "raw_centered": {
+          "ret1": 0.205,
+          "diag_cos": 0.128,
+          "offdiag_cos": 0.003
+        }
+      },
+      "52": {
+        "ours_whitened": {
+          "ret1": 0.505,
+          "diag_cos": 0.076,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.22,
+          "diag_cos": 0.159,
+          "offdiag_cos": 0.001
+        }
+      },
+      "56": {
+        "ours_whitened": {
+          "ret1": 0.32,
+          "diag_cos": 0.073,
+          "offdiag_cos": 0.001
+        },
+        "raw_centered": {
+          "ret1": 0.1,
+          "diag_cos": 0.145,
+          "offdiag_cos": 0.001
+        }
+      },
+      "60": {
+        "ours_whitened": {
+          "ret1": 0.425,
+          "diag_cos": 0.05,
+          "offdiag_cos": 0.001
+        },
+        "raw_centered": {
+          "ret1": 0.075,
+          "diag_cos": 0.094,
+          "offdiag_cos": -0.0
+        }
+      }
+    },
+    "final_raw": {
+      "20": {
+        "ours_whitened": {
+          "ret1": 0.53,
+          "diag_cos": 0.081,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.215,
+          "diag_cos": 0.135,
+          "offdiag_cos": -0.006
+        }
+      },
+      "24": {
+        "ours_whitened": {
+          "ret1": 0.49,
+          "diag_cos": 0.081,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.22,
+          "diag_cos": 0.136,
+          "offdiag_cos": -0.007
+        }
+      },
+      "28": {
+        "ours_whitened": {
+          "ret1": 0.46,
+          "diag_cos": 0.069,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.21,
+          "diag_cos": 0.128,
+          "offdiag_cos": -0.004
+        }
+      },
+      "32": {
+        "ours_whitened": {
+          "ret1": 0.44,
+          "diag_cos": 0.06,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.205,
+          "diag_cos": 0.122,
+          "offdiag_cos": -0.001
+        }
+      },
+      "36": {
+        "ours_whitened": {
+          "ret1": 0.58,
+          "diag_cos": 0.091,
+          "offdiag_cos": 0.0
+        },
+        "raw_centered": {
+          "ret1": 0.285,
+          "diag_cos": 0.179,
+          "offdiag_cos": 0.003
+        }
+      },
+      "40": {
+        "ours_whitened": {
+          "ret1": 0.53,
+          "diag_cos": 0.079,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.21,
+          "diag_cos": 0.154,
+          "offdiag_cos": -0.001
+        }
+      },
+      "44": {
+        "ours_whitened": {
+          "ret1": 0.465,
+          "diag_cos": 0.062,
+          "offdiag_cos": -0.001
+        },
+        "raw_centered": {
+          "ret1": 0.16,
+          "diag_cos": 0.133,
+          "offdiag_cos": -0.003
+        }
+      },
+      "48": {
+        "ours_whitened": {
+          "ret1": 0.375,
+          "diag_cos": 0.057,
+          "offdiag_cos": 0.0
+        },
+        "raw_centered": {
+          "ret1": 0.195,
+          "diag_cos": 0.132,
+          "offdiag_cos": 0.003
+        }
+      },
+      "52": {
+        "ours_whitened": {
+          "ret1": 0.505,
+          "diag_cos": 0.075,
+          "offdiag_cos": -0.0
+        },
+        "raw_centered": {
+          "ret1": 0.235,
+          "diag_cos": 0.163,
+          "offdiag_cos": 0.0
+        }
+      },
+      "56": {
+        "ours_whitened": {
+          "ret1": 0.325,
+          "diag_cos": 0.072,
+          "offdiag_cos": 0.001
+        },
+        "raw_centered": {
+          "ret1": 0.1,
+          "diag_cos": 0.149,
+          "offdiag_cos": 0.001
+        }
+      },
+      "60": {
+        "ours_whitened": {
+          "ret1": 0.425,
+          "diag_cos": 0.05,
+          "offdiag_cos": 0.001
+        },
+        "raw_centered": {
+          "ret1": 0.08,
+          "diag_cos": 0.097,
+          "offdiag_cos": -0.001
+        }
+      }
+    }
+  },
+  "best_read": "block_L",
+  "pass": false
+}

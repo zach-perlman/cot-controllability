@@ -1,0 +1,31 @@
+{
+  "kernels": {
+    "fla": true,
+    "causal_conv1d": false,
+    "kernels": false
+  },
+  "torch": "2.11.0+cu128",
+  "forward_s": 0.0694,
+  "prompt_tokens": 397,
+  "generate": [
+    {
+      "batch": 16,
+      "new_tokens": 2048,
+      "seconds": 41.32,
+      "tokens_per_s": 49.6
+    },
+    {
+      "batch": 64,
+      "new_tokens": 8192,
+      "seconds": 42.06,
+      "tokens_per_s": 194.8
+    },
+    {
+      "batch": 192,
+      "new_tokens": 24576,
+      "seconds": 47.67,
+      "tokens_per_s": 515.5
+    }
+  ],
+  "peak_gb": 87.9
+}

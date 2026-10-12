@@ -1,0 +1,54 @@
+{
+  "olens": {
+    "layer": 42,
+    "adapter_logit_drift": 13.188,
+    "overlap_true": 0.0356,
+    "overlap_shuffled": 0.0039,
+    "paired_diff": [
+      0.0317,
+      0.0225,
+      0.042
+    ],
+    "pass": true,
+    "examples": [
+      "* of old bindings. The librarian preserved the bindings protecting bindings of\n* and spines. He sold rare volumes to preserve bindings and\n* and leather. The rare books\u2019 bindings demanded darkness preserving bindings\n* of old paper. The librarian preserves bindings to spare bindings of",
+      "* olive oil and season evenly; roast vegetables tossed with oil\n* olive oil and roast. Toss vegetables\n* olive oil and seasonings. Toss vegetables evenly with olive\n* olive oil and roast. Toss vegetables with olive",
+      "* of talking. Instead we spent time reminiscing instead of planning\n* of discussing work. We ended up reminiscing instead instead of\n* than solving. Instead we ended up chatting instead instead\n* of discussing work. My grandmother ended up reminiscing instead"
+    ]
+  },
+  "ao_one_line": {
+    "layer": 44,
+    "adapter_logit_drift": 25.938,
+    "overlap_true": 0.0256,
+    "overlap_shuffled": 0.0049,
+    "paired_diff": [
+      0.0207,
+      0.0152,
+      0.0267
+    ],
+    "pass": true,
+    "examples": [
+      "- /covers of old books. Sunlight, they said, would ruin the bindings\n- \uff08bindings) of the older volumes. So the shop\u2019s lights were dimmed to preserve the bindings\n- \u5c01\u9762 (bindings) from sun and humidity. But the librarians preferred dimness\u2014it kept the bindings\n- /covers of the books; too much glare wo",
+      "- olive oil, seasonings, and spread evenly on a baking sheet. Roast until vegetables are\n- \u6a44\u6984\u6cb9 and spices, then roast until tender-crisp. Toss remaining vegetables with oil and\n- \u6a44\u6984\u6cb9\u3001salt, and spices, then roast until caramelized. Arrange them on a large baking sheet, tossing vegetables with olive o",
+      "- of focusing on saving tips. We ended up reminiscing about the past instead\n- \u9677\u5165\u56de\u5fc6 instead. \ud83d\ude0a We talked about our childhood instead of actually planning. Instead\n- \u804a\u8d77\u4e86\u8fc7\u53bb\uff08instead of actually budgeting). Here\u2019s how that conversation went, and how I ended up reminiscing instead\n- /ending up discussing"
+    ]
+  },
+  "ao_readme_breaks": {
+    "layer": 44,
+    "adapter_logit_drift": 25.938,
+    "overlap_true": 0.027,
+    "overlap_shuffled": 0.0041,
+    "paired_diff": [
+      0.0229,
+      0.017,
+      0.029
+    ],
+    "pass": true,
+    "examples": [
+      "- /covers of old books. Sunlight, they said, would ruin the bindings\n- \uff08bindings) of the older volumes. So the windows stayed low, the lights dim. \u201cPreserving the bindings\n- \uff08bindings\uff09 of rare editions and to spare the spines from glare. The shop was a quiet cavern of paper and leather; the bindings",
+      "- olive oil, seasonings, and spread evenly on baking sheets. Roast until caramelized\n- \u6a44\u6984\u6cb9 and spices, spread evenly on a baking sheet, and roast until tender and caramelized. Toss roasted veggies with\n- \u9002\u91cf olive oil, salt, and spices, then roast until golden and tender. Arrange veggies on a large s",
+      "- of focusing on budgets, which was fun but unproductive. Here's a summary of our nostalgia trip instead\n- \u804a\u8d77\u4e86\u7ae5\u5e74\u56de\u5fc6 instead. \ud83d\ude05 We ended up reminiscing about old times instead\n- \u9677\u5165 reminiscing about the past instead. \ud83d\ude02 We spent an hour sharing stories instead of planning. Here\u2019s what I learned instead"
+    ]
+  },
+  "ao_prompt_kept": "ao_readme_breaks"
+}

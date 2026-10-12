@@ -1,0 +1,18 @@
+{
+  "cos_hidden42": 0.9743,
+  "cos_hidden43": 0.9993,
+  "min_cos_hidden43": 0.9766,
+  "layer_index_42_is_hidden": 43,
+  "av_adapter_logit_drift": 5.629,
+  "explanation_tag_rate": 1.0,
+  "fve_baseline_mse": 0.4616,
+  "fve_mean": 0.7706,
+  "fve_best_of_4_by_fve": 0.8012,
+  "pass_convention": true,
+  "pass_fve": true,
+  "examples": [
+    "Aggregated web scraping of industrial equipment listings: crushing, grinding mills, and stone quarry products dominate, mixing suppliers, prices, specifications, and locations across India/South Africa.\n\nThe text consistently follows a \"product name + location/brand + specifications + price\" listing pattern, with truncated entries suggesting more items follow.\n\nFinal token \"Price list for\" is the ",
+    "Biographical narrative momentum through consistent historical record entries, each detailing military honors, service, and dates for named veterans.\n\nJohn Benson's biography follows a structured chronological British Army career progression, with ranks and appointments documented sequentially \u2014 Captain promotion 1896, Sudan campaign,\u817e\u817e Whydah Forest War, India posting all leading to next advanceme",
+    "Biographical profile format maintained throughout, establishing Sammy's passion for marine conservation, outdoor pursuits, and professional credentials for a UK-based adventure/conservation role.\n\nCumulative list pattern: each paragraph adds another dimension to Sammy's profile (underwater researcher, diver, protector, blogger/vlogger, athlete, expeditions, volunteer work, relocation history, rese"
+  ]
+}

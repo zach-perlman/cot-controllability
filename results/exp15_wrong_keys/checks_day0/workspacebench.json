@@ -1,0 +1,54 @@
+{
+  "n_items": 100,
+  "layers": [
+    20,
+    24,
+    28,
+    32,
+    36,
+    40,
+    44,
+    48,
+    52,
+    56,
+    60
+  ],
+  "cells": [
+    "emit_asst",
+    "emit_think",
+    "emit_colon"
+  ],
+  "gold_rate": 0.4952,
+  "offpath_rate": 0.2241,
+  "gold_minus_off": [
+    0.2711,
+    0.2018,
+    0.3414
+  ],
+  "gold_rate_any_of_4": 0.6212,
+  "offpath_rate_any_of_4": 0.3461,
+  "item_pass_rate": 0.76,
+  "item_null_rate": 0.29,
+  "published_llm_judged": {
+    "gold_cell_rate": 0.38,
+    "off_cell_rate": 0.2
+  },
+  "pass": true,
+  "examples": [
+    {
+      "item": "brew-s2-r10d2-0000",
+      "layer": 40,
+      "sample": "- 2 (Green) (Since both paths lead to Green after two steps)\n- Green (Explanation: The second step leads to Green regardless of the path taken after the first\n- \u7eff\u8272 (Green)** (or just **Green**, as both paths lead to the same result after two steps)\n- Green** (since the second transition also leads t"
+    },
+    {
+      "item": "brew-s2-r10d2-0001",
+      "layer": 40,
+      "sample": "- 2** (since applying the rule twice: Blue $\\rightarrow$ Green, then Green\n- Yellow** (The second application transforms Green to Yellow)\n- Green (Explanation: First step transforms Blue to Green, second step transforms Green to Yellow)\n\n**Step-by-Step Execution of\n- 2 (Since the second application "
+    },
+    {
+      "item": "brew-s2-r10d2-0002",
+      "layer": 40,
+      "sample": "- 2 (Two applications of the rule)\n- yellow (Explanation: Blue -> Green, Green -> Yellow)\n- \u9ec4\u8272 (Yellow) (Explanation: The second step transforms Orange to Yellow. The third step transforms Yellow to Black.)\n- 3 (or Yellow, depending on interpretation of the chain) Let's trace carefully: First applic"
+    }
+  ]
+}

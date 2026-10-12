@@ -1,0 +1,13 @@
+{
+  "seed": "exp15_zero_edit",
+  "n_items": 128,
+  "layers": [
+    28,
+    42
+  ],
+  "n_trials": 256,
+  "same_answer": 0.9922,
+  "max_abs_dp": 0.0996,
+  "mean_abs_dp": 0.01066,
+  "pass": true
+}

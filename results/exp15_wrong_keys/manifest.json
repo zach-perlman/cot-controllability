@@ -1,0 +1,415 @@
+{
+ "experiment": "exp15_wrong_keys",
+ "status": "locked",
+ "written": "2026-10-12T00:40:51Z",
+ "plan": "/root/.cursor/plans/exp15_wrong-key_read_write_abef3741.plan.md",
+ "question": "On Qwen3.6-27B's no-CoT single-table brew errors that are off the true cycle, is the wrong intermediate w = T^-1(answer) readable before the answer exists (read), and can additive edits of matched size swap a key on correct items or repair an error (write)?",
+ "model": {
+  "name": "Qwen3.6-27B",
+  "rendering": "exp10 C0: one h=2 shot, thinking off, 'Answer:' prefilled",
+  "layer_convention": "layer l = output of decoder block l = hidden_states[l + 1]",
+  "kernels": "flash-linear-attention 0.5.2; cuDNN SDPA disabled; causal_conv1d absent (torch path)"
+ },
+ "items": {
+  "dev_bank": "exp11 single_test (250 per h, seen in exp11)",
+  "test_bank": {
+   "seed": "exp15_test_20261012",
+   "format": "single_first",
+   "per_h": {
+    "1": 100,
+    "2": 600,
+    "3": 2000
+   }
+  },
+  "groups": "correct | offcycle (answer != T^k(s0) for k in 0..h+3) | miscount (unique k) | miscount_ambiguous",
+  "consistent_p": 0.3,
+  "sensitivity_p": [
+   0.0,
+   0.5,
+   0.8
+  ],
+  "controls": "all colours minus (true path, implied path, T(answer))",
+  "text_read_rows": {
+   "dev": "all h=2 and h=3 rows",
+   "test": {
+    "seed": "exp15_text_rows",
+    "correct_per_h": 300,
+    "miscount": 300,
+    "offcycle": "all"
+   }
+  }
+ },
+ "readers": {
+  "token_lenses": {
+   "kinds": [
+    "logit",
+    "jlens",
+    "rlens",
+    "jpp",
+    "template"
+   ],
+   "score": "readout logits (template: cosine) over the 10 colours"
+  },
+  "probe": "exp11_probe features + fit (PCA-64, multinomial LR, wd 1e-2), 5-fold cross-fit",
+  "diffmeans": "mean(x | key=c) - mean(x | key!=c), same folds",
+  "text": {
+   "nla": {
+    "layers": [
+     42
+    ],
+    "n_samples": 4,
+    "max_new_tokens": 300,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "primary_layers": [
+     42
+    ]
+   },
+   "olens": {
+    "layers": [
+     42
+    ],
+    "n_samples": 4,
+    "max_new_tokens": 120,
+    "temperature": 1.0,
+    "top_p": 1.0,
+    "primary_layers": [
+     42
+    ]
+   },
+   "ao": {
+    "layers": [
+     20,
+     24,
+     28,
+     32,
+     36,
+     40,
+     44,
+     48,
+     52,
+     56,
+     60
+    ],
+    "n_samples": 4,
+    "max_new_tokens": 128,
+    "temperature": 0.8,
+    "top_p": 0.95,
+    "primary_layers": [
+     36,
+     40,
+     44,
+     48
+    ]
+   }
+  },
+  "nla_adapter": "iter_000800",
+  "ao_prompt": "An activation vector from layer {layer} of a language model is enclosed in activation tags:\n<activation>{char}</activation>. Produce distinct concepts that encode this activation, each as\na '- ' bullet on its own line.",
+  "matcher": {
+   "red": "\\bred\\b|(?<![\u7c89])\u7ea2\u8272|(?<![\\u4e00-\\u9fff])\u7ea2(?![\\u4e00-\\u9fff])",
+   "blue": "\\bblue\\b|\u84dd\u8272|(?<![\\u4e00-\\u9fff])\u84dd(?![\\u4e00-\\u9fff])",
+   "green": "\\bgreen\\b|\u7eff\u8272|(?<![\\u4e00-\\u9fff])\u7eff(?![\\u4e00-\\u9fff])",
+   "gold": "\\bgold(?:en)?\\b|\u91d1\u8272|(?<![\\u4e00-\\u9fff])\u91d1(?![\\u4e00-\\u9fff])|\u91d1\u9ec4\u8272",
+   "pink": "\\bpink\\b|\u7c89\u8272|(?<![\\u4e00-\\u9fff])\u7c89(?![\\u4e00-\\u9fff])|\u7c89\u7ea2\u8272?",
+   "gray": "\\bgr[ae]y\\b|\u7070\u8272|(?<![\\u4e00-\\u9fff])\u7070(?![\\u4e00-\\u9fff])",
+   "brown": "\\bbrown\\b|[\u68d5\u8910]\u8272|(?<![\\u4e00-\\u9fff])[\u68d5\u8910](?![\\u4e00-\\u9fff])",
+   "black": "\\bblack\\b|\u9ed1\u8272|(?<![\\u4e00-\\u9fff])\u9ed1(?![\\u4e00-\\u9fff])",
+   "white": "\\bwhite\\b|\u767d\u8272|(?<![\\u4e00-\\u9fff])\u767d(?![\\u4e00-\\u9fff])",
+   "purple": "\\bpurple\\b|\u7d2b\u8272|(?<![\\u4e00-\\u9fff])\u7d2b(?![\\u4e00-\\u9fff])"
+  },
+  "primary_cells": [
+   "question_end",
+   "nl_asst",
+   "final"
+  ],
+  "primary_layers": [
+   36,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   48
+  ],
+  "ao_exploratory_layers": [
+   20,
+   24,
+   28,
+   32,
+   52,
+   56,
+   60
+  ]
+ },
+ "tests": {
+  "P1": "correct items, per h in {2, 3}: AUC of S(key = s_{h-1}) vs controls",
+  "P2": {
+   "population": "off-cycle errors, h in {2, 3}, p(a') >= 0.3",
+   "primary": [
+    "AUC of S(w) vs controls",
+    "direction test: S(w) vs S(T(answer))"
+   ],
+   "secondary": [
+    "answer-leak filtered AUC (pairs where J++ ranks the answer outside its top 3)",
+    "hypothesis decomposition: top among {w, true s_{h-1}, controls}",
+    "strata: gold is / is not the runner-up colour; h = 2 / 3; gates 0.0 / 0.5 / 0.8",
+    "AUC of the true s_{h-1} vs controls"
+   ]
+  },
+  "P3": {
+   "population": "correct h=2 items",
+   "edit": "c = s1 -> c' = s1' (s1', T(s1'), T(T(s1')) off the true path and distinct)",
+   "outcomes": "success T(s1') | start_swap T(T(s1')) | echo s1' | unchanged | other",
+   "variants": {
+    "answer_swap": "c = s2 -> c' = a' (ceiling and gate: success >= 0.30 on dev)",
+    "random_null": "seeded random unit direction, same alpha and layer",
+    "other_item": "c, c' = two colours unrelated to the item"
+   },
+   "primary_metric": "per-item key_swap success - random_null success at the locked setting",
+   "head_to_head": "every method at layer 42, at its best dev alpha there"
+  },
+  "P4": {
+   "population": "off-cycle errors, h = 3, p(a') >= 0.3",
+   "edit": "c = w -> c' = true s2; success = gold",
+   "controls": [
+    "redirect: c' = r off both paths, success = T(r)",
+    "random-direction null"
+   ],
+   "eligibility": "methods with dev key_swap success - null >= 0.10 that pass the gate"
+  }
+ },
+ "secondary_exploratory": {
+  "path_specificity": "S(true s_{h-1}) vs S(s_0..s_{h-2}) on correct items and errors, and S(w) vs the same on errors (does a reader favour the held key, or path colours in general?)",
+  "count_target": "miscount items with a unique implied k: S(k) vs other counts; S(h) vs other counts",
+  "count_repair": "consistent miscounts: count word k -> h (logit, J, J++, template); dev grid, test at the dev-best setting; random null",
+  "self_report": "no-CoT 'colour just before the last stir' after the model's own answer; thinking-on prompt-only baseline on 100 test off-cycle errors",
+  "nla_iter300": "AV iter_000300 vs iter_000800 at the primary cells, layer 42",
+  "best_of_16": "16 AV samples at the final cell ranked by AR cosine: top-1 vs random-1 vs all",
+  "ar_edit": "per-item key-swap direction AR(explanation, s1 -> s1') - AR(explanation) at layer 42, all alphas, vs the template nla_ar direction on the same items",
+  "read_then_write": "P4 with c = each reader's decoded key (top colour other than the answer) instead of w",
+  "ptag_rule": "ptag_ar enters the write tests only if day-0 check 7 passes (retrieval@1 >= 0.8 at L44)"
+ },
+ "writes": {
+  "edit": "h_p += alpha ||h_p|| unit(v_l(c') - v_l(c)) at block-l output, positions start colour token .. final token",
+  "methods": [
+   "logit",
+   "jlens",
+   "rlens",
+   "jpp",
+   "template",
+   "diffmeans",
+   "nla_ar",
+   "ptag_ar"
+  ],
+  "layers": {
+   "logit": [
+    28,
+    32,
+    36,
+    40,
+    42,
+    44
+   ],
+   "jlens": [
+    28,
+    32,
+    36,
+    40,
+    42,
+    44
+   ],
+   "rlens": [
+    28,
+    32,
+    36,
+    40,
+    42,
+    44
+   ],
+   "jpp": [
+    28,
+    32,
+    36,
+    40,
+    42,
+    44
+   ],
+   "template": [
+    28,
+    32,
+    36,
+    40,
+    42,
+    44
+   ],
+   "diffmeans": [
+    28,
+    32,
+    36,
+    40,
+    42,
+    44
+   ],
+   "nla_ar": [
+    42
+   ],
+   "ptag_ar": [
+    28,
+    32,
+    36,
+    40,
+    44
+   ]
+  },
+  "alphas": [
+   0.1,
+   0.25,
+   0.5,
+   1.0
+  ],
+  "directions": {
+   "logit": "g * W_U[c]",
+   "jlens/rlens/jpp": "J_l^T (g * W_U[c])",
+   "template": "template-lens row (layer l, c)",
+   "diffmeans": "dev correct h=2/3 items, final cell, key classes",
+   "nla_ar": {
+    "layer": 42,
+    "templates": [
+     "Colour-change puzzle about a potion: tracking the current colour through the stir rules. The potion is {c} right now, and the model is about to apply the rule for a {c} potion.",
+     "Rule lookup in progress: the relevant line is 'A {c} potion turns ...'; the answer is the colour that {c} turns into.",
+     "The intermediate colour before the last stir is {c}; the final answer follows from the {c} rule.",
+     "Answer slot after 'Answer:' in a short puzzle; the colour held in mind is {c}, about to be mapped through the table once more."
+    ]
+   },
+   "ptag_ar": {
+    "templates": [
+     "The potion is now {c}",
+     "A {c} potion turns",
+     "After that stir the potion is {c}",
+     "Before the last stir it was {c}"
+    ],
+    "whitener": {
+     "passages": 3000,
+     "skip_first": 4,
+     "seed": 1,
+     "ridge": 0.1
+    }
+   }
+  },
+  "selection_rule": "per method, on dev: the (layer, alpha) maximising key_swap success - random_null success; ties -> smaller alpha, then earlier layer. Gate: the method's best answer_swap success over its grid >= 0.30, else 'cannot write at this edit size' (K3).",
+  "lock_file": "write_lock.json"
+ },
+ "statistics": {
+  "bootstrap": "items, 10k resamples, percentile 95% CI",
+  "paired": "reader comparisons on shared items",
+  "multiplicity": "Holm over readers x {P1 h=2, P1 h=3, P2 AUC, P2 direction}",
+  "positive": "CI lower bound > 0.5 (AUC) or > 0 (null-adjusted rate)"
+ },
+ "kill_rules": {
+  "K1": "no reader reads the on-path key on dev -> exploratory sweep, then count target",
+  "K2": "< 100 projected consistent off-cycle test errors -> enlarge h=3 bank (applied)",
+  "K3": "answer_swap gate failed -> 'cannot write at this edit size'",
+  "K4": "no method reaches dev key_swap - null >= 0.10 -> repair reported untestable"
+ },
+ "day0_checks": {
+  "behaviour": {
+   "pass": true,
+   "max_abs_diff": 3
+  },
+  "lens_sanity": {
+   "pass_by_lens": {
+    "logit": false,
+    "jlens": false,
+    "rlens": false,
+    "jpp": false
+   }
+  },
+  "nla": {
+   "cos_hidden43": 0.9993,
+   "fve_mean": 0.7706,
+   "pass_convention": true,
+   "pass_fve": true
+  },
+  "oracles": {
+   "olens": {
+    "overlap_true": 0.0356,
+    "overlap_shuffled": 0.0039,
+    "pass": true
+   },
+   "ao_one_line": {
+    "overlap_true": 0.0256,
+    "overlap_shuffled": 0.0049,
+    "pass": true
+   },
+   "ao_readme_breaks": {
+    "overlap_true": 0.027,
+    "overlap_shuffled": 0.0041,
+    "pass": true
+   }
+  },
+  "ptag": {
+   "pass": false,
+   "L44": {
+    "ours_whitened": {
+     "ret1": 0.48,
+     "diag_cos": 0.071,
+     "offdiag_cos": -0.001
+    },
+    "raw_centered": {
+     "ret1": 0.225,
+     "diag_cos": 0.155,
+     "offdiag_cos": -0.003
+    }
+   }
+  },
+  "matcher": {
+   "precision": 1.0,
+   "recall": 1.0,
+   "pass": true
+  },
+  "matcher_cjk": {
+   "precision": 0.9892,
+   "recall": 1.0,
+   "pass": true
+  },
+  "zero_edit": {},
+  "external_workspacebench": {
+   "gold_rate": 0.4952,
+   "offpath_rate": 0.2241,
+   "pass": true
+  }
+ },
+ "deviations_from_plan": [
+  "Consistency gate: p(a') >= 0.3 is primary (plan: 0.5, sensitivity 0.8). At 0.5 dev kept 3 of 52 h=3 off-cycle errors; 0.0, 0.5 and 0.8 are reported as sensitivity (0.8 is expected to be empty: no dev off-cycle error reaches it).",
+  "Test bank enlarged to 100 / 600 / 2000 items at h = 1 / 2 / 3 (plan: 100 / 300 / 1000), per K2: dev projects 26 + 136 consistent off-cycle errors at the 0.3 gate.",
+  "Primary read cells chosen on dev: question_end, nl_asst (the newline after 'assistant'), final. think_close was a candidate; its reads were at chance on dev.",
+  "transformers stores hidden_states[64] after the final norm, so lenses read layers 0..62 (as planned) and no reader sees the raw block-63 output.",
+  "J++ (koayon/jpp-lenses) ships one Jacobian per layer, so the plan's 'expert mixture evaluated at the clean h' does not apply; its single matrix is used for reads and writes.",
+  "Lens write directions include the final norm's gain g: v = J_l^T (g * W_U[c]) (logit lens: g * W_U[c]); exp14 used W_U[c] J without g.",
+  "agu18dec's pooled whitener is gated. Our own (natural-text passages, WHITENER_SPEC) stands in: ptag AR retrieval is scored in our whitened space, and ptag AR write directions are mapped back with our S^1/2.",
+  "AO prompt: both renderings of the README's concepts_raw prompt were scored in day-0 check 6 and the README's line-break rendering was kept.",
+  "Day-0 check 6 used the next 20 tokens (the template-lens passages are about 45 tokens long), not 32.",
+  "Day-0 check 4 (lens sanity) fails its literal bar (>= 0.90 top-1 at L60; observed 0.76 to 0.86). On items where the model's colour softmax is confident (p >= 0.8) every lens is >= 0.99; misses concentrate on h=3 items with p < 0.8, where the last block often flips the top colour. The lenses are kept as readers; their reads on uncertain items are noisier, which is reported.",
+  "Text readers on test run on all off-cycle errors plus seeded subsamples of 300 correct items per h (P1) and 300 miscounts (secondary), to bound generation cost.",
+  "The probe and diffmeans are trained on correct h=2 and h=3 items pooled (target: the key, s_{h-1}); other rows are scored by the mean of the five fold models.",
+  "P2 pools h=2 and h=3 off-cycle errors (strata by h are reported); P4 uses h=3 only, as planned.",
+  "Reader scores: rank-average within (cell, layer) pairs for continuous readers; mean naming fraction for text readers (the plan's 'fraction of samples naming c').",
+  "The prompt-only analytic baseline gives AUC(w) = 0.5 by construction (w is never on the true path of an off-cycle error); the thinking-on baseline runs with the self-report secondary.",
+  "Write settings are frozen in a separate write_lock.json (after the dev grid, before any test write trial), so the locked manifest is never edited.",
+  "Matcher extended to Chinese colour words before the lock: about a quarter of dev AO samples answer in Chinese (often a bare character, e.g. '\u7eff ('), which the English-only matcher missed (recall 0.946 on a 30-readout audit of such samples; 4.3% of AO samples had a missed colour). A second hand-labelled audit (matcher_cjk) checks the extended matcher; the first audit is re-scored with it. The external check (day-0 check 9) ran with the English-only matcher.",
+  "Day-0 check 7 (ptag AR) failed: retrieval@1 at L44 is 0.48 in our whitened space (bar 0.8, published 0.93). As pre-registered, ptag_ar stays out of the write tests unless debugging (at most 3 hours, logged in checks_day0/ptag_debug*.json) brings it over the bar.",
+  "Added pipeline check: the edit harness at alpha = 0 (right-padded batches, hook installed) must reproduce the captured answers (checks_day0/zero_edit.json)."
+ ],
+ "confounds": [
+  "answer leak: a reader naming w because the answer's rule line is active (direction test, J++ leak filter)",
+  "path co-activation: the probe at h=3 mixes s1 and s2 on correct items",
+  "edit size: alpha * ||h|| matched across methods; random and other-item nulls",
+  "text readers: colour words in readouts can come from the prompt's rule list (controls are colours in the same rule list)"
+ ]
+}

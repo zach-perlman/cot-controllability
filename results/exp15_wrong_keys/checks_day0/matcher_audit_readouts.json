@@ -1,0 +1,412 @@
+{
+ "spec": {
+  "seed": "exp15_matcher_audit",
+  "per_reader": {
+   "nla": 20,
+   "olens": 15,
+   "ao": 15
+  }
+ },
+ "rows": [
+  {
+   "audit_id": 0,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:13",
+   "read": "question_end|42",
+   "sample": 0,
+   "text": "Repeated template pattern: two-step examples follow identical structure (\"starting value\", chain description, \"What is the answer after 2 hops?  \"), with formatted input fields shown as \"Answer:\" placeholders.\n\nFirst example answered \"orange \u2192 wire \u2192 Cstems\" (2 hops); second example starts with \"5\", applying emojis then vowels \u2192 digits chain, requiring 2 consecutive conversions (5\u2192\u2192digits).\n\nFinal token is \"?\" closing the second example's prompt \"What is the answer after 2 hops?\" mirrors exactly the first example's closing line, immediately expecting the answer: a numeric result like \"Answer:\" followed by that next answer (likely \"o\" after \"o\" \u2192 vowels \u2192 vowels twice).\n\"Two hops: \"\n\"What starting value\\\" (2 hops; gives vowels first step). \"After 2 hops?\" \u2014 reasoning demands following answer: two-step result expected"
+  },
+  {
+   "audit_id": 1,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:111",
+   "read": "final|42",
+   "sample": 3,
+   "text": "Worked example pattern: first example showed a single-step Johnson cycle with \"X \u2192 Yellow \u2192 Green,\" now second example follows identical format.\n\nColor-wheel logical continuation: two steps starting from Green must be traced (Blue \u2192 next \u2192 next), constrained by the defined rotation sequence (Green\u2192Blue\u2192Red\u2192Yellow\u2192X\u2192Green repeats).\n\nFinal token \"answer is:\" ends the second example's solution statement, immediately requiring a color name completing \"Two Steps after Blue.\"\n\"Orange\n\nGiven two-step forward transmission with step color replacement in Question 9 part 2: must follow from Green)\n\n(B) \u2014 Applying two transmissions on Blue starting at Blue:\n\"\\room...\\\n\nAnswer is:\" \u2014 the solution value \"expected answer: Red\" or \"Yellow again? Two transmissions)\n\n1st transmission gives [third color], \"next:\", must follow pattern\nFinal token \"two-step\""
+  },
+  {
+   "audit_id": 2,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:8",
+   "read": "question_end|42",
+   "sample": 1,
+   "text": "Pattern of two identical question structures: input element \u2192 chain \u2192 steps, now requiring the same format repeated.\n\nThe first question gave one step (\"splice\u2192Element after 1 step? Answer: Light\"), establishing the multi-step chain reasoning task with color coding.\n\nFinal token is \"element?\" closing the second question prompt (\"Given input as 'petroleum'. What element after 2 steps?\"), immediately requiring \"Answer:\" followed by the result after applying mendStories twice to \"petroleum\"\n</ex: \"petroleum\u2192age\" gives \"old age\" \u2192 next element after \"old age\" again).\n</ex>\n\n\"Given input as 'hydrogen' in 2 steps json of Mend periodic table to result after this conversion.\n\nInput is 'What'?/ \"What element after 2 steps?\" is a two-step answer, continuing with \"Answer:\" expecting numeric; old"
+  },
+  {
+   "audit_id": 3,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:207",
+   "read": "question_end|42",
+   "sample": 2,
+   "text": "Structured pattern: JSON tags establish \"what comes after X steps\" puzzle format, alternated with explanatory astype sequence chains.\n\nExample 1 gave \"after 1 step?\" with answer \"c\" and source thought explaining the step-by-step transformation; Example 2 mirrors this format, requiring a 2-step chain using \"b -> astype\" and \"short -> astype.\"\n\nFinal token \"?\" closes \"What is the final answer after 2 steps?\" \u2014 directly mirrors Example 1's closing line \"What is the final answer after 1 step?\" \u2014 next token must be \"\n\" followed by the formatted answer like \"c\" requiring another 2-step trace (short\u2192b, then b\u2192next result \"e\" or similar).\n\"Steps?\nExample 2: two rounds:\nWhat is the final answer after 2 steps?\" \u2014 answer computation: two-step"
+  },
+  {
+   "audit_id": 4,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:167",
+   "read": "nl_asst|42",
+   "sample": 3,
+   "text": "Structured pattern continuation: two-part problem set established identical format \u2014 given frequency option, show two conversion steps using diagram.\n\nDomain reference: electromagnetic spectrum light-color diagram labeling questions already answered for part \"1.\" require parallel structure for part \"2.\"\n\nFinal token \"Energy and Frequency answers are\n\" mirrors \"Question 1 answers are: Blue\" \u2014 the sentence \"Starting at Green after tworeflections (2 changes) the wavelength is\n\" must be completed with the answer after two steps forward: Green \u2192 X-ray (step 1) \u2192 another color (step 2).\n\n\"Two hops from Green via Red yet applies the same conversion chain \u2014 Green converts to Green? Wait, Green\u2192Red after two hops\": Red frequency.\"\n\n\"after 2 changes):\nAnswer 2 is: \" \u2192 [Y]\"\n\nA simple arithmetic-like concrete repetition: Red \u2192 X-ray return."
+  },
+  {
+   "audit_id": 5,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:26",
+   "read": "final|42",
+   "sample": 2,
+   "text": "Structured answer pattern: each question gives example color Then two-step transformation result, consistently formatted as \"answer: [color].\"\n\nNet short-answer chain transformation exercise: two steps apply Green\u2192Yellow\u2192(next step), requiring correct sequence from previous answer.\n\nFinal token \"answer: \" completes the third item's result field (\"B. answer is Green, two steps: what answer: \"), expecting \"blue\" or \"Cyan\" based on Yellow\u2192three-step chain using chain: Red\u2192Yellow\u2192Gray\u2192...\n\"Yellow\u2192next-hop(network)\" already shown as first step earlier.\n</br>\n\n\"two steps: begins answer: Its two steps starting from Green through the chain: Green \u2192 YELLOW \"\n\n\"B. answer with two steps from Green:\nanswer:\" \u2014 established pattern demanding final conversion result color, now \"Gray\" (two hops from Yellow using direct application next)."
+  },
+  {
+   "audit_id": 6,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h3:77",
+   "read": "final|42",
+   "sample": 3,
+   "text": "Structured pattern of answer format: Problem 1 showed a 4-element decryption sequence followed by \"Answer is: pbm\"; Problem 2 must follow same template.\n\nThe cipher cycle established: purple\u2192red\u2192blue\u2192green\u2192purple repeats every 3 steps; PBECO's first decryption yields \"purple,\" second \"red,\" third continues this cycle.\n\nFinal token \"is:\": the answer field \"user's third decryption is: Answer 2 answer is:\" demands the next color after three forward CAESAR steps from purple (starting at green onward: green \u2192 blue \u2192 purple), so the answer should be \"green\" (mirroring Problem 1's final-state reasoning showing the cycle calculation).\n\n</ex>: \"After 5 iterations\n\nProblem 3 continuing: 3 iterations\n\nAnswer is 2 answer is:\"\nCalculate again: answer is 3: daily?\" pattern entrance"
+  },
+  {
+   "audit_id": 7,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h3:137",
+   "read": "question_end|42",
+   "sample": 2,
+   "text": "Pattern of structured puzzle-response pairs: each problem gives a letter \u2192 function link table then a starting letter and question asking for result after N applications.\n\nFirst example established the template: a 3-step chain yielding an answer \"[  ]\"; second example now mirrors same structure, with four functions (A\u2192common\u2192Game, B\u2192is\u251c\u2192lowercase, C) and a three-step ask.\n\nFinal token \"?\" closes the question prompt \"What letter will we get after 3 steps?\", requiring \"[  ]\" immediately next, then the answer (one may infer: Game \u2192 is\u251c \u2192 lower \u2192 lowercase, so \"[ I ]\" checking steps).\n\"\n</ex>:\n</ex>: \"\n\nExample 2 ends on \"R].\nStart from letter 'Y'; An exception. After 3 steps, what letter will we get?\"\nThree steps later likely a"
+  },
+  {
+   "audit_id": 8,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h3:52",
+   "read": "final|42",
+   "sample": 1,
+   "text": "Established pattern of examples: bit position \u2192 program counter sequence \u2192 answer, repeated for two cases (5th bit = \"2\u2192110\u21928 all bits\").\n\nThird example: starting from \"second\" instruction executing \"beyond\u2192r\u2192g\u2192b\" with XOR cipher under modulo-3 stepping, requiring exactly 3 iterations. From green \u2192 red iteration 1, blue iteration 2, then beyond iteration 3.\n\nThe answer placeholder \"after 3 executions:\" \"answer:\" is directly following the pattern \"answer: 1\" and \"answer:\" from prior example, requiring a color (\"1\"/g\u2192r\u2192b's repeated result, e.g., \"red\" or trace completion like \"blue\").\n\n\"3 executions:\" is \"answer:\" requires mapping from the modular sequence continuing after \"Bytes\": red established repetition: two steps back (inverse of modifications"
+  },
+  {
+   "audit_id": 9,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:98",
+   "read": "nl_asst|42",
+   "sample": 3,
+   "text": "Bilingual parallel structure: same question format with different starting value, following established example pattern.\n\nSeries definition established: A\u2192B\u2192D cycle sequence, requiring calculation of two steps forward from bottle (bottle\u2192?\u2192?).\n\nFinal token \"is\n__.\" demands the answer for two steps from \"plastic pricked,\" predicted answer: \"D\" based on A\u2192C\u2192D cycle previously shown (wait: \"the first transformation is C and two transformations is\"). Two transformations from \"Bottle\" yield another letter-chain answer.\nThe structure rigidly mirrors the first example: \"Answer is\n\n<blank>\" requires the completed sequence showing two transformations: the result of A\u2192C transformation, then applying it again, likely \"to\" \"D\" or \"A\" depending on sequence logic.\n\n\"Answer is\n\" \u2014 constrained to just give \"two days, returning plastic"
+  },
+  {
+   "audit_id": 10,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:186",
+   "read": "nl_asst|42",
+   "sample": 2,
+   "text": "Mathematical chain function problem: applying functions sequentially (f\u2218g\u2218h) to a binary representation through successive steps.\n\nPattern established by Example 1: each step asks for the binary representation after N applications, requiring the tracked intermediate and final outcome (e.g., \"18 (0)\").\n\nFinal token is for Example 2's second step: \"As we have, [Start] 192 (Q), answer after 2 applications is\\n\" demands a decimal answer like \"10 (0)\" \u2014 specifically the outcome from applying h(x)=next digit twice: g\u2192f, so ~two-step from 10.\n\n\"Answer: <after two steps from the original >\n\nLet's check: 3 (Q \u2192 h(3)=20 \u2192 f gives ? Answer 3rd letter is\n\nRepeat the chain: \"returns back\""
+  },
+  {
+   "audit_id": 11,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h3:54",
+   "read": "nl_asst|42",
+   "sample": 2,
+   "text": "Math/physics problem-solving format with step-by-step clock-face/phase-shift progression, establishing pattern of worked examples.\n\nThe pattern requires completing the second example: input B (6 o'clockaquaria \u2192 day 1: Earth, then 3 more shifts following original Phase? sequence of lunar\u2192Earth\u2192daylight.\n\nFinal token \"Answer: \" is an opened answer field mirroring the first example exactly (\"Answer: daylight\\tmoon\"), now requiring the output coolant-description after \"daylight.\" Three.days later starting from Mercury (Earth answer expected next: three steps \u2192 Mercury \u2192 Earth \u2192 daylight. Each shift follows Mercury\u2192Earth\u2192daylight cycle, so three shifts: Mercury\u2192Earth\u2192daylight.\n\nFinal token \"Answer: \" demands a short sequence of three specific phase changes, \"Engine\" or similar answer continuing the cycle. (third step from Mercury \u2192 infinite addition of digits"
+  },
+  {
+   "audit_id": 12,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:21",
+   "read": "question_end|42",
+   "sample": 0,
+   "text": "Structured test prompt pattern: each block follows identical format: starting element, operation instructions, chain length, then \"?\\nAnswer:\"\n\nThe second example mirrors the first (A\u2192B\u2192C chain logic), applying \"next atomic number\" twice starting from oxygen.\n\nFinal token \"element?\" is the repeated question-ending punctuation across both prompt blocks; \"Answer:\" must immediately follow next.\n\"Starting answer:\" establishes the prompt; \"Form follows: Starting from element \"A\"; then two steps... \"After 2 steps, what is the answer?\n\nSecond block: \"Starting answer: Carbon. Each: next atomic number. 2 steps. Starting from what element in the input? Answer: result after -2 steps.\n\n\"Starting answer? After 2 steps, what element in the input match?\" outcome is simply two even steps, answer continues; expect Answer: carbon \u2192"
+  },
+  {
+   "audit_id": 13,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h3:77",
+   "read": "final|42",
+   "sample": 2,
+   "text": "Serial puzzle format establishing that each cipher step cycles Alpha\u2192Beta\u2192Gamma\u2192Alpha, requiring calculation of each starting character's transformation chain. Example 1 set the template: three steps with labeled colors and answer.\n\nThe pattern demands filling the answer for Example 2: starting at Epsilon, three iterations of Alpha\u2192Beta\u2192Gamma\u2192Alpha cycle from prior sequence (Gamma was step 1, Alpha step 2, Beta step 3).\n\nFinal token \"answer is:\" is the completion prompt mirroring \"the answer is: gamma\" from Example 1, requiring the color name directly next. The answer for three iterations from Epsilon should be \"alpha\" or \"beta\" based on the repeating cycle.\n</explanation: \"After 3 iterations\"\n\n\"After three hops\nAnswer is:\"\n\nFinal answer likely \"alpha\" by tracing backward through example.\n\nCalc: a repetition."
+  },
+  {
+   "audit_id": 14,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:89",
+   "read": "final|42",
+   "sample": 0,
+   "text": "Numbered list pattern established with consistent structure: problem followed by answer using rod coloring (e.g., \"Answer: green\").\n\nThe problem asks to solve for two aging steps starting from blue in the cycle (blue\u2192orange\u2192green\u2192blue), so answer follows the same logic: after one step orange (same as question 1's one-step pattern), after two steps green is reached.\n\nFinal token \"is:\" ends the answer marker \"For x, 2 of aging steps Answer:\", requiring immediate continuation with the color \"green\" (two aging steps from orange: orange\u2192(attacker)\u2192green).\n\"\nQuestion 1 Answer: attacker\nQuestion 2 Answer: ...\n\nQuestion 2 Given: orange, aging steps: 2\n\nAnswer for x after sequence: ...\" \u2014 the sentence demands the color result of applying the computational steps, requiring \"second step applied via\""
+  },
+  {
+   "audit_id": 15,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:128",
+   "read": "question_end|42",
+   "sample": 0,
+   "text": "Parallel test structure with Q&A format repeating: a \"Given...\" chain, then \"what is the result after 2 steps?\" followed by answer block \u2014 established clearly in first example.\n\nThe mapping sequence description pattern: \"Given \"a\"->..., \"b\"->..., \"c\"->...\" defines the chain, with two steps in this second instance, starting from \"a\" again but with different mappings.\n\nThe final token \"answer?\" closes the question prompt, exactly mirroring the first example's question, so the next tokens must be \"Answer:\" followed by applying two mapping steps: \"b\" \u2192 \"c\" \u2192 expected next result.\n\"\ndifference?\"\n\"Given \"a\" to map sequence to number next is: a 2 steps?\" ends with two mapping steps result.\"\n\nWhat is the answer?\" \u2014 the parallel answer?\n2 steps, expected value,"
+  },
+  {
+   "audit_id": 16,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:24",
+   "read": "question_end|42",
+   "sample": 3,
+   "text": "Repeated prompt-response pattern: each entry gives starting letter/chain steps then asks \"What is the ending letter after the transformation?\" \u2014 a math puzzle with multiple-chain letter transformations.\n\nThe pattern establishes a template: two map descriptions give chain length 1 answer for \"bird,\" now a second 2-step chain starting with \"cat\" following the same format.\n\nFinal token \"=\" closes \"What is the ending letter after 2 steps?\" requiring a block identical to previous question ending: \"?\" followed by the expected answer \"Tablesuye\" or \"fly\" applying two transformations (cat\u2192country\u2192state\u2192county\u2192city, answer likely \"no letters\" or similar result like \"fly\").\n\"Tables\n\nGiven examples: \"What is the map: [X twice]\n\nStarting letter is C. After 2 steps, what is the ending letter?\" expects one step result after applying second map."
+  },
+  {
+   "audit_id": 17,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h2:136",
+   "read": "final|42",
+   "sample": 3,
+   "text": "Table pattern: each row shows a color transformation problem with Step 1 and Step 2 answers, e.g., \"2 Step\" rows end with Step 2 result after Step 1.\n\nThe established color-cycle (\"red \u2192 green yellow \u2192 blue purple \u2192 green...\") dictates the next token must be a color name following the transformation logic.\n\nFinal token is \"green answer: Step 2 is **Step 2 answer: \" \u2014 the sequence \"cyan after 2 jumps starting from cyan, part 2: cyan \u2192 yellow \u2192 ?\", requiring a color result after two transformations (two applications: address \u2192 yellow \u2192 next).\n\nSemantic expectation: the answer for 2-step transformation starting from \"cyan\" must follow the established answer format \"yellow / two jumps\"/\n\"Answer:\": {fill}\n\"after two steps: \" requires completing the sequence.\n\nTwo transformations from yellow"
+  },
+  {
+   "audit_id": 18,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h3:182",
+   "read": "nl_asst|42",
+   "sample": 2,
+   "text": "Q&A format established: two examples analyzing color transformations after specific steps using provided sequence (Red\u2192Black\u2192Orange\u2192Green\u2192Purple...), with answers following \"Answer is:\"\n\nThe second problem applies the same color-changing cycle to Blue starting from Purple after 3 steps, requiring the same logical tracing pattern as Example 1 (Red after 3 steps gave \"Black\").\n\nFinal token \"\nAnswer is:\n\" mirrors the exact answer structure of Example 1, and immediately requires the resulting color sequence (32-character hex color progression after 3 steps from Green). Likely \"\nPurple\" or similar continuation following the modular arithmetic: Blue\u2192Green\u2192next step should be another known sequence shifted forward by one cycle.\n\n\"After 3 steps:\nSecond answer for: Blue\n\nAnswer is:\n\" \u2014 Repeating Purple after looping through cycle:\n\nEighth step derived path:Roman"
+  },
+  {
+   "audit_id": 19,
+   "reader": "nla",
+   "item_id": "single_test:single_first:eval:h3:167",
+   "read": "question_end|42",
+   "sample": 0,
+   "text": "Established pattern: two example structures with identical question format (\"What is the resulting color after...the end? Answer:\") followed by solution walkthrough. The puzzles follow a chain-of-word-translations with specified step counts.\n\nSecond example introduces \"blueberry\" with 3 steps using the given map (Lettuce \u2192 red \u2192 black \u2192 turquoise \u2192 orange, etc.), requiring a similar analytical solution after the question.\n\nFinal token \"end?\" closes the second example's question exactly mirroring the first (\"What is the resulting color after 4 steps? Answer:\"), now expecting \"Answer:?\" followed by a chain: 3 steps of transformations (likely \"Lettuce \u2192 turquoise \u2192 orange\" or similar result).\n</ex>: \"What is the resulting color number?\"\n\n\"3 steps? Answer:\" requires finding an odd result after three hops through the chain logic. Answer is a computed response"
+  },
+  {
+   "audit_id": 20,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h2:154",
+   "read": "question_end|42",
+   "sample": 3,
+   "text": "* 2nd? Starting element? Answer: two hops result?\n* A?Answer: Two-step transformation result?\n* Result2? Starting element two hops: Answer\n* Answer: Two steps. Starting letter? Result"
+  },
+  {
+   "audit_id": 21,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h2:195",
+   "read": "final|42",
+   "sample": 0,
+   "text": "* green. Second step result: two hops = green\n* D. Second skip gives: blue. Sequence: D\n* 2. Starting color red \u2192 two steps\n* B2. Starting from Fire"
+  },
+  {
+   "audit_id": 22,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h2:125",
+   "read": "nl_asst|42",
+   "sample": 1,
+   "text": "* 2: Blue. Two steps gives result: Fire -> 2\n* -2. Starting from Fire \u2192 two days = carbon\n* -2. Two days later\n* C. Two steps: Fire\u2192Carbon. Result"
+  },
+  {
+   "audit_id": 23,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h3:99",
+   "read": "final|42",
+   "sample": 0,
+   "text": "* green. Three iterations gives: start -> red -> green\n* Z. So starting color cycle: green -> Z\n* final=Fire. Starting at position gives: cycle\n* Y. Let's trace 3 steps"
+  },
+  {
+   "audit_id": 24,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h3:52",
+   "read": "question_end|42",
+   "sample": 1,
+   "text": "* Answer: cycle 3 result? Step\n* C? Let's trace 3 transformations: result\n* Answer: red. Three step transformation yields? Answer\n* A. Determine after 3 transformations? Answer:"
+  },
+  {
+   "audit_id": 25,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h2:52",
+   "read": "question_end|42",
+   "sample": 2,
+   "text": "* C?Two-step answer: Fire\n* C. Answer: Two steps result? Element?\n* Answer: Two hops: Fire \u2192 ? \u2192 Result\n* (Answer: Two hops)What element? Answer"
+  },
+  {
+   "audit_id": 26,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h2:119",
+   "read": "question_end|42",
+   "sample": 1,
+   "text": "* Answer: yellow. Two hops: ?\n* ?2nd step? Answer:\n* A? Two-step conversion:\n* 2nd? Answer: Fire"
+  },
+  {
+   "audit_id": 27,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h3:63",
+   "read": "question_end|42",
+   "sample": 0,
+   "text": "* Answer: 3 steps? Let's trace sequence ending?\n* Answer: 3 hops. Let's trace\n* Step3? Let's trace: starting\n* Answer: 3 steps? Trace sequence ending letter"
+  },
+  {
+   "audit_id": 28,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h2:29",
+   "read": "final|42",
+   "sample": 1,
+   "text": "* C. After two shifts result: beginning element = C:\n* C. Starting day +2 becomes: cacophony\n* Y. Two shifts later: Y. Answer is\n* 3. Starting from yellow two steps = element: red:"
+  },
+  {
+   "audit_id": 29,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h3:75",
+   "read": "question_end|42",
+   "sample": 2,
+   "text": "* Answer: 3 steps later? Let's trace\n* ?3. Determine final element after three steps?\n* ? Step 3 result\n* Answer: 3 steps: Fire -> Letter"
+  },
+  {
+   "audit_id": 30,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h3:248",
+   "read": "nl_asst|42",
+   "sample": 3,
+   "text": "* A. Day3 cycle starts Red. Answer becomes A:\n* 3rd: Blue. Starting toxin advances gives:\n* 3rd day Fire. Starting letter cycles gives:\n* C3. Starting day 1 converts to snake path C"
+  },
+  {
+   "audit_id": 31,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h3:123",
+   "read": "final|42",
+   "sample": 0,
+   "text": "* 3. So cycle returns to: gray -> cycle\n* 3. Therefore Fibonacci cycle\n* Z. Three steps from red cycle ends at:\n* C. Three cycles: red ->"
+  },
+  {
+   "audit_id": 32,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h3:165",
+   "read": "nl_asst|42",
+   "sample": 2,
+   "text": "* -2. Starting from Poison cycle gives: correctly\n* 4. Third cycle gives: snake \u2192 poison\n* 3. Final cycle: Snake. Three shifts =\n* -4. Starting element transforms three times gives: cycle-"
+  },
+  {
+   "audit_id": 33,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h3:69",
+   "read": "nl_asst|42",
+   "sample": 3,
+   "text": "* A. Third step gives Fire which is\n* -3rd: Blue. Starting letter progression\n* C. Third shift result: Fire\n* C\u21923. Starting day sequence gives Cyan"
+  },
+  {
+   "audit_id": 34,
+   "reader": "olens",
+   "item_id": "single_test:single_first:eval:h3:243",
+   "read": "nl_asst|42",
+   "sample": 2,
+   "text": "* fourth. Starting element cycles: Green->\n* -1: Blue. Three steps gives cycle ends:\n* C. Third cycle = poison. Starting letter A becomes C\n* C3. Starting from green cycle three steps is"
+  },
+  {
+   "audit_id": 35,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:212",
+   "read": "final|48",
+   "sample": 0,
+   "text": "- 3. D (after 3 cycles)\n- blue 4. purple 5. green\n- 0 (After 1 transformation cycle) public void testApplyTransform3() { System.out.println(\"After 3 transformations: \"\n- yellow -> green -> blue -> red -> blue -> green -> red -> blue -> yellow` (Cycle length 4). Output: `1: green`\n\n### Test Case"
+  },
+  {
+   "audit_id": 36,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:109",
+   "read": "final|24",
+   "sample": 0,
+   "text": "- purple (or possibly red, depending on interpretation)\n- orange (Let's verify the full chain to be sure of the final state after 3 transformations:\n- blue** (after 3 steps) or more likely, the question asks for the final color. Let's trace carefully.\n- red (or more accurately, the final state after all transformations) is **red**. Let's trace it carefully to be sure.\n\n"
+  },
+  {
+   "audit_id": 37,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:186",
+   "read": "final|56",
+   "sample": 0,
+   "text": "- gray ``` (Note: The prompt says the magic bean changes color to white, then blue\n- blue ``` (Wait, the chain is Red -> Purple -> Blue. So after turning purple, the next step is\n- gray) ``` (Note: In the prompt's sequence, Pink -> Red -> Gray. Let's trace carefully. Start: purple. 1. Changes to gray. 2\n- black, green, white, blue, orange, purple) // Note: The sequence changes the color. Let's trace carefully."
+  },
+  {
+   "audit_id": 38,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:17",
+   "read": "final|40",
+   "sample": 3,
+   "text": "- green (after 4 cycles)\n- \u7eff (after 4 more steps) 5. After 4 cycles: blue -> red -> blue ->\n- \u84dd (Blue) (after 3 transformations). Let's verify: Start: Blue \u2192 Cycle 1: Green \u2192 Cycle 2:\n- Red (after 4 cycles of transformation) or you can trace it manually. Let's trace from Step 1 to Step 8.\n\n###"
+  },
+  {
+   "audit_id": 39,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:79",
+   "read": "final|24",
+   "sample": 1,
+   "text": "- yellow (or possibly red, depending on interpretation, but yellow is the final state after 5 steps\n- red (after 6 transformations) or more accurately, the final state is **red\n- blue (or possibly purple, depending on interpretation, but \"blue\" is the result after 4 steps) Here is the step-by-step\n- \u84dd (Blue) \u2014 assuming the cycle continues as described. Let me trace it carefully step-by-step to ensure accuracy.\n\n### Step-by-Step Deduction"
+  },
+  {
+   "audit_id": 40,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:68",
+   "read": "nl_asst|48",
+   "sample": 0,
+   "text": "- 3: img\n- <span style=\"color: green;\">Step 2: Next Transition -> Transform</span\n- 3: B (after 2 transitions) */ function testTwoTransitions() { document.getElementById('result\n- 1: SVG</div> <!-- After 2 transitions --> <div class=\"result\">Expected: SVG</div>\n- svg.png\" // After 2 transitions: SVG -> JSON -> SVG"
+  },
+  {
+   "audit_id": 41,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:220",
+   "read": "nl_asst|44",
+   "sample": 0,
+   "text": "- 3. Sun \u2192 Moon \u2192 Fire \u2192 Water\n- C. After 3 jumps: Green (Starting with Red, 3 shifts: R->G->B->G\n- 3. A \u2192 B \u2192 C \u2192 D** (Note: 4 cycles) Let's trace carefully.\n- \u6a59\u8272 (Orange) \u2192 \u9ec4\u8272 (Yellow) \u2192 \u84dd\u8272 (Blue) *(After 3 transformations)*\n\n**Explanation:**"
+  },
+  {
+   "audit_id": 42,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:69",
+   "read": "final|48",
+   "sample": 3,
+   "text": "- 3 (after 3 shifts)\n- green  (After 3 transformations: shift -> rotate -> add)\n- F  // Step 3: After 3 transformations, we reach node \"green\"\n- blue (Start from root, apply transformation 3 times) */ function testTransform(start, steps) {\n- E (after 3 steps) | Explanation: 0->A->B->C->E ("
+  },
+  {
+   "audit_id": 43,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:150",
+   "read": "final|48",
+   "sample": 2,
+   "text": "- green (after 3 shifts)\n- 3 (After 3 transformations) \"\"\" print(\"After 3 operations: blue\n- \u84dd\u8272 -> green -> black -> green -> red \"\"\"  # Wait, let's trace carefully.\n- green  # After 1 shift from start (0 -> 1)\nprint(\"Operation 4 (after 4\n- blue (after 3 transforms) -> Step 4: gray (after 4 transforms)"
+  },
+  {
+   "audit_id": 44,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:211",
+   "read": "question_end|36",
+   "sample": 1,
+   "text": "- Answer: **C**\n- Answer: **C** (After applying the transformation three times)\n- Answer: Let's trace the chain of transformations starting from \"fruit\". We need to apply the rule 3 times to determine the final\n- \uff08Note: The chain of transformations is 4 steps long. We need to find the final word after 3 applications of the rule.)\n\n```\n- ? (Note: The chain is 4 applications long.)\n\n**Step-by-step chain:**"
+  },
+  {
+   "audit_id": 45,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:66",
+   "read": "nl_asst|48",
+   "sample": 2,
+   "text": "- Text: 4. Path: A -> D -> E\n- 3. Triangle (Day 3)\n- D, C, B, A, B, C, D, E, D, B, C, A\n- 3. Triangle\\n\", 16 // Step 3: 0->1->2->3\n- ```text\n3. Square\n4. Square\n5. Road\n```\n\n*(Note: Day 4 is \"Road\")*\n\n**Explanation for Step 1:**"
+  },
+  {
+   "audit_id": 46,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:118",
+   "read": "question_end|48",
+   "sample": 1,
+   "text": "- <pre>blue\n- <details><summary>\u7b54\u6848\uff1aBB</summary> \u89e3\u6790\uff1aA -> \u67e5\u627e\u7b2c\u4e00\u6b65 -> \u5f97\u5230\n- \u7b54\u6848\uff1ablue</answer> <!-- \u7ecf\u8fc72\u6b65\u8df3\u8f6c\uff1awhite -> orange -->\n- ```\n**Explanation:** We follow the chain: Apple \u2192 Step 2 \u2192 Yellow \u2192 Step 3 \u2192 Green.\n\n###"
+  },
+  {
+   "audit_id": 47,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:128",
+   "read": "question_end|48",
+   "sample": 3,
+   "text": "- </pre><code>Output: sun\n- \u7b54\u6848\uff1a`green` (\u7ecf\u8fc7 3 \u6b21\u8df3\u8f6c\uff1ablue -> blue -> green\n- \u7b54\u6848\uff1a`forest`** \u3010\u89e3\u6790\u3011\uff1a\u8ffd\u8e2a\u8def\u5f84\uff1aA \u2192 2 \u2192 green \u2192 4 \u2192 blue\n- \uff08Output: `blue`\uff09 \u3010\u89e3\u6790\u3011\uff1a\u6309\u7167\u8def\u5f84\u8df33\u6b65\uff1aSun \u2192 Moon \u2192 Star \u2192 Forest \u2192 \u7ed3\u675f\u3002\n\n###"
+  },
+  {
+   "audit_id": 48,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:70",
+   "read": "final|52",
+   "sample": 0,
+   "text": "- purple\n- purple (via Blue) | Answer: The color sequence is pink\n- purple (from Blue -> Purple) | 2. Start at Pink, apply change twice: Pink\n- purple** (since Green transforms to purple) | **Step 3: From Purple, apply \"Spin\" again.** The sequence is Purple $\\rightarrow$ purple\n- blue** (since Purple changes to Blue in step 2) | Step 4: Purple $\\to$ pink"
+  },
+  {
+   "audit_id": 49,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:9",
+   "read": "final|52",
+   "sample": 2,
+   "text": "- purple\n- green (2 steps) ``` (Since Black -> Green -> Purple\n- purple ``` (Explanation: Black transforms to purple after 2 spins) ```python def color_chain(start_color, steps):\n- green (Second press) \"\"\" # Step 2: Black -> Green\n    return rotate_color(\"black\", 2)\n\ndef spin_twice():\n   "
+  }
+ ]
+}

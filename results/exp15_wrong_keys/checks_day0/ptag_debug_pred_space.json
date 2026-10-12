@@ -1,0 +1,276 @@
+{
+  "hypotheses": "Hypotheses 4-5 on check 7's natural spans (block-L read): (4) the head predicts raw activations and only\n    the training loss was whitened, so the prediction must be whitened as well; (5) their whitener is diagonal\n    (per-dimension standardisation with the same ridge rule), not ZCA. Reported for context, not for the bar:\n    retrieval within pools of 24 (their eval batch size is unknown), the norm ratio of prediction to whitened target\n    and the scalar-optimal FVE (published L44 FVE 0.22 implies a diagonal cosine near 0.47).",
+  "layers": {
+    "20": {
+      "ours_whitened": {
+        "ret1": 0.805,
+        "diag_cos": 0.148,
+        "offdiag_cos": -0.0
+      },
+      "pred_whitened_too": {
+        "ret1": 0.845,
+        "diag_cos": 0.143,
+        "offdiag_cos": 0.0
+      },
+      "diagonal_whitener": {
+        "ret1": 0.7,
+        "diag_cos": 0.208,
+        "offdiag_cos": -0.002
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.925,
+        "ret1_pool24_diagonal": 0.862,
+        "norm_ratio_pred_to_whitened_target": 1.264,
+        "scaled_fve_ours_whitened": 0.016,
+        "scaled_fve_diagonal": 0.036
+      }
+    },
+    "24": {
+      "ours_whitened": {
+        "ret1": 0.69,
+        "diag_cos": 0.129,
+        "offdiag_cos": -0.0
+      },
+      "pred_whitened_too": {
+        "ret1": 0.745,
+        "diag_cos": 0.129,
+        "offdiag_cos": 0.0
+      },
+      "diagonal_whitener": {
+        "ret1": 0.58,
+        "diag_cos": 0.183,
+        "offdiag_cos": -0.002
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.87,
+        "ret1_pool24_diagonal": 0.79,
+        "norm_ratio_pred_to_whitened_target": 1.128,
+        "scaled_fve_ours_whitened": 0.012,
+        "scaled_fve_diagonal": 0.029
+      }
+    },
+    "28": {
+      "ours_whitened": {
+        "ret1": 0.63,
+        "diag_cos": 0.108,
+        "offdiag_cos": -0.0
+      },
+      "pred_whitened_too": {
+        "ret1": 0.71,
+        "diag_cos": 0.102,
+        "offdiag_cos": 0.0
+      },
+      "diagonal_whitener": {
+        "ret1": 0.535,
+        "diag_cos": 0.152,
+        "offdiag_cos": -0.001
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.82,
+        "ret1_pool24_diagonal": 0.742,
+        "norm_ratio_pred_to_whitened_target": 1.057,
+        "scaled_fve_ours_whitened": 0.007,
+        "scaled_fve_diagonal": 0.017
+      }
+    },
+    "32": {
+      "ours_whitened": {
+        "ret1": 0.57,
+        "diag_cos": 0.086,
+        "offdiag_cos": 0.0
+      },
+      "pred_whitened_too": {
+        "ret1": 0.56,
+        "diag_cos": 0.074,
+        "offdiag_cos": 0.001
+      },
+      "diagonal_whitener": {
+        "ret1": 0.46,
+        "diag_cos": 0.117,
+        "offdiag_cos": -0.001
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.784,
+        "ret1_pool24_diagonal": 0.688,
+        "norm_ratio_pred_to_whitened_target": 1.033,
+        "scaled_fve_ours_whitened": 0.002,
+        "scaled_fve_diagonal": 0.008
+      }
+    },
+    "36": {
+      "ours_whitened": {
+        "ret1": 0.63,
+        "diag_cos": 0.098,
+        "offdiag_cos": 0.0
+      },
+      "pred_whitened_too": {
+        "ret1": 0.64,
+        "diag_cos": 0.093,
+        "offdiag_cos": -0.0
+      },
+      "diagonal_whitener": {
+        "ret1": 0.55,
+        "diag_cos": 0.149,
+        "offdiag_cos": -0.0
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.848,
+        "ret1_pool24_diagonal": 0.776,
+        "norm_ratio_pred_to_whitened_target": 1.303,
+        "scaled_fve_ours_whitened": 0.005,
+        "scaled_fve_diagonal": 0.017
+      }
+    },
+    "40": {
+      "ours_whitened": {
+        "ret1": 0.58,
+        "diag_cos": 0.086,
+        "offdiag_cos": -0.0
+      },
+      "pred_whitened_too": {
+        "ret1": 0.605,
+        "diag_cos": 0.089,
+        "offdiag_cos": 0.0
+      },
+      "diagonal_whitener": {
+        "ret1": 0.465,
+        "diag_cos": 0.125,
+        "offdiag_cos": -0.001
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.801,
+        "ret1_pool24_diagonal": 0.712,
+        "norm_ratio_pred_to_whitened_target": 1.166,
+        "scaled_fve_ours_whitened": 0.003,
+        "scaled_fve_diagonal": 0.01
+      }
+    },
+    "44": {
+      "ours_whitened": {
+        "ret1": 0.48,
+        "diag_cos": 0.071,
+        "offdiag_cos": -0.001
+      },
+      "pred_whitened_too": {
+        "ret1": 0.53,
+        "diag_cos": 0.064,
+        "offdiag_cos": 0.0
+      },
+      "diagonal_whitener": {
+        "ret1": 0.335,
+        "diag_cos": 0.103,
+        "offdiag_cos": -0.001
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.743,
+        "ret1_pool24_diagonal": 0.613,
+        "norm_ratio_pred_to_whitened_target": 1.189,
+        "scaled_fve_ours_whitened": 0.0,
+        "scaled_fve_diagonal": 0.005
+      }
+    },
+    "48": {
+      "ours_whitened": {
+        "ret1": 0.405,
+        "diag_cos": 0.06,
+        "offdiag_cos": 0.0
+      },
+      "pred_whitened_too": {
+        "ret1": 0.4,
+        "diag_cos": 0.047,
+        "offdiag_cos": 0.0
+      },
+      "diagonal_whitener": {
+        "ret1": 0.28,
+        "diag_cos": 0.085,
+        "offdiag_cos": -0.001
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.693,
+        "ret1_pool24_diagonal": 0.557,
+        "norm_ratio_pred_to_whitened_target": 1.136,
+        "scaled_fve_ours_whitened": -0.001,
+        "scaled_fve_diagonal": 0.001
+      }
+    },
+    "52": {
+      "ours_whitened": {
+        "ret1": 0.485,
+        "diag_cos": 0.08,
+        "offdiag_cos": -0.0
+      },
+      "pred_whitened_too": {
+        "ret1": 0.49,
+        "diag_cos": 0.056,
+        "offdiag_cos": 0.0
+      },
+      "diagonal_whitener": {
+        "ret1": 0.36,
+        "diag_cos": 0.122,
+        "offdiag_cos": -0.0
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.758,
+        "ret1_pool24_diagonal": 0.646,
+        "norm_ratio_pred_to_whitened_target": 0.985,
+        "scaled_fve_ours_whitened": 0.001,
+        "scaled_fve_diagonal": 0.009
+      }
+    },
+    "56": {
+      "ours_whitened": {
+        "ret1": 0.5,
+        "diag_cos": 0.079,
+        "offdiag_cos": -0.0
+      },
+      "pred_whitened_too": {
+        "ret1": 0.425,
+        "diag_cos": 0.048,
+        "offdiag_cos": -0.001
+      },
+      "diagonal_whitener": {
+        "ret1": 0.4,
+        "diag_cos": 0.122,
+        "offdiag_cos": -0.001
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.739,
+        "ret1_pool24_diagonal": 0.651,
+        "norm_ratio_pred_to_whitened_target": 1.026,
+        "scaled_fve_ours_whitened": 0.001,
+        "scaled_fve_diagonal": 0.009
+      }
+    },
+    "60": {
+      "ours_whitened": {
+        "ret1": 0.43,
+        "diag_cos": 0.053,
+        "offdiag_cos": 0.001
+      },
+      "pred_whitened_too": {
+        "ret1": 0.21,
+        "diag_cos": 0.02,
+        "offdiag_cos": -0.001
+      },
+      "diagonal_whitener": {
+        "ret1": 0.345,
+        "diag_cos": 0.083,
+        "offdiag_cos": 0.001
+      },
+      "context": {
+        "ret1_pool24_ours_whitened": 0.671,
+        "ret1_pool24_diagonal": 0.596,
+        "norm_ratio_pred_to_whitened_target": 0.758,
+        "scaled_fve_ours_whitened": -0.002,
+        "scaled_fve_diagonal": 0.001
+      }
+    }
+  },
+  "best_at_44": {
+    "space": "pred_whitened_too",
+    "ret1": 0.53,
+    "diag_cos": 0.064,
+    "offdiag_cos": 0.0
+  },
+  "pass": false
+}

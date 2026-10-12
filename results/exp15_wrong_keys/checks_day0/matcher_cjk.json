@@ -1,0 +1,24 @@
+{
+  "n_readouts": 30,
+  "n_true_mentions": 92,
+  "precision": 0.9892,
+  "recall": 1.0,
+  "pass": true,
+  "disagreements": [
+    {
+      "audit_id": 1,
+      "matcher_only": [
+        "gray"
+      ],
+      "label_only": []
+    }
+  ],
+  "first_audit_with_current_matcher": {
+    "n_readouts": 50,
+    "n_true_mentions": 89,
+    "precision": 1.0,
+    "recall": 1.0,
+    "pass": true,
+    "disagreements": []
+  }
+}

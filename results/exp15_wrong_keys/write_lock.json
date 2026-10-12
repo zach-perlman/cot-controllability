@@ -1,0 +1,112 @@
+{
+ "written": "2026-10-12T01:18:32Z",
+ "rule": "see manifest writes.selection_rule",
+ "ptag_check_passed": false,
+ "ptag_debug_read_site_passed": false,
+ "primary": {
+  "logit": {
+   "layer": 32,
+   "alpha": 1.0,
+   "dev_key_minus_null": 0.0688
+  },
+  "jlens": {
+   "layer": 28,
+   "alpha": 1.0,
+   "dev_key_minus_null": 0.1323
+  },
+  "rlens": {
+   "layer": 28,
+   "alpha": 1.0,
+   "dev_key_minus_null": 0.1481
+  },
+  "jpp": {
+   "layer": 28,
+   "alpha": 1.0,
+   "dev_key_minus_null": 0.2116
+  },
+  "template": {
+   "layer": 36,
+   "alpha": 1.0,
+   "dev_key_minus_null": 0.0423
+  },
+  "diffmeans": {
+   "layer": 40,
+   "alpha": 0.5,
+   "dev_key_minus_null": 0.6667
+  },
+  "nla_ar": {
+   "layer": 42,
+   "alpha": 0.5,
+   "dev_key_minus_null": 0.3651
+  }
+ },
+ "layer42": {
+  "logit": {
+   "alpha": 0.5,
+   "dev_key_minus_null": 0.0212
+  },
+  "jlens": {
+   "alpha": 0.5,
+   "dev_key_minus_null": 0.0317
+  },
+  "rlens": {
+   "alpha": 0.25,
+   "dev_key_minus_null": 0.0265
+  },
+  "jpp": {
+   "alpha": 0.5,
+   "dev_key_minus_null": 0.0317
+  },
+  "template": {
+   "alpha": 1.0,
+   "dev_key_minus_null": 0.0265
+  },
+  "diffmeans": {
+   "alpha": 0.5,
+   "dev_key_minus_null": 0.5979
+  },
+  "nla_ar": {
+   "alpha": 0.5,
+   "dev_key_minus_null": 0.3651
+  }
+ },
+ "gates": {
+  "logit": {
+   "best_answer_swap": 0.8942,
+   "pass": true
+  },
+  "jlens": {
+   "best_answer_swap": 0.7249,
+   "pass": true
+  },
+  "rlens": {
+   "best_answer_swap": 0.7778,
+   "pass": true
+  },
+  "jpp": {
+   "best_answer_swap": 0.7725,
+   "pass": true
+  },
+  "template": {
+   "best_answer_swap": 0.4021,
+   "pass": true
+  },
+  "diffmeans": {
+   "best_answer_swap": 0.5132,
+   "pass": true
+  },
+  "nla_ar": {
+   "best_answer_swap": 0.381,
+   "pass": true
+  }
+ },
+ "repair_methods": [
+  "jlens",
+  "rlens",
+  "jpp",
+  "diffmeans",
+  "nla_ar"
+ ],
+ "k4_repair_testable": true,
+ "dev_items": 189
+}

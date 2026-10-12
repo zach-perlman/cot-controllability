@@ -1,0 +1,391 @@
+{
+  "hypotheses": "Hypotheses 2 and 3: (2) our natural-text whitener is not theirs (pooled chat statistics), which shifts the\n    mean and per-direction scale; scored with each side centred on its own batch mean as well. (3) chat-formatted\n    assistant-turn targets instead of bare passages.",
+  "sets": {
+    "natural": {
+      "20": {
+        "ours_whitened": {
+          "ret1": 0.805,
+          "diag_cos": 0.148,
+          "offdiag_cos": -0.0
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.825,
+          "diag_cos": 0.172,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.615,
+          "diag_cos": 0.261,
+          "offdiag_cos": -0.001
+        }
+      },
+      "24": {
+        "ours_whitened": {
+          "ret1": 0.69,
+          "diag_cos": 0.129,
+          "offdiag_cos": -0.0
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.705,
+          "diag_cos": 0.15,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.51,
+          "diag_cos": 0.247,
+          "offdiag_cos": -0.001
+        }
+      },
+      "28": {
+        "ours_whitened": {
+          "ret1": 0.63,
+          "diag_cos": 0.108,
+          "offdiag_cos": -0.0
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.66,
+          "diag_cos": 0.13,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.48,
+          "diag_cos": 0.235,
+          "offdiag_cos": -0.001
+        }
+      },
+      "32": {
+        "ours_whitened": {
+          "ret1": 0.57,
+          "diag_cos": 0.086,
+          "offdiag_cos": 0.0
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.615,
+          "diag_cos": 0.107,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.45,
+          "diag_cos": 0.203,
+          "offdiag_cos": -0.001
+        }
+      },
+      "36": {
+        "ours_whitened": {
+          "ret1": 0.63,
+          "diag_cos": 0.098,
+          "offdiag_cos": 0.0
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.645,
+          "diag_cos": 0.123,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.48,
+          "diag_cos": 0.237,
+          "offdiag_cos": -0.001
+        }
+      },
+      "40": {
+        "ours_whitened": {
+          "ret1": 0.58,
+          "diag_cos": 0.086,
+          "offdiag_cos": -0.0
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.605,
+          "diag_cos": 0.107,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.41,
+          "diag_cos": 0.211,
+          "offdiag_cos": -0.001
+        }
+      },
+      "44": {
+        "ours_whitened": {
+          "ret1": 0.48,
+          "diag_cos": 0.071,
+          "offdiag_cos": -0.001
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.495,
+          "diag_cos": 0.087,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.305,
+          "diag_cos": 0.193,
+          "offdiag_cos": -0.001
+        }
+      },
+      "48": {
+        "ours_whitened": {
+          "ret1": 0.405,
+          "diag_cos": 0.06,
+          "offdiag_cos": 0.0
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.445,
+          "diag_cos": 0.074,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.255,
+          "diag_cos": 0.174,
+          "offdiag_cos": -0.001
+        }
+      },
+      "52": {
+        "ours_whitened": {
+          "ret1": 0.485,
+          "diag_cos": 0.08,
+          "offdiag_cos": -0.0
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.54,
+          "diag_cos": 0.096,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.32,
+          "diag_cos": 0.212,
+          "offdiag_cos": -0.001
+        }
+      },
+      "56": {
+        "ours_whitened": {
+          "ret1": 0.5,
+          "diag_cos": 0.079,
+          "offdiag_cos": -0.0
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.54,
+          "diag_cos": 0.097,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.33,
+          "diag_cos": 0.208,
+          "offdiag_cos": -0.001
+        }
+      },
+      "60": {
+        "ours_whitened": {
+          "ret1": 0.43,
+          "diag_cos": 0.053,
+          "offdiag_cos": 0.001
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.505,
+          "diag_cos": 0.09,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.31,
+          "diag_cos": 0.183,
+          "offdiag_cos": -0.001
+        }
+      }
+    },
+    "chat_assistant": {
+      "20": {
+        "ours_whitened": {
+          "ret1": 0.66,
+          "diag_cos": 0.17,
+          "offdiag_cos": 0.019
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.675,
+          "diag_cos": 0.178,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.595,
+          "diag_cos": 0.266,
+          "offdiag_cos": -0.001
+        }
+      },
+      "24": {
+        "ours_whitened": {
+          "ret1": 0.58,
+          "diag_cos": 0.156,
+          "offdiag_cos": 0.021
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.595,
+          "diag_cos": 0.16,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.49,
+          "diag_cos": 0.252,
+          "offdiag_cos": -0.001
+        }
+      },
+      "28": {
+        "ours_whitened": {
+          "ret1": 0.535,
+          "diag_cos": 0.141,
+          "offdiag_cos": 0.026
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.565,
+          "diag_cos": 0.141,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.45,
+          "diag_cos": 0.236,
+          "offdiag_cos": -0.001
+        }
+      },
+      "32": {
+        "ours_whitened": {
+          "ret1": 0.43,
+          "diag_cos": 0.117,
+          "offdiag_cos": 0.029
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.47,
+          "diag_cos": 0.112,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.385,
+          "diag_cos": 0.198,
+          "offdiag_cos": -0.001
+        }
+      },
+      "36": {
+        "ours_whitened": {
+          "ret1": 0.445,
+          "diag_cos": 0.112,
+          "offdiag_cos": 0.021
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.5,
+          "diag_cos": 0.115,
+          "offdiag_cos": -0.001
+        },
+        "raw_batch_centred": {
+          "ret1": 0.395,
+          "diag_cos": 0.219,
+          "offdiag_cos": -0.001
+        }
+      },
+      "40": {
+        "ours_whitened": {
+          "ret1": 0.38,
+          "diag_cos": 0.096,
+          "offdiag_cos": 0.02
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.44,
+          "diag_cos": 0.097,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.315,
+          "diag_cos": 0.19,
+          "offdiag_cos": -0.001
+        }
+      },
+      "44": {
+        "ours_whitened": {
+          "ret1": 0.28,
+          "diag_cos": 0.081,
+          "offdiag_cos": 0.018
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.335,
+          "diag_cos": 0.079,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.2,
+          "diag_cos": 0.174,
+          "offdiag_cos": -0.001
+        }
+      },
+      "48": {
+        "ours_whitened": {
+          "ret1": 0.22,
+          "diag_cos": 0.071,
+          "offdiag_cos": 0.019
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.255,
+          "diag_cos": 0.067,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.125,
+          "diag_cos": 0.158,
+          "offdiag_cos": -0.001
+        }
+      },
+      "52": {
+        "ours_whitened": {
+          "ret1": 0.325,
+          "diag_cos": 0.08,
+          "offdiag_cos": 0.012
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.37,
+          "diag_cos": 0.084,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.235,
+          "diag_cos": 0.195,
+          "offdiag_cos": -0.001
+        }
+      },
+      "56": {
+        "ours_whitened": {
+          "ret1": 0.34,
+          "diag_cos": 0.083,
+          "offdiag_cos": 0.014
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.39,
+          "diag_cos": 0.087,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.255,
+          "diag_cos": 0.195,
+          "offdiag_cos": -0.001
+        }
+      },
+      "60": {
+        "ours_whitened": {
+          "ret1": 0.25,
+          "diag_cos": 0.054,
+          "offdiag_cos": 0.008
+        },
+        "ours_whitened_batch_centred": {
+          "ret1": 0.345,
+          "diag_cos": 0.08,
+          "offdiag_cos": -0.0
+        },
+        "raw_batch_centred": {
+          "ret1": 0.235,
+          "diag_cos": 0.171,
+          "offdiag_cos": -0.001
+        }
+      }
+    }
+  },
+  "best_at_44": {
+    "set": "natural",
+    "space": "ours_whitened_batch_centred",
+    "ret1": 0.495,
+    "diag_cos": 0.087,
+    "offdiag_cos": -0.0
+  },
+  "pass": false
+}

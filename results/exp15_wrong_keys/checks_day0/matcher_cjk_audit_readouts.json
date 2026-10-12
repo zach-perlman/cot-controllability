@@ -1,0 +1,251 @@
+{
+ "spec": {
+  "seed": "exp15_matcher_audit_cjk",
+  "per_reader": {
+   "ao": 30
+  },
+  "only_cjk": true
+ },
+ "rows": [
+  {
+   "audit_id": 0,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:134",
+   "read": "final|44",
+   "sample": 2,
+   "text": "- 4 (after 3 steps: A -> B -> C -> D)\n- C (after 3 transformations) | Explanation: A -> B -> C -> D (after 3 steps\n- \u7eff (Green) \u2192 \u84dd (Blue) \u2192 Red (after 3 steps) | Explanation: Start at 1. Apply transform 3 times.\n- D (or C, depending on counting) *(Let's trace carefully below)* | 5 steps:"
+  },
+  {
+   "audit_id": 1,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:23",
+   "read": "nl_asst|40",
+   "sample": 2,
+   "text": "- 2. C (Two steps: Rat $\\rightarrow$ Mouse $\\rightarrow$ Dog)\n- 3. Mouse** (Explanation: B -> C -> D. Two transformations from C).\n- B (Step 2: Snake $\\rightarrow$ Wolf) (since it transforms twice). Let's trace carefully: Start at A, step 1\n- \u7070\u72fc (Gray Wolf) (Explanation: 2 steps forward: Rat -> Snake -> Gray Wolf)\n\n**Explanation:**"
+  },
+  {
+   "audit_id": 2,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:67",
+   "read": "final|20",
+   "sample": 1,
+   "text": "- purple (or the final color after 5 steps)\n- red (or more precisely, the final color after all operations). Let me verify the chain step-by-step\n- \u7070\u8272 (or the final color after 10 steps) Let me verify the chain. The answer is\n- blue (or more precisely, the final color after 10 steps). Let me verify the chain. The answer is: **red** after 5 steps."
+  },
+  {
+   "audit_id": 3,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:209",
+   "read": "final|44",
+   "sample": 3,
+   "text": "- 3. Cycle 3: Sun -> Moon -> Earth -> Green\n- \u706b (Day 3) \u2192 Day 9: \u6c34 (after 3 transformations)\n- \u7eff \u2192 \u84dd \u2192 \u7eff \uff08\u7ecf\u8fc73\u6b21\u5faa\u73af\uff09 (Note: The 4th step would be Green again, but we stop at\n- \u7eff (Green) [Let's trace carefully: Start -> Day1 -> Day2 -> Day3 = Red]\n\n**Explanation:**"
+  },
+  {
+   "audit_id": 4,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:84",
+   "read": "final|20",
+   "sample": 3,
+   "text": "- purple (or possibly red, depending on the exact rule interpretation after 10 steps). Let\n- red (or more precisely, the final color after 5 steps is red\n- \u9ed1\u8272 (black) \u2014 Let me verify the chain. Let's trace carefully. If the question asks for the color after 5 applications, the answer is\n- blue (or more accurately, the final color after 10 applications) Let me re-derive carefully. The question asks for the color after 1"
+  },
+  {
+   "audit_id": 5,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:7",
+   "read": "final|24",
+   "sample": 3,
+   "text": "- green (after the final transformation) or simply: the final state is **blue\n- blue (or more precisely, after the chain of transformations, the state is **blue\n- \u7ea2\u8272 (Red) \u2014 because the sequence is cyclical. Let me double-check the transformations.\n- orange (or more precisely, the final color after the chain of transformations) is **blue**.\n\n### Final Answer:"
+  },
+  {
+   "audit_id": 6,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:70",
+   "read": "final|44",
+   "sample": 2,
+   "text": "- A (Day 3) (3 transformations from A)\n- 3. C \u2192 D \u2192 E (3 transformations) (or we can track further if needed, but 5 steps is enough to\n- \u7eff\u8272 (Green) (after 3 transformations from start) | Explanation: A->B->C->D->E (3rd gen)\n- E (after 3 transformations) | Starting from 0, after 3 days: A -> B -> C"
+  },
+  {
+   "audit_id": 7,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:152",
+   "read": "final|20",
+   "sample": 3,
+   "text": "- blue (or more precisely, the final color after 9 steps)\n- blue (or perhaps red, depending on the exact chain of transformations)\n- \u7ea2\u8272 (after applying all transformations) Let me trace it carefully to give the final color after 5 steps: red\n- purple (or more precisely, the final state after 10 steps) Let me trace it carefully to give you the exact color.\n\n"
+  },
+  {
+   "audit_id": 8,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:26",
+   "read": "nl_asst|40",
+   "sample": 3,
+   "text": "- 3. Blue (Two steps: Red -> Green\n- \u7b54\u6848\uff1aD (Yellow) (Since the rule applies twice)\n- 2. Green (Explanation: Blue $\\rightarrow$ Green $\\rightarrow$ Blue). Let's trace the path: Start at Red, apply rule twice to reach\n- \u84dd\u8272 (Blue) (Explanation: Two steps from Blue: Blue $\\to$ Yellow $\\to$ Green)\n\n**2. Starting at"
+  },
+  {
+   "audit_id": 9,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:181",
+   "read": "nl_asst|36",
+   "sample": 0,
+   "text": "- 4. Explanation of the Transformation Chain\n- C (After 3 transformations) Explanation: The chain is: Green \u2192 Blue \u2192 White \u2192 Green\n- \u7b54\u6848: C (After 4 transformations: Green \u2192 Blue \u2192 Red \u2192 White) Let's trace the full path to verify.\n- \u7eff (Green) \u2192 \u767d (White) [after 3 steps]` *(Note: Let's verify this cycle.)*\n\nLet's trace"
+  },
+  {
+   "audit_id": 10,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:84",
+   "read": "final|40",
+   "sample": 3,
+   "text": "- yellow (After 2 jumps)\n- \u7eff (Green) (Explanation: Start $\\to$ Apply twice $\\rightarrow$ Blue $\\rightarrow$ Apply once $\\rightarrow\n- \u7eff (Green) (Explanation: After two jumps, the value is Green) 3. Third step:\n- Blue (after two applications) or **Step 3: Green** (after three applications). Let's trace carefully.\n\n### Step"
+  },
+  {
+   "audit_id": 11,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:83",
+   "read": "final|20",
+   "sample": 1,
+   "text": "- blue (or more precisely, the final color after 9 steps is blue)\n- black (or the state after 5 steps) Let me verify the chain carefully.\n- \u7ea2\u8272 (Red) \u2014 but wait, let's retrace carefully. The question asks for the color after five steps.\n- blue (or more accurately, the final color after applying all rules) Let me re-verify the chain. The answer is:"
+  },
+  {
+   "audit_id": 12,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:154",
+   "read": "final|20",
+   "sample": 3,
+   "text": "- black (or the final color after 5 steps)\n- blue (or more precisely, the state after 5 steps is blue, but the answer is\n- \u7ea2\u8272 (red) (after applying the rules 5 times) Here is the answer:\n- red** (or more precisely, the final color after 5 steps is red). Let's trace carefully to be sure.\n\nLet's simulate the"
+  },
+  {
+   "audit_id": 13,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:236",
+   "read": "final|28",
+   "sample": 2,
+   "text": "- green (or red, depending on interpretation of the 4th day transformation)\n- blue (after 4 transformations) Here is the step-by-step tracking of the transformation:\n- \u9ed1 (Black) (after 4 transformations) or possibly red depending on the exact interpretation, but let's trace it carefully.\n- red** (or more accurately, the final state after 5 days of transformation)\n\n### Explanation:\nLet's trace the sequence step-by-step"
+  },
+  {
+   "audit_id": 14,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:172",
+   "read": "final|48",
+   "sample": 0,
+   "text": "- \u7eff (After 2 transforms)\n- \u767d (After two transformations) \"\"\" print(\"Output\n- \u9ec4 (Yellow)  # Step 2: Green -> Blue (via 'to') -> White (via 'from')\n- green  # Explanation: start -> to -> green -> from -> red -> from -> white (Wait, let me recheck the chain)\n```\n\nWait, let me"
+  },
+  {
+   "audit_id": 15,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:70",
+   "read": "final|48",
+   "sample": 0,
+   "text": "- yellow (2 steps from start)\n- \u7eff (After 2 transformations) ``` python\n- blue ``` (Explanation: Start -> green -> yellow -> red)\n- \u9ec4 (after 2 hops) \"\"\" print(f\"Step 2: {transform_path(color, 2)}\")\n- green  (2 steps: mouse -> green) \"\"\" start_node = \"mouse\" # Initial node name result ="
+  },
+  {
+   "audit_id": 16,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:185",
+   "read": "final|24",
+   "sample": 0,
+   "text": "- blue (or possibly red, depending on interpretation)\n- blue (or red, depending on interpretation) after 8 changes. Let me trace it carefully:\n- red (or more accurately, the final state after 4 transformations is red) Let's trace it carefully. The answer is **red\n- \u7d2b\u8272 (or **purple**) is the final color after the 12 steps. Let me double-check the cycle logic.\n\n### Step-by-Step Deduction:"
+  },
+  {
+   "audit_id": 17,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:64",
+   "read": "final|32",
+   "sample": 3,
+   "text": "- blue (after 2 transformations)\n- red** (or **yellow**, depending on interpretation of \"two transformations\" in the chain)\n- \u7eff\u8272 (Green) (assuming each transformation is applied once sequentially) Here is the step-by-step transformation: Red -> Blue -> Green.\n- blue (since it cycles every 3 steps: red -> blue -> green) ``` ### Explanation:"
+  },
+  {
+   "audit_id": 18,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:235",
+   "read": "final|44",
+   "sample": 3,
+   "text": "- C (after two hops)\n- 3. C (Two steps from A: A -> B -> C)\n- \u7d2b \u2192 \u7eff** \uff08\u89e3\u91ca\uff1a\u4ece root \u5f00\u59cb\uff0c\u7ecf\u8fc7\u4e24\u6b21\u201c\u4e0b\u4e00\u4f4d\u201d\u64cd\u4f5c\uff09\n- \u7eff\u8272 (Green) \uff08\u89e3\u91ca\uff1a\u4e24\u6b21 next \u64cd\u4f5c\uff09 ### \u89e3\u6790\uff1a\u4e24\u6b21 `next()` \u64cd\u4f5c\uff1aroot \u2192 blue \u2192 green\n- 2 (after 2 hops) or **D** (after 3 hops) depending on interpretation. Let\u2019s trace carefully"
+  },
+  {
+   "audit_id": 19,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:68",
+   "read": "final|36",
+   "sample": 1,
+   "text": "- 4 (after 4 transformations: Yellow -> Blue -> Green -> Red)\n- D (after 3 steps) | Explanation: The cycle is: Yellow -> Green -> Red\n- \u84dd (after 4 cycles) We need to trace the transformation 8 times. Starting from Red: Red \u2192 Green \u2192 Blue \u2192 Green\n- E (after 4 transformations from Green) Let's trace the path carefully. Starting from `animal` and applying the transformation 3 times:"
+  },
+  {
+   "audit_id": 20,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:107",
+   "read": "final|28",
+   "sample": 2,
+   "text": "- blue (or potentially red, depending on the exact cycle count, but let's trace carefully)\n- red (after 5 transformations) or possibly blue, depending on interpretation, but most likely red\n- \u7eff** (or possibly blue, depending on interpretation) Let's trace it step-by-step to be sure.\n- yellow** (or possibly **green**, depending on the exact number of transformations). Let's trace it step-by-step carefully.\n\n### Step-by-Step Transformation:"
+  },
+  {
+   "audit_id": 21,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:104",
+   "read": "final|36",
+   "sample": 2,
+   "text": "- A (after 3 transformations) (since 3 steps from C leads to\n- green (or cycle depends on count) After 4 transformations, the state will be green.\n- \u767d (or back to red, depending on counting) Let's trace carefully: Start -> B -> C -> D -> A. After 4 transformations, it\n- E (after 4 transformations) \u2014 let\u2019s trace the full cycle to confirm the final state after 7 steps.\n\n"
+  },
+  {
+   "audit_id": 22,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:98",
+   "read": "final|48",
+   "sample": 3,
+   "text": "- green)  # After 2 transformations: start -> red -> green\n- D) c\n- \u7070 (Gray) -> Output 2: blue\n- \u7334 (Monkey)  // Step 1: Apply transform once -> becomes Red\n- white  # (After 2 steps: Blue \u2192 Green \u2192 White)\n```\n\n**Explanation:**"
+  },
+  {
+   "audit_id": 23,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:182",
+   "read": "final|24",
+   "sample": 3,
+   "text": "- green (or possibly red, depending on interpretation)\n- blue (Let's trace it carefully to be sure) Here is the step-by-step transformation:\n- \u7eff (Green) (or more precisely, the final state after 5 transformations is blue) Let's verify with a step-by-step trace.\n- red (or more precisely, the final state after 5 transformations is red) \u2014 let me trace it carefully.\n\nLet\u2019s trace the color changes step-by-step"
+  },
+  {
+   "audit_id": 24,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:83",
+   "read": "nl_asst|40",
+   "sample": 0,
+   "text": "- B. Green (Since two jumps: Red $\\rightarrow$\n- 2. Blue (Explanation: Two applications of the function result in Blue.)\n- B, D** (After 2 steps: Blue $\\to$ Green $\\to$ Red)\n\nLet's verify:\n1.\n- \u84dd\u8272 (Blue) (Explanation: After 2 jumps, the value becomes Blue)\n\n**Question 2: Apply the function twice starting from"
+  },
+  {
+   "audit_id": 25,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:24",
+   "read": "final|36",
+   "sample": 1,
+   "text": "- 3 (since two transformations occur: Black -> Yellow, Yellow ->\n- green (since two transformations occur: Black -> Red, Red -> Green) After 3 transformations, the state will be\n- \u7eff (Green) (Explanation: After 2 steps, the state is Green. The third step transforms Green to Blue. So the answer is Blue.)\n- C (after two transformations) **Explanation**: After 2 steps from \"Black\", the state will be \"Red\"."
+  },
+  {
+   "audit_id": 26,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:209",
+   "read": "final|40",
+   "sample": 3,
+   "text": "- Blue (after 3 cycles)\n- \u7eff (after 3 steps) or Cycle 4: Blue (since the cycle length is 3, starting from\n- \u7ea2 (Red) (since the cycle repeats every 3 steps, 4 steps in: Red \u2192 Green \u2192 Blue \u2192 Red\n- \u592a\u9633 (Step 3) after 3 jumps. Let's trace carefully: Step 1: Red \u2192 Green, Step 2:"
+  },
+  {
+   "audit_id": 27,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:187",
+   "read": "nl_asst|36",
+   "sample": 0,
+   "text": "- 3. After 4 transformations, the result is **Black**\n- B (after 4 steps) Let's trace carefully: Black \u2192 Rabbit \u2192 White \u2192 Ghost \u2192 Black\n- \u7b54\u6848\uff1a\u9ec4 (Yellow) \uff08\u7ecf\u8fc74\u6b21\u8f6c\u6362\uff1a\u767d -> \u9ed1 -> \u7ea2 -> \u9ec4\uff09\n- D (after 4 transformations) or **C** (after 4 transformations). Let's verify by tracing the chain.\n\n**"
+  },
+  {
+   "audit_id": 28,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h2:29",
+   "read": "final|32",
+   "sample": 2,
+   "text": "- blue\n- blue (or more accurately, the final state after 3 transformations)\n- \u7eff (Green) \u6216 3 (if we follow the cycle exactly twice). Let's trace carefully: Start at Red. Step 1:\n- yellow** (or more precisely, the final state after 2 transformations) Explanation: The chain of transformations is: Red \u2192 Blue \u2192 Yellow. After 3 steps,\n- Blue** (Explanation: Red \u2192 Blue \u2192 Green \u2192 Red \u2192 Blue)\n\n### Explanation of the"
+  },
+  {
+   "audit_id": 29,
+   "reader": "ao",
+   "item_id": "single_test:single_first:eval:h3:25",
+   "read": "final|24",
+   "sample": 1,
+   "text": "- blue (after 4 transformations) or possibly red depending on the exact chain, but the\n- blue (after 6 transformations) Here is the step-by-step deduction to find the final color after 6 changes:\n- \u7ea2 (Red) \u2014 or more precisely, the final state after all transformations is **red**. Let me double-check the cycle. Let's trace it step\n- purple (or possibly red, depending on the exact rule interpretation) \u2014 Let's trace it carefully."
+  }
+ ]
+}

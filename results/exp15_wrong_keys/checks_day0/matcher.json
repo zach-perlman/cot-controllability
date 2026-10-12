@@ -1,0 +1,8 @@
+{
+  "n_readouts": 50,
+  "n_true_mentions": 89,
+  "precision": 1.0,
+  "recall": 1.0,
+  "pass": true,
+  "disagreements": []
+}
