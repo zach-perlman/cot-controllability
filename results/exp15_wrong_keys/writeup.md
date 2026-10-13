@@ -391,7 +391,7 @@ The package is `results/exp15_wrong_keys/verification_v2/` (gitignored; on the p
 ## Report
 
 ```
-EXP exp15_wrong_keys @ 50b9fd8 (code and main results; this write-up and the last secondaries in the next commit)
+EXP exp15_wrong_keys @ fd05cc4 (code and main results; this write-up and the last secondaries in the next commit)
   | model Qwen3.6-27B (bf16, thinking off) | n = test bank 2,700 items (P2 323 off-cycle errors; P3 440 correct
   h=2 items; P4 266 off-cycle h=3 errors) | seeds = bank exp15_test_20261012, text rows exp15_text_rows, edit
   nulls per-item seeded, bootstrap 10k (seed 0)
