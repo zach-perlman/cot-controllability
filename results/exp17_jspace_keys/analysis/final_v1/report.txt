@@ -1,0 +1,728 @@
+qwen: factual positive control, 59 of 76 usable prompts answer correctly when clean
+band     alpha |  inter answer   null |   gain | kept(i) dose(i) dose(n)
+b24_36       1 |  0.441  0.203  0.000 | +0.441 |   0.475  0.0096  0.0096
+b24_36       2 |  0.627  0.458  0.000 | +0.627 |   0.203  0.0193  0.0193
+b24_36       4 |  0.644  0.559  0.000 | +0.644 |   0.102  0.0389  0.0395
+b24_48       1 |  0.576  0.339  0.000 | +0.576 |   0.305  0.0094  0.0093
+b24_48       2 |  0.627  0.559  0.000 | +0.627 |   0.119  0.0190  0.0190
+b24_48       4 |  0.576  0.678  0.000 | +0.576 |   0.034  0.0388  0.0396
+b30_42       1 |  0.542  0.356  0.000 | +0.542 |   0.339  0.0114  0.0113
+b30_42       2 |  0.644  0.542  0.000 | +0.644 |   0.136  0.0232  0.0231
+b30_42       4 |  0.576  0.661  0.000 | +0.576 |   0.068  0.0473  0.0481
+b36_48       1 |  0.475  0.322  0.000 | +0.475 |   0.441  0.0124  0.0123
+b36_48       2 |  0.610  0.559  0.000 | +0.610 |   0.169  0.0249  0.0248
+b36_48       4 |  0.508  0.610  0.000 | +0.508 |   0.068  0.0502  0.0505
+b42_54       1 |  0.458  0.407  0.000 | +0.458 |   0.458  0.0122  0.0122
+b42_54       2 |  0.559  0.627  0.000 | +0.559 |   0.169  0.0247  0.0247
+b42_54       4 |  0.407  0.797  0.000 | +0.407 |   0.119  0.0501  0.0505
+best intermediate swap: {'band': 'b24_36', 'alpha': 4.0, 'gain': 0.6441, 'inter': 0.6441, 'answer': 0.5593, 'null': 0.0, 'n': 59, 'K1_stop': False}
+
+qwen: positive-control follow-up, 59 prompts; success rate (dose)
+band     alpha |                inter           inter_orth         inter_orth_m       inter_clampans
+b24_36       1 |       0.441 (0.0096)     0.051 (102.3208)       0.051 (0.0096)       0.203 (0.0097)
+b24_36       2 |       0.627 (0.0193)     0.373 (204.6243)       0.441 (0.0193)       0.492 (0.0193)
+b24_36       4 |       0.644 (0.0389)     0.475 (409.2312)       0.508 (0.0391)       0.424 (0.0380)
+b24_48       1 |       0.576 (0.0094)      0.203 (53.2273)       0.220 (0.0094)       0.254 (0.0095)
+b24_48       2 |       0.627 (0.0190)     0.508 (106.4298)       0.525 (0.0190)       0.407 (0.0189)
+b24_48       4 |       0.576 (0.0388)     0.525 (212.8350)       0.525 (0.0391)       0.322 (0.0371)
+b30_42       1 |       0.542 (0.0114)      0.136 (51.2777)       0.136 (0.0114)       0.186 (0.0118)
+b30_42       2 |       0.644 (0.0232)     0.475 (102.5433)       0.492 (0.0232)       0.441 (0.0235)
+b30_42       4 |       0.576 (0.0473)     0.492 (205.0746)       0.525 (0.0476)       0.356 (0.0461)
+b36_48       1 |       0.475 (0.0124)      0.051 (28.0810)       0.051 (0.0123)       0.136 (0.0124)
+b36_48       2 |       0.610 (0.0249)      0.322 (56.1163)       0.356 (0.0249)       0.390 (0.0247)
+b36_48       4 |       0.508 (0.0502)     0.441 (112.1868)       0.475 (0.0504)       0.356 (0.0481)
+b42_54       1 |       0.458 (0.0122)      0.085 (35.0742)       0.085 (0.0122)       0.068 (0.0124)
+b42_54       2 |       0.559 (0.0247)      0.305 (70.0984)       0.305 (0.0247)       0.220 (0.0247)
+b42_54       4 |       0.407 (0.0501)     0.254 (140.1469)       0.254 (0.0502)       0.102 (0.0488)
+
+qwen: dev grid, 192 of 192 targets give gold in their clean pass
+alpha-0 arm: 192 of 192 unchanged
+family band     alpha |   succ   null   gain |   echo start2   unch  other |   dose   mass
+ar     l42          2 |  0.047  0.005 +0.042 |  0.010  0.010  0.797  0.135 | 0.1408  0.999
+ar     l42          4 |  0.177  0.016 +0.161 |  0.104  0.036  0.536  0.146 | 0.2816  0.972
+ar     l42          8 |  0.146  0.026 +0.120 |  0.224  0.047  0.318  0.266 | 0.5631  0.857
+ar     l42         16 |  0.115  0.021 +0.094 |  0.161  0.083  0.203  0.438 | 1.1263  0.485
+dm     b24_36       1 |  0.135  0.021 +0.115 |  0.036  0.083  0.557  0.188 | 0.0950  0.998
+dm     b24_36       2 |  0.172  0.021 +0.151 |  0.052  0.068  0.177  0.531 | 0.1727  0.902
+dm     b24_36       4 |  0.115  0.047 +0.068 |  0.099  0.068  0.078  0.641 | 0.2730  0.407
+dm     b24_36       8 |  0.068  0.094 -0.026 |  0.167  0.099  0.089  0.578 | 0.3832  0.058
+dm     b24_48       1 |  0.365  0.021 +0.344 |  0.036  0.078  0.214  0.307 | 0.0680  0.997
+dm     b24_48       2 |  0.260  0.010 +0.250 |  0.167  0.052  0.083  0.438 | 0.1251  0.877
+dm     b24_48       4 |  0.089  0.057 +0.031 |  0.208  0.073  0.068  0.562 | 0.1999  0.313
+dm     b24_48       8 |  0.078  0.078 +0.000 |  0.198  0.109  0.057  0.557 | 0.2616  0.031
+dm     b30_42       1 |  0.182  0.005 +0.177 |  0.026  0.094  0.495  0.203 | 0.0644  0.998
+dm     b30_42       2 |  0.229  0.010 +0.219 |  0.125  0.047  0.234  0.365 | 0.1256  0.984
+dm     b30_42       4 |  0.115  0.062 +0.052 |  0.214  0.057  0.068  0.547 | 0.2187  0.740
+dm     b30_42       8 |  0.073  0.115 -0.042 |  0.198  0.068  0.094  0.568 | 0.3231  0.251
+dm     b36_48       1 |  0.359  0.005 +0.354 |  0.047  0.104  0.307  0.182 | 0.0454  0.999
+dm     b36_48       2 |  0.411  0.036 +0.375 |  0.156  0.042  0.115  0.276 | 0.0890  0.993
+dm     b36_48       4 |  0.281  0.073 +0.208 |  0.250  0.062  0.057  0.349 | 0.1679  0.896
+dm     b36_48       8 |  0.083  0.073 +0.010 |  0.385  0.057  0.073  0.401 | 0.2885  0.561
+dm     b42_54       1 |  0.427  0.010 +0.417 |  0.052  0.078  0.281  0.161 | 0.0447  0.999
+dm     b42_54       2 |  0.396  0.010 +0.385 |  0.151  0.042  0.193  0.219 | 0.0882  0.972
+dm     b42_54       4 |  0.167  0.042 +0.125 |  0.229  0.057  0.151  0.396 | 0.1697  0.676
+dm     b42_54       8 |  0.068  0.094 -0.026 |  0.380  0.068  0.062  0.422 | 0.2935  0.223
+dm     l42          2 |  0.333  0.026 +0.307 |  0.047  0.083  0.411  0.125 | 0.1921  0.998
+dm     l42          4 |  0.297  0.021 +0.276 |  0.141  0.052  0.240  0.271 | 0.3842  0.981
+dm     l42          8 |  0.224  0.026 +0.198 |  0.250  0.057  0.182  0.286 | 0.7683  0.755
+dm     l42         16 |  0.182  0.068 +0.115 |  0.276  0.036  0.125  0.380 | 1.5367  0.425
+jpp    b24_36       1 |  0.010  0.005 +0.005 |  0.005  0.000  0.974  0.010 | 0.0070  0.999
+jpp    b24_36       2 |  0.010  0.010 +0.000 |  0.005  0.000  0.974  0.010 | 0.0141  0.999
+jpp    b24_36       4 |  0.010  0.010 +0.000 |  0.005  0.000  0.964  0.021 | 0.0282  0.999
+jpp    b24_36       8 |  0.036  0.000 +0.036 |  0.021  0.016  0.844  0.083 | 0.0562  0.998
+jpp    b24_48       1 |  0.005  0.010 -0.005 |  0.005  0.000  0.979  0.010 | 0.0074  0.999
+jpp    b24_48       2 |  0.005  0.005 +0.000 |  0.010  0.000  0.969  0.016 | 0.0147  0.999
+jpp    b24_48       4 |  0.016  0.000 +0.016 |  0.010  0.010  0.932  0.031 | 0.0294  0.999
+jpp    b24_48       8 |  0.042  0.010 +0.031 |  0.036  0.021  0.781  0.120 | 0.0588  0.997
+jpp    b30_42       1 |  0.000  0.005 -0.005 |  0.000  0.000  0.984  0.016 | 0.0082  0.999
+jpp    b30_42       2 |  0.000  0.005 -0.005 |  0.000  0.005  0.979  0.016 | 0.0164  0.999
+jpp    b30_42       4 |  0.010  0.005 +0.005 |  0.000  0.010  0.953  0.026 | 0.0328  0.999
+jpp    b30_42       8 |  0.031  0.000 +0.031 |  0.016  0.031  0.807  0.115 | 0.0655  0.996
+jpp    b36_48       1 |  0.000  0.005 -0.005 |  0.005  0.000  0.990  0.005 | 0.0084  0.999
+jpp    b36_48       2 |  0.000  0.005 -0.005 |  0.005  0.000  0.990  0.005 | 0.0167  0.999
+jpp    b36_48       4 |  0.005  0.005 +0.000 |  0.005  0.010  0.964  0.016 | 0.0335  0.999
+jpp    b36_48       8 |  0.021  0.010 +0.010 |  0.026  0.016  0.859  0.078 | 0.0668  0.999
+jpp    b42_54       1 |  0.000  0.005 -0.005 |  0.000  0.000  0.995  0.005 | 0.0100  0.999
+jpp    b42_54       2 |  0.000  0.000 +0.000 |  0.005  0.000  0.984  0.010 | 0.0200  0.999
+jpp    b42_54       4 |  0.005  0.000 +0.005 |  0.005  0.000  0.974  0.016 | 0.0399  0.999
+jpp    b42_54       8 |  0.010  0.005 +0.005 |  0.031  0.000  0.922  0.036 | 0.0794  0.999
+jpp    l42          2 |  0.000  0.000 +0.000 |  0.000  0.000  0.995  0.005 | 0.0349  0.999
+jpp    l42          4 |  0.000  0.010 -0.010 |  0.000  0.000  0.990  0.010 | 0.0698  0.999
+jpp    l42          8 |  0.010  0.000 +0.010 |  0.005  0.000  0.958  0.026 | 0.1396  0.999
+jpp    l42         16 |  0.021  0.021 +0.000 |  0.042  0.021  0.818  0.099 | 0.2792  0.999
+J++ answer swaps (gold -> a'): success = a' said, relookup = T(a')
+  jpp_answer|b24_36|1    success 0.000 relookup 0.005 unchanged 0.990 dose 0.0069
+  jpp_answer|b24_36|2    success 0.005 relookup 0.005 unchanged 0.969 dose 0.0137
+  jpp_answer|b24_48|1    success 0.000 relookup 0.005 unchanged 0.990 dose 0.0071
+  jpp_answer|b24_48|2    success 0.005 relookup 0.005 unchanged 0.958 dose 0.0143
+  jpp_answer|b30_42|1    success 0.005 relookup 0.000 unchanged 0.990 dose 0.0079
+  jpp_answer|b30_42|2    success 0.010 relookup 0.000 unchanged 0.979 dose 0.0157
+  jpp_answer|b36_48|1    success 0.005 relookup 0.000 unchanged 0.984 dose 0.0080
+  jpp_answer|b36_48|2    success 0.005 relookup 0.000 unchanged 0.984 dose 0.0160
+  jpp_answer|b42_54|1    success 0.005 relookup 0.000 unchanged 0.990 dose 0.0097
+  jpp_answer|b42_54|2    success 0.016 relookup 0.000 unchanged 0.948 dose 0.0195
+  jpp_answer|l42|2       success 0.005 relookup 0.000 unchanged 0.979 dose 0.0304
+  jpp_answer|l42|4       success 0.005 relookup 0.000 unchanged 0.969 dose 0.0609
+selection: {"jpp": {"band": "b24_36", "alpha": 8.0, "success": 0.0365, "null": 0.0, "gain": 0.0365, "echo": 0.0208, "dose": 0.0562}, "dm": {"band": "b42_54", "alpha": 1.0, "success": 0.4271, "null": 0.0104, "gain": 0.4167, "echo": 0.0521, "dose": 0.0447}, "ar": {"band": "l42", "alpha": 4.0, "success": 0.1771, "null": 0.0156, "gain": 0.1615, "echo": 0.1042, "dose": 0.2816}}  K2 stop: False
+
+qwen: J++ answer swaps (gold -> a') vs a random direction at their size, dev
+  b24_36   alpha   1: success 0.000 null 0.005 dose 0.0069
+  b24_36   alpha   2: success 0.005 null 0.005 dose 0.0137
+  b24_36   alpha   4: success 0.005 null 0.010 dose 0.0275
+  b24_36   alpha   8: success 0.016 null 0.005 dose 0.0548
+  b24_48   alpha   1: success 0.000 null 0.005 dose 0.0071
+  b24_48   alpha   2: success 0.005 null 0.010 dose 0.0143
+  b24_48   alpha   4: success 0.010 null 0.005 dose 0.0286
+  b24_48   alpha   8: success 0.026 null 0.021 dose 0.0571
+  b30_42   alpha   1: success 0.005 null 0.000 dose 0.0079
+  b30_42   alpha   2: success 0.005 null 0.000 dose 0.0157
+  b30_42   alpha   4: success 0.010 null 0.005 dose 0.0315
+  b30_42   alpha   8: success 0.031 null 0.016 dose 0.0628
+  b36_48   alpha   1: success 0.005 null 0.005 dose 0.0080
+  b36_48   alpha   2: success 0.005 null 0.010 dose 0.0160
+  b36_48   alpha   4: success 0.005 null 0.005 dose 0.0321
+  b36_48   alpha   8: success 0.031 null 0.010 dose 0.0641
+  b42_54   alpha   1: success 0.005 null 0.000 dose 0.0097
+  b42_54   alpha   2: success 0.016 null 0.005 dose 0.0195
+  b42_54   alpha   4: success 0.052 null 0.010 dose 0.0389
+  b42_54   alpha   8: success 0.406 null 0.010 dose 0.0776
+  b48_60   alpha   1: success 0.667 null 0.000 dose 0.0149
+  b48_60   alpha   2: success 0.974 null 0.005 dose 0.0301
+  b48_60   alpha   4: success 0.990 null 0.016 dose 0.0600
+  b48_60   alpha   8: success 0.969 null 0.010 dose 0.1164
+  b54_62   alpha   1: success 0.792 null 0.000 dose 0.0188
+  b54_62   alpha   2: success 0.938 null 0.000 dose 0.0383
+  b54_62   alpha   4: success 0.885 null 0.005 dose 0.0763
+  b54_62   alpha   8: success 0.885 null 0.010 dose 0.1447
+
+qwen: patch window start: 153 of 192 targets (clean gives gold and the counterfactual gives T(s1'))
+  patch_dm_jpart|b24_36    success 0.013 unchanged 0.941 echo 0.013 other 0.026 dose 0.0063 | specificity +0.003 [-0.016, +0.026]
+  patch_dm_rem|b24_36      success 0.078 unchanged 0.771 echo 0.072 other 0.052 dose 0.0114 | specificity +0.029 [-0.020, +0.082]
+  patch_dm|b24_36          success 0.091 unchanged 0.745 echo 0.085 other 0.052 dose 0.0126 | specificity +0.036 [-0.016, +0.095]
+  patch_full|b24_36        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0061 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b24_36         success 0.013 unchanged 0.967 echo 0.013 other 0.006 dose 0.0032 | specificity +0.006 [-0.010, +0.029]
+  patch_random|b24_36      success 0.000 unchanged 0.994 echo 0.000 other 0.006 dose 0.0046 | specificity +0.000 [+0.000, +0.000]
+  patch_dm_jpart|b24_48    success 0.039 unchanged 0.863 echo 0.020 other 0.052 dose 0.0071 | specificity +0.016 [-0.016, +0.052]
+  patch_dm_rem|b24_48      success 0.490 unchanged 0.196 echo 0.111 other 0.157 dose 0.0113 | specificity +0.412 [+0.317, +0.506]
+  patch_dm|b24_48          success 0.503 unchanged 0.176 echo 0.111 other 0.163 dose 0.0126 | specificity +0.425 [+0.330, +0.520]
+  patch_full|b24_48        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0032 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b24_48         success 0.013 unchanged 0.967 echo 0.013 other 0.006 dose 0.0037 | specificity +0.006 [-0.010, +0.029]
+  patch_random|b24_48      success 0.000 unchanged 0.994 echo 0.000 other 0.006 dose 0.0059 | specificity +0.000 [+0.000, +0.000]
+  patch_dm_jpart|b30_42    success 0.020 unchanged 0.902 echo 0.020 other 0.046 dose 0.0078 | specificity +0.003 [-0.023, +0.029]
+  patch_dm_rem|b30_42      success 0.203 unchanged 0.601 echo 0.091 other 0.078 dose 0.0113 | specificity +0.144 [+0.072, +0.216]
+  patch_dm|b30_42          success 0.209 unchanged 0.595 echo 0.078 other 0.085 dose 0.0127 | specificity +0.154 [+0.082, +0.229]
+  patch_full|b30_42        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0077 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b30_42         success 0.000 unchanged 0.994 echo 0.006 other 0.000 dose 0.0042 | specificity -0.003 [-0.010, +0.000]
+  patch_random|b30_42      success 0.006 unchanged 0.987 echo 0.006 other 0.000 dose 0.0058 | specificity +0.003 [-0.010, +0.020]
+  patch_dm_jpart|b36_48    success 0.039 unchanged 0.863 echo 0.020 other 0.052 dose 0.0091 | specificity +0.016 [-0.016, +0.052]
+  patch_dm_rem|b36_48      success 0.484 unchanged 0.190 echo 0.105 other 0.163 dose 0.0135 | specificity +0.402 [+0.307, +0.497]
+  patch_dm|b36_48          success 0.490 unchanged 0.183 echo 0.098 other 0.170 dose 0.0152 | specificity +0.412 [+0.317, +0.506]
+  patch_full|b36_48        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0118 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b36_48         success 0.006 unchanged 0.980 echo 0.013 other 0.000 dose 0.0048 | specificity +0.000 [-0.013, +0.016]
+  patch_random|b36_48      success 0.006 unchanged 0.987 echo 0.006 other 0.000 dose 0.0072 | specificity +0.003 [-0.010, +0.020]
+  patch_dm_jpart|b42_54    success 0.052 unchanged 0.863 echo 0.013 other 0.046 dose 0.0120 | specificity +0.033 [-0.003, +0.075]
+  patch_dm_rem|b42_54      success 0.588 unchanged 0.085 echo 0.098 other 0.137 dose 0.0171 | specificity +0.493 [+0.392, +0.592]
+  patch_dm|b42_54          success 0.588 unchanged 0.091 echo 0.105 other 0.144 dose 0.0208 | specificity +0.500 [+0.402, +0.598]
+  patch_full|b42_54        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0119 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b42_54         success 0.013 unchanged 0.974 echo 0.006 other 0.006 dose 0.0073 | specificity +0.010 [-0.006, +0.033]
+  patch_random|b42_54      success 0.013 unchanged 0.987 echo 0.000 other 0.000 dose 0.0095 | specificity +0.013 [+0.000, +0.033]
+  patch_full|b48_60        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0166 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b48_60         success 0.673 unchanged 0.229 echo 0.020 other 0.046 dose 0.0141 | specificity +0.647 [+0.565, +0.726]
+  patch_random|b48_60      success 0.013 unchanged 0.987 echo 0.000 other 0.000 dose 0.0117 | specificity +0.013 [+0.000, +0.033]
+qwen: patch window after: 153 of 192 targets (clean gives gold and the counterfactual gives T(s1'))
+  patch_dm_jpart|b24_36    success 0.013 unchanged 0.948 echo 0.013 other 0.020 dose 0.0054 | specificity +0.003 [-0.016, +0.026]
+  patch_dm_rem|b24_36      success 0.052 unchanged 0.804 echo 0.059 other 0.059 dose 0.0109 | specificity +0.010 [-0.029, +0.056]
+  patch_dm|b24_36          success 0.059 unchanged 0.797 echo 0.059 other 0.059 dose 0.0120 | specificity +0.016 [-0.026, +0.062]
+  patch_full|b24_36        success 0.431 unchanged 0.281 echo 0.091 other 0.157 dose 0.0223 | specificity +0.366 [+0.278, +0.458]
+  patch_jpp|b24_36         success 0.013 unchanged 0.980 echo 0.006 other 0.000 dose 0.0026 | specificity +0.010 [-0.006, +0.033]
+  patch_random|b24_36      success 0.000 unchanged 1.000 echo 0.000 other 0.000 dose 0.0041 | specificity +0.000 [+0.000, +0.000]
+  patch_dm_jpart|b24_48    success 0.046 unchanged 0.850 echo 0.026 other 0.052 dose 0.0064 | specificity +0.020 [-0.016, +0.059]
+  patch_dm_rem|b24_48      success 0.451 unchanged 0.235 echo 0.098 other 0.170 dose 0.0109 | specificity +0.379 [+0.288, +0.474]
+  patch_dm|b24_48          success 0.444 unchanged 0.222 echo 0.091 other 0.190 dose 0.0122 | specificity +0.372 [+0.281, +0.467]
+  patch_full|b24_48        success 0.967 unchanged 0.000 echo 0.000 other 0.033 dose 0.0191 | specificity +0.967 [+0.935, +0.994]
+  patch_jpp|b24_48         success 0.013 unchanged 0.974 echo 0.006 other 0.006 dose 0.0032 | specificity +0.010 [-0.006, +0.033]
+  patch_random|b24_48      success 0.000 unchanged 0.994 echo 0.000 other 0.006 dose 0.0054 | specificity +0.000 [+0.000, +0.000]
+  patch_dm_jpart|b30_42    success 0.020 unchanged 0.908 echo 0.020 other 0.039 dose 0.0069 | specificity +0.003 [-0.023, +0.029]
+  patch_dm_rem|b30_42      success 0.190 unchanged 0.614 echo 0.085 other 0.085 dose 0.0110 | specificity +0.134 [+0.065, +0.206]
+  patch_dm|b30_42          success 0.203 unchanged 0.582 echo 0.085 other 0.098 dose 0.0124 | specificity +0.144 [+0.072, +0.216]
+  patch_full|b30_42        success 0.634 unchanged 0.124 echo 0.085 other 0.105 dose 0.0227 | specificity +0.565 [+0.471, +0.657]
+  patch_jpp|b30_42         success 0.006 unchanged 0.987 echo 0.006 other 0.000 dose 0.0035 | specificity +0.003 [-0.010, +0.020]
+  patch_random|b30_42      success 0.006 unchanged 0.987 echo 0.000 other 0.006 dose 0.0053 | specificity +0.006 [+0.000, +0.020]
+  patch_dm_jpart|b36_48    success 0.033 unchanged 0.869 echo 0.020 other 0.052 dose 0.0083 | specificity +0.010 [-0.023, +0.046]
+  patch_dm_rem|b36_48      success 0.464 unchanged 0.242 echo 0.085 other 0.163 dose 0.0132 | specificity +0.399 [+0.307, +0.490]
+  patch_dm|b36_48          success 0.477 unchanged 0.222 echo 0.085 other 0.170 dose 0.0149 | specificity +0.412 [+0.320, +0.503]
+  patch_full|b36_48        success 0.961 unchanged 0.000 echo 0.000 other 0.033 dose 0.0251 | specificity +0.958 [+0.918, +0.987]
+  patch_jpp|b36_48         success 0.006 unchanged 0.980 echo 0.006 other 0.006 dose 0.0042 | specificity +0.003 [-0.010, +0.020]
+  patch_random|b36_48      success 0.006 unchanged 0.994 echo 0.000 other 0.000 dose 0.0068 | specificity +0.006 [+0.000, +0.020]
+  patch_dm_jpart|b42_54    success 0.046 unchanged 0.889 echo 0.006 other 0.039 dose 0.0113 | specificity +0.033 [+0.000, +0.072]
+  patch_dm_rem|b42_54      success 0.588 unchanged 0.085 echo 0.098 other 0.144 dose 0.0172 | specificity +0.497 [+0.399, +0.598]
+  patch_dm|b42_54          success 0.575 unchanged 0.098 echo 0.091 other 0.157 dose 0.0208 | specificity +0.490 [+0.389, +0.588]
+  patch_full|b42_54        success 0.980 unchanged 0.000 echo 0.000 other 0.020 dose 0.0259 | specificity +0.980 [+0.954, +1.000]
+  patch_jpp|b42_54         success 0.013 unchanged 0.980 echo 0.000 other 0.006 dose 0.0066 | specificity +0.013 [+0.000, +0.033]
+  patch_random|b42_54      success 0.013 unchanged 0.987 echo 0.000 other 0.000 dose 0.0091 | specificity +0.013 [+0.000, +0.033]
+  patch_full|b48_60        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0264 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b48_60         success 0.667 unchanged 0.235 echo 0.020 other 0.046 dose 0.0135 | specificity +0.640 [+0.556, +0.719]
+  patch_random|b48_60      success 0.013 unchanged 0.987 echo 0.000 other 0.000 dose 0.0112 | specificity +0.013 [+0.000, +0.033]
+  P1 patch_jpp - patch_random @ b42_54: {'mean': 0.0, 'lo': 0.0, 'hi': 0.0, 'n': 153, 'p': 1.0, 'p_holm': 1.0}
+  P2 patch_dm - patch_jpp @ b42_54: {'mean': 0.5621, 'lo': 0.4837, 'hi': 0.6405, 'n': 153, 'p': 0.0001, 'p_holm': 0.0003}
+  P3 patch_dm_rem - patch_dm_jpart @ b42_54: {'mean': 0.5425, 'lo': 0.4641, 'hi': 0.6209, 'n': 153, 'p': 0.0001, 'p_holm': 0.0003}
+
+qwen: preview, 192 eligible items
+  ar_full        success 0.1771 echo 0.1042 start_swap 0.0365 unchanged 0.5365 relookup 0.0 other 0.1458 dose 0.2816 colour_mass 0.9717 n 192
+  ar_jpart       success 0.026 echo 0.0417 start_swap 0.0208 unchanged 0.7656 relookup 0.0 other 0.1458 dose 0.2816 colour_mass 0.998 n 192
+  ar_rem         success 0.1458 echo 0.0573 start_swap 0.026 unchanged 0.5781 relookup 0.0 other 0.1927 dose 0.2816 colour_mass 0.9877 n 192
+  dm_full        success 0.4271 echo 0.0521 start_swap 0.0781 unchanged 0.2812 relookup 0.0 other 0.1615 dose 0.0447 colour_mass 0.9986 n 192
+  dm_jpart       success 0.0469 echo 0.0208 start_swap 0.0208 unchanged 0.8229 relookup 0.0 other 0.0885 dose 0.0447 colour_mass 0.9991 n 192
+  dm_jpart_own   success 0.0312 echo 0.0104 start_swap 0.0156 unchanged 0.9115 relookup 0.0 other 0.0312 dose 0.0195 colour_mass 0.9992 n 192
+  dm_rem         success 0.4167 echo 0.0365 start_swap 0.0833 unchanged 0.3021 relookup 0.0 other 0.1615 dose 0.0447 colour_mass 0.9985 n 192
+  dm_rem_clamp   success 0.4219 echo 0.0312 start_swap 0.0833 unchanged 0.3021 relookup 0.0 other 0.1615 dose 0.0449 colour_mass 0.9985 n 192
+  dm_rem_own     success 0.4167 echo 0.0469 start_swap 0.0885 unchanged 0.2969 relookup 0.0 other 0.151 dose 0.0458 colour_mass 0.9985 n 192
+  jpp_answer     success 0.0156 echo 0.0 start_swap 0.0 unchanged 0.849 relookup 0.026 other 0.1094 dose 0.0548 colour_mass 0.9987 n 192
+  jpp_at_dm      success 0.0 echo 0.0 start_swap 0.0 unchanged 0.9948 relookup 0.0 other 0.0052 dose 0.01 colour_mass 0.9992 n 192
+  jpp_matched    success 0.0052 echo 0.0052 start_swap 0.0104 unchanged 0.9688 relookup 0.0 other 0.0104 dose 0.0446 colour_mass 0.9992 n 192
+  jpp_raw        success 0.0365 echo 0.0208 start_swap 0.0156 unchanged 0.8438 relookup 0.0 other 0.0833 dose 0.0562 colour_mass 0.9983 n 192
+  null_ar        success 0.0104 echo 0.0052 start_swap 0.0104 unchanged 0.8906 relookup 0.0 other 0.0833 dose 0.2816 colour_mass 0.999 n 192
+  null_dm        success 0.0104 echo 0.0104 start_swap 0.0156 unchanged 0.9271 relookup 0.0 other 0.0365 dose 0.0444 colour_mass 0.9991 n 192
+  null_jpp       success 0.0104 echo 0.0156 start_swap 0.0156 unchanged 0.8802 relookup 0.0 other 0.0781 dose 0.0559 colour_mass 0.999 n 192
+  other_item     success 0.0417 echo 0.0573 start_swap 0.026 unchanged 0.6198 relookup 0.0 other 0.2552 dose 0.0439 colour_mass 0.9987 n 192
+  T1 dm_jpart - dm_rem: {'mean': -0.3698, 'lo': -0.4427, 'hi': -0.2969, 'n': 192}
+  T2 jpp_raw - null_jpp: {'mean': 0.026, 'lo': 0.0052, 'hi': 0.0521, 'n': 192, 'p': 0.0064, 'p_holm': 0.0256}
+  T2 dm_full - null_dm: {'mean': 0.4167, 'lo': 0.349, 'hi': 0.4896, 'n': 192, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 jpp_matched - null_dm: {'mean': -0.0052, 'lo': -0.026, 'hi': 0.0104, 'n': 192, 'p': 0.82362, 'p_holm': 0.82362}
+  T2 dm_jpart - null_dm: {'mean': 0.0365, 'lo': 0.0104, 'hi': 0.0677, 'n': 192, 'p': 0.0016, 'p_holm': 0.008}
+  T2 dm_rem - null_dm: {'mean': 0.4062, 'lo': 0.3385, 'hi': 0.4792, 'n': 192, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 dm_jpart_own - null_dm: {'mean': 0.0208, 'lo': 0.0052, 'hi': 0.0417, 'n': 192, 'p': 0.019, 'p_holm': 0.05699}
+  T2 dm_rem_own - null_dm: {'mean': 0.4062, 'lo': 0.3385, 'hi': 0.474, 'n': 192, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 dm_rem_clamp - null_dm: {'mean': 0.4115, 'lo': 0.3438, 'hi': 0.4844, 'n': 192, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 ar_full - null_ar: {'mean': 0.1667, 'lo': 0.1146, 'hi': 0.224, 'n': 192, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 ar_jpart - null_ar: {'mean': 0.0156, 'lo': -0.0052, 'hi': 0.0417, 'n': 192, 'p': 0.12189, 'p_holm': 0.24378}
+  T2 ar_rem - null_ar: {'mean': 0.1354, 'lo': 0.0885, 'hi': 0.1875, 'n': 192, 'p': 0.0001, 'p_holm': 0.0011}
+  T3 dm_rem - dm_rem_clamp: {'mean': -0.0052, 'lo': -0.0156, 'hi': 0.0, 'n': 192}
+  T4 jpp_answer - jpp_raw: {'mean': -0.0208, 'lo': -0.0521, 'hi': 0.0104, 'n': 192}
+  T5 dm_full - jpp_matched: {'mean': 0.4219, 'lo': 0.3542, 'hi': 0.4896, 'n': 192}
+
+qwen: test, 930 eligible items
+  ar_full        success 0.1699 echo 0.129 start_swap 0.0237 unchanged 0.5204 relookup 0.0 other 0.157 dose 0.2912 colour_mass 0.9736 n 930
+  ar_jpart       success 0.0355 echo 0.0366 start_swap 0.0151 unchanged 0.7505 relookup 0.0 other 0.1624 dose 0.2912 colour_mass 0.9985 n 930
+  ar_rem         success 0.1667 echo 0.0645 start_swap 0.0226 unchanged 0.5774 relookup 0.0 other 0.1688 dose 0.2912 colour_mass 0.9852 n 930
+  dm_full        success 0.3602 echo 0.0462 start_swap 0.0559 unchanged 0.3344 relookup 0.0 other 0.2032 dose 0.044 colour_mass 0.9986 n 930
+  dm_jpart       success 0.0237 echo 0.0194 start_swap 0.0065 unchanged 0.8495 relookup 0.0 other 0.1011 dose 0.0439 colour_mass 0.9993 n 930
+  dm_jpart_own   success 0.0151 echo 0.0086 start_swap 0.0043 unchanged 0.9151 relookup 0.0 other 0.057 dose 0.0189 colour_mass 0.9993 n 930
+  dm_jpart_x2    success 0.0301 echo 0.0366 start_swap 0.0161 unchanged 0.7624 relookup 0.0 other 0.1548 dose 0.0875 colour_mass 0.9988 n 930
+  dm_jpart_x4    success 0.0505 echo 0.0817 start_swap 0.0215 unchanged 0.5172 relookup 0.0 other 0.329 dose 0.1703 colour_mass 0.9895 n 930
+  dm_rem         success 0.3591 echo 0.0462 start_swap 0.0527 unchanged 0.3409 relookup 0.0 other 0.2011 dose 0.044 colour_mass 0.9985 n 930
+  dm_rem_clamp   success 0.357 echo 0.043 start_swap 0.0527 unchanged 0.3473 relookup 0.0 other 0.2 dose 0.0441 colour_mass 0.9985 n 930
+  dm_rem_own     success 0.3645 echo 0.0452 start_swap 0.0548 unchanged 0.3323 relookup 0.0 other 0.2032 dose 0.0451 colour_mass 0.9985 n 930
+  jpp_answer     success 0.0172 echo 0.0 start_swap 0.0 unchanged 0.843 relookup 0.0183 other 0.1215 dose 0.0553 colour_mass 0.9986 n 930
+  jpp_answer_ctl success 0.9677 echo 0.0 start_swap 0.0 unchanged 0.0161 relookup 0.0022 other 0.014 dose 0.0295 colour_mass 0.9993 n 930
+  jpp_matched    success 0.0075 echo 0.0032 start_swap 0.0043 unchanged 0.9301 relookup 0.0 other 0.0548 dose 0.0438 colour_mass 0.9993 n 930
+  jpp_matched_x2 success 0.0075 echo 0.0172 start_swap 0.0054 unchanged 0.871 relookup 0.0 other 0.0989 dose 0.0874 colour_mass 0.9991 n 930
+  jpp_matched_x4 success 0.0108 echo 0.0699 start_swap 0.0065 unchanged 0.7043 relookup 0.0 other 0.2086 dose 0.1727 colour_mass 0.9971 n 930
+  jpp_raw        success 0.0226 echo 0.0226 start_swap 0.0118 unchanged 0.8301 relookup 0.0 other 0.1129 dose 0.0557 colour_mass 0.9979 n 930
+  null_answer_ctl success 0.0011 echo 0.0 start_swap 0.0 unchanged 0.9763 relookup 0.0022 other 0.0204 dose 0.0295 colour_mass 0.9992 n 930
+  null_ar        success 0.0043 echo 0.0129 start_swap 0.0086 unchanged 0.8699 relookup 0.0 other 0.1043 dose 0.2912 colour_mass 0.9991 n 930
+  null_dm        success 0.0032 echo 0.0086 start_swap 0.0054 unchanged 0.9301 relookup 0.0 other 0.0527 dose 0.0437 colour_mass 0.9992 n 930
+  null_dm_x2     success 0.0097 echo 0.0151 start_swap 0.0118 unchanged 0.8602 relookup 0.0 other 0.1032 dose 0.0868 colour_mass 0.9989 n 930
+  null_dm_x4     success 0.028 echo 0.0194 start_swap 0.0183 unchanged 0.5516 relookup 0.0 other 0.3828 dose 0.1677 colour_mass 0.9911 n 930
+  null_jpp       success 0.0065 echo 0.0097 start_swap 0.0065 unchanged 0.9172 relookup 0.0 other 0.0602 dose 0.0555 colour_mass 0.9992 n 930
+  other_item     success 0.0226 echo 0.0624 start_swap 0.0312 unchanged 0.6194 relookup 0.0 other 0.2645 dose 0.0428 colour_mass 0.9988 n 930
+  T1 dm_jpart - dm_rem: {'mean': -0.3355, 'lo': -0.3667, 'hi': -0.3032, 'n': 930}
+  T2 jpp_raw - null_jpp: {'mean': 0.0161, 'lo': 0.0054, 'hi': 0.0269, 'n': 930, 'p': 0.0017, 'p_holm': 0.0039}
+  T2 dm_full - null_dm: {'mean': 0.357, 'lo': 0.3258, 'hi': 0.3882, 'n': 930, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 jpp_matched - null_dm: {'mean': 0.0043, 'lo': -0.0011, 'hi': 0.0108, 'n': 930, 'p': 0.10309, 'p_holm': 0.10309}
+  T2 dm_jpart - null_dm: {'mean': 0.0204, 'lo': 0.0108, 'hi': 0.0312, 'n': 930, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 dm_rem - null_dm: {'mean': 0.3559, 'lo': 0.3247, 'hi': 0.3871, 'n': 930, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 dm_jpart_own - null_dm: {'mean': 0.0118, 'lo': 0.0043, 'hi': 0.0204, 'n': 930, 'p': 0.0013, 'p_holm': 0.0039}
+  T2 dm_rem_own - null_dm: {'mean': 0.3613, 'lo': 0.3301, 'hi': 0.3925, 'n': 930, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 dm_rem_clamp - null_dm: {'mean': 0.3538, 'lo': 0.3226, 'hi': 0.3849, 'n': 930, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 ar_full - null_ar: {'mean': 0.1656, 'lo': 0.1409, 'hi': 0.1903, 'n': 930, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 ar_jpart - null_ar: {'mean': 0.0312, 'lo': 0.0194, 'hi': 0.0441, 'n': 930, 'p': 0.0001, 'p_holm': 0.0011}
+  T2 ar_rem - null_ar: {'mean': 0.1624, 'lo': 0.1387, 'hi': 0.1871, 'n': 930, 'p': 0.0001, 'p_holm': 0.0011}
+  T3 dm_rem - dm_rem_clamp: {'mean': 0.0022, 'lo': -0.0032, 'hi': 0.0086, 'n': 930}
+  T4 jpp_answer - jpp_raw: {'mean': -0.0054, 'lo': -0.0183, 'hi': 0.0075, 'n': 930}
+  T5 dm_full - jpp_matched: {'mean': 0.3527, 'lo': 0.3215, 'hi': 0.3839, 'n': 930}
+  secondary dm_jpart_x2 - null_dm_x2: {'mean': 0.0204, 'lo': 0.0097, 'hi': 0.0323, 'n': 930}
+  secondary jpp_matched_x2 - null_dm_x2: {'mean': -0.0022, 'lo': -0.0108, 'hi': 0.0054, 'n': 930}
+  secondary dm_jpart_x4 - null_dm_x4: {'mean': 0.0226, 'lo': 0.0054, 'hi': 0.0398, 'n': 930}
+  secondary jpp_matched_x4 - null_dm_x4: {'mean': -0.0172, 'lo': -0.0301, 'hi': -0.0065, 'n': 930}
+  secondary jpp_answer_ctl - null_answer_ctl: {'mean': 0.9667, 'lo': 0.9538, 'hi': 0.9785, 'n': 930}
+
+qwen: test, every position edited (secondary), 921 eligible items
+  jpp_raw_all  success 0.0369 echo 0.0684 unchanged 0.6341 dose 0.0598 n 921
+  dm_full_all  success 0.1661 echo 0.0326 unchanged 0.5212 dose 0.0426 n 921
+  null_dm_all  success 0.0043 echo 0.0076 unchanged 0.9316 dose 0.0425 n 921
+  jpp_raw_all - null_dm_all: {'mean': 0.0326, 'lo': 0.0206, 'hi': 0.0456, 'n': 921}
+  dm_full_all - null_dm_all: {'mean': 0.1618, 'lo': 0.1379, 'hi': 0.1857, 'n': 921}
+
+qwen: test_patch window start: 710 of 930 targets (clean gives gold and the counterfactual gives T(s1'))
+  patch_dm_jpart|b24_36    success 0.003 unchanged 0.944 echo 0.013 other 0.038 dose 0.0060 | specificity -0.005 [-0.011, +0.001]
+  patch_dm_rem|b24_36      success 0.094 unchanged 0.728 echo 0.082 other 0.086 dose 0.0108 | specificity +0.049 [+0.025, +0.073]
+  patch_dm|b24_36          success 0.104 unchanged 0.718 echo 0.087 other 0.080 dose 0.0119 | specificity +0.056 [+0.030, +0.082]
+  patch_full|b24_36        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0061 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b24_36         success 0.001 unchanged 0.976 echo 0.006 other 0.015 dose 0.0032 | specificity -0.002 [-0.006, +0.002]
+  patch_random|b24_36      success 0.000 unchanged 0.987 echo 0.000 other 0.011 dose 0.0046 | specificity -0.001 [-0.002, +0.000]
+  patch_dm_jpart|b42_54    success 0.021 unchanged 0.900 echo 0.020 other 0.053 dose 0.0113 | specificity +0.009 [-0.004, +0.021]
+  patch_dm_rem|b42_54      success 0.607 unchanged 0.089 echo 0.135 other 0.096 dose 0.0159 | specificity +0.503 [+0.455, +0.550]
+  patch_dm|b42_54          success 0.604 unchanged 0.094 echo 0.137 other 0.094 dose 0.0193 | specificity +0.501 [+0.454, +0.547]
+  patch_full|b42_54        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0114 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b42_54         success 0.004 unchanged 0.966 echo 0.006 other 0.022 dose 0.0069 | specificity +0.001 [-0.005, +0.007]
+  patch_random|b42_54      success 0.001 unchanged 0.970 echo 0.006 other 0.021 dose 0.0090 | specificity -0.002 [-0.006, +0.002]
+  patch_full|b48_60        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0157 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b48_60         success 0.675 unchanged 0.223 echo 0.032 other 0.046 dose 0.0133 | specificity +0.646 [+0.609, +0.684]
+  patch_random|b48_60      success 0.001 unchanged 0.983 echo 0.003 other 0.013 dose 0.0110 | specificity +0.000 [-0.003, +0.004]
+qwen: test_patch window after: 710 of 930 targets (clean gives gold and the counterfactual gives T(s1'))
+  patch_dm_jpart|b24_36    success 0.001 unchanged 0.955 echo 0.011 other 0.030 dose 0.0051 | specificity -0.006 [-0.011, -0.001]
+  patch_dm_rem|b24_36      success 0.073 unchanged 0.772 echo 0.058 other 0.087 dose 0.0102 | specificity +0.039 [+0.018, +0.061]
+  patch_dm|b24_36          success 0.079 unchanged 0.751 echo 0.066 other 0.091 dose 0.0114 | specificity +0.039 [+0.017, +0.063]
+  patch_full|b24_36        success 0.451 unchanged 0.237 echo 0.104 other 0.156 dose 0.0217 | specificity +0.372 [+0.329, +0.415]
+  patch_jpp|b24_36         success 0.000 unchanged 0.986 echo 0.001 other 0.011 dose 0.0026 | specificity -0.001 [-0.004, +0.000]
+  patch_random|b24_36      success 0.000 unchanged 0.992 echo 0.000 other 0.007 dose 0.0041 | specificity -0.001 [-0.002, +0.000]
+  patch_dm_jpart|b42_54    success 0.020 unchanged 0.906 echo 0.017 other 0.052 dose 0.0106 | specificity +0.009 [-0.003, +0.020]
+  patch_dm_rem|b42_54      success 0.596 unchanged 0.093 echo 0.130 other 0.108 dose 0.0159 | specificity +0.494 [+0.447, +0.541]
+  patch_dm|b42_54          success 0.594 unchanged 0.089 echo 0.128 other 0.111 dose 0.0192 | specificity +0.491 [+0.444, +0.538]
+  patch_full|b42_54        success 0.989 unchanged 0.000 echo 0.000 other 0.004 dose 0.0252 | specificity +0.985 [+0.974, +0.995]
+  patch_jpp|b42_54         success 0.004 unchanged 0.970 echo 0.006 other 0.018 dose 0.0062 | specificity +0.001 [-0.005, +0.007]
+  patch_random|b42_54      success 0.001 unchanged 0.970 echo 0.004 other 0.022 dose 0.0086 | specificity -0.001 [-0.005, +0.003]
+  patch_full|b48_60        success 0.997 unchanged 0.000 echo 0.001 other 0.000 dose 0.0253 | specificity +0.996 [+0.989, +1.000]
+  patch_jpp|b48_60         success 0.673 unchanged 0.225 echo 0.034 other 0.045 dose 0.0127 | specificity +0.645 [+0.607, +0.683]
+  patch_random|b48_60      success 0.001 unchanged 0.985 echo 0.003 other 0.011 dose 0.0105 | specificity +0.000 [-0.003, +0.004]
+  P1 patch_jpp - patch_random @ b42_54: {'mean': 0.0028, 'lo': 0.0, 'hi': 0.007, 'n': 710, 'p': 0.13439, 'p_holm': 0.13439}
+  P2 patch_dm - patch_jpp @ b42_54: {'mean': 0.5901, 'lo': 0.5549, 'hi': 0.6268, 'n': 710, 'p': 0.0001, 'p_holm': 0.0003}
+  P3 patch_dm_rem - patch_dm_jpart @ b42_54: {'mean': 0.5761, 'lo': 0.5394, 'hi': 0.6127, 'n': 710, 'p': 0.0001, 'p_holm': 0.0003}
+
+gemma: factual positive control, 0 of 76 usable prompts answer correctly when clean
+band     alpha |  inter answer   null |   gain | kept(i) dose(i) dose(n)
+best intermediate swap: {'gain': None, 'K1_stop': True, 'reason': 'no prompt is answered correctly when clean'}
+
+gemma: positive-control follow-up, 0 prompts; success rate (dose)
+band     alpha |                inter           inter_orth         inter_orth_m       inter_clampans
+
+gemma: dev grid, 230 of 230 targets give gold in their clean pass
+alpha-0 arm: 230 of 230 unchanged
+family band     alpha |   succ   null   gain |   echo start2   unch  other |   dose   mass
+dm     b22_34       1 |  0.109  0.126 -0.017 |  0.130  0.065  0.083  0.613 | 0.3678  0.146
+dm     b22_34       2 |  0.096  0.139 -0.043 |  0.113  0.057  0.104  0.630 | 0.7337  0.000
+dm     b22_34       4 |  0.122  0.126 -0.004 |  0.096  0.083  0.104  0.596 | 1.3198  0.000
+dm     b22_34       8 |  0.113  0.100 +0.013 |  0.152  0.070  0.091  0.574 | 2.1390  0.000
+dm     b22_46       1 |  0.109  0.109 +0.000 |  0.170  0.048  0.083  0.591 | 0.2273  0.123
+dm     b22_46       2 |  0.070  0.087 -0.017 |  0.139  0.078  0.126  0.587 | 0.4538  0.003
+dm     b22_46       4 |  0.057  0.087 -0.030 |  0.143  0.083  0.087  0.630 | 0.8118  0.011
+dm     b22_46       8 |  0.078  0.117 -0.039 |  0.152  0.074  0.061  0.635 | 1.2908  0.018
+dm     b28_40       1 |  0.187  0.135 +0.052 |  0.226  0.013  0.157  0.417 | 0.1554  0.763
+dm     b28_40       2 |  0.100  0.113 -0.013 |  0.178  0.017  0.087  0.617 | 0.3295  0.273
+dm     b28_40       4 |  0.096  0.096 +0.000 |  0.117  0.074  0.100  0.613 | 0.6622  0.002
+dm     b28_40       8 |  0.065  0.096 -0.030 |  0.117  0.109  0.122  0.587 | 1.1366  0.001
+dm     b34_46       1 |  0.243  0.122 +0.122 |  0.183  0.017  0.235  0.322 | 0.1090  0.896
+dm     b34_46       2 |  0.139  0.091 +0.048 |  0.130  0.017  0.083  0.630 | 0.2101  0.404
+dm     b34_46       4 |  0.083  0.100 -0.017 |  0.091  0.061  0.091  0.674 | 0.3922  0.055
+dm     b34_46       8 |  0.070  0.096 -0.026 |  0.122  0.078  0.078  0.652 | 0.6790  0.036
+dm     b40_52       1 |  0.422  0.148 +0.274 |  0.074  0.000  0.391  0.113 | 0.0709  1.000
+dm     b40_52       2 |  0.226  0.122 +0.104 |  0.143  0.022  0.278  0.330 | 0.1287  0.769
+dm     b40_52       4 |  0.139  0.126 +0.013 |  0.091  0.091  0.104  0.574 | 0.2226  0.373
+dm     b40_52       8 |  0.130  0.096 +0.035 |  0.083  0.104  0.074  0.609 | 0.3877  0.110
+jpp    b22_34       1 |  0.000  0.000 +0.000 |  0.000  0.000  0.996  0.004 | 0.0012  1.000
+jpp    b22_34       2 |  0.000  0.000 +0.000 |  0.009  0.000  0.970  0.022 | 0.0024  1.000
+jpp    b22_34       4 |  0.000  0.000 +0.000 |  0.000  0.000  0.978  0.022 | 0.0048  1.000
+jpp    b22_34       8 |  0.004  0.000 +0.004 |  0.009  0.000  0.935  0.052 | 0.0097  0.947
+jpp    b22_46       1 |  0.000  0.000 +0.000 |  0.004  0.000  0.991  0.004 | 0.0006  1.000
+jpp    b22_46       2 |  0.000  0.000 +0.000 |  0.004  0.000  0.983  0.013 | 0.0013  0.996
+jpp    b22_46       4 |  0.000  0.000 +0.000 |  0.000  0.000  0.978  0.022 | 0.0026  0.927
+jpp    b22_46       8 |  0.004  0.000 +0.004 |  0.013  0.009  0.848  0.126 | 0.0052  0.558
+jpp    b28_40       1 |  0.000  0.000 +0.000 |  0.000  0.000  0.996  0.004 | 0.0002  1.000
+jpp    b28_40       2 |  0.000  0.000 +0.000 |  0.000  0.000  0.996  0.004 | 0.0005  1.000
+jpp    b28_40       4 |  0.000  0.000 +0.000 |  0.000  0.000  0.996  0.004 | 0.0009  0.998
+jpp    b28_40       8 |  0.000  0.000 +0.000 |  0.004  0.000  0.974  0.022 | 0.0019  0.889
+jpp    b34_46       1 |  0.000  0.000 +0.000 |  0.009  0.000  0.987  0.004 | 0.0001  1.000
+jpp    b34_46       2 |  0.000  0.000 +0.000 |  0.009  0.000  0.987  0.004 | 0.0002  0.999
+jpp    b34_46       4 |  0.000  0.000 +0.000 |  0.009  0.000  0.987  0.004 | 0.0004  0.934
+jpp    b34_46       8 |  0.000  0.000 +0.000 |  0.004  0.000  0.961  0.035 | 0.0007  0.701
+jpp    b40_52       1 |  0.000  0.000 +0.000 |  0.000  0.000  1.000  0.000 | 0.0001  1.000
+jpp    b40_52       2 |  0.000  0.000 +0.000 |  0.000  0.000  1.000  0.000 | 0.0002  0.991
+jpp    b40_52       4 |  0.000  0.000 +0.000 |  0.000  0.000  0.996  0.004 | 0.0003  0.896
+jpp    b40_52       8 |  0.004  0.000 +0.004 |  0.013  0.004  0.878  0.100 | 0.0006  0.577
+J++ answer swaps (gold -> a'): success = a' said, relookup = T(a')
+  jpp_answer|b22_34|1    success 0.000 relookup 0.000 unchanged 0.987 dose 0.0012
+  jpp_answer|b22_34|2    success 0.000 relookup 0.000 unchanged 0.974 dose 0.0024
+  jpp_answer|b22_46|1    success 0.000 relookup 0.000 unchanged 0.996 dose 0.0007
+  jpp_answer|b22_46|2    success 0.000 relookup 0.000 unchanged 0.987 dose 0.0013
+  jpp_answer|b28_40|1    success 0.000 relookup 0.000 unchanged 1.000 dose 0.0002
+  jpp_answer|b28_40|2    success 0.000 relookup 0.000 unchanged 0.996 dose 0.0005
+  jpp_answer|b34_46|1    success 0.000 relookup 0.000 unchanged 1.000 dose 0.0001
+  jpp_answer|b34_46|2    success 0.000 relookup 0.000 unchanged 0.996 dose 0.0002
+  jpp_answer|b40_52|1    success 0.000 relookup 0.000 unchanged 1.000 dose 0.0001
+  jpp_answer|b40_52|2    success 0.004 relookup 0.000 unchanged 0.983 dose 0.0003
+selection: {"jpp": {"band": "b22_34", "alpha": 1.0, "success": 0.0, "null": 0.0, "gain": 0.0, "echo": 0.0, "dose": 0.0012}, "dm": {"band": "b40_52", "alpha": 1.0, "success": 0.4217, "null": 0.1478, "gain": 0.2739, "echo": 0.0739, "dose": 0.0709}}  K2 stop: False
+
+gemma: J++ answer swaps (gold -> a') vs a random direction at their size, dev
+
+gemma: no patch trials
+
+gemma: preview, 230 eligible items
+  dm_full        success 0.4217 echo 0.0739 start_swap 0.0 unchanged 0.3913 relookup 0.0 other 0.113 dose 0.0709 colour_mass 0.9997 n 230
+  dm_jpart       success 0.0739 echo 0.0739 start_swap 0.1043 unchanged 0.0739 relookup 0.0 other 0.6739 dose 0.0588 colour_mass 0.0 n 230
+  dm_jpart_own   success 0.0 echo 0.0043 start_swap 0.0 unchanged 0.9696 relookup 0.0 other 0.0261 dose 0.0004 colour_mass 0.7424 n 230
+  dm_rem         success 0.4043 echo 0.0913 start_swap 0.0087 unchanged 0.3696 relookup 0.0 other 0.1261 dose 0.0699 colour_mass 0.9906 n 230
+  dm_rem_clamp   success 0.413 echo 0.0826 start_swap 0.0043 unchanged 0.3696 relookup 0.0 other 0.1304 dose 0.0697 colour_mass 0.9882 n 230
+  dm_rem_own     success 0.3913 echo 0.1043 start_swap 0.0087 unchanged 0.3652 relookup 0.0 other 0.1304 dose 0.0697 colour_mass 0.9889 n 230
+  jpp_answer     success 0.0 echo 0.0 start_swap 0.0 unchanged 0.987 relookup 0.0 other 0.013 dose 0.0012 colour_mass 1.0 n 230
+  jpp_at_dm      success 0.0 echo 0.0 start_swap 0.0 unchanged 1.0 relookup 0.0 other 0.0 dose 0.0001 colour_mass 1.0 n 230
+  jpp_matched    success 0.0913 echo 0.113 start_swap 0.0913 unchanged 0.0913 relookup 0.0 other 0.613 dose 0.0589 colour_mass 0.0 n 230
+  jpp_raw        success 0.0 echo 0.0 start_swap 0.0 unchanged 0.9957 relookup 0.0 other 0.0043 dose 0.0012 colour_mass 1.0 n 230
+  null_dm        success 0.1 echo 0.0696 start_swap 0.113 unchanged 0.1217 relookup 0.0 other 0.5957 dose 0.0592 colour_mass 0.0 n 230
+  null_jpp       success 0.0 echo 0.0087 start_swap 0.0 unchanged 0.9739 relookup 0.0 other 0.0174 dose 0.0012 colour_mass 1.0 n 230
+  other_item     success 0.0 echo 0.0174 start_swap 0.0043 unchanged 0.8087 relookup 0.0 other 0.1696 dose 0.0697 colour_mass 0.9998 n 230
+  T1 dm_jpart - dm_rem: {'mean': -0.3304, 'lo': -0.4, 'hi': -0.2565, 'n': 230}
+  T2 jpp_raw - null_jpp: {'mean': 0.0, 'lo': 0.0, 'hi': 0.0, 'n': 230, 'p': 1.0, 'p_holm': 1.0}
+  T2 dm_full - null_dm: {'mean': 0.3217, 'lo': 0.2435, 'hi': 0.3957, 'n': 230, 'p': 0.0001, 'p_holm': 0.0008}
+  T2 jpp_matched - null_dm: {'mean': -0.0087, 'lo': -0.0652, 'hi': 0.0435, 'n': 230, 'p': 0.65083, 'p_holm': 1.0}
+  T2 dm_jpart - null_dm: {'mean': -0.0261, 'lo': -0.0739, 'hi': 0.0217, 'n': 230, 'p': 0.88451, 'p_holm': 1.0}
+  T2 dm_rem - null_dm: {'mean': 0.3043, 'lo': 0.2261, 'hi': 0.3783, 'n': 230, 'p': 0.0001, 'p_holm': 0.0008}
+  T2 dm_jpart_own - null_dm: {'mean': -0.1, 'lo': -0.1435, 'hi': -0.0609, 'n': 230, 'p': 1.0, 'p_holm': 1.0}
+  T2 dm_rem_own - null_dm: {'mean': 0.2913, 'lo': 0.2174, 'hi': 0.3652, 'n': 230, 'p': 0.0001, 'p_holm': 0.0008}
+  T2 dm_rem_clamp - null_dm: {'mean': 0.313, 'lo': 0.2348, 'hi': 0.387, 'n': 230, 'p': 0.0001, 'p_holm': 0.0008}
+  T3 dm_rem - dm_rem_clamp: {'mean': -0.0087, 'lo': -0.0348, 'hi': 0.0174, 'n': 230}
+  T4 jpp_answer - jpp_raw: {'mean': 0.0, 'lo': 0.0, 'hi': 0.0, 'n': 230}
+  T5 dm_full - jpp_matched: {'mean': 0.3304, 'lo': 0.2609, 'hi': 0.4, 'n': 230}
+
+gemma: no test trials
+
+gemma: no test_all trials
+
+gemma: no test_patch trials
+
+gemma_occupied: factual positive control, 65 of 76 usable prompts answer correctly when clean
+band     alpha |  inter answer   null |   gain | kept(i) dose(i) dose(n)
+b22_34       1 |  0.000  0.000  0.000 | +0.000 |   0.985  0.0037  0.0037
+b22_34       2 |  0.077  0.015  0.000 | +0.077 |   0.815  0.0073  0.0073
+b22_34       4 |  0.077  0.015  0.000 | +0.077 |   0.477  0.0147  0.0147
+b22_46       1 |  0.000  0.000  0.015 | -0.015 |   0.000  0.0058  0.0060
+b22_46       2 |  0.000  0.000  0.000 | +0.000 |   0.000  0.0108  0.0109
+b22_46       4 |  0.000  0.000  0.000 | +0.000 |   0.000  0.0213  0.0204
+b28_40       1 |  0.062  0.000  0.000 | +0.062 |   0.677  0.0051  0.0051
+b28_40       2 |  0.046  0.015  0.000 | +0.046 |   0.062  0.0100  0.0100
+b28_40       4 |  0.000  0.000  0.000 | +0.000 |   0.000  0.0199  0.0198
+b34_46       1 |  0.000  0.000  0.000 | +0.000 |   0.000  0.0075  0.0079
+b34_46       2 |  0.000  0.000  0.000 | +0.000 |   0.000  0.0137  0.0139
+b34_46       4 |  0.000  0.000  0.015 | -0.015 |   0.000  0.0270  0.0256
+b40_52       1 |  0.000  0.000  0.015 | -0.015 |   0.000  0.0103  0.0121
+b40_52       2 |  0.000  0.000  0.000 | +0.000 |   0.000  0.0163  0.0173
+b40_52       4 |  0.000  0.000  0.000 | +0.000 |   0.000  0.0299  0.0284
+best intermediate swap: {'band': 'b22_34', 'alpha': 4.0, 'gain': 0.0769, 'inter': 0.0769, 'answer': 0.0154, 'null': 0.0, 'n': 65, 'K1_stop': True}
+
+gemma_occupied: no posctl_orth trials
+
+gemma_occupied: dev grid, 230 of 230 targets give gold in their clean pass
+alpha-0 arm: 230 of 230 unchanged
+family band     alpha |   succ   null   gain |   echo start2   unch  other |   dose   mass
+dm     b22_34       1 |  0.109  0.091 +0.017 |  0.130  0.065  0.083  0.613 | 0.3678  0.146
+dm     b22_34       2 |  0.096  0.135 -0.039 |  0.113  0.057  0.104  0.630 | 0.7337  0.000
+dm     b22_34       4 |  0.122  0.087 +0.035 |  0.096  0.083  0.104  0.596 | 1.3198  0.000
+dm     b22_34       8 |  0.113  0.087 +0.026 |  0.152  0.070  0.091  0.574 | 2.1390  0.000
+dm     b22_46       1 |  0.109  0.096 +0.013 |  0.170  0.048  0.083  0.591 | 0.2273  0.123
+dm     b22_46       2 |  0.070  0.096 -0.026 |  0.139  0.078  0.126  0.587 | 0.4538  0.003
+dm     b22_46       4 |  0.057  0.096 -0.039 |  0.143  0.083  0.087  0.630 | 0.8118  0.011
+dm     b22_46       8 |  0.078  0.126 -0.048 |  0.152  0.074  0.061  0.635 | 1.2908  0.018
+dm     b28_40       1 |  0.187  0.070 +0.117 |  0.226  0.013  0.157  0.417 | 0.1554  0.763
+dm     b28_40       2 |  0.100  0.104 -0.004 |  0.178  0.017  0.087  0.617 | 0.3295  0.273
+dm     b28_40       4 |  0.096  0.083 +0.013 |  0.117  0.074  0.100  0.613 | 0.6622  0.002
+dm     b28_40       8 |  0.065  0.087 -0.022 |  0.117  0.109  0.122  0.587 | 1.1366  0.001
+dm     b34_46       1 |  0.243  0.104 +0.139 |  0.183  0.017  0.235  0.322 | 0.1090  0.896
+dm     b34_46       2 |  0.139  0.104 +0.035 |  0.130  0.017  0.083  0.630 | 0.2101  0.404
+dm     b34_46       4 |  0.083  0.104 -0.022 |  0.091  0.061  0.091  0.674 | 0.3922  0.055
+dm     b34_46       8 |  0.070  0.122 -0.052 |  0.122  0.078  0.078  0.652 | 0.6790  0.036
+dm     b40_52       1 |  0.422  0.083 +0.339 |  0.074  0.000  0.391  0.113 | 0.0709  1.000
+dm     b40_52       2 |  0.226  0.074 +0.152 |  0.143  0.022  0.278  0.330 | 0.1287  0.769
+dm     b40_52       4 |  0.139  0.096 +0.043 |  0.091  0.091  0.104  0.574 | 0.2226  0.373
+dm     b40_52       8 |  0.130  0.122 +0.009 |  0.083  0.104  0.074  0.609 | 0.3877  0.110
+jpp    b22_34       1 |  0.000  0.000 +0.000 |  0.004  0.000  0.983  0.013 | 0.0030  1.000
+jpp    b22_34       2 |  0.000  0.000 +0.000 |  0.004  0.000  0.965  0.030 | 0.0060  0.973
+jpp    b22_34       4 |  0.009  0.000 +0.009 |  0.070  0.000  0.826  0.096 | 0.0121  0.619
+jpp    b22_34       8 |  0.026  0.000 +0.026 |  0.209  0.004  0.300  0.461 | 0.0243  0.156
+jpp    b22_46       1 |  0.039  0.000 +0.039 |  0.052  0.061  0.365  0.483 | 0.0047  0.041
+jpp    b22_46       2 |  0.126  0.000 +0.126 |  0.070  0.078  0.183  0.543 | 0.0085  0.003
+jpp    b22_46       4 |  0.152  0.004 +0.148 |  0.078  0.083  0.122  0.565 | 0.0164  0.000
+jpp    b22_46       8 |  0.139  0.022 +0.117 |  0.109  0.100  0.083  0.570 | 0.0333  0.000
+jpp    b28_40       1 |  0.000  0.000 +0.000 |  0.009  0.000  0.961  0.030 | 0.0043  0.780
+jpp    b28_40       2 |  0.026  0.000 +0.026 |  0.043  0.004  0.730  0.196 | 0.0084  0.327
+jpp    b28_40       4 |  0.057  0.000 +0.057 |  0.126  0.061  0.278  0.478 | 0.0165  0.099
+jpp    b28_40       8 |  0.035  0.000 +0.035 |  0.217  0.065  0.096  0.587 | 0.0334  0.025
+jpp    b34_46       1 |  0.057  0.000 +0.057 |  0.061  0.048  0.326  0.509 | 0.0062  0.040
+jpp    b34_46       2 |  0.117  0.000 +0.117 |  0.083  0.100  0.178  0.522 | 0.0108  0.003
+jpp    b34_46       4 |  0.139  0.000 +0.139 |  0.100  0.083  0.100  0.578 | 0.0205  0.000
+jpp    b34_46       8 |  0.139  0.039 +0.100 |  0.117  0.096  0.087  0.561 | 0.0417  0.000
+jpp    b40_52       1 |  0.109  0.000 +0.109 |  0.135  0.091  0.157  0.509 | 0.0084  0.000
+jpp    b40_52       2 |  0.070  0.000 +0.070 |  0.109  0.096  0.113  0.613 | 0.0124  0.000
+jpp    b40_52       4 |  0.100  0.004 +0.096 |  0.104  0.091  0.083  0.622 | 0.0214  0.000
+jpp    b40_52       8 |  0.109  0.061 +0.048 |  0.113  0.078  0.070  0.630 | 0.0412  0.000
+J++ answer swaps (gold -> a'): success = a' said, relookup = T(a')
+  jpp_answer|b22_34|1    success 0.000 relookup 0.000 unchanged 0.978 dose 0.0030
+  jpp_answer|b22_34|2    success 0.000 relookup 0.000 unchanged 0.957 dose 0.0059
+  jpp_answer|b22_46|1    success 0.117 relookup 0.057 unchanged 0.243 dose 0.0048
+  jpp_answer|b22_46|2    success 0.078 relookup 0.113 unchanged 0.117 dose 0.0086
+  jpp_answer|b28_40|1    success 0.009 relookup 0.000 unchanged 0.965 dose 0.0042
+  jpp_answer|b28_40|2    success 0.030 relookup 0.009 unchanged 0.800 dose 0.0082
+  jpp_answer|b34_46|1    success 0.104 relookup 0.052 unchanged 0.270 dose 0.0064
+  jpp_answer|b34_46|2    success 0.061 relookup 0.117 unchanged 0.117 dose 0.0110
+  jpp_answer|b40_52|1    success 0.165 relookup 0.074 unchanged 0.165 dose 0.0087
+  jpp_answer|b40_52|2    success 0.170 relookup 0.109 unchanged 0.096 dose 0.0128
+selection: {"jpp": {"band": "b34_46", "alpha": 4.0, "success": 0.1391, "null": 0.0, "gain": 0.1391, "echo": 0.1, "dose": 0.0205}, "dm": {"band": "b40_52", "alpha": 1.0, "success": 0.4217, "null": 0.0826, "gain": 0.3391, "echo": 0.0739, "dose": 0.0709}}  K2 stop: False
+
+gemma_occupied: J++ answer swaps (gold -> a') vs a random direction at their size, dev
+  b22_34   alpha   1: success 0.000 null 0.004 dose 0.0030
+  b22_34   alpha   2: success 0.000 null 0.004 dose 0.0059
+  b22_34   alpha   4: success 0.048 null 0.004 dose 0.0119
+  b22_34   alpha   8: success 0.139 null 0.000 dose 0.0239
+  b22_46   alpha   1: success 0.117 null 0.000 dose 0.0048
+  b22_46   alpha   2: success 0.078 null 0.000 dose 0.0086
+  b22_46   alpha   4: success 0.074 null 0.000 dose 0.0167
+  b22_46   alpha   8: success 0.109 null 0.061 dose 0.0341
+  b28_40   alpha   1: success 0.009 null 0.004 dose 0.0042
+  b28_40   alpha   2: success 0.030 null 0.004 dose 0.0082
+  b28_40   alpha   4: success 0.148 null 0.004 dose 0.0162
+  b28_40   alpha   8: success 0.157 null 0.013 dose 0.0327
+  b34_46   alpha   1: success 0.109 null 0.000 dose 0.0064
+  b34_46   alpha   2: success 0.070 null 0.000 dose 0.0110
+  b34_46   alpha   4: success 0.078 null 0.000 dose 0.0213
+  b34_46   alpha   8: success 0.122 null 0.078 dose 0.0434
+  b40_52   alpha   1: success 0.165 null 0.000 dose 0.0087
+  b40_52   alpha   2: success 0.161 null 0.000 dose 0.0128
+  b40_52   alpha   4: success 0.170 null 0.030 dose 0.0223
+  b40_52   alpha   8: success 0.161 null 0.052 dose 0.0430
+  b46_58   alpha   1: success 0.304 null 0.004 dose 0.0109
+  b46_58   alpha   2: success 0.478 null 0.009 dose 0.0147
+  b46_58   alpha   4: success 0.504 null 0.035 dose 0.0244
+  b46_58   alpha   8: success 0.565 null 0.087 dose 0.0462
+  b52_58   alpha   1: success 0.204 null 0.000 dose 0.0124
+  b52_58   alpha   2: success 0.326 null 0.000 dose 0.0190
+  b52_58   alpha   4: success 0.457 null 0.009 dose 0.0336
+  b52_58   alpha   8: success 0.513 null 0.030 dose 0.0647
+
+gemma_occupied: patch window start: 212 of 230 targets (clean gives gold and the counterfactual gives T(s1'))
+  patch_dm_jpart|b22_34    success 0.000 unchanged 0.981 echo 0.009 other 0.009 dose 0.0026 | specificity -0.005 [-0.012, +0.000]
+  patch_dm_rem|b22_34      success 0.000 unchanged 0.910 echo 0.033 other 0.057 dose 0.0133 | specificity -0.017 [-0.028, -0.005]
+  patch_dm|b22_34          success 0.000 unchanged 0.896 echo 0.033 other 0.071 dose 0.0148 | specificity -0.017 [-0.028, -0.005]
+  patch_full|b22_34        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0043 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b22_34         success 0.005 unchanged 0.906 echo 0.005 other 0.085 dose 0.0017 | specificity +0.002 [-0.007, +0.014]
+  patch_random|b22_34      success 0.000 unchanged 0.986 echo 0.009 other 0.005 dose 0.0029 | specificity -0.005 [-0.012, +0.000]
+  patch_dm_jpart|b22_46    success 0.052 unchanged 0.179 echo 0.066 other 0.618 dose 0.0077 | specificity -0.024 [-0.064, +0.019]
+  patch_dm_rem|b22_46      success 0.703 unchanged 0.108 echo 0.033 other 0.071 dose 0.0197 | specificity +0.644 [+0.564, +0.717]
+  patch_dm|b22_46          success 0.689 unchanged 0.075 echo 0.009 other 0.090 dose 0.0233 | specificity +0.616 [+0.533, +0.693]
+  patch_full|b22_46        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0026 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b22_46         success 0.123 unchanged 0.118 echo 0.090 other 0.566 dose 0.0069 | specificity +0.026 [-0.028, +0.083]
+  patch_random|b22_46      success 0.000 unchanged 0.995 echo 0.005 other 0.000 dose 0.0062 | specificity -0.002 [-0.007, +0.000]
+  patch_dm_jpart|b28_40    success 0.061 unchanged 0.797 echo 0.047 other 0.094 dose 0.0061 | specificity +0.038 [+0.002, +0.075]
+  patch_dm_rem|b28_40      success 0.660 unchanged 0.151 echo 0.024 other 0.061 dose 0.0250 | specificity +0.597 [+0.516, +0.674]
+  patch_dm|b28_40          success 0.651 unchanged 0.108 echo 0.019 other 0.066 dose 0.0291 | specificity +0.564 [+0.479, +0.646]
+  patch_full|b28_40        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0097 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b28_40         success 0.000 unchanged 0.976 echo 0.005 other 0.019 dose 0.0040 | specificity -0.002 [-0.007, +0.000]
+  patch_random|b28_40      success 0.000 unchanged 0.976 echo 0.014 other 0.009 dose 0.0056 | specificity -0.007 [-0.017, +0.000]
+  patch_dm_jpart|b34_46    success 0.071 unchanged 0.165 echo 0.090 other 0.585 dose 0.0118 | specificity -0.019 [-0.064, +0.028]
+  patch_dm_rem|b34_46      success 0.703 unchanged 0.132 echo 0.028 other 0.052 dose 0.0258 | specificity +0.646 [+0.568, +0.722]
+  patch_dm|b34_46          success 0.670 unchanged 0.094 echo 0.019 other 0.057 dose 0.0309 | specificity +0.580 [+0.495, +0.663]
+  patch_full|b34_46        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0119 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b34_46         success 0.127 unchanged 0.108 echo 0.094 other 0.590 dose 0.0105 | specificity +0.040 [-0.014, +0.097]
+  patch_random|b34_46      success 0.000 unchanged 0.986 echo 0.009 other 0.005 dose 0.0088 | specificity -0.005 [-0.012, +0.000]
+  patch_dm_jpart|b40_52    success 0.094 unchanged 0.132 echo 0.127 other 0.538 dose 0.0194 | specificity -0.024 [-0.075, +0.031]
+  patch_dm_rem|b40_52      success 0.410 unchanged 0.123 echo 0.108 other 0.283 dose 0.0338 | specificity +0.318 [+0.238, +0.401]
+  patch_dm|b40_52          success 0.693 unchanged 0.090 echo 0.028 other 0.075 dose 0.0339 | specificity +0.623 [+0.542, +0.701]
+  patch_full|b40_52        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0283 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b40_52         success 0.151 unchanged 0.075 echo 0.094 other 0.580 dose 0.0184 | specificity +0.054 [-0.002, +0.113]
+  patch_random|b40_52      success 0.000 unchanged 0.995 echo 0.005 other 0.000 dose 0.0135 | specificity -0.002 [-0.007, +0.000]
+  patch_full|b46_58        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0351 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b46_58         success 0.193 unchanged 0.137 echo 0.090 other 0.476 dose 0.0244 | specificity +0.097 [+0.031, +0.163]
+  patch_random|b46_58      success 0.000 unchanged 0.967 echo 0.000 other 0.033 dose 0.0219 | specificity +0.000 [+0.000, +0.000]
+gemma_occupied: patch window after: 212 of 230 targets (clean gives gold and the counterfactual gives T(s1'))
+  patch_dm_jpart|b22_34    success 0.000 unchanged 0.972 echo 0.019 other 0.009 dose 0.0024 | specificity -0.009 [-0.019, -0.002]
+  patch_dm_rem|b22_34      success 0.000 unchanged 0.906 echo 0.033 other 0.061 dose 0.0132 | specificity -0.017 [-0.028, -0.005]
+  patch_dm|b22_34          success 0.000 unchanged 0.901 echo 0.033 other 0.066 dose 0.0147 | specificity -0.017 [-0.028, -0.005]
+  patch_full|b22_34        success 0.995 unchanged 0.000 echo 0.000 other 0.000 dose 0.0206 | specificity +0.993 [+0.979, +1.000]
+  patch_jpp|b22_34         success 0.000 unchanged 0.986 echo 0.014 other 0.000 dose 0.0015 | specificity -0.007 [-0.017, +0.000]
+  patch_random|b22_34      success 0.000 unchanged 0.976 echo 0.009 other 0.014 dose 0.0028 | specificity -0.005 [-0.012, +0.000]
+  patch_dm_jpart|b22_46    success 0.057 unchanged 0.165 echo 0.061 other 0.627 dose 0.0076 | specificity -0.019 [-0.059, +0.024]
+  patch_dm_rem|b22_46      success 0.712 unchanged 0.099 echo 0.028 other 0.071 dose 0.0199 | specificity +0.653 [+0.576, +0.729]
+  patch_dm|b22_46          success 0.684 unchanged 0.075 echo 0.009 other 0.090 dose 0.0235 | specificity +0.609 [+0.526, +0.686]
+  patch_full|b22_46        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0175 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b22_46         success 0.104 unchanged 0.123 echo 0.080 other 0.613 dose 0.0065 | specificity +0.024 [-0.026, +0.075]
+  patch_random|b22_46      success 0.000 unchanged 0.995 echo 0.005 other 0.000 dose 0.0061 | specificity -0.002 [-0.007, +0.000]
+  patch_dm_jpart|b28_40    success 0.047 unchanged 0.830 echo 0.038 other 0.085 dose 0.0061 | specificity +0.028 [-0.002, +0.061]
+  patch_dm_rem|b28_40      success 0.660 unchanged 0.156 echo 0.024 other 0.061 dose 0.0254 | specificity +0.599 [+0.519, +0.674]
+  patch_dm|b28_40          success 0.641 unchanged 0.113 echo 0.019 other 0.066 dose 0.0296 | specificity +0.552 [+0.467, +0.634]
+  patch_full|b28_40        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0283 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b28_40         success 0.000 unchanged 0.976 echo 0.005 other 0.019 dose 0.0039 | specificity -0.002 [-0.007, +0.000]
+  patch_random|b28_40      success 0.000 unchanged 0.976 echo 0.014 other 0.009 dose 0.0055 | specificity -0.007 [-0.017, +0.000]
+  patch_dm_jpart|b34_46    success 0.071 unchanged 0.160 echo 0.061 other 0.637 dose 0.0118 | specificity +0.005 [-0.038, +0.050]
+  patch_dm_rem|b34_46      success 0.708 unchanged 0.127 echo 0.024 other 0.057 dose 0.0262 | specificity +0.653 [+0.576, +0.729]
+  patch_dm|b34_46          success 0.674 unchanged 0.090 echo 0.024 other 0.057 dose 0.0314 | specificity +0.585 [+0.500, +0.667]
+  patch_full|b34_46        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0233 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b34_46         success 0.099 unchanged 0.118 echo 0.080 other 0.604 dose 0.0105 | specificity +0.009 [-0.040, +0.061]
+  patch_random|b34_46      success 0.000 unchanged 0.986 echo 0.009 other 0.005 dose 0.0088 | specificity -0.005 [-0.012, +0.000]
+  patch_dm_jpart|b40_52    success 0.113 unchanged 0.132 echo 0.132 other 0.509 dose 0.0194 | specificity -0.009 [-0.064, +0.047]
+  patch_dm_rem|b40_52      success 0.410 unchanged 0.118 echo 0.118 other 0.283 dose 0.0340 | specificity +0.316 [+0.236, +0.396]
+  patch_dm|b40_52          success 0.693 unchanged 0.090 echo 0.028 other 0.075 dose 0.0342 | specificity +0.623 [+0.542, +0.701]
+  patch_full|b40_52        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0339 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b40_52         success 0.132 unchanged 0.085 echo 0.099 other 0.585 dose 0.0183 | specificity +0.033 [-0.021, +0.092]
+  patch_random|b40_52      success 0.000 unchanged 0.995 echo 0.005 other 0.000 dose 0.0134 | specificity -0.002 [-0.007, +0.000]
+  patch_full|b46_58        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0438 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b46_58         success 0.189 unchanged 0.132 echo 0.090 other 0.481 dose 0.0243 | specificity +0.090 [+0.026, +0.156]
+  patch_random|b46_58      success 0.000 unchanged 0.962 echo 0.000 other 0.038 dose 0.0217 | specificity +0.000 [+0.000, +0.000]
+  P1 patch_jpp - patch_random @ b40_52: {'mean': 0.1321, 'lo': 0.0896, 'hi': 0.1792, 'n': 212, 'p': 0.0001, 'p_holm': 0.0003}
+  P2 patch_dm - patch_jpp @ b40_52: {'mean': 0.5613, 'lo': 0.4858, 'hi': 0.6368, 'n': 212, 'p': 0.0001, 'p_holm': 0.0003}
+  P3 patch_dm_rem - patch_dm_jpart @ b40_52: {'mean': 0.2972, 'lo': 0.217, 'hi': 0.3726, 'n': 212, 'p': 0.0001, 'p_holm': 0.0003}
+
+gemma_occupied: preview, 230 eligible items
+  dm_full        success 0.4217 echo 0.0739 start_swap 0.0 unchanged 0.3913 relookup 0.0 other 0.113 dose 0.0709 colour_mass 0.9997 n 230
+  dm_jpart       success 0.1 echo 0.1261 start_swap 0.0652 unchanged 0.0826 relookup 0.0 other 0.6261 dose 0.0579 colour_mass 0.0 n 230
+  dm_jpart_own   success 0.1391 echo 0.113 start_swap 0.1 unchanged 0.1609 relookup 0.0 other 0.487 dose 0.0099 colour_mass 0.0005 n 230
+  dm_jpart_x2    success 0.0783 echo 0.1826 start_swap 0.1043 unchanged 0.0739 relookup 0.0 other 0.5609 dose 0.1152 colour_mass 0.0 n 230
+  dm_jpart_x4    success 0.1043 echo 0.1478 start_swap 0.0913 unchanged 0.087 relookup 0.0 other 0.5696 dose 0.2232 colour_mass 0.0 n 230
+  dm_rem         success 0.1739 echo 0.0957 start_swap 0.0739 unchanged 0.2261 relookup 0.0 other 0.4304 dose 0.0568 colour_mass 0.0425 n 230
+  dm_rem_clamp   success 0.1261 echo 0.1348 start_swap 0.1043 unchanged 0.1478 relookup 0.0 other 0.487 dose 0.0574 colour_mass 0.0001 n 230
+  dm_rem_own     success 0.1522 echo 0.1087 start_swap 0.0652 unchanged 0.2043 relookup 0.0 other 0.4696 dose 0.06 colour_mass 0.0303 n 230
+  jpp_answer     success 0.0739 echo 0.0 start_swap 0.0 unchanged 0.0826 relookup 0.113 other 0.7304 dose 0.0213 colour_mass 0.0001 n 230
+  jpp_matched    success 0.0913 echo 0.1174 start_swap 0.0913 unchanged 0.1 relookup 0.0 other 0.6 dose 0.0578 colour_mass 0.0 n 230
+  jpp_matched_x2 success 0.0739 echo 0.113 start_swap 0.0826 unchanged 0.1043 relookup 0.0 other 0.6261 dose 0.1147 colour_mass 0.0 n 230
+  jpp_matched_x4 success 0.1043 echo 0.1 start_swap 0.0826 unchanged 0.1043 relookup 0.0 other 0.6087 dose 0.2221 colour_mass 0.0 n 230
+  jpp_raw        success 0.1391 echo 0.1 start_swap 0.0826 unchanged 0.1 relookup 0.0 other 0.5783 dose 0.0205 colour_mass 0.0003 n 230
+  null_dm        success 0.0739 echo 0.0957 start_swap 0.0522 unchanged 0.2 relookup 0.0 other 0.5783 dose 0.0547 colour_mass 0.001 n 230
+  null_dm_x2     success 0.1 echo 0.1174 start_swap 0.1391 unchanged 0.1174 relookup 0.0 other 0.5261 dose 0.1109 colour_mass 0.0001 n 230
+  null_dm_x4     success 0.1 echo 0.0957 start_swap 0.0826 unchanged 0.0783 relookup 0.0 other 0.6435 dose 0.2198 colour_mass 0.0 n 230
+  null_jpp       success 0.0 echo 0.0087 start_swap 0.0 unchanged 0.9391 relookup 0.0 other 0.0522 dose 0.022 colour_mass 0.6433 n 230
+  other_item     success 0.0 echo 0.0174 start_swap 0.0043 unchanged 0.8087 relookup 0.0 other 0.1696 dose 0.0697 colour_mass 0.9998 n 230
+  T1 dm_jpart - dm_rem: {'mean': -0.0739, 'lo': -0.1304, 'hi': -0.0174, 'n': 230}
+  T2 jpp_raw - null_jpp: {'mean': 0.1391, 'lo': 0.0957, 'hi': 0.187, 'n': 230, 'p': 0.0001, 'p_holm': 0.0008}
+  T2 dm_full - null_dm: {'mean': 0.3478, 'lo': 0.2783, 'hi': 0.4174, 'n': 230, 'p': 0.0001, 'p_holm': 0.0008}
+  T2 jpp_matched - null_dm: {'mean': 0.0174, 'lo': -0.0304, 'hi': 0.0652, 'n': 230, 'p': 0.26617, 'p_holm': 0.34857}
+  T2 dm_jpart - null_dm: {'mean': 0.0261, 'lo': -0.0217, 'hi': 0.0783, 'n': 230, 'p': 0.17428, 'p_holm': 0.34857}
+  T2 dm_rem - null_dm: {'mean': 0.1, 'lo': 0.0478, 'hi': 0.1565, 'n': 230, 'p': 0.0002, 'p_holm': 0.0012}
+  T2 dm_jpart_own - null_dm: {'mean': 0.0652, 'lo': 0.0174, 'hi': 0.1132, 'n': 230, 'p': 0.0065, 'p_holm': 0.026}
+  T2 dm_rem_own - null_dm: {'mean': 0.0783, 'lo': 0.0217, 'hi': 0.1348, 'n': 230, 'p': 0.0047, 'p_holm': 0.0235}
+  T2 dm_rem_clamp - null_dm: {'mean': 0.0522, 'lo': -0.0043, 'hi': 0.1087, 'n': 230, 'p': 0.0413, 'p_holm': 0.12389}
+  T3 dm_rem - dm_rem_clamp: {'mean': 0.0478, 'lo': -0.0087, 'hi': 0.1043, 'n': 230}
+  T4 jpp_answer - jpp_raw: {'mean': -0.0652, 'lo': -0.1217, 'hi': -0.0087, 'n': 230}
+  T5 dm_full - jpp_matched: {'mean': 0.3304, 'lo': 0.2565, 'hi': 0.4, 'n': 230}
+  secondary dm_jpart_x2 - null_dm_x2: {'mean': -0.0217, 'lo': -0.0739, 'hi': 0.0304, 'n': 230}
+  secondary jpp_matched_x2 - null_dm_x2: {'mean': -0.0261, 'lo': -0.0783, 'hi': 0.0261, 'n': 230}
+  secondary dm_jpart_x4 - null_dm_x4: {'mean': 0.0043, 'lo': -0.0478, 'hi': 0.0609, 'n': 230}
+  secondary jpp_matched_x4 - null_dm_x4: {'mean': 0.0043, 'lo': -0.0435, 'hi': 0.0522, 'n': 230}
+
+gemma_occupied: test, 1094 eligible items
+  dm_full        success 0.3135 echo 0.0804 start_swap 0.0027 unchanged 0.5183 relookup 0.0 other 0.085 dose 0.07 colour_mass 0.9997 n 1094
+  dm_jpart       success 0.0896 echo 0.1097 start_swap 0.0987 unchanged 0.1097 relookup 0.0 other 0.5923 dose 0.0572 colour_mass 0.0 n 1094
+  dm_jpart_own   success 0.1033 echo 0.0777 start_swap 0.0896 unchanged 0.1691 relookup 0.0 other 0.5603 dose 0.0097 colour_mass 0.001 n 1094
+  dm_jpart_x2    success 0.0896 echo 0.149 start_swap 0.096 unchanged 0.0932 relookup 0.0 other 0.5722 dose 0.1142 colour_mass 0.0 n 1094
+  dm_jpart_x4    success 0.0887 echo 0.1627 start_swap 0.0814 unchanged 0.0731 relookup 0.0 other 0.5941 dose 0.2215 colour_mass 0.0 n 1094
+  dm_rem         success 0.1481 echo 0.1124 start_swap 0.0713 unchanged 0.2715 relookup 0.0 other 0.3967 dose 0.0562 colour_mass 0.0506 n 1094
+  dm_rem_clamp   success 0.1197 echo 0.0951 start_swap 0.0786 unchanged 0.1435 relookup 0.0 other 0.5631 dose 0.0567 colour_mass 0.0007 n 1094
+  dm_rem_own     success 0.128 echo 0.0951 start_swap 0.0768 unchanged 0.2367 relookup 0.0 other 0.4634 dose 0.0595 colour_mass 0.0168 n 1094
+  jpp_answer     success 0.0914 echo 0.0 start_swap 0.0 unchanged 0.0951 relookup 0.1161 other 0.6974 dose 0.0213 colour_mass 0.0001 n 1094
+  jpp_answer_ctl success 0.5539 echo 0.0 start_swap 0.0 unchanged 0.0165 relookup 0.074 other 0.3556 dose 0.0462 colour_mass 0.0 n 1094
+  jpp_matched    success 0.0914 echo 0.1069 start_swap 0.0951 unchanged 0.0996 relookup 0.0 other 0.6069 dose 0.0573 colour_mass 0.0 n 1094
+  jpp_matched_x2 success 0.0996 echo 0.1124 start_swap 0.1042 unchanged 0.0914 relookup 0.0 other 0.5923 dose 0.1137 colour_mass 0.0 n 1094
+  jpp_matched_x4 success 0.0914 echo 0.0987 start_swap 0.0841 unchanged 0.1005 relookup 0.0 other 0.6252 dose 0.2205 colour_mass 0.0 n 1094
+  jpp_raw        success 0.0978 echo 0.0932 start_swap 0.0996 unchanged 0.1133 relookup 0.0 other 0.596 dose 0.0207 colour_mass 0.0003 n 1094
+  null_answer_ctl success 0.0823 echo 0.0 start_swap 0.0 unchanged 0.287 relookup 0.0686 other 0.5622 dose 0.0494 colour_mass 0.0007 n 1094
+  null_dm        success 0.0777 echo 0.0914 start_swap 0.096 unchanged 0.1828 relookup 0.0 other 0.5521 dose 0.054 colour_mass 0.0009 n 1094
+  null_dm_x2     success 0.1152 echo 0.0987 start_swap 0.0996 unchanged 0.1243 relookup 0.0 other 0.5622 dose 0.1092 colour_mass 0.0001 n 1094
+  null_dm_x4     success 0.0878 echo 0.1188 start_swap 0.0951 unchanged 0.1005 relookup 0.0 other 0.5978 dose 0.2177 colour_mass 0.0 n 1094
+  null_jpp       success 0.0009 echo 0.0055 start_swap 0.0009 unchanged 0.9616 relookup 0.0 other 0.0311 dose 0.0221 colour_mass 0.6564 n 1094
+  other_item     success 0.0027 echo 0.0165 start_swap 0.0009 unchanged 0.8519 relookup 0.0 other 0.128 dose 0.0689 colour_mass 0.9998 n 1094
+  T1 dm_jpart - dm_rem: {'mean': -0.0585, 'lo': -0.085, 'hi': -0.0329, 'n': 1094}
+  T2 jpp_raw - null_jpp: {'mean': 0.0969, 'lo': 0.0795, 'hi': 0.1152, 'n': 1094, 'p': 0.0001, 'p_holm': 0.0008}
+  T2 dm_full - null_dm: {'mean': 0.2358, 'lo': 0.2048, 'hi': 0.2678, 'n': 1094, 'p': 0.0001, 'p_holm': 0.0008}
+  T2 jpp_matched - null_dm: {'mean': 0.0137, 'lo': -0.0091, 'hi': 0.0366, 'n': 1094, 'p': 0.13059, 'p_holm': 0.26117}
+  T2 dm_jpart - null_dm: {'mean': 0.0119, 'lo': -0.0101, 'hi': 0.0338, 'n': 1094, 'p': 0.15578, 'p_holm': 0.26117}
+  T2 dm_rem - null_dm: {'mean': 0.0704, 'lo': 0.0448, 'hi': 0.0969, 'n': 1094, 'p': 0.0001, 'p_holm': 0.0008}
+  T2 dm_jpart_own - null_dm: {'mean': 0.0256, 'lo': 0.0018, 'hi': 0.0484, 'n': 1094, 'p': 0.0182, 'p_holm': 0.05459}
+  T2 dm_rem_own - null_dm: {'mean': 0.0503, 'lo': 0.0256, 'hi': 0.075, 'n': 1094, 'p': 0.0001, 'p_holm': 0.0008}
+  T2 dm_rem_clamp - null_dm: {'mean': 0.042, 'lo': 0.0183, 'hi': 0.0658, 'n': 1094, 'p': 0.0008, 'p_holm': 0.0032}
+  T3 dm_rem - dm_rem_clamp: {'mean': 0.0283, 'lo': 0.0, 'hi': 0.0558, 'n': 1094}
+  T4 jpp_answer - jpp_raw: {'mean': -0.0064, 'lo': -0.0311, 'hi': 0.0183, 'n': 1094}
+  T5 dm_full - jpp_matched: {'mean': 0.2221, 'lo': 0.1892, 'hi': 0.2559, 'n': 1094}
+  secondary dm_jpart_x2 - null_dm_x2: {'mean': -0.0256, 'lo': -0.0503, 'hi': -0.0009, 'n': 1094}
+  secondary jpp_matched_x2 - null_dm_x2: {'mean': -0.0155, 'lo': -0.0393, 'hi': 0.0091, 'n': 1094}
+  secondary dm_jpart_x4 - null_dm_x4: {'mean': 0.0009, 'lo': -0.0229, 'hi': 0.0247, 'n': 1094}
+  secondary jpp_matched_x4 - null_dm_x4: {'mean': 0.0037, 'lo': -0.0201, 'hi': 0.0274, 'n': 1094}
+  secondary jpp_answer_ctl - null_answer_ctl: {'mean': 0.4717, 'lo': 0.4388, 'hi': 0.5055, 'n': 1094}
+
+gemma_occupied: test, every position edited (secondary), 1094 eligible items
+  jpp_raw_all  success 0.0896 echo 0.096 unchanged 0.1106 dose 0.0219 n 1094
+  dm_full_all  success 0.3172 echo 0.0146 unchanged 0.5786 dose 0.0666 n 1094
+  null_dm_all  success 0.1115 echo 0.096 unchanged 0.0868 dose 0.0557 n 1094
+  jpp_raw_all - null_dm_all: {'mean': -0.0219, 'lo': -0.0475, 'hi': 0.0027, 'n': 1094}
+  dm_full_all - null_dm_all: {'mean': 0.2057, 'lo': 0.1728, 'hi': 0.2395, 'n': 1094}
+
+gemma_occupied: test_patch window start: 1013 of 1094 targets (clean gives gold and the counterfactual gives T(s1'))
+  patch_dm_jpart|b34_46    success 0.086 unchanged 0.186 echo 0.083 other 0.549 dose 0.0115 | specificity -0.004 [-0.026, +0.019]
+  patch_dm_rem|b34_46      success 0.647 unchanged 0.192 echo 0.037 other 0.076 dose 0.0252 | specificity +0.604 [+0.570, +0.637]
+  patch_dm|b34_46          success 0.672 unchanged 0.147 echo 0.031 other 0.064 dose 0.0299 | specificity +0.614 [+0.579, +0.649]
+  patch_full|b34_46        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0118 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b34_46         success 0.106 unchanged 0.122 echo 0.103 other 0.565 dose 0.0105 | specificity +0.002 [-0.022, +0.027]
+  patch_random|b34_46      success 0.000 unchanged 0.994 echo 0.001 other 0.005 dose 0.0088 | specificity -0.001 [-0.002, +0.000]
+  patch_dm_jpart|b40_52    success 0.092 unchanged 0.134 echo 0.078 other 0.597 dose 0.0192 | specificity +0.004 [-0.019, +0.026]
+  patch_dm_rem|b40_52      success 0.354 unchanged 0.185 echo 0.085 other 0.305 dose 0.0333 | specificity +0.276 [+0.241, +0.311]
+  patch_dm|b40_52          success 0.651 unchanged 0.150 echo 0.035 other 0.081 dose 0.0336 | specificity +0.593 [+0.557, +0.628]
+  patch_full|b40_52        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0280 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b40_52         success 0.124 unchanged 0.110 echo 0.109 other 0.570 dose 0.0184 | specificity +0.026 [+0.001, +0.052]
+  patch_random|b40_52      success 0.001 unchanged 0.987 echo 0.003 other 0.006 dose 0.0133 | specificity -0.002 [-0.005, +0.001]
+  patch_full|b46_58        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0349 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b46_58         success 0.228 unchanged 0.099 echo 0.088 other 0.494 dose 0.0245 | specificity +0.138 [+0.108, +0.169]
+  patch_random|b46_58      success 0.002 unchanged 0.967 echo 0.005 other 0.025 dose 0.0220 | specificity -0.001 [-0.004, +0.003]
+gemma_occupied: test_patch window after: 1013 of 1094 targets (clean gives gold and the counterfactual gives T(s1'))
+  patch_dm_jpart|b34_46    success 0.093 unchanged 0.173 echo 0.077 other 0.563 dose 0.0115 | specificity +0.007 [-0.016, +0.030]
+  patch_dm_rem|b34_46      success 0.648 unchanged 0.193 echo 0.036 other 0.074 dose 0.0255 | specificity +0.605 [+0.571, +0.638]
+  patch_dm|b34_46          success 0.674 unchanged 0.141 echo 0.031 other 0.066 dose 0.0303 | specificity +0.615 [+0.580, +0.650]
+  patch_full|b34_46        success 0.997 unchanged 0.001 echo 0.000 other 0.001 dose 0.0231 | specificity +0.997 [+0.992, +1.000]
+  patch_jpp|b34_46         success 0.098 unchanged 0.124 echo 0.110 other 0.570 dose 0.0105 | specificity -0.006 [-0.030, +0.018]
+  patch_random|b34_46      success 0.000 unchanged 0.995 echo 0.001 other 0.004 dose 0.0087 | specificity -0.001 [-0.002, +0.000]
+  patch_dm_jpart|b40_52    success 0.092 unchanged 0.131 echo 0.079 other 0.598 dose 0.0192 | specificity +0.003 [-0.020, +0.025]
+  patch_dm_rem|b40_52      success 0.348 unchanged 0.183 echo 0.083 other 0.311 dose 0.0335 | specificity +0.270 [+0.235, +0.304]
+  patch_dm|b40_52          success 0.651 unchanged 0.150 echo 0.035 other 0.080 dose 0.0338 | specificity +0.592 [+0.557, +0.627]
+  patch_full|b40_52        success 0.999 unchanged 0.000 echo 0.000 other 0.000 dose 0.0335 | specificity +0.999 [+0.996, +1.000]
+  patch_jpp|b40_52         success 0.122 unchanged 0.112 echo 0.105 other 0.579 dose 0.0184 | specificity +0.029 [+0.004, +0.054]
+  patch_random|b40_52      success 0.001 unchanged 0.988 echo 0.002 other 0.006 dose 0.0132 | specificity -0.002 [-0.004, +0.002]
+  patch_full|b46_58        success 1.000 unchanged 0.000 echo 0.000 other 0.000 dose 0.0435 | specificity +1.000 [+1.000, +1.000]
+  patch_jpp|b46_58         success 0.227 unchanged 0.107 echo 0.090 other 0.486 dose 0.0244 | specificity +0.137 [+0.106, +0.167]
+  patch_random|b46_58      success 0.002 unchanged 0.965 echo 0.006 other 0.026 dose 0.0218 | specificity -0.002 [-0.005, +0.003]
+  P1 patch_jpp - patch_random @ b40_52: {'mean': 0.1214, 'lo': 0.1017, 'hi': 0.1422, 'n': 1013, 'p': 0.0001, 'p_holm': 0.0003}
+  P2 patch_dm - patch_jpp @ b40_52: {'mean': 0.5291, 'lo': 0.4926, 'hi': 0.5647, 'n': 1013, 'p': 0.0001, 'p_holm': 0.0003}
+  P3 patch_dm_rem - patch_dm_jpart @ b40_52: {'mean': 0.2567, 'lo': 0.2231, 'hi': 0.2902, 'n': 1013, 'p': 0.0001, 'p_holm': 0.0003}

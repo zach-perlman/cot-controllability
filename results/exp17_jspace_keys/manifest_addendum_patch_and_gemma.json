@@ -1,0 +1,92 @@
+{
+ "experiment": "exp17_jspace_keys",
+ "addendum": "patch_and_gemma",
+ "status": "locked",
+ "locked": "2026-10-13T01:16:14",
+ "approved_by": "zach-perlman",
+ "base_manifest_locked": "2026-10-12T22:44:16",
+ "locked_settings": {
+  "gemma_occupied": {
+   "jpp": {
+    "band": "b34_46",
+    "alpha": 4.0,
+    "dev_gain": 0.1391
+   },
+   "dm": {
+    "band": "b40_52",
+    "alpha": 1.0,
+    "dev_gain": 0.3391
+   },
+   "answer_control": {
+    "band": "b46_58",
+    "alpha": 8.0,
+    "dev_success": 0.5652,
+    "dev_null": 0.087,
+    "meets_rule": false,
+    "rule": "no control band has dev success - null >= 0.9; fallback: the first control band at the alpha with the largest success - null"
+   },
+   "patch": {
+    "bands": [
+     "b40_52",
+     "b34_46",
+     "b46_58"
+    ],
+    "windows": [
+     "start",
+     "after"
+    ],
+    "dm_band": "b40_52"
+   }
+  },
+  "qwen": {
+   "patch": {
+    "bands": [
+     "b42_54",
+     "b24_36",
+     "b48_60"
+    ],
+    "windows": [
+     "start",
+     "after"
+    ],
+    "dm_band": "b42_54"
+   }
+  }
+ },
+ "descriptive_swap_tests": [
+  "gemma_occupied"
+ ],
+ "patch_plan": {
+  "arms": "exp17_patch: per band, the counterfactual's coordinates copied into the residual at every J++ layer and window position, in the whole residual (full) or the span of 10 vectors: dm_full, dm_jpart, dm_rem, the J++ colour vectors (jpp), a random subspace; on the control band full, jpp, random only",
+  "bands": "the run's locked dm band, jpp band and in-task control band (read from the locked settings)",
+  "windows": {
+   "start": "start colour .. last token (the swap arms' window)",
+   "after": "the token after the start colour .. last token (primary: the start colour itself, which names s0', is not patched)"
+  },
+  "items": "the test bank's correct h=2 items whose counterfactual (start colour T^-1(s1')) is answered T(s1') clean (arm cf_clean)",
+  "success": "the answer is T(s1')",
+  "tests": {
+   "P1": "patch_jpp - patch_random at the dm band, window after",
+   "P2": "patch_dm - patch_jpp at the dm band, window after",
+   "P3": "patch_dm_rem - patch_dm_jpart at the dm band, window after"
+  },
+  "test_method": "paired bootstrap 95% CI (exp15_score.boot_ci), Holm over P1-P3 within run",
+  "controls": [
+   "patch_full at every band and window: the upper bound (window start: the counterfactual itself)",
+   "patch_jpp at the control band: the J++ colour span carries the answer late"
+  ],
+  "secondary": [
+   "every other arm, band and window: CIs only",
+   "specificity per arm: per item 1[success] - (1[echo] + 1[start_swap]) / 2, the success rate above that of two other wrong colours (a patch that only scrambles the answer scores ~0)"
+  ]
+ },
+ "deviations": [
+  "Gemma is run with EXP17_LENS=occupied (run key gemma_occupied): every J++ vector and random direction projected onto the subspace holding 99.99% of Gemma's WikiText residual energy and renormalised, because the raw J++ colour vectors keep only 5-20% of their norm there at layers 28-58 (occupied_subspace.json). Qwen's vectors are 99.4-99.7% inside, so the projection would not change Qwen.",
+  "Gemma's factual positive control uses the chat template with the instruction 'Complete the sentence with one word. Reply with that word only.' (raw text: 0 of 76 prompts answered); success counts the bare, capitalised or spaced first token.",
+  "Stop rule K1 triggers for gemma_occupied (best factual intermediate-swap gain 0.077 < 0.15). With approval, Gemma's swap test is still run on the test bank but is descriptive only: no confirmatory claims from T1-T5 on Gemma.",
+  "Gemma's in-task control: no control band reaches success - null >= 0.9 on dev (best 0.565 - 0.087 at b46_58 alpha 8); the recorded fallback (first control band, largest gain) sets both its answer-control arms and its patch control band.",
+  "Interchange patching (exp17_patch) added after the main lock and run on dev for both models before this addendum: counterfactual = the same prompt with start colour T^-1(s1'); P1-P3 and the specificity secondary are pre-registered here, before any test-bank patching.",
+  "The difference-of-means key directions were fit on dev items, so the dev patching numbers are in-sample for the dm arms; the test-bank patching is out of sample.",
+  "exp17_late early (J++ answer swap with nulls at alpha 1-8 in the earlier dev bands) added, dev only. On Qwen it shows J++ colour swaps do not steer this task at layers 24-48 (<= 0.031 vs null <= 0.021), so the J++-band key swap has no in-band positive control; the controlled comparison is at the dm band."
+ ]
+}

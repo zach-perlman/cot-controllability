@@ -1,0 +1,5324 @@
+{
+ "qwen": {
+  "posctl": {
+   "band": "b24_36",
+   "alpha": 4.0,
+   "gain": 0.6441,
+   "inter": 0.6441,
+   "answer": 0.5593,
+   "null": 0.0,
+   "n": 59,
+   "K1_stop": false
+  },
+  "posctl_orth": {
+   "inter|b24_36|1": {
+    "success": 0.4407,
+    "dose": 0.0096
+   },
+   "inter_orth|b24_36|1": {
+    "success": 0.0508,
+    "dose": 102.3208
+   },
+   "inter_orth_m|b24_36|1": {
+    "success": 0.0508,
+    "dose": 0.0096
+   },
+   "inter_clampans|b24_36|1": {
+    "success": 0.2034,
+    "dose": 0.0097
+   },
+   "inter|b24_36|2": {
+    "success": 0.6271,
+    "dose": 0.0193
+   },
+   "inter_orth|b24_36|2": {
+    "success": 0.3729,
+    "dose": 204.6243
+   },
+   "inter_orth_m|b24_36|2": {
+    "success": 0.4407,
+    "dose": 0.0193
+   },
+   "inter_clampans|b24_36|2": {
+    "success": 0.4915,
+    "dose": 0.0193
+   },
+   "inter|b24_36|4": {
+    "success": 0.6441,
+    "dose": 0.0389
+   },
+   "inter_orth|b24_36|4": {
+    "success": 0.4746,
+    "dose": 409.2312
+   },
+   "inter_orth_m|b24_36|4": {
+    "success": 0.5085,
+    "dose": 0.0391
+   },
+   "inter_clampans|b24_36|4": {
+    "success": 0.4237,
+    "dose": 0.038
+   },
+   "inter|b24_48|1": {
+    "success": 0.5763,
+    "dose": 0.0094
+   },
+   "inter_orth|b24_48|1": {
+    "success": 0.2034,
+    "dose": 53.2273
+   },
+   "inter_orth_m|b24_48|1": {
+    "success": 0.2203,
+    "dose": 0.0094
+   },
+   "inter_clampans|b24_48|1": {
+    "success": 0.2542,
+    "dose": 0.0095
+   },
+   "inter|b24_48|2": {
+    "success": 0.6271,
+    "dose": 0.019
+   },
+   "inter_orth|b24_48|2": {
+    "success": 0.5085,
+    "dose": 106.4298
+   },
+   "inter_orth_m|b24_48|2": {
+    "success": 0.5254,
+    "dose": 0.019
+   },
+   "inter_clampans|b24_48|2": {
+    "success": 0.4068,
+    "dose": 0.0189
+   },
+   "inter|b24_48|4": {
+    "success": 0.5763,
+    "dose": 0.0388
+   },
+   "inter_orth|b24_48|4": {
+    "success": 0.5254,
+    "dose": 212.835
+   },
+   "inter_orth_m|b24_48|4": {
+    "success": 0.5254,
+    "dose": 0.0391
+   },
+   "inter_clampans|b24_48|4": {
+    "success": 0.322,
+    "dose": 0.0371
+   },
+   "inter|b30_42|1": {
+    "success": 0.5424,
+    "dose": 0.0114
+   },
+   "inter_orth|b30_42|1": {
+    "success": 0.1356,
+    "dose": 51.2777
+   },
+   "inter_orth_m|b30_42|1": {
+    "success": 0.1356,
+    "dose": 0.0114
+   },
+   "inter_clampans|b30_42|1": {
+    "success": 0.1864,
+    "dose": 0.0118
+   },
+   "inter|b30_42|2": {
+    "success": 0.6441,
+    "dose": 0.0232
+   },
+   "inter_orth|b30_42|2": {
+    "success": 0.4746,
+    "dose": 102.5433
+   },
+   "inter_orth_m|b30_42|2": {
+    "success": 0.4915,
+    "dose": 0.0232
+   },
+   "inter_clampans|b30_42|2": {
+    "success": 0.4407,
+    "dose": 0.0235
+   },
+   "inter|b30_42|4": {
+    "success": 0.5763,
+    "dose": 0.0473
+   },
+   "inter_orth|b30_42|4": {
+    "success": 0.4915,
+    "dose": 205.0746
+   },
+   "inter_orth_m|b30_42|4": {
+    "success": 0.5254,
+    "dose": 0.0476
+   },
+   "inter_clampans|b30_42|4": {
+    "success": 0.3559,
+    "dose": 0.0461
+   },
+   "inter|b36_48|1": {
+    "success": 0.4746,
+    "dose": 0.0124
+   },
+   "inter_orth|b36_48|1": {
+    "success": 0.0508,
+    "dose": 28.081
+   },
+   "inter_orth_m|b36_48|1": {
+    "success": 0.0508,
+    "dose": 0.0123
+   },
+   "inter_clampans|b36_48|1": {
+    "success": 0.1356,
+    "dose": 0.0124
+   },
+   "inter|b36_48|2": {
+    "success": 0.6102,
+    "dose": 0.0249
+   },
+   "inter_orth|b36_48|2": {
+    "success": 0.322,
+    "dose": 56.1163
+   },
+   "inter_orth_m|b36_48|2": {
+    "success": 0.3559,
+    "dose": 0.0249
+   },
+   "inter_clampans|b36_48|2": {
+    "success": 0.3898,
+    "dose": 0.0247
+   },
+   "inter|b36_48|4": {
+    "success": 0.5085,
+    "dose": 0.0502
+   },
+   "inter_orth|b36_48|4": {
+    "success": 0.4407,
+    "dose": 112.1868
+   },
+   "inter_orth_m|b36_48|4": {
+    "success": 0.4746,
+    "dose": 0.0504
+   },
+   "inter_clampans|b36_48|4": {
+    "success": 0.3559,
+    "dose": 0.0481
+   },
+   "inter|b42_54|1": {
+    "success": 0.4576,
+    "dose": 0.0122
+   },
+   "inter_orth|b42_54|1": {
+    "success": 0.0847,
+    "dose": 35.0742
+   },
+   "inter_orth_m|b42_54|1": {
+    "success": 0.0847,
+    "dose": 0.0122
+   },
+   "inter_clampans|b42_54|1": {
+    "success": 0.0678,
+    "dose": 0.0124
+   },
+   "inter|b42_54|2": {
+    "success": 0.5593,
+    "dose": 0.0247
+   },
+   "inter_orth|b42_54|2": {
+    "success": 0.3051,
+    "dose": 70.0984
+   },
+   "inter_orth_m|b42_54|2": {
+    "success": 0.3051,
+    "dose": 0.0247
+   },
+   "inter_clampans|b42_54|2": {
+    "success": 0.2203,
+    "dose": 0.0247
+   },
+   "inter|b42_54|4": {
+    "success": 0.4068,
+    "dose": 0.0501
+   },
+   "inter_orth|b42_54|4": {
+    "success": 0.2542,
+    "dose": 140.1469
+   },
+   "inter_orth_m|b42_54|4": {
+    "success": 0.2542,
+    "dose": 0.0502
+   },
+   "inter_clampans|b42_54|4": {
+    "success": 0.1017,
+    "dose": 0.0488
+   }
+  },
+  "dev": {
+   "n_eligible": 192,
+   "zero_unchanged": 192,
+   "n_zero": 192,
+   "chosen": {
+    "jpp": {
+     "band": "b24_36",
+     "alpha": 8.0,
+     "success": 0.0365,
+     "null": 0.0,
+     "gain": 0.0365,
+     "echo": 0.0208,
+     "dose": 0.0562
+    },
+    "dm": {
+     "band": "b42_54",
+     "alpha": 1.0,
+     "success": 0.4271,
+     "null": 0.0104,
+     "gain": 0.4167,
+     "echo": 0.0521,
+     "dose": 0.0447
+    },
+    "ar": {
+     "band": "l42",
+     "alpha": 4.0,
+     "success": 0.1771,
+     "null": 0.0156,
+     "gain": 0.1615,
+     "echo": 0.1042,
+     "dose": 0.2816
+    }
+   },
+   "K2_stop": false
+  },
+  "answer_swaps": {
+   "jpp_answer|b24_36|1": {
+    "success": 0.0,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0069
+   },
+   "jpp_answer|b24_36|2": {
+    "success": 0.0052,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0137
+   },
+   "jpp_answer|b24_36|4": {
+    "success": 0.0052,
+    "null": 0.0104,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0275
+   },
+   "jpp_answer|b24_36|8": {
+    "success": 0.0156,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0548
+   },
+   "jpp_answer|b24_48|1": {
+    "success": 0.0,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0071
+   },
+   "jpp_answer|b24_48|2": {
+    "success": 0.0052,
+    "null": 0.0104,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0143
+   },
+   "jpp_answer|b24_48|4": {
+    "success": 0.0104,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0286
+   },
+   "jpp_answer|b24_48|8": {
+    "success": 0.026,
+    "null": 0.0208,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0571
+   },
+   "jpp_answer|b30_42|1": {
+    "success": 0.0052,
+    "null": 0.0,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0079
+   },
+   "jpp_answer|b30_42|2": {
+    "success": 0.0052,
+    "null": 0.0,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0157
+   },
+   "jpp_answer|b30_42|4": {
+    "success": 0.0104,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0315
+   },
+   "jpp_answer|b30_42|8": {
+    "success": 0.0312,
+    "null": 0.0156,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0628
+   },
+   "jpp_answer|b36_48|1": {
+    "success": 0.0052,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.008
+   },
+   "jpp_answer|b36_48|2": {
+    "success": 0.0052,
+    "null": 0.0104,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.016
+   },
+   "jpp_answer|b36_48|4": {
+    "success": 0.0052,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0321
+   },
+   "jpp_answer|b36_48|8": {
+    "success": 0.0312,
+    "null": 0.0104,
+    "n": 192,
+    "phase": "answer_early",
+    "dose": 0.0641
+   },
+   "jpp_answer|b42_54|1": {
+    "success": 0.0052,
+    "null": 0.0,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.0097
+   },
+   "jpp_answer|b42_54|2": {
+    "success": 0.0156,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.0195
+   },
+   "jpp_answer|b42_54|4": {
+    "success": 0.0521,
+    "null": 0.0104,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.0389
+   },
+   "jpp_answer|b42_54|8": {
+    "success": 0.4062,
+    "null": 0.0104,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.0776
+   },
+   "jpp_answer|b48_60|1": {
+    "success": 0.6667,
+    "null": 0.0,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.0149
+   },
+   "jpp_answer|b48_60|2": {
+    "success": 0.974,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.0301
+   },
+   "jpp_answer|b48_60|4": {
+    "success": 0.9896,
+    "null": 0.0156,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.06
+   },
+   "jpp_answer|b48_60|8": {
+    "success": 0.9688,
+    "null": 0.0104,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.1164
+   },
+   "jpp_answer|b54_62|1": {
+    "success": 0.7917,
+    "null": 0.0,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.0188
+   },
+   "jpp_answer|b54_62|2": {
+    "success": 0.9375,
+    "null": 0.0,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.0383
+   },
+   "jpp_answer|b54_62|4": {
+    "success": 0.8854,
+    "null": 0.0052,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.0763
+   },
+   "jpp_answer|b54_62|8": {
+    "success": 0.8854,
+    "null": 0.0104,
+    "n": 192,
+    "phase": "late",
+    "dose": 0.1447
+   }
+  },
+  "patch_dev": {
+   "start": {
+    "n_targets": 192,
+    "n_clean_gold": 192,
+    "n_cf_correct": 153,
+    "rates": {
+     "patch_full|b24_36": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0061,
+      "n": 153,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b24_36": {
+      "success": 0.0915,
+      "unchanged": 0.7451,
+      "echo": 0.085,
+      "start_swap": 0.0261,
+      "other": 0.0523,
+      "dose": 0.0126,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0359,
+       "lo": -0.0163,
+       "hi": 0.0948
+      }
+     },
+     "patch_dm_jpart|b24_36": {
+      "success": 0.0131,
+      "unchanged": 0.9412,
+      "echo": 0.0131,
+      "start_swap": 0.0065,
+      "other": 0.0261,
+      "dose": 0.0063,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0033,
+       "lo": -0.0163,
+       "hi": 0.0261
+      }
+     },
+     "patch_dm_rem|b24_36": {
+      "success": 0.0784,
+      "unchanged": 0.7712,
+      "echo": 0.0719,
+      "start_swap": 0.0261,
+      "other": 0.0523,
+      "dose": 0.0114,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0294,
+       "lo": -0.0196,
+       "hi": 0.0817
+      }
+     },
+     "patch_jpp|b24_36": {
+      "success": 0.0131,
+      "unchanged": 0.9673,
+      "echo": 0.0131,
+      "start_swap": 0.0,
+      "other": 0.0065,
+      "dose": 0.0032,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0065,
+       "lo": -0.0098,
+       "hi": 0.0294
+      }
+     },
+     "patch_random|b24_36": {
+      "success": 0.0,
+      "unchanged": 0.9935,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0065,
+      "dose": 0.0046,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0,
+       "lo": 0.0,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b30_42": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0077,
+      "n": 153,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b30_42": {
+      "success": 0.2092,
+      "unchanged": 0.5948,
+      "echo": 0.0784,
+      "start_swap": 0.0327,
+      "other": 0.085,
+      "dose": 0.0127,
+      "n": 153,
+      "specificity": {
+       "mean": 0.1536,
+       "lo": 0.0817,
+       "hi": 0.2288
+      }
+     },
+     "patch_dm_jpart|b30_42": {
+      "success": 0.0196,
+      "unchanged": 0.902,
+      "echo": 0.0196,
+      "start_swap": 0.0131,
+      "other": 0.0458,
+      "dose": 0.0078,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0033,
+       "lo": -0.0229,
+       "hi": 0.0294
+      }
+     },
+     "patch_dm_rem|b30_42": {
+      "success": 0.2026,
+      "unchanged": 0.6013,
+      "echo": 0.0915,
+      "start_swap": 0.0261,
+      "other": 0.0784,
+      "dose": 0.0113,
+      "n": 153,
+      "specificity": {
+       "mean": 0.1438,
+       "lo": 0.0719,
+       "hi": 0.2157
+      }
+     },
+     "patch_jpp|b30_42": {
+      "success": 0.0,
+      "unchanged": 0.9935,
+      "echo": 0.0065,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0042,
+      "n": 153,
+      "specificity": {
+       "mean": -0.0033,
+       "lo": -0.0098,
+       "hi": 0.0
+      }
+     },
+     "patch_random|b30_42": {
+      "success": 0.0065,
+      "unchanged": 0.9869,
+      "echo": 0.0065,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0058,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0033,
+       "lo": -0.0098,
+       "hi": 0.0196
+      }
+     },
+     "patch_full|b36_48": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0118,
+      "n": 153,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b36_48": {
+      "success": 0.4902,
+      "unchanged": 0.183,
+      "echo": 0.098,
+      "start_swap": 0.0588,
+      "other": 0.1699,
+      "dose": 0.0152,
+      "n": 153,
+      "specificity": {
+       "mean": 0.4118,
+       "lo": 0.317,
+       "hi": 0.5065
+      }
+     },
+     "patch_dm_jpart|b36_48": {
+      "success": 0.0392,
+      "unchanged": 0.8627,
+      "echo": 0.0196,
+      "start_swap": 0.0261,
+      "other": 0.0523,
+      "dose": 0.0091,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0163,
+       "lo": -0.0163,
+       "hi": 0.0523
+      }
+     },
+     "patch_dm_rem|b36_48": {
+      "success": 0.4837,
+      "unchanged": 0.1895,
+      "echo": 0.1046,
+      "start_swap": 0.0588,
+      "other": 0.1634,
+      "dose": 0.0135,
+      "n": 153,
+      "specificity": {
+       "mean": 0.402,
+       "lo": 0.3072,
+       "hi": 0.4967
+      }
+     },
+     "patch_jpp|b36_48": {
+      "success": 0.0065,
+      "unchanged": 0.9804,
+      "echo": 0.0131,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0048,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0,
+       "lo": -0.0131,
+       "hi": 0.0163
+      }
+     },
+     "patch_random|b36_48": {
+      "success": 0.0065,
+      "unchanged": 0.9869,
+      "echo": 0.0065,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0072,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0033,
+       "lo": -0.0098,
+       "hi": 0.0196
+      }
+     },
+     "patch_full|b42_54": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0119,
+      "n": 153,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b42_54": {
+      "success": 0.5882,
+      "unchanged": 0.0915,
+      "echo": 0.1046,
+      "start_swap": 0.0719,
+      "other": 0.1438,
+      "dose": 0.0208,
+      "n": 153,
+      "specificity": {
+       "mean": 0.5,
+       "lo": 0.402,
+       "hi": 0.598
+      }
+     },
+     "patch_dm_jpart|b42_54": {
+      "success": 0.0523,
+      "unchanged": 0.8627,
+      "echo": 0.0131,
+      "start_swap": 0.0261,
+      "other": 0.0458,
+      "dose": 0.012,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0327,
+       "lo": -0.0033,
+       "hi": 0.0752
+      }
+     },
+     "patch_dm_rem|b42_54": {
+      "success": 0.5882,
+      "unchanged": 0.085,
+      "echo": 0.098,
+      "start_swap": 0.0915,
+      "other": 0.1373,
+      "dose": 0.0171,
+      "n": 153,
+      "specificity": {
+       "mean": 0.4935,
+       "lo": 0.3922,
+       "hi": 0.5915
+      }
+     },
+     "patch_jpp|b42_54": {
+      "success": 0.0131,
+      "unchanged": 0.9739,
+      "echo": 0.0065,
+      "start_swap": 0.0,
+      "other": 0.0065,
+      "dose": 0.0073,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0098,
+       "lo": -0.0065,
+       "hi": 0.0327
+      }
+     },
+     "patch_random|b42_54": {
+      "success": 0.0131,
+      "unchanged": 0.9869,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0095,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0131,
+       "lo": 0.0,
+       "hi": 0.0327
+      }
+     },
+     "patch_full|b24_48": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0032,
+      "n": 153,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b24_48": {
+      "success": 0.5033,
+      "unchanged": 0.1765,
+      "echo": 0.1111,
+      "start_swap": 0.0458,
+      "other": 0.1634,
+      "dose": 0.0126,
+      "n": 153,
+      "specificity": {
+       "mean": 0.4248,
+       "lo": 0.3301,
+       "hi": 0.5196
+      }
+     },
+     "patch_dm_jpart|b24_48": {
+      "success": 0.0392,
+      "unchanged": 0.8627,
+      "echo": 0.0196,
+      "start_swap": 0.0261,
+      "other": 0.0523,
+      "dose": 0.0071,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0163,
+       "lo": -0.0163,
+       "hi": 0.0523
+      }
+     },
+     "patch_dm_rem|b24_48": {
+      "success": 0.4902,
+      "unchanged": 0.1961,
+      "echo": 0.1111,
+      "start_swap": 0.0458,
+      "other": 0.1569,
+      "dose": 0.0113,
+      "n": 153,
+      "specificity": {
+       "mean": 0.4118,
+       "lo": 0.317,
+       "hi": 0.5065
+      }
+     },
+     "patch_jpp|b24_48": {
+      "success": 0.0131,
+      "unchanged": 0.9673,
+      "echo": 0.0131,
+      "start_swap": 0.0,
+      "other": 0.0065,
+      "dose": 0.0037,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0065,
+       "lo": -0.0098,
+       "hi": 0.0294
+      }
+     },
+     "patch_random|b24_48": {
+      "success": 0.0,
+      "unchanged": 0.9935,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0065,
+      "dose": 0.0059,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0,
+       "lo": 0.0,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b48_60": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0166,
+      "n": 153,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_jpp|b48_60": {
+      "success": 0.6732,
+      "unchanged": 0.2288,
+      "echo": 0.0196,
+      "start_swap": 0.0327,
+      "other": 0.0458,
+      "dose": 0.0141,
+      "n": 153,
+      "specificity": {
+       "mean": 0.6471,
+       "lo": 0.5654,
+       "hi": 0.7255
+      }
+     },
+     "patch_random|b48_60": {
+      "success": 0.0131,
+      "unchanged": 0.9869,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0117,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0131,
+       "lo": 0.0,
+       "hi": 0.0327
+      }
+     }
+    },
+    "tests": {}
+   },
+   "after": {
+    "n_targets": 192,
+    "n_clean_gold": 192,
+    "n_cf_correct": 153,
+    "rates": {
+     "patch_full|b24_36": {
+      "success": 0.4314,
+      "unchanged": 0.281,
+      "echo": 0.0915,
+      "start_swap": 0.0392,
+      "other": 0.1569,
+      "dose": 0.0223,
+      "n": 153,
+      "specificity": {
+       "mean": 0.366,
+       "lo": 0.2778,
+       "hi": 0.4575
+      }
+     },
+     "patch_dm|b24_36": {
+      "success": 0.0588,
+      "unchanged": 0.7974,
+      "echo": 0.0588,
+      "start_swap": 0.0261,
+      "other": 0.0588,
+      "dose": 0.012,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0163,
+       "lo": -0.0261,
+       "hi": 0.0621
+      }
+     },
+     "patch_dm_jpart|b24_36": {
+      "success": 0.0131,
+      "unchanged": 0.9477,
+      "echo": 0.0131,
+      "start_swap": 0.0065,
+      "other": 0.0196,
+      "dose": 0.0054,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0033,
+       "lo": -0.0163,
+       "hi": 0.0261
+      }
+     },
+     "patch_dm_rem|b24_36": {
+      "success": 0.0523,
+      "unchanged": 0.8039,
+      "echo": 0.0588,
+      "start_swap": 0.0261,
+      "other": 0.0588,
+      "dose": 0.0109,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0098,
+       "lo": -0.0295,
+       "hi": 0.0556
+      }
+     },
+     "patch_jpp|b24_36": {
+      "success": 0.0131,
+      "unchanged": 0.9804,
+      "echo": 0.0065,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0026,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0098,
+       "lo": -0.0065,
+       "hi": 0.0327
+      }
+     },
+     "patch_random|b24_36": {
+      "success": 0.0,
+      "unchanged": 1.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0041,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0,
+       "lo": 0.0,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b30_42": {
+      "success": 0.634,
+      "unchanged": 0.1242,
+      "echo": 0.085,
+      "start_swap": 0.0523,
+      "other": 0.1046,
+      "dose": 0.0227,
+      "n": 153,
+      "specificity": {
+       "mean": 0.5654,
+       "lo": 0.4706,
+       "hi": 0.6569
+      }
+     },
+     "patch_dm|b30_42": {
+      "success": 0.2026,
+      "unchanged": 0.5817,
+      "echo": 0.085,
+      "start_swap": 0.0327,
+      "other": 0.098,
+      "dose": 0.0124,
+      "n": 153,
+      "specificity": {
+       "mean": 0.1438,
+       "lo": 0.0719,
+       "hi": 0.2157
+      }
+     },
+     "patch_dm_jpart|b30_42": {
+      "success": 0.0196,
+      "unchanged": 0.9085,
+      "echo": 0.0196,
+      "start_swap": 0.0131,
+      "other": 0.0392,
+      "dose": 0.0069,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0033,
+       "lo": -0.0229,
+       "hi": 0.0294
+      }
+     },
+     "patch_dm_rem|b30_42": {
+      "success": 0.1895,
+      "unchanged": 0.6144,
+      "echo": 0.085,
+      "start_swap": 0.0261,
+      "other": 0.085,
+      "dose": 0.011,
+      "n": 153,
+      "specificity": {
+       "mean": 0.134,
+       "lo": 0.0654,
+       "hi": 0.2059
+      }
+     },
+     "patch_jpp|b30_42": {
+      "success": 0.0065,
+      "unchanged": 0.9869,
+      "echo": 0.0065,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0035,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0033,
+       "lo": -0.0098,
+       "hi": 0.0196
+      }
+     },
+     "patch_random|b30_42": {
+      "success": 0.0065,
+      "unchanged": 0.9869,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0065,
+      "dose": 0.0053,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0065,
+       "lo": 0.0,
+       "hi": 0.0196
+      }
+     },
+     "patch_full|b36_48": {
+      "success": 0.9608,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0065,
+      "other": 0.0327,
+      "dose": 0.0251,
+      "n": 153,
+      "specificity": {
+       "mean": 0.9575,
+       "lo": 0.9183,
+       "hi": 0.9869
+      }
+     },
+     "patch_dm|b36_48": {
+      "success": 0.4771,
+      "unchanged": 0.2222,
+      "echo": 0.085,
+      "start_swap": 0.0458,
+      "other": 0.1699,
+      "dose": 0.0149,
+      "n": 153,
+      "specificity": {
+       "mean": 0.4118,
+       "lo": 0.3203,
+       "hi": 0.5033
+      }
+     },
+     "patch_dm_jpart|b36_48": {
+      "success": 0.0327,
+      "unchanged": 0.8693,
+      "echo": 0.0196,
+      "start_swap": 0.0261,
+      "other": 0.0523,
+      "dose": 0.0083,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0098,
+       "lo": -0.0229,
+       "hi": 0.0458
+      }
+     },
+     "patch_dm_rem|b36_48": {
+      "success": 0.4641,
+      "unchanged": 0.2418,
+      "echo": 0.085,
+      "start_swap": 0.0458,
+      "other": 0.1634,
+      "dose": 0.0132,
+      "n": 153,
+      "specificity": {
+       "mean": 0.3987,
+       "lo": 0.3072,
+       "hi": 0.4902
+      }
+     },
+     "patch_jpp|b36_48": {
+      "success": 0.0065,
+      "unchanged": 0.9804,
+      "echo": 0.0065,
+      "start_swap": 0.0,
+      "other": 0.0065,
+      "dose": 0.0042,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0033,
+       "lo": -0.0098,
+       "hi": 0.0196
+      }
+     },
+     "patch_random|b36_48": {
+      "success": 0.0065,
+      "unchanged": 0.9935,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0068,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0065,
+       "lo": 0.0,
+       "hi": 0.0196
+      }
+     },
+     "patch_full|b42_54": {
+      "success": 0.9804,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0196,
+      "dose": 0.0259,
+      "n": 153,
+      "specificity": {
+       "mean": 0.9804,
+       "lo": 0.9542,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b42_54": {
+      "success": 0.5752,
+      "unchanged": 0.098,
+      "echo": 0.0915,
+      "start_swap": 0.0784,
+      "other": 0.1569,
+      "dose": 0.0208,
+      "n": 153,
+      "specificity": {
+       "mean": 0.4902,
+       "lo": 0.3889,
+       "hi": 0.5882
+      }
+     },
+     "patch_dm_jpart|b42_54": {
+      "success": 0.0458,
+      "unchanged": 0.8889,
+      "echo": 0.0065,
+      "start_swap": 0.0196,
+      "other": 0.0392,
+      "dose": 0.0113,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0327,
+       "lo": 0.0,
+       "hi": 0.0719
+      }
+     },
+     "patch_dm_rem|b42_54": {
+      "success": 0.5882,
+      "unchanged": 0.085,
+      "echo": 0.098,
+      "start_swap": 0.085,
+      "other": 0.1438,
+      "dose": 0.0172,
+      "n": 153,
+      "specificity": {
+       "mean": 0.4967,
+       "lo": 0.3987,
+       "hi": 0.598
+      }
+     },
+     "patch_jpp|b42_54": {
+      "success": 0.0131,
+      "unchanged": 0.9804,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0065,
+      "dose": 0.0066,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0131,
+       "lo": 0.0,
+       "hi": 0.0327
+      }
+     },
+     "patch_random|b42_54": {
+      "success": 0.0131,
+      "unchanged": 0.9869,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0091,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0131,
+       "lo": 0.0,
+       "hi": 0.0327
+      }
+     },
+     "patch_full|b24_48": {
+      "success": 0.9673,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0327,
+      "dose": 0.0191,
+      "n": 153,
+      "specificity": {
+       "mean": 0.9673,
+       "lo": 0.9346,
+       "hi": 0.9935
+      }
+     },
+     "patch_dm|b24_48": {
+      "success": 0.4444,
+      "unchanged": 0.2222,
+      "echo": 0.0915,
+      "start_swap": 0.0523,
+      "other": 0.1895,
+      "dose": 0.0122,
+      "n": 153,
+      "specificity": {
+       "mean": 0.3725,
+       "lo": 0.281,
+       "hi": 0.4673
+      }
+     },
+     "patch_dm_jpart|b24_48": {
+      "success": 0.0458,
+      "unchanged": 0.8497,
+      "echo": 0.0261,
+      "start_swap": 0.0261,
+      "other": 0.0523,
+      "dose": 0.0064,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0196,
+       "lo": -0.0163,
+       "hi": 0.0588
+      }
+     },
+     "patch_dm_rem|b24_48": {
+      "success": 0.451,
+      "unchanged": 0.2353,
+      "echo": 0.098,
+      "start_swap": 0.0458,
+      "other": 0.1699,
+      "dose": 0.0109,
+      "n": 153,
+      "specificity": {
+       "mean": 0.3791,
+       "lo": 0.2876,
+       "hi": 0.4739
+      }
+     },
+     "patch_jpp|b24_48": {
+      "success": 0.0131,
+      "unchanged": 0.9739,
+      "echo": 0.0065,
+      "start_swap": 0.0,
+      "other": 0.0065,
+      "dose": 0.0032,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0098,
+       "lo": -0.0065,
+       "hi": 0.0327
+      }
+     },
+     "patch_random|b24_48": {
+      "success": 0.0,
+      "unchanged": 0.9935,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0065,
+      "dose": 0.0054,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0,
+       "lo": 0.0,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b48_60": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0264,
+      "n": 153,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_jpp|b48_60": {
+      "success": 0.6667,
+      "unchanged": 0.2353,
+      "echo": 0.0196,
+      "start_swap": 0.0327,
+      "other": 0.0458,
+      "dose": 0.0135,
+      "n": 153,
+      "specificity": {
+       "mean": 0.6405,
+       "lo": 0.5556,
+       "hi": 0.719
+      }
+     },
+     "patch_random|b48_60": {
+      "success": 0.0131,
+      "unchanged": 0.9869,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0112,
+      "n": 153,
+      "specificity": {
+       "mean": 0.0131,
+       "lo": 0.0,
+       "hi": 0.0327
+      }
+     }
+    },
+    "tests": {
+     "P1 patch_jpp - patch_random @ b42_54": {
+      "mean": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n": 153,
+      "p": 1.0,
+      "p_holm": 1.0
+     },
+     "P2 patch_dm - patch_jpp @ b42_54": {
+      "mean": 0.5621,
+      "lo": 0.4837,
+      "hi": 0.6405,
+      "n": 153,
+      "p": 0.0001,
+      "p_holm": 0.0003
+     },
+     "P3 patch_dm_rem - patch_dm_jpart @ b42_54": {
+      "mean": 0.5425,
+      "lo": 0.4641,
+      "hi": 0.6209,
+      "n": 153,
+      "p": 0.0001,
+      "p_holm": 0.0003
+     }
+    }
+   }
+  },
+  "preview": {
+   "n_eligible": 192,
+   "rates": {
+    "jpp_raw": {
+     "success": 0.0365,
+     "echo": 0.0208,
+     "start_swap": 0.0156,
+     "unchanged": 0.8438,
+     "relookup": 0.0,
+     "other": 0.0833,
+     "dose": 0.0562,
+     "colour_mass": 0.9983,
+     "n": 192
+    },
+    "null_jpp": {
+     "success": 0.0104,
+     "echo": 0.0156,
+     "start_swap": 0.0156,
+     "unchanged": 0.8802,
+     "relookup": 0.0,
+     "other": 0.0781,
+     "dose": 0.0559,
+     "colour_mass": 0.999,
+     "n": 192
+    },
+    "jpp_answer": {
+     "success": 0.0156,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.849,
+     "relookup": 0.026,
+     "other": 0.1094,
+     "dose": 0.0548,
+     "colour_mass": 0.9987,
+     "n": 192
+    },
+    "dm_full": {
+     "success": 0.4271,
+     "echo": 0.0521,
+     "start_swap": 0.0781,
+     "unchanged": 0.2812,
+     "relookup": 0.0,
+     "other": 0.1615,
+     "dose": 0.0447,
+     "colour_mass": 0.9986,
+     "n": 192
+    },
+    "jpp_matched": {
+     "success": 0.0052,
+     "echo": 0.0052,
+     "start_swap": 0.0104,
+     "unchanged": 0.9688,
+     "relookup": 0.0,
+     "other": 0.0104,
+     "dose": 0.0446,
+     "colour_mass": 0.9992,
+     "n": 192
+    },
+    "dm_jpart": {
+     "success": 0.0469,
+     "echo": 0.0208,
+     "start_swap": 0.0208,
+     "unchanged": 0.8229,
+     "relookup": 0.0,
+     "other": 0.0885,
+     "dose": 0.0447,
+     "colour_mass": 0.9991,
+     "n": 192
+    },
+    "dm_rem": {
+     "success": 0.4167,
+     "echo": 0.0365,
+     "start_swap": 0.0833,
+     "unchanged": 0.3021,
+     "relookup": 0.0,
+     "other": 0.1615,
+     "dose": 0.0447,
+     "colour_mass": 0.9985,
+     "n": 192
+    },
+    "dm_jpart_own": {
+     "success": 0.0312,
+     "echo": 0.0104,
+     "start_swap": 0.0156,
+     "unchanged": 0.9115,
+     "relookup": 0.0,
+     "other": 0.0312,
+     "dose": 0.0195,
+     "colour_mass": 0.9992,
+     "n": 192
+    },
+    "dm_rem_own": {
+     "success": 0.4167,
+     "echo": 0.0469,
+     "start_swap": 0.0885,
+     "unchanged": 0.2969,
+     "relookup": 0.0,
+     "other": 0.151,
+     "dose": 0.0458,
+     "colour_mass": 0.9985,
+     "n": 192
+    },
+    "dm_rem_clamp": {
+     "success": 0.4219,
+     "echo": 0.0312,
+     "start_swap": 0.0833,
+     "unchanged": 0.3021,
+     "relookup": 0.0,
+     "other": 0.1615,
+     "dose": 0.0449,
+     "colour_mass": 0.9985,
+     "n": 192
+    },
+    "null_dm": {
+     "success": 0.0104,
+     "echo": 0.0104,
+     "start_swap": 0.0156,
+     "unchanged": 0.9271,
+     "relookup": 0.0,
+     "other": 0.0365,
+     "dose": 0.0444,
+     "colour_mass": 0.9991,
+     "n": 192
+    },
+    "other_item": {
+     "success": 0.0417,
+     "echo": 0.0573,
+     "start_swap": 0.026,
+     "unchanged": 0.6198,
+     "relookup": 0.0,
+     "other": 0.2552,
+     "dose": 0.0439,
+     "colour_mass": 0.9987,
+     "n": 192
+    },
+    "jpp_at_dm": {
+     "success": 0.0,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.9948,
+     "relookup": 0.0,
+     "other": 0.0052,
+     "dose": 0.01,
+     "colour_mass": 0.9992,
+     "n": 192
+    },
+    "ar_full": {
+     "success": 0.1771,
+     "echo": 0.1042,
+     "start_swap": 0.0365,
+     "unchanged": 0.5365,
+     "relookup": 0.0,
+     "other": 0.1458,
+     "dose": 0.2816,
+     "colour_mass": 0.9717,
+     "n": 192
+    },
+    "ar_jpart": {
+     "success": 0.026,
+     "echo": 0.0417,
+     "start_swap": 0.0208,
+     "unchanged": 0.7656,
+     "relookup": 0.0,
+     "other": 0.1458,
+     "dose": 0.2816,
+     "colour_mass": 0.998,
+     "n": 192
+    },
+    "ar_rem": {
+     "success": 0.1458,
+     "echo": 0.0573,
+     "start_swap": 0.026,
+     "unchanged": 0.5781,
+     "relookup": 0.0,
+     "other": 0.1927,
+     "dose": 0.2816,
+     "colour_mass": 0.9877,
+     "n": 192
+    },
+    "null_ar": {
+     "success": 0.0104,
+     "echo": 0.0052,
+     "start_swap": 0.0104,
+     "unchanged": 0.8906,
+     "relookup": 0.0,
+     "other": 0.0833,
+     "dose": 0.2816,
+     "colour_mass": 0.999,
+     "n": 192
+    }
+   },
+   "tests": {
+    "T1 dm_jpart - dm_rem": {
+     "mean": -0.3698,
+     "lo": -0.4427,
+     "hi": -0.2969,
+     "n": 192
+    },
+    "T2 jpp_raw - null_jpp": {
+     "mean": 0.026,
+     "lo": 0.0052,
+     "hi": 0.0521,
+     "n": 192,
+     "p": 0.0064,
+     "p_holm": 0.0256
+    },
+    "T2 dm_full - null_dm": {
+     "mean": 0.4167,
+     "lo": 0.349,
+     "hi": 0.4896,
+     "n": 192,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 jpp_matched - null_dm": {
+     "mean": -0.0052,
+     "lo": -0.026,
+     "hi": 0.0104,
+     "n": 192,
+     "p": 0.82362,
+     "p_holm": 0.82362
+    },
+    "T2 dm_jpart - null_dm": {
+     "mean": 0.0365,
+     "lo": 0.0104,
+     "hi": 0.0677,
+     "n": 192,
+     "p": 0.0016,
+     "p_holm": 0.008
+    },
+    "T2 dm_rem - null_dm": {
+     "mean": 0.4062,
+     "lo": 0.3385,
+     "hi": 0.4792,
+     "n": 192,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 dm_jpart_own - null_dm": {
+     "mean": 0.0208,
+     "lo": 0.0052,
+     "hi": 0.0417,
+     "n": 192,
+     "p": 0.019,
+     "p_holm": 0.05699
+    },
+    "T2 dm_rem_own - null_dm": {
+     "mean": 0.4062,
+     "lo": 0.3385,
+     "hi": 0.474,
+     "n": 192,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 dm_rem_clamp - null_dm": {
+     "mean": 0.4115,
+     "lo": 0.3438,
+     "hi": 0.4844,
+     "n": 192,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 ar_full - null_ar": {
+     "mean": 0.1667,
+     "lo": 0.1146,
+     "hi": 0.224,
+     "n": 192,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 ar_jpart - null_ar": {
+     "mean": 0.0156,
+     "lo": -0.0052,
+     "hi": 0.0417,
+     "n": 192,
+     "p": 0.12189,
+     "p_holm": 0.24378
+    },
+    "T2 ar_rem - null_ar": {
+     "mean": 0.1354,
+     "lo": 0.0885,
+     "hi": 0.1875,
+     "n": 192,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T3 dm_rem - dm_rem_clamp": {
+     "mean": -0.0052,
+     "lo": -0.0156,
+     "hi": 0.0,
+     "n": 192
+    },
+    "T4 jpp_answer - jpp_raw": {
+     "mean": -0.0208,
+     "lo": -0.0521,
+     "hi": 0.0104,
+     "n": 192
+    },
+    "T5 dm_full - jpp_matched": {
+     "mean": 0.4219,
+     "lo": 0.3542,
+     "hi": 0.4896,
+     "n": 192
+    }
+   }
+  },
+  "test": {
+   "n_eligible": 930,
+   "rates": {
+    "jpp_raw": {
+     "success": 0.0226,
+     "echo": 0.0226,
+     "start_swap": 0.0118,
+     "unchanged": 0.8301,
+     "relookup": 0.0,
+     "other": 0.1129,
+     "dose": 0.0557,
+     "colour_mass": 0.9979,
+     "n": 930
+    },
+    "null_jpp": {
+     "success": 0.0065,
+     "echo": 0.0097,
+     "start_swap": 0.0065,
+     "unchanged": 0.9172,
+     "relookup": 0.0,
+     "other": 0.0602,
+     "dose": 0.0555,
+     "colour_mass": 0.9992,
+     "n": 930
+    },
+    "jpp_answer": {
+     "success": 0.0172,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.843,
+     "relookup": 0.0183,
+     "other": 0.1215,
+     "dose": 0.0553,
+     "colour_mass": 0.9986,
+     "n": 930
+    },
+    "dm_full": {
+     "success": 0.3602,
+     "echo": 0.0462,
+     "start_swap": 0.0559,
+     "unchanged": 0.3344,
+     "relookup": 0.0,
+     "other": 0.2032,
+     "dose": 0.044,
+     "colour_mass": 0.9986,
+     "n": 930
+    },
+    "jpp_matched": {
+     "success": 0.0075,
+     "echo": 0.0032,
+     "start_swap": 0.0043,
+     "unchanged": 0.9301,
+     "relookup": 0.0,
+     "other": 0.0548,
+     "dose": 0.0438,
+     "colour_mass": 0.9993,
+     "n": 930
+    },
+    "dm_jpart": {
+     "success": 0.0237,
+     "echo": 0.0194,
+     "start_swap": 0.0065,
+     "unchanged": 0.8495,
+     "relookup": 0.0,
+     "other": 0.1011,
+     "dose": 0.0439,
+     "colour_mass": 0.9993,
+     "n": 930
+    },
+    "dm_rem": {
+     "success": 0.3591,
+     "echo": 0.0462,
+     "start_swap": 0.0527,
+     "unchanged": 0.3409,
+     "relookup": 0.0,
+     "other": 0.2011,
+     "dose": 0.044,
+     "colour_mass": 0.9985,
+     "n": 930
+    },
+    "dm_jpart_own": {
+     "success": 0.0151,
+     "echo": 0.0086,
+     "start_swap": 0.0043,
+     "unchanged": 0.9151,
+     "relookup": 0.0,
+     "other": 0.057,
+     "dose": 0.0189,
+     "colour_mass": 0.9993,
+     "n": 930
+    },
+    "dm_rem_own": {
+     "success": 0.3645,
+     "echo": 0.0452,
+     "start_swap": 0.0548,
+     "unchanged": 0.3323,
+     "relookup": 0.0,
+     "other": 0.2032,
+     "dose": 0.0451,
+     "colour_mass": 0.9985,
+     "n": 930
+    },
+    "dm_rem_clamp": {
+     "success": 0.357,
+     "echo": 0.043,
+     "start_swap": 0.0527,
+     "unchanged": 0.3473,
+     "relookup": 0.0,
+     "other": 0.2,
+     "dose": 0.0441,
+     "colour_mass": 0.9985,
+     "n": 930
+    },
+    "null_dm": {
+     "success": 0.0032,
+     "echo": 0.0086,
+     "start_swap": 0.0054,
+     "unchanged": 0.9301,
+     "relookup": 0.0,
+     "other": 0.0527,
+     "dose": 0.0437,
+     "colour_mass": 0.9992,
+     "n": 930
+    },
+    "other_item": {
+     "success": 0.0226,
+     "echo": 0.0624,
+     "start_swap": 0.0312,
+     "unchanged": 0.6194,
+     "relookup": 0.0,
+     "other": 0.2645,
+     "dose": 0.0428,
+     "colour_mass": 0.9988,
+     "n": 930
+    },
+    "dm_jpart_x2": {
+     "success": 0.0301,
+     "echo": 0.0366,
+     "start_swap": 0.0161,
+     "unchanged": 0.7624,
+     "relookup": 0.0,
+     "other": 0.1548,
+     "dose": 0.0875,
+     "colour_mass": 0.9988,
+     "n": 930
+    },
+    "jpp_matched_x2": {
+     "success": 0.0075,
+     "echo": 0.0172,
+     "start_swap": 0.0054,
+     "unchanged": 0.871,
+     "relookup": 0.0,
+     "other": 0.0989,
+     "dose": 0.0874,
+     "colour_mass": 0.9991,
+     "n": 930
+    },
+    "null_dm_x2": {
+     "success": 0.0097,
+     "echo": 0.0151,
+     "start_swap": 0.0118,
+     "unchanged": 0.8602,
+     "relookup": 0.0,
+     "other": 0.1032,
+     "dose": 0.0868,
+     "colour_mass": 0.9989,
+     "n": 930
+    },
+    "dm_jpart_x4": {
+     "success": 0.0505,
+     "echo": 0.0817,
+     "start_swap": 0.0215,
+     "unchanged": 0.5172,
+     "relookup": 0.0,
+     "other": 0.329,
+     "dose": 0.1703,
+     "colour_mass": 0.9895,
+     "n": 930
+    },
+    "jpp_matched_x4": {
+     "success": 0.0108,
+     "echo": 0.0699,
+     "start_swap": 0.0065,
+     "unchanged": 0.7043,
+     "relookup": 0.0,
+     "other": 0.2086,
+     "dose": 0.1727,
+     "colour_mass": 0.9971,
+     "n": 930
+    },
+    "null_dm_x4": {
+     "success": 0.028,
+     "echo": 0.0194,
+     "start_swap": 0.0183,
+     "unchanged": 0.5516,
+     "relookup": 0.0,
+     "other": 0.3828,
+     "dose": 0.1677,
+     "colour_mass": 0.9911,
+     "n": 930
+    },
+    "jpp_answer_ctl": {
+     "success": 0.9677,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.0161,
+     "relookup": 0.0022,
+     "other": 0.014,
+     "dose": 0.0295,
+     "colour_mass": 0.9993,
+     "n": 930
+    },
+    "null_answer_ctl": {
+     "success": 0.0011,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.9763,
+     "relookup": 0.0022,
+     "other": 0.0204,
+     "dose": 0.0295,
+     "colour_mass": 0.9992,
+     "n": 930
+    },
+    "ar_full": {
+     "success": 0.1699,
+     "echo": 0.129,
+     "start_swap": 0.0237,
+     "unchanged": 0.5204,
+     "relookup": 0.0,
+     "other": 0.157,
+     "dose": 0.2912,
+     "colour_mass": 0.9736,
+     "n": 930
+    },
+    "ar_jpart": {
+     "success": 0.0355,
+     "echo": 0.0366,
+     "start_swap": 0.0151,
+     "unchanged": 0.7505,
+     "relookup": 0.0,
+     "other": 0.1624,
+     "dose": 0.2912,
+     "colour_mass": 0.9985,
+     "n": 930
+    },
+    "ar_rem": {
+     "success": 0.1667,
+     "echo": 0.0645,
+     "start_swap": 0.0226,
+     "unchanged": 0.5774,
+     "relookup": 0.0,
+     "other": 0.1688,
+     "dose": 0.2912,
+     "colour_mass": 0.9852,
+     "n": 930
+    },
+    "null_ar": {
+     "success": 0.0043,
+     "echo": 0.0129,
+     "start_swap": 0.0086,
+     "unchanged": 0.8699,
+     "relookup": 0.0,
+     "other": 0.1043,
+     "dose": 0.2912,
+     "colour_mass": 0.9991,
+     "n": 930
+    }
+   },
+   "tests": {
+    "T1 dm_jpart - dm_rem": {
+     "mean": -0.3355,
+     "lo": -0.3667,
+     "hi": -0.3032,
+     "n": 930
+    },
+    "T2 jpp_raw - null_jpp": {
+     "mean": 0.0161,
+     "lo": 0.0054,
+     "hi": 0.0269,
+     "n": 930,
+     "p": 0.0017,
+     "p_holm": 0.0039
+    },
+    "T2 dm_full - null_dm": {
+     "mean": 0.357,
+     "lo": 0.3258,
+     "hi": 0.3882,
+     "n": 930,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 jpp_matched - null_dm": {
+     "mean": 0.0043,
+     "lo": -0.0011,
+     "hi": 0.0108,
+     "n": 930,
+     "p": 0.10309,
+     "p_holm": 0.10309
+    },
+    "T2 dm_jpart - null_dm": {
+     "mean": 0.0204,
+     "lo": 0.0108,
+     "hi": 0.0312,
+     "n": 930,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 dm_rem - null_dm": {
+     "mean": 0.3559,
+     "lo": 0.3247,
+     "hi": 0.3871,
+     "n": 930,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 dm_jpart_own - null_dm": {
+     "mean": 0.0118,
+     "lo": 0.0043,
+     "hi": 0.0204,
+     "n": 930,
+     "p": 0.0013,
+     "p_holm": 0.0039
+    },
+    "T2 dm_rem_own - null_dm": {
+     "mean": 0.3613,
+     "lo": 0.3301,
+     "hi": 0.3925,
+     "n": 930,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 dm_rem_clamp - null_dm": {
+     "mean": 0.3538,
+     "lo": 0.3226,
+     "hi": 0.3849,
+     "n": 930,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 ar_full - null_ar": {
+     "mean": 0.1656,
+     "lo": 0.1409,
+     "hi": 0.1903,
+     "n": 930,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 ar_jpart - null_ar": {
+     "mean": 0.0312,
+     "lo": 0.0194,
+     "hi": 0.0441,
+     "n": 930,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T2 ar_rem - null_ar": {
+     "mean": 0.1624,
+     "lo": 0.1387,
+     "hi": 0.1871,
+     "n": 930,
+     "p": 0.0001,
+     "p_holm": 0.0011
+    },
+    "T3 dm_rem - dm_rem_clamp": {
+     "mean": 0.0022,
+     "lo": -0.0032,
+     "hi": 0.0086,
+     "n": 930
+    },
+    "T4 jpp_answer - jpp_raw": {
+     "mean": -0.0054,
+     "lo": -0.0183,
+     "hi": 0.0075,
+     "n": 930
+    },
+    "T5 dm_full - jpp_matched": {
+     "mean": 0.3527,
+     "lo": 0.3215,
+     "hi": 0.3839,
+     "n": 930
+    },
+    "secondary dm_jpart_x2 - null_dm_x2": {
+     "mean": 0.0204,
+     "lo": 0.0097,
+     "hi": 0.0323,
+     "n": 930
+    },
+    "secondary jpp_matched_x2 - null_dm_x2": {
+     "mean": -0.0022,
+     "lo": -0.0108,
+     "hi": 0.0054,
+     "n": 930
+    },
+    "secondary dm_jpart_x4 - null_dm_x4": {
+     "mean": 0.0226,
+     "lo": 0.0054,
+     "hi": 0.0398,
+     "n": 930
+    },
+    "secondary jpp_matched_x4 - null_dm_x4": {
+     "mean": -0.0172,
+     "lo": -0.0301,
+     "hi": -0.0065,
+     "n": 930
+    },
+    "secondary jpp_answer_ctl - null_answer_ctl": {
+     "mean": 0.9667,
+     "lo": 0.9538,
+     "hi": 0.9785,
+     "n": 930
+    }
+   }
+  },
+  "test_all_positions": {
+   "n_eligible": 921,
+   "rates": {
+    "jpp_raw_all": {
+     "success": 0.0369,
+     "echo": 0.0684,
+     "unchanged": 0.6341,
+     "dose": 0.0598,
+     "n": 921
+    },
+    "dm_full_all": {
+     "success": 0.1661,
+     "echo": 0.0326,
+     "unchanged": 0.5212,
+     "dose": 0.0426,
+     "n": 921
+    },
+    "null_dm_all": {
+     "success": 0.0043,
+     "echo": 0.0076,
+     "unchanged": 0.9316,
+     "dose": 0.0425,
+     "n": 921
+    }
+   },
+   "tests": {
+    "jpp_raw_all - null_dm_all": {
+     "mean": 0.0326,
+     "lo": 0.0206,
+     "hi": 0.0456,
+     "n": 921
+    },
+    "dm_full_all - null_dm_all": {
+     "mean": 0.1618,
+     "lo": 0.1379,
+     "hi": 0.1857,
+     "n": 921
+    }
+   }
+  },
+  "patch_test": {
+   "start": {
+    "n_targets": 930,
+    "n_clean_gold": 930,
+    "n_cf_correct": 710,
+    "rates": {
+     "patch_full|b42_54": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0114,
+      "n": 710,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b42_54": {
+      "success": 0.6042,
+      "unchanged": 0.0944,
+      "echo": 0.1366,
+      "start_swap": 0.0704,
+      "other": 0.0944,
+      "dose": 0.0193,
+      "n": 710,
+      "specificity": {
+       "mean": 0.5007,
+       "lo": 0.4535,
+       "hi": 0.5472
+      }
+     },
+     "patch_dm_jpart|b42_54": {
+      "success": 0.0211,
+      "unchanged": 0.9,
+      "echo": 0.0197,
+      "start_swap": 0.0056,
+      "other": 0.0535,
+      "dose": 0.0113,
+      "n": 710,
+      "specificity": {
+       "mean": 0.0085,
+       "lo": -0.0035,
+       "hi": 0.0211
+      }
+     },
+     "patch_dm_rem|b42_54": {
+      "success": 0.607,
+      "unchanged": 0.0887,
+      "echo": 0.1352,
+      "start_swap": 0.0732,
+      "other": 0.0958,
+      "dose": 0.0159,
+      "n": 710,
+      "specificity": {
+       "mean": 0.5028,
+       "lo": 0.4549,
+       "hi": 0.55
+      }
+     },
+     "patch_jpp|b42_54": {
+      "success": 0.0042,
+      "unchanged": 0.9662,
+      "echo": 0.0056,
+      "start_swap": 0.0014,
+      "other": 0.0225,
+      "dose": 0.0069,
+      "n": 710,
+      "specificity": {
+       "mean": 0.0007,
+       "lo": -0.0049,
+       "hi": 0.007
+      }
+     },
+     "patch_random|b42_54": {
+      "success": 0.0014,
+      "unchanged": 0.9704,
+      "echo": 0.0056,
+      "start_swap": 0.0014,
+      "other": 0.0211,
+      "dose": 0.009,
+      "n": 710,
+      "specificity": {
+       "mean": -0.0021,
+       "lo": -0.0063,
+       "hi": 0.0021
+      }
+     },
+     "patch_full|b24_36": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0061,
+      "n": 710,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b24_36": {
+      "success": 0.1042,
+      "unchanged": 0.7183,
+      "echo": 0.0873,
+      "start_swap": 0.0099,
+      "other": 0.0803,
+      "dose": 0.0119,
+      "n": 710,
+      "specificity": {
+       "mean": 0.0556,
+       "lo": 0.0296,
+       "hi": 0.0824
+      }
+     },
+     "patch_dm_jpart|b24_36": {
+      "success": 0.0028,
+      "unchanged": 0.9437,
+      "echo": 0.0127,
+      "start_swap": 0.0028,
+      "other": 0.038,
+      "dose": 0.006,
+      "n": 710,
+      "specificity": {
+       "mean": -0.0049,
+       "lo": -0.0113,
+       "hi": 0.0014
+      }
+     },
+     "patch_dm_rem|b24_36": {
+      "success": 0.0944,
+      "unchanged": 0.7282,
+      "echo": 0.0817,
+      "start_swap": 0.0099,
+      "other": 0.0859,
+      "dose": 0.0108,
+      "n": 710,
+      "specificity": {
+       "mean": 0.0486,
+       "lo": 0.0246,
+       "hi": 0.0732
+      }
+     },
+     "patch_jpp|b24_36": {
+      "success": 0.0014,
+      "unchanged": 0.9761,
+      "echo": 0.0056,
+      "start_swap": 0.0014,
+      "other": 0.0155,
+      "dose": 0.0032,
+      "n": 710,
+      "specificity": {
+       "mean": -0.0021,
+       "lo": -0.0063,
+       "hi": 0.0021
+      }
+     },
+     "patch_random|b24_36": {
+      "success": 0.0,
+      "unchanged": 0.9873,
+      "echo": 0.0,
+      "start_swap": 0.0014,
+      "other": 0.0113,
+      "dose": 0.0046,
+      "n": 710,
+      "specificity": {
+       "mean": -0.0007,
+       "lo": -0.0021,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b48_60": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0157,
+      "n": 710,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_jpp|b48_60": {
+      "success": 0.6746,
+      "unchanged": 0.2225,
+      "echo": 0.0324,
+      "start_swap": 0.0239,
+      "other": 0.0465,
+      "dose": 0.0133,
+      "n": 710,
+      "specificity": {
+       "mean": 0.6465,
+       "lo": 0.6085,
+       "hi": 0.6845
+      }
+     },
+     "patch_random|b48_60": {
+      "success": 0.0014,
+      "unchanged": 0.9831,
+      "echo": 0.0028,
+      "start_swap": 0.0,
+      "other": 0.0127,
+      "dose": 0.011,
+      "n": 710,
+      "specificity": {
+       "mean": 0.0,
+       "lo": -0.0028,
+       "hi": 0.0035
+      }
+     }
+    },
+    "tests": {}
+   },
+   "after": {
+    "n_targets": 930,
+    "n_clean_gold": 930,
+    "n_cf_correct": 710,
+    "rates": {
+     "patch_full|b42_54": {
+      "success": 0.9887,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.007,
+      "other": 0.0042,
+      "dose": 0.0252,
+      "n": 710,
+      "specificity": {
+       "mean": 0.9852,
+       "lo": 0.9739,
+       "hi": 0.9951
+      }
+     },
+     "patch_dm|b42_54": {
+      "success": 0.5944,
+      "unchanged": 0.0887,
+      "echo": 0.1282,
+      "start_swap": 0.0775,
+      "other": 0.1113,
+      "dose": 0.0192,
+      "n": 710,
+      "specificity": {
+       "mean": 0.4915,
+       "lo": 0.4444,
+       "hi": 0.538
+      }
+     },
+     "patch_dm_jpart|b42_54": {
+      "success": 0.0197,
+      "unchanged": 0.9056,
+      "echo": 0.0169,
+      "start_swap": 0.0056,
+      "other": 0.0521,
+      "dose": 0.0106,
+      "n": 710,
+      "specificity": {
+       "mean": 0.0085,
+       "lo": -0.0028,
+       "hi": 0.0204
+      }
+     },
+     "patch_dm_rem|b42_54": {
+      "success": 0.5958,
+      "unchanged": 0.093,
+      "echo": 0.1296,
+      "start_swap": 0.0732,
+      "other": 0.1085,
+      "dose": 0.0159,
+      "n": 710,
+      "specificity": {
+       "mean": 0.4944,
+       "lo": 0.4472,
+       "hi": 0.5415
+      }
+     },
+     "patch_jpp|b42_54": {
+      "success": 0.0042,
+      "unchanged": 0.9704,
+      "echo": 0.0056,
+      "start_swap": 0.0014,
+      "other": 0.0183,
+      "dose": 0.0062,
+      "n": 710,
+      "specificity": {
+       "mean": 0.0007,
+       "lo": -0.0049,
+       "hi": 0.007
+      }
+     },
+     "patch_random|b42_54": {
+      "success": 0.0014,
+      "unchanged": 0.9704,
+      "echo": 0.0042,
+      "start_swap": 0.0014,
+      "other": 0.0225,
+      "dose": 0.0086,
+      "n": 710,
+      "specificity": {
+       "mean": -0.0014,
+       "lo": -0.0049,
+       "hi": 0.0028
+      }
+     },
+     "patch_full|b24_36": {
+      "success": 0.4507,
+      "unchanged": 0.2366,
+      "echo": 0.1042,
+      "start_swap": 0.0521,
+      "other": 0.1563,
+      "dose": 0.0217,
+      "n": 710,
+      "specificity": {
+       "mean": 0.3725,
+       "lo": 0.3289,
+       "hi": 0.4148
+      }
+     },
+     "patch_dm|b24_36": {
+      "success": 0.0789,
+      "unchanged": 0.7507,
+      "echo": 0.0662,
+      "start_swap": 0.0127,
+      "other": 0.0915,
+      "dose": 0.0114,
+      "n": 710,
+      "specificity": {
+       "mean": 0.0394,
+       "lo": 0.0169,
+       "hi": 0.0627
+      }
+     },
+     "patch_dm_jpart|b24_36": {
+      "success": 0.0014,
+      "unchanged": 0.9549,
+      "echo": 0.0113,
+      "start_swap": 0.0028,
+      "other": 0.0296,
+      "dose": 0.0051,
+      "n": 710,
+      "specificity": {
+       "mean": -0.0056,
+       "lo": -0.0106,
+       "hi": -0.0007
+      }
+     },
+     "patch_dm_rem|b24_36": {
+      "success": 0.0732,
+      "unchanged": 0.7718,
+      "echo": 0.0577,
+      "start_swap": 0.0099,
+      "other": 0.0873,
+      "dose": 0.0102,
+      "n": 710,
+      "specificity": {
+       "mean": 0.0394,
+       "lo": 0.0176,
+       "hi": 0.0613
+      }
+     },
+     "patch_jpp|b24_36": {
+      "success": 0.0,
+      "unchanged": 0.9859,
+      "echo": 0.0014,
+      "start_swap": 0.0014,
+      "other": 0.0113,
+      "dose": 0.0026,
+      "n": 710,
+      "specificity": {
+       "mean": -0.0014,
+       "lo": -0.0035,
+       "hi": 0.0
+      }
+     },
+     "patch_random|b24_36": {
+      "success": 0.0,
+      "unchanged": 0.9915,
+      "echo": 0.0,
+      "start_swap": 0.0014,
+      "other": 0.007,
+      "dose": 0.0041,
+      "n": 710,
+      "specificity": {
+       "mean": -0.0007,
+       "lo": -0.0021,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b48_60": {
+      "success": 0.9972,
+      "unchanged": 0.0,
+      "echo": 0.0014,
+      "start_swap": 0.0014,
+      "other": 0.0,
+      "dose": 0.0253,
+      "n": 710,
+      "specificity": {
+       "mean": 0.9958,
+       "lo": 0.9894,
+       "hi": 1.0
+      }
+     },
+     "patch_jpp|b48_60": {
+      "success": 0.6732,
+      "unchanged": 0.2254,
+      "echo": 0.0338,
+      "start_swap": 0.0225,
+      "other": 0.0451,
+      "dose": 0.0127,
+      "n": 710,
+      "specificity": {
+       "mean": 0.6451,
+       "lo": 0.607,
+       "hi": 0.6831
+      }
+     },
+     "patch_random|b48_60": {
+      "success": 0.0014,
+      "unchanged": 0.9845,
+      "echo": 0.0028,
+      "start_swap": 0.0,
+      "other": 0.0113,
+      "dose": 0.0105,
+      "n": 710,
+      "specificity": {
+       "mean": 0.0,
+       "lo": -0.0028,
+       "hi": 0.0035
+      }
+     }
+    },
+    "tests": {
+     "P1 patch_jpp - patch_random @ b42_54": {
+      "mean": 0.0028,
+      "lo": 0.0,
+      "hi": 0.007,
+      "n": 710,
+      "p": 0.13439,
+      "p_holm": 0.13439
+     },
+     "P2 patch_dm - patch_jpp @ b42_54": {
+      "mean": 0.5901,
+      "lo": 0.5549,
+      "hi": 0.6268,
+      "n": 710,
+      "p": 0.0001,
+      "p_holm": 0.0003
+     },
+     "P3 patch_dm_rem - patch_dm_jpart @ b42_54": {
+      "mean": 0.5761,
+      "lo": 0.5394,
+      "hi": 0.6127,
+      "n": 710,
+      "p": 0.0001,
+      "p_holm": 0.0003
+     }
+    }
+   }
+  }
+ },
+ "gemma": {
+  "posctl": {
+   "gain": null,
+   "K1_stop": true,
+   "reason": "no prompt is answered correctly when clean"
+  },
+  "posctl_orth": {},
+  "dev": {
+   "n_eligible": 230,
+   "zero_unchanged": 230,
+   "n_zero": 230,
+   "chosen": {
+    "jpp": {
+     "band": "b22_34",
+     "alpha": 1.0,
+     "success": 0.0,
+     "null": 0.0,
+     "gain": 0.0,
+     "echo": 0.0,
+     "dose": 0.0012
+    },
+    "dm": {
+     "band": "b40_52",
+     "alpha": 1.0,
+     "success": 0.4217,
+     "null": 0.1478,
+     "gain": 0.2739,
+     "echo": 0.0739,
+     "dose": 0.0709
+    }
+   },
+   "K2_stop": false
+  },
+  "answer_swaps": {},
+  "patch_dev": {},
+  "preview": {
+   "n_eligible": 230,
+   "rates": {
+    "jpp_raw": {
+     "success": 0.0,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.9957,
+     "relookup": 0.0,
+     "other": 0.0043,
+     "dose": 0.0012,
+     "colour_mass": 1.0,
+     "n": 230
+    },
+    "null_jpp": {
+     "success": 0.0,
+     "echo": 0.0087,
+     "start_swap": 0.0,
+     "unchanged": 0.9739,
+     "relookup": 0.0,
+     "other": 0.0174,
+     "dose": 0.0012,
+     "colour_mass": 1.0,
+     "n": 230
+    },
+    "jpp_answer": {
+     "success": 0.0,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.987,
+     "relookup": 0.0,
+     "other": 0.013,
+     "dose": 0.0012,
+     "colour_mass": 1.0,
+     "n": 230
+    },
+    "dm_full": {
+     "success": 0.4217,
+     "echo": 0.0739,
+     "start_swap": 0.0,
+     "unchanged": 0.3913,
+     "relookup": 0.0,
+     "other": 0.113,
+     "dose": 0.0709,
+     "colour_mass": 0.9997,
+     "n": 230
+    },
+    "jpp_matched": {
+     "success": 0.0913,
+     "echo": 0.113,
+     "start_swap": 0.0913,
+     "unchanged": 0.0913,
+     "relookup": 0.0,
+     "other": 0.613,
+     "dose": 0.0589,
+     "colour_mass": 0.0,
+     "n": 230
+    },
+    "dm_jpart": {
+     "success": 0.0739,
+     "echo": 0.0739,
+     "start_swap": 0.1043,
+     "unchanged": 0.0739,
+     "relookup": 0.0,
+     "other": 0.6739,
+     "dose": 0.0588,
+     "colour_mass": 0.0,
+     "n": 230
+    },
+    "dm_rem": {
+     "success": 0.4043,
+     "echo": 0.0913,
+     "start_swap": 0.0087,
+     "unchanged": 0.3696,
+     "relookup": 0.0,
+     "other": 0.1261,
+     "dose": 0.0699,
+     "colour_mass": 0.9906,
+     "n": 230
+    },
+    "dm_jpart_own": {
+     "success": 0.0,
+     "echo": 0.0043,
+     "start_swap": 0.0,
+     "unchanged": 0.9696,
+     "relookup": 0.0,
+     "other": 0.0261,
+     "dose": 0.0004,
+     "colour_mass": 0.7424,
+     "n": 230
+    },
+    "dm_rem_own": {
+     "success": 0.3913,
+     "echo": 0.1043,
+     "start_swap": 0.0087,
+     "unchanged": 0.3652,
+     "relookup": 0.0,
+     "other": 0.1304,
+     "dose": 0.0697,
+     "colour_mass": 0.9889,
+     "n": 230
+    },
+    "dm_rem_clamp": {
+     "success": 0.413,
+     "echo": 0.0826,
+     "start_swap": 0.0043,
+     "unchanged": 0.3696,
+     "relookup": 0.0,
+     "other": 0.1304,
+     "dose": 0.0697,
+     "colour_mass": 0.9882,
+     "n": 230
+    },
+    "null_dm": {
+     "success": 0.1,
+     "echo": 0.0696,
+     "start_swap": 0.113,
+     "unchanged": 0.1217,
+     "relookup": 0.0,
+     "other": 0.5957,
+     "dose": 0.0592,
+     "colour_mass": 0.0,
+     "n": 230
+    },
+    "other_item": {
+     "success": 0.0,
+     "echo": 0.0174,
+     "start_swap": 0.0043,
+     "unchanged": 0.8087,
+     "relookup": 0.0,
+     "other": 0.1696,
+     "dose": 0.0697,
+     "colour_mass": 0.9998,
+     "n": 230
+    },
+    "jpp_at_dm": {
+     "success": 0.0,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 1.0,
+     "relookup": 0.0,
+     "other": 0.0,
+     "dose": 0.0001,
+     "colour_mass": 1.0,
+     "n": 230
+    }
+   },
+   "tests": {
+    "T1 dm_jpart - dm_rem": {
+     "mean": -0.3304,
+     "lo": -0.4,
+     "hi": -0.2565,
+     "n": 230
+    },
+    "T2 jpp_raw - null_jpp": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 230,
+     "p": 1.0,
+     "p_holm": 1.0
+    },
+    "T2 dm_full - null_dm": {
+     "mean": 0.3217,
+     "lo": 0.2435,
+     "hi": 0.3957,
+     "n": 230,
+     "p": 0.0001,
+     "p_holm": 0.0008
+    },
+    "T2 jpp_matched - null_dm": {
+     "mean": -0.0087,
+     "lo": -0.0652,
+     "hi": 0.0435,
+     "n": 230,
+     "p": 0.65083,
+     "p_holm": 1.0
+    },
+    "T2 dm_jpart - null_dm": {
+     "mean": -0.0261,
+     "lo": -0.0739,
+     "hi": 0.0217,
+     "n": 230,
+     "p": 0.88451,
+     "p_holm": 1.0
+    },
+    "T2 dm_rem - null_dm": {
+     "mean": 0.3043,
+     "lo": 0.2261,
+     "hi": 0.3783,
+     "n": 230,
+     "p": 0.0001,
+     "p_holm": 0.0008
+    },
+    "T2 dm_jpart_own - null_dm": {
+     "mean": -0.1,
+     "lo": -0.1435,
+     "hi": -0.0609,
+     "n": 230,
+     "p": 1.0,
+     "p_holm": 1.0
+    },
+    "T2 dm_rem_own - null_dm": {
+     "mean": 0.2913,
+     "lo": 0.2174,
+     "hi": 0.3652,
+     "n": 230,
+     "p": 0.0001,
+     "p_holm": 0.0008
+    },
+    "T2 dm_rem_clamp - null_dm": {
+     "mean": 0.313,
+     "lo": 0.2348,
+     "hi": 0.387,
+     "n": 230,
+     "p": 0.0001,
+     "p_holm": 0.0008
+    },
+    "T3 dm_rem - dm_rem_clamp": {
+     "mean": -0.0087,
+     "lo": -0.0348,
+     "hi": 0.0174,
+     "n": 230
+    },
+    "T4 jpp_answer - jpp_raw": {
+     "mean": 0.0,
+     "lo": 0.0,
+     "hi": 0.0,
+     "n": 230
+    },
+    "T5 dm_full - jpp_matched": {
+     "mean": 0.3304,
+     "lo": 0.2609,
+     "hi": 0.4,
+     "n": 230
+    }
+   }
+  },
+  "test": {},
+  "test_all_positions": {},
+  "patch_test": {}
+ },
+ "gemma_occupied": {
+  "posctl": {
+   "band": "b22_34",
+   "alpha": 4.0,
+   "gain": 0.0769,
+   "inter": 0.0769,
+   "answer": 0.0154,
+   "null": 0.0,
+   "n": 65,
+   "K1_stop": true
+  },
+  "posctl_orth": {},
+  "dev": {
+   "n_eligible": 230,
+   "zero_unchanged": 230,
+   "n_zero": 230,
+   "chosen": {
+    "jpp": {
+     "band": "b34_46",
+     "alpha": 4.0,
+     "success": 0.1391,
+     "null": 0.0,
+     "gain": 0.1391,
+     "echo": 0.1,
+     "dose": 0.0205
+    },
+    "dm": {
+     "band": "b40_52",
+     "alpha": 1.0,
+     "success": 0.4217,
+     "null": 0.0826,
+     "gain": 0.3391,
+     "echo": 0.0739,
+     "dose": 0.0709
+    }
+   },
+   "K2_stop": false
+  },
+  "answer_swaps": {
+   "jpp_answer|b22_34|1": {
+    "success": 0.0,
+    "null": 0.0043,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.003
+   },
+   "jpp_answer|b22_34|2": {
+    "success": 0.0,
+    "null": 0.0043,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0059
+   },
+   "jpp_answer|b22_34|4": {
+    "success": 0.0478,
+    "null": 0.0043,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0119
+   },
+   "jpp_answer|b22_34|8": {
+    "success": 0.1391,
+    "null": 0.0,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0239
+   },
+   "jpp_answer|b22_46|1": {
+    "success": 0.1174,
+    "null": 0.0,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0048
+   },
+   "jpp_answer|b22_46|2": {
+    "success": 0.0783,
+    "null": 0.0,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0086
+   },
+   "jpp_answer|b22_46|4": {
+    "success": 0.0739,
+    "null": 0.0,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0167
+   },
+   "jpp_answer|b22_46|8": {
+    "success": 0.1087,
+    "null": 0.0609,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0341
+   },
+   "jpp_answer|b28_40|1": {
+    "success": 0.0087,
+    "null": 0.0043,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0042
+   },
+   "jpp_answer|b28_40|2": {
+    "success": 0.0304,
+    "null": 0.0043,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0082
+   },
+   "jpp_answer|b28_40|4": {
+    "success": 0.1478,
+    "null": 0.0043,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0162
+   },
+   "jpp_answer|b28_40|8": {
+    "success": 0.1565,
+    "null": 0.013,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0327
+   },
+   "jpp_answer|b34_46|1": {
+    "success": 0.1087,
+    "null": 0.0,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0064
+   },
+   "jpp_answer|b34_46|2": {
+    "success": 0.0696,
+    "null": 0.0,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.011
+   },
+   "jpp_answer|b34_46|4": {
+    "success": 0.0783,
+    "null": 0.0,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0213
+   },
+   "jpp_answer|b34_46|8": {
+    "success": 0.1217,
+    "null": 0.0783,
+    "n": 230,
+    "phase": "answer_early",
+    "dose": 0.0434
+   },
+   "jpp_answer|b40_52|1": {
+    "success": 0.1652,
+    "null": 0.0,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.0087
+   },
+   "jpp_answer|b40_52|2": {
+    "success": 0.1609,
+    "null": 0.0,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.0128
+   },
+   "jpp_answer|b40_52|4": {
+    "success": 0.1696,
+    "null": 0.0304,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.0223
+   },
+   "jpp_answer|b40_52|8": {
+    "success": 0.1609,
+    "null": 0.0522,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.043
+   },
+   "jpp_answer|b46_58|1": {
+    "success": 0.3043,
+    "null": 0.0043,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.0109
+   },
+   "jpp_answer|b46_58|2": {
+    "success": 0.4783,
+    "null": 0.0087,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.0147
+   },
+   "jpp_answer|b46_58|4": {
+    "success": 0.5043,
+    "null": 0.0348,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.0244
+   },
+   "jpp_answer|b46_58|8": {
+    "success": 0.5652,
+    "null": 0.087,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.0462
+   },
+   "jpp_answer|b52_58|1": {
+    "success": 0.2043,
+    "null": 0.0,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.0124
+   },
+   "jpp_answer|b52_58|2": {
+    "success": 0.3261,
+    "null": 0.0,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.019
+   },
+   "jpp_answer|b52_58|4": {
+    "success": 0.4565,
+    "null": 0.0087,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.0336
+   },
+   "jpp_answer|b52_58|8": {
+    "success": 0.513,
+    "null": 0.0304,
+    "n": 230,
+    "phase": "late",
+    "dose": 0.0647
+   }
+  },
+  "patch_dev": {
+   "start": {
+    "n_targets": 230,
+    "n_clean_gold": 230,
+    "n_cf_correct": 212,
+    "rates": {
+     "patch_full|b22_34": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0043,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b22_34": {
+      "success": 0.0,
+      "unchanged": 0.8962,
+      "echo": 0.033,
+      "start_swap": 0.0,
+      "other": 0.0708,
+      "dose": 0.0148,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0165,
+       "lo": -0.0283,
+       "hi": -0.0047
+      }
+     },
+     "patch_dm_jpart|b22_34": {
+      "success": 0.0,
+      "unchanged": 0.9811,
+      "echo": 0.0094,
+      "start_swap": 0.0,
+      "other": 0.0094,
+      "dose": 0.0026,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0047,
+       "lo": -0.0118,
+       "hi": 0.0
+      }
+     },
+     "patch_dm_rem|b22_34": {
+      "success": 0.0,
+      "unchanged": 0.9104,
+      "echo": 0.033,
+      "start_swap": 0.0,
+      "other": 0.0566,
+      "dose": 0.0133,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0165,
+       "lo": -0.0283,
+       "hi": -0.0047
+      }
+     },
+     "patch_jpp|b22_34": {
+      "success": 0.0047,
+      "unchanged": 0.9057,
+      "echo": 0.0047,
+      "start_swap": 0.0,
+      "other": 0.0849,
+      "dose": 0.0017,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0024,
+       "lo": -0.0071,
+       "hi": 0.0142
+      }
+     },
+     "patch_random|b22_34": {
+      "success": 0.0,
+      "unchanged": 0.9858,
+      "echo": 0.0094,
+      "start_swap": 0.0,
+      "other": 0.0047,
+      "dose": 0.0029,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0047,
+       "lo": -0.0118,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b28_40": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0097,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b28_40": {
+      "success": 0.6509,
+      "unchanged": 0.1085,
+      "echo": 0.0189,
+      "start_swap": 0.1557,
+      "other": 0.066,
+      "dose": 0.0291,
+      "n": 212,
+      "specificity": {
+       "mean": 0.5637,
+       "lo": 0.4788,
+       "hi": 0.6462
+      }
+     },
+     "patch_dm_jpart|b28_40": {
+      "success": 0.0613,
+      "unchanged": 0.7972,
+      "echo": 0.0472,
+      "start_swap": 0.0,
+      "other": 0.0943,
+      "dose": 0.0061,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0377,
+       "lo": 0.0024,
+       "hi": 0.0755
+      }
+     },
+     "patch_dm_rem|b28_40": {
+      "success": 0.6604,
+      "unchanged": 0.1509,
+      "echo": 0.0236,
+      "start_swap": 0.1038,
+      "other": 0.0613,
+      "dose": 0.025,
+      "n": 212,
+      "specificity": {
+       "mean": 0.5967,
+       "lo": 0.5165,
+       "hi": 0.6745
+      }
+     },
+     "patch_jpp|b28_40": {
+      "success": 0.0,
+      "unchanged": 0.9764,
+      "echo": 0.0047,
+      "start_swap": 0.0,
+      "other": 0.0189,
+      "dose": 0.004,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0024,
+       "lo": -0.0071,
+       "hi": 0.0
+      }
+     },
+     "patch_random|b28_40": {
+      "success": 0.0,
+      "unchanged": 0.9764,
+      "echo": 0.0142,
+      "start_swap": 0.0,
+      "other": 0.0094,
+      "dose": 0.0056,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0071,
+       "lo": -0.0165,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b34_46": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0119,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b34_46": {
+      "success": 0.6698,
+      "unchanged": 0.0943,
+      "echo": 0.0189,
+      "start_swap": 0.1604,
+      "other": 0.0566,
+      "dose": 0.0309,
+      "n": 212,
+      "specificity": {
+       "mean": 0.5802,
+       "lo": 0.4953,
+       "hi": 0.6627
+      }
+     },
+     "patch_dm_jpart|b34_46": {
+      "success": 0.0708,
+      "unchanged": 0.1651,
+      "echo": 0.0896,
+      "start_swap": 0.0896,
+      "other": 0.5849,
+      "dose": 0.0118,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0189,
+       "lo": -0.0637,
+       "hi": 0.0283
+      }
+     },
+     "patch_dm_rem|b34_46": {
+      "success": 0.7028,
+      "unchanged": 0.1321,
+      "echo": 0.0283,
+      "start_swap": 0.0849,
+      "other": 0.0519,
+      "dose": 0.0258,
+      "n": 212,
+      "specificity": {
+       "mean": 0.6462,
+       "lo": 0.5684,
+       "hi": 0.7217
+      }
+     },
+     "patch_jpp|b34_46": {
+      "success": 0.1274,
+      "unchanged": 0.1085,
+      "echo": 0.0943,
+      "start_swap": 0.0802,
+      "other": 0.5896,
+      "dose": 0.0105,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0401,
+       "lo": -0.0142,
+       "hi": 0.0967
+      }
+     },
+     "patch_random|b34_46": {
+      "success": 0.0,
+      "unchanged": 0.9858,
+      "echo": 0.0094,
+      "start_swap": 0.0,
+      "other": 0.0047,
+      "dose": 0.0088,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0047,
+       "lo": -0.0118,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b40_52": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0283,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b40_52": {
+      "success": 0.6934,
+      "unchanged": 0.0896,
+      "echo": 0.0283,
+      "start_swap": 0.1132,
+      "other": 0.0755,
+      "dose": 0.0339,
+      "n": 212,
+      "specificity": {
+       "mean": 0.6226,
+       "lo": 0.5425,
+       "hi": 0.7005
+      }
+     },
+     "patch_dm_jpart|b40_52": {
+      "success": 0.0943,
+      "unchanged": 0.1321,
+      "echo": 0.1274,
+      "start_swap": 0.1085,
+      "other": 0.5377,
+      "dose": 0.0194,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0236,
+       "lo": -0.0755,
+       "hi": 0.0307
+      }
+     },
+     "patch_dm_rem|b40_52": {
+      "success": 0.4104,
+      "unchanged": 0.1226,
+      "echo": 0.1085,
+      "start_swap": 0.0755,
+      "other": 0.283,
+      "dose": 0.0338,
+      "n": 212,
+      "specificity": {
+       "mean": 0.3184,
+       "lo": 0.2382,
+       "hi": 0.4009
+      }
+     },
+     "patch_jpp|b40_52": {
+      "success": 0.1509,
+      "unchanged": 0.0755,
+      "echo": 0.0943,
+      "start_swap": 0.0991,
+      "other": 0.5802,
+      "dose": 0.0184,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0542,
+       "lo": -0.0024,
+       "hi": 0.1132
+      }
+     },
+     "patch_random|b40_52": {
+      "success": 0.0,
+      "unchanged": 0.9953,
+      "echo": 0.0047,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0135,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0024,
+       "lo": -0.0071,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b22_46": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0026,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b22_46": {
+      "success": 0.6887,
+      "unchanged": 0.0755,
+      "echo": 0.0094,
+      "start_swap": 0.1368,
+      "other": 0.0896,
+      "dose": 0.0233,
+      "n": 212,
+      "specificity": {
+       "mean": 0.6156,
+       "lo": 0.533,
+       "hi": 0.6934
+      }
+     },
+     "patch_dm_jpart|b22_46": {
+      "success": 0.0519,
+      "unchanged": 0.1792,
+      "echo": 0.066,
+      "start_swap": 0.0849,
+      "other": 0.6179,
+      "dose": 0.0077,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0236,
+       "lo": -0.0637,
+       "hi": 0.0189
+      }
+     },
+     "patch_dm_rem|b22_46": {
+      "success": 0.7028,
+      "unchanged": 0.1085,
+      "echo": 0.033,
+      "start_swap": 0.0849,
+      "other": 0.0708,
+      "dose": 0.0197,
+      "n": 212,
+      "specificity": {
+       "mean": 0.6439,
+       "lo": 0.5637,
+       "hi": 0.717
+      }
+     },
+     "patch_jpp|b22_46": {
+      "success": 0.1226,
+      "unchanged": 0.1179,
+      "echo": 0.0896,
+      "start_swap": 0.1038,
+      "other": 0.566,
+      "dose": 0.0069,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0259,
+       "lo": -0.0283,
+       "hi": 0.0825
+      }
+     },
+     "patch_random|b22_46": {
+      "success": 0.0,
+      "unchanged": 0.9953,
+      "echo": 0.0047,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0062,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0024,
+       "lo": -0.0071,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b46_58": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0351,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_jpp|b46_58": {
+      "success": 0.1934,
+      "unchanged": 0.1368,
+      "echo": 0.0896,
+      "start_swap": 0.1038,
+      "other": 0.4764,
+      "dose": 0.0244,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0967,
+       "lo": 0.0307,
+       "hi": 0.1627
+      }
+     },
+     "patch_random|b46_58": {
+      "success": 0.0,
+      "unchanged": 0.967,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.033,
+      "dose": 0.0219,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0,
+       "lo": 0.0,
+       "hi": 0.0
+      }
+     }
+    },
+    "tests": {}
+   },
+   "after": {
+    "n_targets": 230,
+    "n_clean_gold": 230,
+    "n_cf_correct": 212,
+    "rates": {
+     "patch_full|b22_34": {
+      "success": 0.9953,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0047,
+      "other": 0.0,
+      "dose": 0.0206,
+      "n": 212,
+      "specificity": {
+       "mean": 0.9929,
+       "lo": 0.9788,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b22_34": {
+      "success": 0.0,
+      "unchanged": 0.9009,
+      "echo": 0.033,
+      "start_swap": 0.0,
+      "other": 0.066,
+      "dose": 0.0147,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0165,
+       "lo": -0.0283,
+       "hi": -0.0047
+      }
+     },
+     "patch_dm_jpart|b22_34": {
+      "success": 0.0,
+      "unchanged": 0.9717,
+      "echo": 0.0189,
+      "start_swap": 0.0,
+      "other": 0.0094,
+      "dose": 0.0024,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0094,
+       "lo": -0.0189,
+       "hi": -0.0024
+      }
+     },
+     "patch_dm_rem|b22_34": {
+      "success": 0.0,
+      "unchanged": 0.9057,
+      "echo": 0.033,
+      "start_swap": 0.0,
+      "other": 0.0613,
+      "dose": 0.0132,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0165,
+       "lo": -0.0283,
+       "hi": -0.0047
+      }
+     },
+     "patch_jpp|b22_34": {
+      "success": 0.0,
+      "unchanged": 0.9858,
+      "echo": 0.0142,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0015,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0071,
+       "lo": -0.0165,
+       "hi": 0.0
+      }
+     },
+     "patch_random|b22_34": {
+      "success": 0.0,
+      "unchanged": 0.9764,
+      "echo": 0.0094,
+      "start_swap": 0.0,
+      "other": 0.0142,
+      "dose": 0.0028,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0047,
+       "lo": -0.0118,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b28_40": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0283,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b28_40": {
+      "success": 0.6415,
+      "unchanged": 0.1132,
+      "echo": 0.0189,
+      "start_swap": 0.1604,
+      "other": 0.066,
+      "dose": 0.0296,
+      "n": 212,
+      "specificity": {
+       "mean": 0.5519,
+       "lo": 0.467,
+       "hi": 0.6344
+      }
+     },
+     "patch_dm_jpart|b28_40": {
+      "success": 0.0472,
+      "unchanged": 0.8302,
+      "echo": 0.0377,
+      "start_swap": 0.0,
+      "other": 0.0849,
+      "dose": 0.0061,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0283,
+       "lo": -0.0024,
+       "hi": 0.0613
+      }
+     },
+     "patch_dm_rem|b28_40": {
+      "success": 0.6604,
+      "unchanged": 0.1557,
+      "echo": 0.0236,
+      "start_swap": 0.0991,
+      "other": 0.0613,
+      "dose": 0.0254,
+      "n": 212,
+      "specificity": {
+       "mean": 0.5991,
+       "lo": 0.5189,
+       "hi": 0.6745
+      }
+     },
+     "patch_jpp|b28_40": {
+      "success": 0.0,
+      "unchanged": 0.9764,
+      "echo": 0.0047,
+      "start_swap": 0.0,
+      "other": 0.0189,
+      "dose": 0.0039,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0024,
+       "lo": -0.0071,
+       "hi": 0.0
+      }
+     },
+     "patch_random|b28_40": {
+      "success": 0.0,
+      "unchanged": 0.9764,
+      "echo": 0.0142,
+      "start_swap": 0.0,
+      "other": 0.0094,
+      "dose": 0.0055,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0071,
+       "lo": -0.0165,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b34_46": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0233,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b34_46": {
+      "success": 0.6745,
+      "unchanged": 0.0896,
+      "echo": 0.0236,
+      "start_swap": 0.1557,
+      "other": 0.0566,
+      "dose": 0.0314,
+      "n": 212,
+      "specificity": {
+       "mean": 0.5849,
+       "lo": 0.5,
+       "hi": 0.6675
+      }
+     },
+     "patch_dm_jpart|b34_46": {
+      "success": 0.0708,
+      "unchanged": 0.1604,
+      "echo": 0.0613,
+      "start_swap": 0.0708,
+      "other": 0.6368,
+      "dose": 0.0118,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0047,
+       "lo": -0.0377,
+       "hi": 0.0495
+      }
+     },
+     "patch_dm_rem|b34_46": {
+      "success": 0.7075,
+      "unchanged": 0.1274,
+      "echo": 0.0236,
+      "start_swap": 0.0849,
+      "other": 0.0566,
+      "dose": 0.0262,
+      "n": 212,
+      "specificity": {
+       "mean": 0.6533,
+       "lo": 0.5755,
+       "hi": 0.7288
+      }
+     },
+     "patch_jpp|b34_46": {
+      "success": 0.0991,
+      "unchanged": 0.1179,
+      "echo": 0.0802,
+      "start_swap": 0.0991,
+      "other": 0.6038,
+      "dose": 0.0105,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0094,
+       "lo": -0.0401,
+       "hi": 0.0613
+      }
+     },
+     "patch_random|b34_46": {
+      "success": 0.0,
+      "unchanged": 0.9858,
+      "echo": 0.0094,
+      "start_swap": 0.0,
+      "other": 0.0047,
+      "dose": 0.0088,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0047,
+       "lo": -0.0118,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b40_52": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0339,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b40_52": {
+      "success": 0.6934,
+      "unchanged": 0.0896,
+      "echo": 0.0283,
+      "start_swap": 0.1132,
+      "other": 0.0755,
+      "dose": 0.0342,
+      "n": 212,
+      "specificity": {
+       "mean": 0.6226,
+       "lo": 0.5425,
+       "hi": 0.7005
+      }
+     },
+     "patch_dm_jpart|b40_52": {
+      "success": 0.1132,
+      "unchanged": 0.1321,
+      "echo": 0.1321,
+      "start_swap": 0.1132,
+      "other": 0.5094,
+      "dose": 0.0194,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0094,
+       "lo": -0.0637,
+       "hi": 0.0472
+      }
+     },
+     "patch_dm_rem|b40_52": {
+      "success": 0.4104,
+      "unchanged": 0.1179,
+      "echo": 0.1179,
+      "start_swap": 0.0708,
+      "other": 0.283,
+      "dose": 0.034,
+      "n": 212,
+      "specificity": {
+       "mean": 0.316,
+       "lo": 0.2358,
+       "hi": 0.3962
+      }
+     },
+     "patch_jpp|b40_52": {
+      "success": 0.1321,
+      "unchanged": 0.0849,
+      "echo": 0.0991,
+      "start_swap": 0.0991,
+      "other": 0.5849,
+      "dose": 0.0183,
+      "n": 212,
+      "specificity": {
+       "mean": 0.033,
+       "lo": -0.0212,
+       "hi": 0.092
+      }
+     },
+     "patch_random|b40_52": {
+      "success": 0.0,
+      "unchanged": 0.9953,
+      "echo": 0.0047,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0134,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0024,
+       "lo": -0.0071,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b22_46": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0175,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b22_46": {
+      "success": 0.684,
+      "unchanged": 0.0755,
+      "echo": 0.0094,
+      "start_swap": 0.1415,
+      "other": 0.0896,
+      "dose": 0.0235,
+      "n": 212,
+      "specificity": {
+       "mean": 0.6085,
+       "lo": 0.5259,
+       "hi": 0.6863
+      }
+     },
+     "patch_dm_jpart|b22_46": {
+      "success": 0.0566,
+      "unchanged": 0.1651,
+      "echo": 0.0613,
+      "start_swap": 0.0896,
+      "other": 0.6274,
+      "dose": 0.0076,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0189,
+       "lo": -0.059,
+       "hi": 0.0236
+      }
+     },
+     "patch_dm_rem|b22_46": {
+      "success": 0.7123,
+      "unchanged": 0.0991,
+      "echo": 0.0283,
+      "start_swap": 0.0896,
+      "other": 0.0708,
+      "dose": 0.0199,
+      "n": 212,
+      "specificity": {
+       "mean": 0.6533,
+       "lo": 0.5755,
+       "hi": 0.7288
+      }
+     },
+     "patch_jpp|b22_46": {
+      "success": 0.1038,
+      "unchanged": 0.1226,
+      "echo": 0.0802,
+      "start_swap": 0.0802,
+      "other": 0.6132,
+      "dose": 0.0065,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0236,
+       "lo": -0.0259,
+       "hi": 0.0755
+      }
+     },
+     "patch_random|b22_46": {
+      "success": 0.0,
+      "unchanged": 0.9953,
+      "echo": 0.0047,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0061,
+      "n": 212,
+      "specificity": {
+       "mean": -0.0024,
+       "lo": -0.0071,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b46_58": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0438,
+      "n": 212,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_jpp|b46_58": {
+      "success": 0.1887,
+      "unchanged": 0.1321,
+      "echo": 0.0896,
+      "start_swap": 0.1085,
+      "other": 0.4811,
+      "dose": 0.0243,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0896,
+       "lo": 0.0259,
+       "hi": 0.1557
+      }
+     },
+     "patch_random|b46_58": {
+      "success": 0.0,
+      "unchanged": 0.9623,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0377,
+      "dose": 0.0217,
+      "n": 212,
+      "specificity": {
+       "mean": 0.0,
+       "lo": 0.0,
+       "hi": 0.0
+      }
+     }
+    },
+    "tests": {
+     "P1 patch_jpp - patch_random @ b40_52": {
+      "mean": 0.1321,
+      "lo": 0.0896,
+      "hi": 0.1792,
+      "n": 212,
+      "p": 0.0001,
+      "p_holm": 0.0003
+     },
+     "P2 patch_dm - patch_jpp @ b40_52": {
+      "mean": 0.5613,
+      "lo": 0.4858,
+      "hi": 0.6368,
+      "n": 212,
+      "p": 0.0001,
+      "p_holm": 0.0003
+     },
+     "P3 patch_dm_rem - patch_dm_jpart @ b40_52": {
+      "mean": 0.2972,
+      "lo": 0.217,
+      "hi": 0.3726,
+      "n": 212,
+      "p": 0.0001,
+      "p_holm": 0.0003
+     }
+    }
+   }
+  },
+  "preview": {
+   "n_eligible": 230,
+   "rates": {
+    "jpp_raw": {
+     "success": 0.1391,
+     "echo": 0.1,
+     "start_swap": 0.0826,
+     "unchanged": 0.1,
+     "relookup": 0.0,
+     "other": 0.5783,
+     "dose": 0.0205,
+     "colour_mass": 0.0003,
+     "n": 230
+    },
+    "null_jpp": {
+     "success": 0.0,
+     "echo": 0.0087,
+     "start_swap": 0.0,
+     "unchanged": 0.9391,
+     "relookup": 0.0,
+     "other": 0.0522,
+     "dose": 0.022,
+     "colour_mass": 0.6433,
+     "n": 230
+    },
+    "jpp_answer": {
+     "success": 0.0739,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.0826,
+     "relookup": 0.113,
+     "other": 0.7304,
+     "dose": 0.0213,
+     "colour_mass": 0.0001,
+     "n": 230
+    },
+    "dm_full": {
+     "success": 0.4217,
+     "echo": 0.0739,
+     "start_swap": 0.0,
+     "unchanged": 0.3913,
+     "relookup": 0.0,
+     "other": 0.113,
+     "dose": 0.0709,
+     "colour_mass": 0.9997,
+     "n": 230
+    },
+    "jpp_matched": {
+     "success": 0.0913,
+     "echo": 0.1174,
+     "start_swap": 0.0913,
+     "unchanged": 0.1,
+     "relookup": 0.0,
+     "other": 0.6,
+     "dose": 0.0578,
+     "colour_mass": 0.0,
+     "n": 230
+    },
+    "dm_jpart": {
+     "success": 0.1,
+     "echo": 0.1261,
+     "start_swap": 0.0652,
+     "unchanged": 0.0826,
+     "relookup": 0.0,
+     "other": 0.6261,
+     "dose": 0.0579,
+     "colour_mass": 0.0,
+     "n": 230
+    },
+    "dm_rem": {
+     "success": 0.1739,
+     "echo": 0.0957,
+     "start_swap": 0.0739,
+     "unchanged": 0.2261,
+     "relookup": 0.0,
+     "other": 0.4304,
+     "dose": 0.0568,
+     "colour_mass": 0.0425,
+     "n": 230
+    },
+    "dm_jpart_own": {
+     "success": 0.1391,
+     "echo": 0.113,
+     "start_swap": 0.1,
+     "unchanged": 0.1609,
+     "relookup": 0.0,
+     "other": 0.487,
+     "dose": 0.0099,
+     "colour_mass": 0.0005,
+     "n": 230
+    },
+    "dm_rem_own": {
+     "success": 0.1522,
+     "echo": 0.1087,
+     "start_swap": 0.0652,
+     "unchanged": 0.2043,
+     "relookup": 0.0,
+     "other": 0.4696,
+     "dose": 0.06,
+     "colour_mass": 0.0303,
+     "n": 230
+    },
+    "dm_rem_clamp": {
+     "success": 0.1261,
+     "echo": 0.1348,
+     "start_swap": 0.1043,
+     "unchanged": 0.1478,
+     "relookup": 0.0,
+     "other": 0.487,
+     "dose": 0.0574,
+     "colour_mass": 0.0001,
+     "n": 230
+    },
+    "null_dm": {
+     "success": 0.0739,
+     "echo": 0.0957,
+     "start_swap": 0.0522,
+     "unchanged": 0.2,
+     "relookup": 0.0,
+     "other": 0.5783,
+     "dose": 0.0547,
+     "colour_mass": 0.001,
+     "n": 230
+    },
+    "other_item": {
+     "success": 0.0,
+     "echo": 0.0174,
+     "start_swap": 0.0043,
+     "unchanged": 0.8087,
+     "relookup": 0.0,
+     "other": 0.1696,
+     "dose": 0.0697,
+     "colour_mass": 0.9998,
+     "n": 230
+    },
+    "dm_jpart_x2": {
+     "success": 0.0783,
+     "echo": 0.1826,
+     "start_swap": 0.1043,
+     "unchanged": 0.0739,
+     "relookup": 0.0,
+     "other": 0.5609,
+     "dose": 0.1152,
+     "colour_mass": 0.0,
+     "n": 230
+    },
+    "jpp_matched_x2": {
+     "success": 0.0739,
+     "echo": 0.113,
+     "start_swap": 0.0826,
+     "unchanged": 0.1043,
+     "relookup": 0.0,
+     "other": 0.6261,
+     "dose": 0.1147,
+     "colour_mass": 0.0,
+     "n": 230
+    },
+    "null_dm_x2": {
+     "success": 0.1,
+     "echo": 0.1174,
+     "start_swap": 0.1391,
+     "unchanged": 0.1174,
+     "relookup": 0.0,
+     "other": 0.5261,
+     "dose": 0.1109,
+     "colour_mass": 0.0001,
+     "n": 230
+    },
+    "dm_jpart_x4": {
+     "success": 0.1043,
+     "echo": 0.1478,
+     "start_swap": 0.0913,
+     "unchanged": 0.087,
+     "relookup": 0.0,
+     "other": 0.5696,
+     "dose": 0.2232,
+     "colour_mass": 0.0,
+     "n": 230
+    },
+    "jpp_matched_x4": {
+     "success": 0.1043,
+     "echo": 0.1,
+     "start_swap": 0.0826,
+     "unchanged": 0.1043,
+     "relookup": 0.0,
+     "other": 0.6087,
+     "dose": 0.2221,
+     "colour_mass": 0.0,
+     "n": 230
+    },
+    "null_dm_x4": {
+     "success": 0.1,
+     "echo": 0.0957,
+     "start_swap": 0.0826,
+     "unchanged": 0.0783,
+     "relookup": 0.0,
+     "other": 0.6435,
+     "dose": 0.2198,
+     "colour_mass": 0.0,
+     "n": 230
+    }
+   },
+   "tests": {
+    "T1 dm_jpart - dm_rem": {
+     "mean": -0.0739,
+     "lo": -0.1304,
+     "hi": -0.0174,
+     "n": 230
+    },
+    "T2 jpp_raw - null_jpp": {
+     "mean": 0.1391,
+     "lo": 0.0957,
+     "hi": 0.187,
+     "n": 230,
+     "p": 0.0001,
+     "p_holm": 0.0008
+    },
+    "T2 dm_full - null_dm": {
+     "mean": 0.3478,
+     "lo": 0.2783,
+     "hi": 0.4174,
+     "n": 230,
+     "p": 0.0001,
+     "p_holm": 0.0008
+    },
+    "T2 jpp_matched - null_dm": {
+     "mean": 0.0174,
+     "lo": -0.0304,
+     "hi": 0.0652,
+     "n": 230,
+     "p": 0.26617,
+     "p_holm": 0.34857
+    },
+    "T2 dm_jpart - null_dm": {
+     "mean": 0.0261,
+     "lo": -0.0217,
+     "hi": 0.0783,
+     "n": 230,
+     "p": 0.17428,
+     "p_holm": 0.34857
+    },
+    "T2 dm_rem - null_dm": {
+     "mean": 0.1,
+     "lo": 0.0478,
+     "hi": 0.1565,
+     "n": 230,
+     "p": 0.0002,
+     "p_holm": 0.0012
+    },
+    "T2 dm_jpart_own - null_dm": {
+     "mean": 0.0652,
+     "lo": 0.0174,
+     "hi": 0.1132,
+     "n": 230,
+     "p": 0.0065,
+     "p_holm": 0.026
+    },
+    "T2 dm_rem_own - null_dm": {
+     "mean": 0.0783,
+     "lo": 0.0217,
+     "hi": 0.1348,
+     "n": 230,
+     "p": 0.0047,
+     "p_holm": 0.0235
+    },
+    "T2 dm_rem_clamp - null_dm": {
+     "mean": 0.0522,
+     "lo": -0.0043,
+     "hi": 0.1087,
+     "n": 230,
+     "p": 0.0413,
+     "p_holm": 0.12389
+    },
+    "T3 dm_rem - dm_rem_clamp": {
+     "mean": 0.0478,
+     "lo": -0.0087,
+     "hi": 0.1043,
+     "n": 230
+    },
+    "T4 jpp_answer - jpp_raw": {
+     "mean": -0.0652,
+     "lo": -0.1217,
+     "hi": -0.0087,
+     "n": 230
+    },
+    "T5 dm_full - jpp_matched": {
+     "mean": 0.3304,
+     "lo": 0.2565,
+     "hi": 0.4,
+     "n": 230
+    },
+    "secondary dm_jpart_x2 - null_dm_x2": {
+     "mean": -0.0217,
+     "lo": -0.0739,
+     "hi": 0.0304,
+     "n": 230
+    },
+    "secondary jpp_matched_x2 - null_dm_x2": {
+     "mean": -0.0261,
+     "lo": -0.0783,
+     "hi": 0.0261,
+     "n": 230
+    },
+    "secondary dm_jpart_x4 - null_dm_x4": {
+     "mean": 0.0043,
+     "lo": -0.0478,
+     "hi": 0.0609,
+     "n": 230
+    },
+    "secondary jpp_matched_x4 - null_dm_x4": {
+     "mean": 0.0043,
+     "lo": -0.0435,
+     "hi": 0.0522,
+     "n": 230
+    }
+   }
+  },
+  "test": {
+   "n_eligible": 1094,
+   "rates": {
+    "jpp_raw": {
+     "success": 0.0978,
+     "echo": 0.0932,
+     "start_swap": 0.0996,
+     "unchanged": 0.1133,
+     "relookup": 0.0,
+     "other": 0.596,
+     "dose": 0.0207,
+     "colour_mass": 0.0003,
+     "n": 1094
+    },
+    "null_jpp": {
+     "success": 0.0009,
+     "echo": 0.0055,
+     "start_swap": 0.0009,
+     "unchanged": 0.9616,
+     "relookup": 0.0,
+     "other": 0.0311,
+     "dose": 0.0221,
+     "colour_mass": 0.6564,
+     "n": 1094
+    },
+    "jpp_answer": {
+     "success": 0.0914,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.0951,
+     "relookup": 0.1161,
+     "other": 0.6974,
+     "dose": 0.0213,
+     "colour_mass": 0.0001,
+     "n": 1094
+    },
+    "dm_full": {
+     "success": 0.3135,
+     "echo": 0.0804,
+     "start_swap": 0.0027,
+     "unchanged": 0.5183,
+     "relookup": 0.0,
+     "other": 0.085,
+     "dose": 0.07,
+     "colour_mass": 0.9997,
+     "n": 1094
+    },
+    "jpp_matched": {
+     "success": 0.0914,
+     "echo": 0.1069,
+     "start_swap": 0.0951,
+     "unchanged": 0.0996,
+     "relookup": 0.0,
+     "other": 0.6069,
+     "dose": 0.0573,
+     "colour_mass": 0.0,
+     "n": 1094
+    },
+    "dm_jpart": {
+     "success": 0.0896,
+     "echo": 0.1097,
+     "start_swap": 0.0987,
+     "unchanged": 0.1097,
+     "relookup": 0.0,
+     "other": 0.5923,
+     "dose": 0.0572,
+     "colour_mass": 0.0,
+     "n": 1094
+    },
+    "dm_rem": {
+     "success": 0.1481,
+     "echo": 0.1124,
+     "start_swap": 0.0713,
+     "unchanged": 0.2715,
+     "relookup": 0.0,
+     "other": 0.3967,
+     "dose": 0.0562,
+     "colour_mass": 0.0506,
+     "n": 1094
+    },
+    "dm_jpart_own": {
+     "success": 0.1033,
+     "echo": 0.0777,
+     "start_swap": 0.0896,
+     "unchanged": 0.1691,
+     "relookup": 0.0,
+     "other": 0.5603,
+     "dose": 0.0097,
+     "colour_mass": 0.001,
+     "n": 1094
+    },
+    "dm_rem_own": {
+     "success": 0.128,
+     "echo": 0.0951,
+     "start_swap": 0.0768,
+     "unchanged": 0.2367,
+     "relookup": 0.0,
+     "other": 0.4634,
+     "dose": 0.0595,
+     "colour_mass": 0.0168,
+     "n": 1094
+    },
+    "dm_rem_clamp": {
+     "success": 0.1197,
+     "echo": 0.0951,
+     "start_swap": 0.0786,
+     "unchanged": 0.1435,
+     "relookup": 0.0,
+     "other": 0.5631,
+     "dose": 0.0567,
+     "colour_mass": 0.0007,
+     "n": 1094
+    },
+    "null_dm": {
+     "success": 0.0777,
+     "echo": 0.0914,
+     "start_swap": 0.096,
+     "unchanged": 0.1828,
+     "relookup": 0.0,
+     "other": 0.5521,
+     "dose": 0.054,
+     "colour_mass": 0.0009,
+     "n": 1094
+    },
+    "other_item": {
+     "success": 0.0027,
+     "echo": 0.0165,
+     "start_swap": 0.0009,
+     "unchanged": 0.8519,
+     "relookup": 0.0,
+     "other": 0.128,
+     "dose": 0.0689,
+     "colour_mass": 0.9998,
+     "n": 1094
+    },
+    "dm_jpart_x2": {
+     "success": 0.0896,
+     "echo": 0.149,
+     "start_swap": 0.096,
+     "unchanged": 0.0932,
+     "relookup": 0.0,
+     "other": 0.5722,
+     "dose": 0.1142,
+     "colour_mass": 0.0,
+     "n": 1094
+    },
+    "jpp_matched_x2": {
+     "success": 0.0996,
+     "echo": 0.1124,
+     "start_swap": 0.1042,
+     "unchanged": 0.0914,
+     "relookup": 0.0,
+     "other": 0.5923,
+     "dose": 0.1137,
+     "colour_mass": 0.0,
+     "n": 1094
+    },
+    "null_dm_x2": {
+     "success": 0.1152,
+     "echo": 0.0987,
+     "start_swap": 0.0996,
+     "unchanged": 0.1243,
+     "relookup": 0.0,
+     "other": 0.5622,
+     "dose": 0.1092,
+     "colour_mass": 0.0001,
+     "n": 1094
+    },
+    "dm_jpart_x4": {
+     "success": 0.0887,
+     "echo": 0.1627,
+     "start_swap": 0.0814,
+     "unchanged": 0.0731,
+     "relookup": 0.0,
+     "other": 0.5941,
+     "dose": 0.2215,
+     "colour_mass": 0.0,
+     "n": 1094
+    },
+    "jpp_matched_x4": {
+     "success": 0.0914,
+     "echo": 0.0987,
+     "start_swap": 0.0841,
+     "unchanged": 0.1005,
+     "relookup": 0.0,
+     "other": 0.6252,
+     "dose": 0.2205,
+     "colour_mass": 0.0,
+     "n": 1094
+    },
+    "null_dm_x4": {
+     "success": 0.0878,
+     "echo": 0.1188,
+     "start_swap": 0.0951,
+     "unchanged": 0.1005,
+     "relookup": 0.0,
+     "other": 0.5978,
+     "dose": 0.2177,
+     "colour_mass": 0.0,
+     "n": 1094
+    },
+    "jpp_answer_ctl": {
+     "success": 0.5539,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.0165,
+     "relookup": 0.074,
+     "other": 0.3556,
+     "dose": 0.0462,
+     "colour_mass": 0.0,
+     "n": 1094
+    },
+    "null_answer_ctl": {
+     "success": 0.0823,
+     "echo": 0.0,
+     "start_swap": 0.0,
+     "unchanged": 0.287,
+     "relookup": 0.0686,
+     "other": 0.5622,
+     "dose": 0.0494,
+     "colour_mass": 0.0007,
+     "n": 1094
+    }
+   },
+   "tests": {
+    "T1 dm_jpart - dm_rem": {
+     "mean": -0.0585,
+     "lo": -0.085,
+     "hi": -0.0329,
+     "n": 1094
+    },
+    "T2 jpp_raw - null_jpp": {
+     "mean": 0.0969,
+     "lo": 0.0795,
+     "hi": 0.1152,
+     "n": 1094,
+     "p": 0.0001,
+     "p_holm": 0.0008
+    },
+    "T2 dm_full - null_dm": {
+     "mean": 0.2358,
+     "lo": 0.2048,
+     "hi": 0.2678,
+     "n": 1094,
+     "p": 0.0001,
+     "p_holm": 0.0008
+    },
+    "T2 jpp_matched - null_dm": {
+     "mean": 0.0137,
+     "lo": -0.0091,
+     "hi": 0.0366,
+     "n": 1094,
+     "p": 0.13059,
+     "p_holm": 0.26117
+    },
+    "T2 dm_jpart - null_dm": {
+     "mean": 0.0119,
+     "lo": -0.0101,
+     "hi": 0.0338,
+     "n": 1094,
+     "p": 0.15578,
+     "p_holm": 0.26117
+    },
+    "T2 dm_rem - null_dm": {
+     "mean": 0.0704,
+     "lo": 0.0448,
+     "hi": 0.0969,
+     "n": 1094,
+     "p": 0.0001,
+     "p_holm": 0.0008
+    },
+    "T2 dm_jpart_own - null_dm": {
+     "mean": 0.0256,
+     "lo": 0.0018,
+     "hi": 0.0484,
+     "n": 1094,
+     "p": 0.0182,
+     "p_holm": 0.05459
+    },
+    "T2 dm_rem_own - null_dm": {
+     "mean": 0.0503,
+     "lo": 0.0256,
+     "hi": 0.075,
+     "n": 1094,
+     "p": 0.0001,
+     "p_holm": 0.0008
+    },
+    "T2 dm_rem_clamp - null_dm": {
+     "mean": 0.042,
+     "lo": 0.0183,
+     "hi": 0.0658,
+     "n": 1094,
+     "p": 0.0008,
+     "p_holm": 0.0032
+    },
+    "T3 dm_rem - dm_rem_clamp": {
+     "mean": 0.0283,
+     "lo": 0.0,
+     "hi": 0.0558,
+     "n": 1094
+    },
+    "T4 jpp_answer - jpp_raw": {
+     "mean": -0.0064,
+     "lo": -0.0311,
+     "hi": 0.0183,
+     "n": 1094
+    },
+    "T5 dm_full - jpp_matched": {
+     "mean": 0.2221,
+     "lo": 0.1892,
+     "hi": 0.2559,
+     "n": 1094
+    },
+    "secondary dm_jpart_x2 - null_dm_x2": {
+     "mean": -0.0256,
+     "lo": -0.0503,
+     "hi": -0.0009,
+     "n": 1094
+    },
+    "secondary jpp_matched_x2 - null_dm_x2": {
+     "mean": -0.0155,
+     "lo": -0.0393,
+     "hi": 0.0091,
+     "n": 1094
+    },
+    "secondary dm_jpart_x4 - null_dm_x4": {
+     "mean": 0.0009,
+     "lo": -0.0229,
+     "hi": 0.0247,
+     "n": 1094
+    },
+    "secondary jpp_matched_x4 - null_dm_x4": {
+     "mean": 0.0037,
+     "lo": -0.0201,
+     "hi": 0.0274,
+     "n": 1094
+    },
+    "secondary jpp_answer_ctl - null_answer_ctl": {
+     "mean": 0.4717,
+     "lo": 0.4388,
+     "hi": 0.5055,
+     "n": 1094
+    }
+   }
+  },
+  "test_all_positions": {
+   "n_eligible": 1094,
+   "rates": {
+    "jpp_raw_all": {
+     "success": 0.0896,
+     "echo": 0.096,
+     "unchanged": 0.1106,
+     "dose": 0.0219,
+     "n": 1094
+    },
+    "dm_full_all": {
+     "success": 0.3172,
+     "echo": 0.0146,
+     "unchanged": 0.5786,
+     "dose": 0.0666,
+     "n": 1094
+    },
+    "null_dm_all": {
+     "success": 0.1115,
+     "echo": 0.096,
+     "unchanged": 0.0868,
+     "dose": 0.0557,
+     "n": 1094
+    }
+   },
+   "tests": {
+    "jpp_raw_all - null_dm_all": {
+     "mean": -0.0219,
+     "lo": -0.0475,
+     "hi": 0.0027,
+     "n": 1094
+    },
+    "dm_full_all - null_dm_all": {
+     "mean": 0.2057,
+     "lo": 0.1728,
+     "hi": 0.2395,
+     "n": 1094
+    }
+   }
+  },
+  "patch_test": {
+   "start": {
+    "n_targets": 1094,
+    "n_clean_gold": 1094,
+    "n_cf_correct": 1013,
+    "rates": {
+     "patch_full|b40_52": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.028,
+      "n": 1013,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b40_52": {
+      "success": 0.6515,
+      "unchanged": 0.15,
+      "echo": 0.0346,
+      "start_swap": 0.0829,
+      "other": 0.0809,
+      "dose": 0.0336,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.5928,
+       "lo": 0.5573,
+       "hi": 0.6278
+      }
+     },
+     "patch_dm_jpart|b40_52": {
+      "success": 0.0918,
+      "unchanged": 0.1343,
+      "echo": 0.078,
+      "start_swap": 0.0987,
+      "other": 0.5972,
+      "dose": 0.0192,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.0035,
+       "lo": -0.0192,
+       "hi": 0.0262
+      }
+     },
+     "patch_dm_rem|b40_52": {
+      "success": 0.3544,
+      "unchanged": 0.1846,
+      "echo": 0.0849,
+      "start_swap": 0.0711,
+      "other": 0.305,
+      "dose": 0.0333,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.2764,
+       "lo": 0.2409,
+       "hi": 0.3115
+      }
+     },
+     "patch_jpp|b40_52": {
+      "success": 0.1244,
+      "unchanged": 0.1096,
+      "echo": 0.1086,
+      "start_swap": 0.0879,
+      "other": 0.5696,
+      "dose": 0.0184,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.0262,
+       "lo": 0.0005,
+       "hi": 0.0518
+      }
+     },
+     "patch_random|b40_52": {
+      "success": 0.001,
+      "unchanged": 0.9872,
+      "echo": 0.003,
+      "start_swap": 0.003,
+      "other": 0.0059,
+      "dose": 0.0133,
+      "n": 1013,
+      "specificity": {
+       "mean": -0.002,
+       "lo": -0.0049,
+       "hi": 0.001
+      }
+     },
+     "patch_full|b34_46": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0118,
+      "n": 1013,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b34_46": {
+      "success": 0.6723,
+      "unchanged": 0.1471,
+      "echo": 0.0306,
+      "start_swap": 0.0859,
+      "other": 0.0642,
+      "dose": 0.0299,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.614,
+       "lo": 0.579,
+       "hi": 0.6486
+      }
+     },
+     "patch_dm_jpart|b34_46": {
+      "success": 0.0859,
+      "unchanged": 0.1856,
+      "echo": 0.0829,
+      "start_swap": 0.0967,
+      "other": 0.5489,
+      "dose": 0.0115,
+      "n": 1013,
+      "specificity": {
+       "mean": -0.0039,
+       "lo": -0.0262,
+       "hi": 0.0188
+      }
+     },
+     "patch_dm_rem|b34_46": {
+      "success": 0.6466,
+      "unchanged": 0.1915,
+      "echo": 0.0375,
+      "start_swap": 0.0484,
+      "other": 0.076,
+      "dose": 0.0252,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.6037,
+       "lo": 0.5701,
+       "hi": 0.6372
+      }
+     },
+     "patch_jpp|b34_46": {
+      "success": 0.1056,
+      "unchanged": 0.1224,
+      "echo": 0.1027,
+      "start_swap": 0.1046,
+      "other": 0.5647,
+      "dose": 0.0105,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.002,
+       "lo": -0.0217,
+       "hi": 0.0267
+      }
+     },
+     "patch_random|b34_46": {
+      "success": 0.0,
+      "unchanged": 0.9941,
+      "echo": 0.001,
+      "start_swap": 0.0,
+      "other": 0.0049,
+      "dose": 0.0088,
+      "n": 1013,
+      "specificity": {
+       "mean": -0.0005,
+       "lo": -0.0015,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b46_58": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0349,
+      "n": 1013,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_jpp|b46_58": {
+      "success": 0.228,
+      "unchanged": 0.0987,
+      "echo": 0.0879,
+      "start_swap": 0.0918,
+      "other": 0.4936,
+      "dose": 0.0245,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.1382,
+       "lo": 0.1076,
+       "hi": 0.1688
+      }
+     },
+     "patch_random|b46_58": {
+      "success": 0.002,
+      "unchanged": 0.9674,
+      "echo": 0.0049,
+      "start_swap": 0.001,
+      "other": 0.0247,
+      "dose": 0.022,
+      "n": 1013,
+      "specificity": {
+       "mean": -0.001,
+       "lo": -0.0044,
+       "hi": 0.003
+      }
+     }
+    },
+    "tests": {}
+   },
+   "after": {
+    "n_targets": 1094,
+    "n_clean_gold": 1094,
+    "n_cf_correct": 1013,
+    "rates": {
+     "patch_full|b40_52": {
+      "success": 0.999,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.001,
+      "other": 0.0,
+      "dose": 0.0335,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.9985,
+       "lo": 0.9956,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b40_52": {
+      "success": 0.6515,
+      "unchanged": 0.15,
+      "echo": 0.0346,
+      "start_swap": 0.0839,
+      "other": 0.08,
+      "dose": 0.0338,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.5923,
+       "lo": 0.5568,
+       "hi": 0.6269
+      }
+     },
+     "patch_dm_jpart|b40_52": {
+      "success": 0.0918,
+      "unchanged": 0.1313,
+      "echo": 0.079,
+      "start_swap": 0.0997,
+      "other": 0.5982,
+      "dose": 0.0192,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.0025,
+       "lo": -0.0202,
+       "hi": 0.0252
+      }
+     },
+     "patch_dm_rem|b40_52": {
+      "success": 0.3485,
+      "unchanged": 0.1826,
+      "echo": 0.0829,
+      "start_swap": 0.075,
+      "other": 0.311,
+      "dose": 0.0335,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.2695,
+       "lo": 0.2349,
+       "hi": 0.3045
+      }
+     },
+     "patch_jpp|b40_52": {
+      "success": 0.1224,
+      "unchanged": 0.1115,
+      "echo": 0.1046,
+      "start_swap": 0.0829,
+      "other": 0.5785,
+      "dose": 0.0184,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.0286,
+       "lo": 0.0039,
+       "hi": 0.0543
+      }
+     },
+     "patch_random|b40_52": {
+      "success": 0.001,
+      "unchanged": 0.9882,
+      "echo": 0.002,
+      "start_swap": 0.003,
+      "other": 0.0059,
+      "dose": 0.0132,
+      "n": 1013,
+      "specificity": {
+       "mean": -0.0015,
+       "lo": -0.0044,
+       "hi": 0.0015
+      }
+     },
+     "patch_full|b34_46": {
+      "success": 0.997,
+      "unchanged": 0.001,
+      "echo": 0.0,
+      "start_swap": 0.001,
+      "other": 0.001,
+      "dose": 0.0231,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.9965,
+       "lo": 0.9921,
+       "hi": 1.0
+      }
+     },
+     "patch_dm|b34_46": {
+      "success": 0.6742,
+      "unchanged": 0.1412,
+      "echo": 0.0306,
+      "start_swap": 0.0879,
+      "other": 0.0661,
+      "dose": 0.0303,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.615,
+       "lo": 0.5795,
+       "hi": 0.6496
+      }
+     },
+     "patch_dm_jpart|b34_46": {
+      "success": 0.0928,
+      "unchanged": 0.1728,
+      "echo": 0.077,
+      "start_swap": 0.0948,
+      "other": 0.5627,
+      "dose": 0.0115,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.0069,
+       "lo": -0.0158,
+       "hi": 0.0301
+      }
+     },
+     "patch_dm_rem|b34_46": {
+      "success": 0.6476,
+      "unchanged": 0.1925,
+      "echo": 0.0365,
+      "start_swap": 0.0494,
+      "other": 0.074,
+      "dose": 0.0255,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.6046,
+       "lo": 0.5711,
+       "hi": 0.6382
+      }
+     },
+     "patch_jpp|b34_46": {
+      "success": 0.0977,
+      "unchanged": 0.1244,
+      "echo": 0.1096,
+      "start_swap": 0.0987,
+      "other": 0.5696,
+      "dose": 0.0105,
+      "n": 1013,
+      "specificity": {
+       "mean": -0.0064,
+       "lo": -0.0301,
+       "hi": 0.0178
+      }
+     },
+     "patch_random|b34_46": {
+      "success": 0.0,
+      "unchanged": 0.9951,
+      "echo": 0.001,
+      "start_swap": 0.0,
+      "other": 0.0039,
+      "dose": 0.0087,
+      "n": 1013,
+      "specificity": {
+       "mean": -0.0005,
+       "lo": -0.0015,
+       "hi": 0.0
+      }
+     },
+     "patch_full|b46_58": {
+      "success": 1.0,
+      "unchanged": 0.0,
+      "echo": 0.0,
+      "start_swap": 0.0,
+      "other": 0.0,
+      "dose": 0.0435,
+      "n": 1013,
+      "specificity": {
+       "mean": 1.0,
+       "lo": 1.0,
+       "hi": 1.0
+      }
+     },
+     "patch_jpp|b46_58": {
+      "success": 0.227,
+      "unchanged": 0.1066,
+      "echo": 0.0898,
+      "start_swap": 0.0908,
+      "other": 0.4857,
+      "dose": 0.0244,
+      "n": 1013,
+      "specificity": {
+       "mean": 0.1367,
+       "lo": 0.1061,
+       "hi": 0.1673
+      }
+     },
+     "patch_random|b46_58": {
+      "success": 0.002,
+      "unchanged": 0.9654,
+      "echo": 0.0059,
+      "start_swap": 0.001,
+      "other": 0.0257,
+      "dose": 0.0218,
+      "n": 1013,
+      "specificity": {
+       "mean": -0.0015,
+       "lo": -0.0049,
+       "hi": 0.0025
+      }
+     }
+    },
+    "tests": {
+     "P1 patch_jpp - patch_random @ b40_52": {
+      "mean": 0.1214,
+      "lo": 0.1017,
+      "hi": 0.1422,
+      "n": 1013,
+      "p": 0.0001,
+      "p_holm": 0.0003
+     },
+     "P2 patch_dm - patch_jpp @ b40_52": {
+      "mean": 0.5291,
+      "lo": 0.4926,
+      "hi": 0.5647,
+      "n": 1013,
+      "p": 0.0001,
+      "p_holm": 0.0003
+     },
+     "P3 patch_dm_rem - patch_dm_jpart @ b40_52": {
+      "mean": 0.2567,
+      "lo": 0.2231,
+      "hi": 0.2902,
+      "n": 1013,
+      "p": 0.0001,
+      "p_holm": 0.0003
+     }
+    }
+   }
+  }
+ }
+}

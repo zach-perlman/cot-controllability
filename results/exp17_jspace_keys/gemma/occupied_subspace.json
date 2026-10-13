@@ -1,0 +1,229 @@
+{
+ "prompts": "jpp_cli.load_fit_prompts pool [64:192]",
+ "n_tokens": 128,
+ "skip": 16,
+ "n_vectors": 14000,
+ "keep_tail": 0.0001,
+ "by_layer": {
+  "22": {
+   "rank": {
+    "0.001": 1913,
+    "0.0001": 3418,
+    "1e-05": 4126
+   },
+   "kept_colour_mean": 0.9208,
+   "kept_colour_min": 0.886,
+   "kept_readable_mean": 0.9231,
+   "brew_energy": 0.998602
+  },
+  "24": {
+   "rank": {
+    "0.001": 2692,
+    "0.0001": 4065,
+    "1e-05": 4597
+   },
+   "kept_colour_mean": 0.948,
+   "kept_colour_min": 0.9302,
+   "kept_readable_mean": 0.9479,
+   "brew_energy": 0.997498
+  },
+  "26": {
+   "rank": {
+    "0.001": 2764,
+    "0.0001": 4208,
+    "1e-05": 4906
+   },
+   "kept_colour_mean": 0.9186,
+   "kept_colour_min": 0.9074,
+   "kept_readable_mean": 0.9088,
+   "brew_energy": 0.997738
+  },
+  "28": {
+   "rank": {
+    "0.001": 1642,
+    "0.0001": 3171,
+    "1e-05": 4441
+   },
+   "kept_colour_mean": 0.4101,
+   "kept_colour_min": 0.3862,
+   "kept_readable_mean": 0.4113,
+   "brew_energy": 0.997252
+  },
+  "30": {
+   "rank": {
+    "0.001": 1872,
+    "0.0001": 3187,
+    "1e-05": 4291
+   },
+   "kept_colour_mean": 0.1668,
+   "kept_colour_min": 0.1553,
+   "kept_readable_mean": 0.1626,
+   "brew_energy": 0.998995
+  },
+  "32": {
+   "rank": {
+    "0.001": 1802,
+    "0.0001": 3155,
+    "1e-05": 4096
+   },
+   "kept_colour_mean": 0.1232,
+   "kept_colour_min": 0.114,
+   "kept_readable_mean": 0.122,
+   "brew_energy": 0.998588
+  },
+  "34": {
+   "rank": {
+    "0.001": 1701,
+    "0.0001": 3134,
+    "1e-05": 3943
+   },
+   "kept_colour_mean": 0.0722,
+   "kept_colour_min": 0.0669,
+   "kept_readable_mean": 0.0765,
+   "brew_energy": 0.997747
+  },
+  "36": {
+   "rank": {
+    "0.001": 2444,
+    "0.0001": 3689,
+    "1e-05": 4281
+   },
+   "kept_colour_mean": 0.0548,
+   "kept_colour_min": 0.0471,
+   "kept_readable_mean": 0.0538,
+   "brew_energy": 0.997754
+  },
+  "38": {
+   "rank": {
+    "0.001": 2987,
+    "0.0001": 4141,
+    "1e-05": 4600
+   },
+   "kept_colour_mean": 0.0528,
+   "kept_colour_min": 0.0476,
+   "kept_readable_mean": 0.0569,
+   "brew_energy": 0.99631
+  },
+  "40": {
+   "rank": {
+    "0.001": 3227,
+    "0.0001": 4400,
+    "1e-05": 4805
+   },
+   "kept_colour_mean": 0.0741,
+   "kept_colour_min": 0.0592,
+   "kept_readable_mean": 0.0738,
+   "brew_energy": 0.995307
+  },
+  "42": {
+   "rank": {
+    "0.001": 3731,
+    "0.0001": 4710,
+    "1e-05": 5015
+   },
+   "kept_colour_mean": 0.1514,
+   "kept_colour_min": 0.1415,
+   "kept_readable_mean": 0.1601,
+   "brew_energy": 0.997654
+  },
+  "44": {
+   "rank": {
+    "0.001": 3694,
+    "0.0001": 4731,
+    "1e-05": 5056
+   },
+   "kept_colour_mean": 0.1808,
+   "kept_colour_min": 0.1583,
+   "kept_readable_mean": 0.18,
+   "brew_energy": 0.996947
+  },
+  "45": {
+   "rank": {
+    "0.001": 3666,
+    "0.0001": 4736,
+    "1e-05": 5055
+   },
+   "kept_colour_mean": 0.167,
+   "kept_colour_min": 0.1523,
+   "kept_readable_mean": 0.1718,
+   "brew_energy": 0.996678
+  },
+  "46": {
+   "rank": {
+    "0.001": 3614,
+    "0.0001": 4738,
+    "1e-05": 5078
+   },
+   "kept_colour_mean": 0.2034,
+   "kept_colour_min": 0.1748,
+   "kept_readable_mean": 0.199,
+   "brew_energy": 0.996387
+  },
+  "48": {
+   "rank": {
+    "0.001": 3632,
+    "0.0001": 4756,
+    "1e-05": 5082
+   },
+   "kept_colour_mean": 0.1936,
+   "kept_colour_min": 0.1698,
+   "kept_readable_mean": 0.1789,
+   "brew_energy": 0.996444
+  },
+  "50": {
+   "rank": {
+    "0.001": 3488,
+    "0.0001": 4718,
+    "1e-05": 5067
+   },
+   "kept_colour_mean": 0.1593,
+   "kept_colour_min": 0.1439,
+   "kept_readable_mean": 0.1621,
+   "brew_energy": 0.995966
+  },
+  "52": {
+   "rank": {
+    "0.001": 4094,
+    "0.0001": 4912,
+    "1e-05": 5157
+   },
+   "kept_colour_mean": 0.2033,
+   "kept_colour_min": 0.1756,
+   "kept_readable_mean": 0.2079,
+   "brew_energy": 0.995288
+  },
+  "54": {
+   "rank": {
+    "0.001": 4007,
+    "0.0001": 4847,
+    "1e-05": 5125
+   },
+   "kept_colour_mean": 0.1976,
+   "kept_colour_min": 0.1716,
+   "kept_readable_mean": 0.1905,
+   "brew_energy": 0.99526
+  },
+  "56": {
+   "rank": {
+    "0.001": 4085,
+    "0.0001": 4832,
+    "1e-05": 5093
+   },
+   "kept_colour_mean": 0.1135,
+   "kept_colour_min": 0.0924,
+   "kept_readable_mean": 0.1118,
+   "brew_energy": 0.99651
+  },
+  "58": {
+   "rank": {
+    "0.001": 4142,
+    "0.0001": 4860,
+    "1e-05": 5109
+   },
+   "kept_colour_mean": 0.0948,
+   "kept_colour_min": 0.0861,
+   "kept_readable_mean": 0.1083,
+   "brew_energy": 0.99699
+  }
+ }
+}

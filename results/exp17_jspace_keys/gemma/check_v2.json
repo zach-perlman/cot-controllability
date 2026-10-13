@@ -1,0 +1,75 @@
+{
+ "batched_vs_single": [
+  {
+   "n_tokens": 396,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.0,
+   "colour_logit_max_diff": 0.0
+  },
+  {
+   "n_tokens": 396,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.0,
+   "colour_logit_max_diff": 0.0
+  },
+  {
+   "n_tokens": 396,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.0,
+   "colour_logit_max_diff": 0.0
+  },
+  {
+   "n_tokens": 396,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.0,
+   "colour_logit_max_diff": 0.0
+  },
+  {
+   "n_tokens": 396,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.0,
+   "colour_logit_max_diff": 0.0
+  },
+  {
+   "n_tokens": 396,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.0,
+   "colour_logit_max_diff": 0.0
+  },
+  {
+   "n_tokens": 396,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.0,
+   "colour_logit_max_diff": 0.0
+  },
+  {
+   "n_tokens": 396,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.0,
+   "colour_logit_max_diff": 0.0
+  }
+ ],
+ "hook_layer": 22,
+ "hook_is_hidden_l+1": true,
+ "accuracy": {
+  "1": {
+   "n": 250,
+   "accuracy": 1.0,
+   "reference": 1.0,
+   "ok": true
+  },
+  "2": {
+   "n": 250,
+   "accuracy": 0.928,
+   "reference": 0.928,
+   "ok": true
+  },
+  "3": {
+   "n": 250,
+   "accuracy": 0.776,
+   "reference": 0.76,
+   "ok": false
+  }
+ },
+ "pass": false
+}

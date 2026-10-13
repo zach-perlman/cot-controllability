@@ -1,0 +1,5093 @@
+{
+ "layers": [
+  22,
+  24,
+  26,
+  28,
+  30,
+  32,
+  34,
+  36,
+  38,
+  40,
+  42,
+  44,
+  45,
+  46,
+  48,
+  50,
+  52
+ ],
+ "n_dictionary": 253664,
+ "n_dm_train": 426,
+ "pursuit_k": 25,
+ "explained_mean": {
+  "dm": {
+   "22": 0.0071,
+   "24": 0.0023,
+   "26": 0.0011,
+   "28": 0.0047,
+   "30": 0.0106,
+   "32": 0.0135,
+   "34": 0.0116,
+   "36": 0.0162,
+   "38": 0.0166,
+   "40": 0.0119,
+   "42": 0.0066,
+   "44": 0.0073,
+   "45": 0.0069,
+   "46": 0.0069,
+   "48": 0.0067,
+   "50": 0.0074,
+   "52": 0.0066
+  }
+ },
+ "random_explained_mean": {
+  "22": 0.0275,
+  "24": 0.0239,
+  "26": 0.026,
+  "28": 0.0297,
+  "30": 0.0304,
+  "32": 0.0276,
+  "34": 0.0261,
+  "36": 0.0243,
+  "38": 0.0198,
+  "40": 0.0183,
+  "42": 0.0135,
+  "44": 0.0134,
+  "45": 0.0154,
+  "46": 0.0154,
+  "48": 0.0147,
+  "50": 0.0163,
+  "52": 0.0179
+ },
+ "own_colour_in_support": {
+  "dm": {
+   "22": 0,
+   "24": 0,
+   "26": 0,
+   "28": 0,
+   "30": 0,
+   "32": 0,
+   "34": 0,
+   "36": 0,
+   "38": 0,
+   "40": 0,
+   "42": 0,
+   "44": 0,
+   "45": 0,
+   "46": 0,
+   "48": 0,
+   "50": 0,
+   "52": 0
+  }
+ },
+ "cos_with_own_jpp_mean": {
+  "dm_cos_own_jpp": {
+   "22": -0.0003,
+   "24": -0.0005,
+   "26": -0.0008,
+   "28": -0.0004,
+   "30": 0.0041,
+   "32": 0.0078,
+   "34": 0.0043,
+   "36": 0.0113,
+   "38": 0.0125,
+   "40": 0.0081,
+   "42": 0.0011,
+   "44": -0.0022,
+   "45": -0.0008,
+   "46": -0.0019,
+   "48": 0.0004,
+   "50": 0.002,
+   "52": 0.0
+  }
+ },
+ "dm_separation_over_norm": {
+  "22": 0.0009,
+  "24": 0.0016,
+  "26": 0.0037,
+  "28": 0.0069,
+  "30": 0.0083,
+  "32": 0.0116,
+  "34": 0.0154,
+  "36": 0.0211,
+  "38": 0.0307,
+  "40": 0.069,
+  "42": 0.0759,
+  "44": 0.0802,
+  "45": 0.0784,
+  "46": 0.077,
+  "48": 0.0687,
+  "50": 0.0694,
+  "52": 0.1076
+ },
+ "per_colour": {
+  "dm": {
+   "22": [
+    {
+     "label": "black",
+     "explained": 0.0042,
+     "support": [
+      " destac",
+      " miles",
+      " consigo",
+      "Migrations",
+      " sein",
+      " horseback",
+      " estoque",
+      " stable",
+      "chord",
+      " Hardly"
+     ],
+     "coef": [
+      0.0165,
+      0.024,
+      0.022,
+      0.0091,
+      0.0,
+      0.0188,
+      0.0129,
+      0.0199,
+      0.0053,
+      0.0158
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0063,
+     "support": [
+      " asked",
+      " Accelerated",
+      "英國",
+      "gespr",
+      " Correspondence",
+      " toxin",
+      "Served",
+      " neutralizing",
+      "स्कृत",
+      " presentation"
+     ],
+     "coef": [
+      0.0063,
+      0.0145,
+      0.0065,
+      0.0203,
+      0.0209,
+      0.018,
+      0.0116,
+      0.0212,
+      0.0111,
+      0.004
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0088,
+     "support": [
+      "灵魂",
+      " fisher",
+      " hinge",
+      " deciduous",
+      " Poké",
+      "完成后",
+      " नी",
+      "丈夫",
+      " Hilfe",
+      " dwarfs"
+     ],
+     "coef": [
+      0.0,
+      0.0326,
+      0.048,
+      0.0336,
+      0.0303,
+      0.0162,
+      0.0107,
+      0.0237,
+      0.0143,
+      0.0078
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0028,
+     "support": [
+      " FAX",
+      " писал",
+      "是以",
+      " दिवसा",
+      "Utilization",
+      " terminology",
+      "讲话",
+      " rainforest",
+      " बोले",
+      "답니다"
+     ],
+     "coef": [
+      0.0002,
+      0.0,
+      0.007,
+      0.0128,
+      0.01,
+      0.0105,
+      0.0118,
+      0.0,
+      0.0098,
+      0.0097
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.004,
+     "support": [
+      "tall",
+      " χ",
+      " eventually",
+      " hinge",
+      "脚",
+      "不幸",
+      " Recogn",
+      " двига",
+      " মেয়ে",
+      " MDF"
+     ],
+     "coef": [
+      0.0194,
+      0.0118,
+      0.014,
+      0.0306,
+      0.0177,
+      0.0101,
+      0.0075,
+      0.0153,
+      0.0125,
+      0.0138
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0077,
+     "support": [
+      " servers",
+      " उपायों",
+      " shelter",
+      "Sampler",
+      "但也",
+      "ogenetics",
+      " куро",
+      " bespoke",
+      " a",
+      " Moz"
+     ],
+     "coef": [
+      0.0,
+      0.0007,
+      0.035,
+      0.0122,
+      0.0185,
+      0.0309,
+      0.0079,
+      0.0111,
+      0.0293,
+      0.0093
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0097,
+     "support": [
+      "Newsletter",
+      "ไปด้วย",
+      " ค",
+      " tắt",
+      "provides",
+      " athlete",
+      " పరిష్",
+      " precautions",
+      " confidential",
+      " và"
+     ],
+     "coef": [
+      0.003,
+      0.0284,
+      0.0101,
+      0.0119,
+      0.0329,
+      0.0258,
+      0.0221,
+      0.0168,
+      0.0133,
+      0.0216
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0098,
+     "support": [
+      "heavy",
+      " देखना",
+      " Provinces",
+      " وس",
+      " considers",
+      " wreck",
+      " চোখ",
+      "ชุด",
+      " Interim",
+      " rmse"
+     ],
+     "coef": [
+      0.0027,
+      0.0108,
+      0.0011,
+      0.0253,
+      0.0362,
+      0.0214,
+      0.0241,
+      0.0255,
+      0.0139,
+      0.0245
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0085,
+     "support": [
+      "ParallelGroup",
+      " centerX",
+      " curiously",
+      " hoja",
+      " basing",
+      "क्षि",
+      " حضرتك",
+      " lone",
+      " canonically",
+      "得到了"
+     ],
+     "coef": [
+      0.0297,
+      0.0432,
+      0.0171,
+      0.0194,
+      0.0158,
+      0.0188,
+      0.0019,
+      0.0281,
+      0.0274,
+      0.0197
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0093,
+     "support": [
+      " ইঞ্জ",
+      " நிலை",
+      " distribuir",
+      " seasoned",
+      " रैंकिंग",
+      " polymer",
+      "店",
+      " l",
+      " শূন্য",
+      " lệnh"
+     ],
+     "coef": [
+      0.0171,
+      0.0339,
+      0.0068,
+      0.0128,
+      0.0312,
+      0.0404,
+      0.0068,
+      0.0392,
+      0.0123,
+      0.013
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "24": [
+    {
+     "label": "black",
+     "explained": 0.0034,
+     "support": [
+      " Ouverture",
+      "odno",
+      " fullback",
+      "Warranty",
+      "sized",
+      "elihood",
+      "idbody",
+      "型の",
+      " distress",
+      " leta"
+     ],
+     "coef": [
+      0.02,
+      0.0135,
+      0.0169,
+      0.0116,
+      0.0123,
+      0.013,
+      0.02,
+      0.0077,
+      0.0116,
+      0.0094
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0023,
+     "support": [
+      " listened",
+      "ryl",
+      " MinMaxScaler",
+      " shorthand",
+      " Shared",
+      "rógeno",
+      " এতটাই",
+      "i",
+      " apostle",
+      "ைப்"
+     ],
+     "coef": [
+      0.0063,
+      0.0096,
+      0.0069,
+      0.0049,
+      0.0141,
+      0.014,
+      0.018,
+      0.0047,
+      0.0104,
+      0.0038
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0022,
+     "support": [
+      " Acme",
+      "デ",
+      " la",
+      " irgendwie",
+      "高く",
+      " रूप",
+      " ability",
+      " kinh",
+      " ڈویل",
+      " ওষুধের"
+     ],
+     "coef": [
+      0.0017,
+      0.0009,
+      0.0227,
+      0.0147,
+      0.0168,
+      0.0048,
+      0.0148,
+      0.0122,
+      0.0186,
+      0.0158
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0014,
+     "support": [
+      " AI",
+      " falando",
+      " объяс",
+      " Conversation",
+      " by",
+      "媑",
+      "ฤษ",
+      " دیگری",
+      " onTap",
+      " boll"
+     ],
+     "coef": [
+      0.0066,
+      0.0057,
+      0.0163,
+      0.007,
+      0.0087,
+      0.0067,
+      0.006,
+      0.0092,
+      0.0069,
+      0.0046
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0026,
+     "support": [
+      "Kann",
+      "となる",
+      " וש",
+      " قدیمی",
+      " básicamente",
+      " heavyweight",
+      "PRODUCT",
+      " eventually",
+      " روس",
+      " అను"
+     ],
+     "coef": [
+      0.0,
+      0.0056,
+      0.028,
+      0.0089,
+      0.0043,
+      0.0028,
+      0.0147,
+      0.0094,
+      0.0124,
+      0.0082
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0027,
+     "support": [
+      " natures",
+      "holi",
+      " sinking",
+      "ancements",
+      " вроде",
+      " fantasy",
+      " मददगार",
+      " गृ",
+      " god",
+      " isle"
+     ],
+     "coef": [
+      0.0,
+      0.0054,
+      0.014,
+      0.0198,
+      0.0058,
+      0.0055,
+      0.0159,
+      0.0079,
+      0.0114,
+      0.0214
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0027,
+     "support": [
+      "ześ",
+      " solutions",
+      " село",
+      "slime",
+      "órios",
+      "Agricult",
+      " recommendations",
+      " школе",
+      "typical",
+      " wits"
+     ],
+     "coef": [
+      0.0223,
+      0.0075,
+      0.0119,
+      0.0073,
+      0.0131,
+      0.011,
+      0.0084,
+      0.0175,
+      0.0084,
+      0.014
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.003,
+     "support": [
+      "DEFIN",
+      "Ofer",
+      " чыга",
+      " recess",
+      " originate",
+      " einiger",
+      " endurance",
+      "FILES",
+      " federal",
+      " stable"
+     ],
+     "coef": [
+      0.0124,
+      0.0005,
+      0.0037,
+      0.0178,
+      0.0073,
+      0.0068,
+      0.0157,
+      0.0132,
+      0.0179,
+      0.0132
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0015,
+     "support": [
+      "ParallelGroup",
+      " आधिकारिक",
+      " મહિ",
+      " contoh",
+      " раск",
+      "是指",
+      "queens",
+      " brother",
+      " مؤرشف",
+      " 사람은"
+     ],
+     "coef": [
+      0.0191,
+      0.0018,
+      0.0075,
+      0.0061,
+      0.0063,
+      0.0044,
+      0.0124,
+      0.0189,
+      0.0138,
+      0.0097
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0014,
+     "support": [
+      " pushing",
+      "rated",
+      " কোম্পানির",
+      " cloned",
+      "fähig",
+      "ന്മ",
+      " ورحمه",
+      " reproducibility",
+      "fast",
+      "DEST"
+     ],
+     "coef": [
+      0.009,
+      0.0,
+      0.0114,
+      0.0067,
+      0.0142,
+      0.008,
+      0.0131,
+      0.0093,
+      0.0077,
+      0.0087
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "26": [
+    {
+     "label": "black",
+     "explained": 0.0008,
+     "support": [
+      "താണ",
+      "幅広い",
+      " JAG",
+      " escolas",
+      " picky",
+      " Европе",
+      " सप्त",
+      "座標",
+      " болезни",
+      " a"
+     ],
+     "coef": [
+      0.0099,
+      0.0,
+      0.0,
+      0.0093,
+      0.0077,
+      0.0069,
+      0.0062,
+      0.0067,
+      0.0048,
+      0.0072
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.001,
+     "support": [
+      "洗衣",
+      " authorizations",
+      " positrons",
+      " lymphoblastic",
+      "rógeno",
+      " widowed",
+      " daring",
+      " equilibrio",
+      " heroism",
+      " baile"
+     ],
+     "coef": [
+      0.0,
+      0.0087,
+      0.0116,
+      0.0097,
+      0.0112,
+      0.0088,
+      0.0098,
+      0.0034,
+      0.0018,
+      0.0041
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0012,
+     "support": [
+      " aceste",
+      "Спа",
+      " hervorrag",
+      " алуу",
+      "巅峰",
+      "政府采购",
+      "葫",
+      " aberr",
+      " epoch",
+      " pvc"
+     ],
+     "coef": [
+      0.0,
+      0.0042,
+      0.0058,
+      0.0073,
+      0.008,
+      0.014,
+      0.009,
+      0.0086,
+      0.0061,
+      0.0074
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0008,
+     "support": [
+      " authorizations",
+      "wxr",
+      "を結",
+      "時から",
+      " VIDEO",
+      " economists",
+      "₂(",
+      " anonymously",
+      " TextStyle",
+      " chape"
+     ],
+     "coef": [
+      0.0114,
+      0.0095,
+      0.0112,
+      0.0044,
+      0.0078,
+      0.0038,
+      0.0063,
+      0.0065,
+      0.0064,
+      0.0052
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.001,
+     "support": [
+      "Kell",
+      " difficoltà",
+      " و",
+      " সমস্যার",
+      "falen",
+      " underdeveloped",
+      " blatant",
+      " sass",
+      " दोष",
+      " sequel"
+     ],
+     "coef": [
+      0.0036,
+      0.0078,
+      0.0163,
+      0.0064,
+      0.0034,
+      0.0099,
+      0.0068,
+      0.0043,
+      0.01,
+      0.0038
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0013,
+     "support": [
+      "cosmos",
+      " símbolo",
+      " cực",
+      "私が",
+      " জোট",
+      " bu",
+      "thol",
+      " isle",
+      " a",
+      " предполагает"
+     ],
+     "coef": [
+      0.0032,
+      0.0041,
+      0.0053,
+      0.0048,
+      0.0095,
+      0.0055,
+      0.005,
+      0.0182,
+      0.0155,
+      0.014
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0014,
+     "support": [
+      " క్ర",
+      " regiments",
+      "ktx",
+      " Ե",
+      "तोष",
+      " erleben",
+      "Stopping",
+      "vig",
+      " escalator",
+      " emb"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0142,
+      0.0141,
+      0.0096,
+      0.0114,
+      0.0044,
+      0.0017,
+      0.01,
+      0.0081
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0013,
+     "support": [
+      "vaccinated",
+      " illegitimate",
+      " счета",
+      " poor",
+      "conse",
+      " concurs",
+      "도는",
+      " balk",
+      " n",
+      "ဆင့်"
+     ],
+     "coef": [
+      0.0073,
+      0.0064,
+      0.0066,
+      0.007,
+      0.005,
+      0.0128,
+      0.0049,
+      0.0127,
+      0.0081,
+      0.0075
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0008,
+     "support": [
+      " 맞아",
+      " তিন",
+      "ধবার",
+      " Develop",
+      "သ",
+      " dụ",
+      " Okay",
+      " چپ",
+      " bos",
+      " пози"
+     ],
+     "coef": [
+      0.0085,
+      0.0097,
+      0.0014,
+      0.0118,
+      0.0154,
+      0.0002,
+      0.0105,
+      0.0086,
+      0.0049,
+      0.0045
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0015,
+     "support": [
+      " succeed",
+      "pped",
+      " større",
+      " applies",
+      " đ",
+      " burner",
+      " இல",
+      " במהלך",
+      " lash",
+      "াইড"
+     ],
+     "coef": [
+      0.0191,
+      0.0134,
+      0.0006,
+      0.0026,
+      0.0125,
+      0.0107,
+      0.0093,
+      0.0066,
+      0.0112,
+      0.0096
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "28": [
+    {
+     "label": "black",
+     "explained": 0.0036,
+     "support": [
+      " caldo",
+      " mk",
+      " Badal",
+      "देशक",
+      " işte",
+      "steigen",
+      " desolate",
+      "犍",
+      " person",
+      " flames"
+     ],
+     "coef": [
+      0.0089,
+      0.0101,
+      0.0013,
+      0.0018,
+      0.0106,
+      0.0088,
+      0.0177,
+      0.005,
+      0.0235,
+      0.0167
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0048,
+     "support": [
+      " Paston",
+      " přep",
+      "憬",
+      " آ",
+      "纺",
+      "Additionally",
+      " Lumpur",
+      "ტის",
+      " हरा",
+      " respal"
+     ],
+     "coef": [
+      0.0,
+      0.0064,
+      0.0177,
+      0.0066,
+      0.0189,
+      0.0148,
+      0.0091,
+      0.0102,
+      0.0081,
+      0.0168
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0038,
+     "support": [
+      " Brookings",
+      " inconvenient",
+      " ظل",
+      " declare",
+      " sıcak",
+      " கொடுத்து",
+      "คุณภาพ",
+      " LOCK",
+      " DSC",
+      " baffled"
+     ],
+     "coef": [
+      0.0243,
+      0.0124,
+      0.0124,
+      0.0083,
+      0.0075,
+      0.0137,
+      0.0097,
+      0.0189,
+      0.0132,
+      0.0138
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0052,
+     "support": [
+      " डेयरी",
+      " Etr",
+      " penghargaan",
+      " этап",
+      "由此",
+      " postale",
+      "を",
+      " zusätzlich",
+      " Tare",
+      " securely"
+     ],
+     "coef": [
+      0.0169,
+      0.0,
+      0.0174,
+      0.0205,
+      0.0,
+      0.0162,
+      0.0137,
+      0.0076,
+      0.0078,
+      0.0133
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0068,
+     "support": [
+      "ombie",
+      " زاده",
+      " sức",
+      " ग्राहक",
+      "വില്‍",
+      " lc",
+      "就可以",
+      " دم",
+      " Dynamite",
+      " Looks"
+     ],
+     "coef": [
+      0.0265,
+      0.0,
+      0.0053,
+      0.0214,
+      0.0166,
+      0.0226,
+      0.0189,
+      0.0088,
+      0.0105,
+      0.0059
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0053,
+     "support": [
+      " Master",
+      " Meteorology",
+      "ίου",
+      " Honduras",
+      " enthalpies",
+      " shows",
+      "つもり",
+      " nativity",
+      " partnership",
+      " powers"
+     ],
+     "coef": [
+      0.0053,
+      0.0227,
+      0.0108,
+      0.0003,
+      0.0167,
+      0.0069,
+      0.0285,
+      0.0269,
+      0.0117,
+      0.015
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0047,
+     "support": [
+      " terza",
+      " coordinators",
+      " USB",
+      " باندې",
+      " Mise",
+      " Gitar",
+      " prédio",
+      "емых",
+      " Capitol",
+      " boost"
+     ],
+     "coef": [
+      0.0,
+      0.0212,
+      0.0254,
+      0.0,
+      0.0012,
+      0.0177,
+      0.0162,
+      0.0222,
+      0.029,
+      0.0139
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0051,
+     "support": [
+      " Combination",
+      " Ds",
+      " விகி",
+      " MLB",
+      "但也",
+      " Tunisian",
+      " Some",
+      " Jit",
+      " glimmer",
+      " clerks"
+     ],
+     "coef": [
+      0.023,
+      0.0278,
+      0.0145,
+      0.0124,
+      0.0093,
+      0.0134,
+      0.0209,
+      0.0086,
+      0.0109,
+      0.0194
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0034,
+     "support": [
+      " unclean",
+      " sequential",
+      "格式",
+      "Lowest",
+      " расти",
+      " anf",
+      " لقب",
+      " 便利",
+      "连续",
+      " Others"
+     ],
+     "coef": [
+      0.0032,
+      0.0,
+      0.0043,
+      0.0132,
+      0.019,
+      0.0,
+      0.0157,
+      0.0154,
+      0.02,
+      0.0133
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.004,
+     "support": [
+      " રો",
+      " Sco",
+      " poses",
+      " rollback",
+      " recombinant",
+      " sali",
+      " gỗ",
+      " টাইমস",
+      "starred",
+      " survivor"
+     ],
+     "coef": [
+      0.0083,
+      0.0046,
+      0.0123,
+      0.0201,
+      0.0112,
+      0.0,
+      0.0292,
+      0.0139,
+      0.0166,
+      0.0203
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "30": [
+    {
+     "label": "black",
+     "explained": 0.0093,
+     "support": [
+      " furiously",
+      " blower",
+      "onite",
+      "ஓ",
+      " December",
+      " sloth",
+      " অসুস্থ",
+      "aggy",
+      " chứ",
+      " القاعدة"
+     ],
+     "coef": [
+      0.0185,
+      0.0216,
+      0.01,
+      0.0,
+      0.0209,
+      0.0151,
+      0.0271,
+      0.0068,
+      0.0201,
+      0.0149
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0094,
+     "support": [
+      "两位",
+      " ยาว",
+      " برطانیہ",
+      " apportion",
+      " الاق",
+      " стек",
+      " werken",
+      " combinado",
+      " ফোনের",
+      " आश्"
+     ],
+     "coef": [
+      0.0296,
+      0.0158,
+      0.0115,
+      0.0131,
+      0.0129,
+      0.014,
+      0.0284,
+      0.0255,
+      0.0186,
+      0.0129
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0097,
+     "support": [
+      "трима",
+      " dok",
+      " conglomer",
+      "굽",
+      "escol",
+      " Ninh",
+      "ರಿಸ",
+      " Fritz",
+      "エントリー",
+      " fades"
+     ],
+     "coef": [
+      0.0,
+      0.0275,
+      0.0241,
+      0.0199,
+      0.0158,
+      0.0154,
+      0.0164,
+      0.0093,
+      0.0157,
+      0.0169
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0093,
+     "support": [
+      " implications",
+      " polls",
+      "epend",
+      "지는",
+      "也很",
+      " ద్వ",
+      " hearted",
+      " permutations",
+      " معی",
+      " difund"
+     ],
+     "coef": [
+      0.0056,
+      0.0133,
+      0.0083,
+      0.0116,
+      0.0038,
+      0.0245,
+      0.0182,
+      0.0156,
+      0.013,
+      0.0153
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.008,
+     "support": [
+      "लंका",
+      "otid",
+      " Mose",
+      " まず",
+      " Professor",
+      " salvage",
+      " Ambient",
+      "ก็ได้",
+      " reminder",
+      " tetr"
+     ],
+     "coef": [
+      0.0187,
+      0.0203,
+      0.0143,
+      0.0186,
+      0.0108,
+      0.0123,
+      0.0067,
+      0.0221,
+      0.0162,
+      0.0079
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0112,
+     "support": [
+      " kuiten",
+      " sekolah",
+      " တို့",
+      "便利",
+      " промышлен",
+      " taught",
+      " magar",
+      " szak",
+      " Waldorf",
+      "슛"
+     ],
+     "coef": [
+      0.0294,
+      0.0209,
+      0.0308,
+      0.0303,
+      0.0194,
+      0.0134,
+      0.0171,
+      0.0069,
+      0.0134,
+      0.0206
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0123,
+     "support": [
+      " diritto",
+      " Kategor",
+      " set",
+      " مشارکت",
+      "ქვენ",
+      " percent",
+      " pulsing",
+      " प्रिंट",
+      " nymphs",
+      " sponsoring"
+     ],
+     "coef": [
+      0.0196,
+      0.0168,
+      0.0489,
+      0.0102,
+      0.0294,
+      0.0181,
+      0.0085,
+      0.0107,
+      0.0274,
+      0.0208
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0102,
+     "support": [
+      " Lv",
+      " angka",
+      "ajit",
+      " rắn",
+      " elite",
+      " می‌کن",
+      " ability",
+      " async",
+      " ഹ",
+      " ثلاثة"
+     ],
+     "coef": [
+      0.0257,
+      0.0357,
+      0.0,
+      0.0223,
+      0.0312,
+      0.016,
+      0.0364,
+      0.0317,
+      0.0044,
+      0.0269
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0127,
+     "support": [
+      "freiheit",
+      "fruit",
+      "昆",
+      " ranchers",
+      " основном",
+      "HELP",
+      " Rising",
+      "ෙක්",
+      " hôn",
+      " segno"
+     ],
+     "coef": [
+      0.0161,
+      0.0242,
+      0.0054,
+      0.0212,
+      0.0189,
+      0.0057,
+      0.0218,
+      0.0322,
+      0.0279,
+      0.0142
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0138,
+     "support": [
+      " Cathedral",
+      " PROTE",
+      " testo",
+      "Personally",
+      "plug",
+      " शो",
+      " móc",
+      " rescue",
+      " FIGURE",
+      " نها"
+     ],
+     "coef": [
+      0.0167,
+      0.0273,
+      0.0169,
+      0.0107,
+      0.0104,
+      0.0062,
+      0.0372,
+      0.0279,
+      0.0312,
+      0.0077
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "32": [
+    {
+     "label": "black",
+     "explained": 0.0159,
+     "support": [
+      "closures",
+      " Aliment",
+      " controversy",
+      " sideboard",
+      " mengunjungi",
+      " ALA",
+      "łac",
+      "素晴らしい",
+      " sporadically",
+      " owner"
+     ],
+     "coef": [
+      0.0052,
+      0.0,
+      0.0253,
+      0.0155,
+      0.016,
+      0.0309,
+      0.0328,
+      0.0113,
+      0.033,
+      0.0197
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0121,
+     "support": [
+      "වන",
+      " ²",
+      " OnTrigger",
+      " fishes",
+      "Deux",
+      " mascota",
+      " octopus",
+      " ทั้ง",
+      " blasted",
+      " möglicherweise"
+     ],
+     "coef": [
+      0.006,
+      0.0237,
+      0.0023,
+      0.0251,
+      0.0203,
+      0.0196,
+      0.0199,
+      0.0209,
+      0.0135,
+      0.022
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0108,
+     "support": [
+      "诸",
+      " Aunt",
+      " semicircle",
+      " generosity",
+      " lastName",
+      " scrapbook",
+      " అంటే",
+      " modernize",
+      " Argonne",
+      " chest"
+     ],
+     "coef": [
+      0.0488,
+      0.0016,
+      0.0354,
+      0.0139,
+      0.0219,
+      0.0207,
+      0.0216,
+      0.0193,
+      0.015,
+      0.0162
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0112,
+     "support": [
+      "𝒔",
+      "Workbook",
+      "leştir",
+      "枚",
+      " Both",
+      "تنا",
+      " эксплуа",
+      " COT",
+      " beheld",
+      "Seeing"
+     ],
+     "coef": [
+      0.0193,
+      0.0077,
+      0.007,
+      0.029,
+      0.0173,
+      0.0151,
+      0.0067,
+      0.0226,
+      0.0115,
+      0.0156
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0129,
+     "support": [
+      "明る",
+      " Minority",
+      " pico",
+      " referees",
+      "اویز",
+      " کیلوم",
+      " دیگری",
+      "这项",
+      " extraordin",
+      " Grec"
+     ],
+     "coef": [
+      0.0177,
+      0.0178,
+      0.0299,
+      0.0061,
+      0.0346,
+      0.0188,
+      0.0147,
+      0.0114,
+      0.0182,
+      0.0049
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0146,
+     "support": [
+      " വിദ്യാഭ്യാസ",
+      " Negev",
+      " شناخت",
+      " nice",
+      " সারাদেশ",
+      " ہے",
+      " canyons",
+      " يبقى",
+      " NODE",
+      " blå"
+     ],
+     "coef": [
+      0.0266,
+      0.0165,
+      0.0033,
+      0.0118,
+      0.0238,
+      0.0078,
+      0.015,
+      0.022,
+      0.0265,
+      0.0148
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0173,
+     "support": [
+      " dai",
+      "dSample",
+      " la",
+      " copos",
+      " Perhaps",
+      " थंड",
+      "कारों",
+      " sociable",
+      " mildew",
+      " ICC"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0143,
+      0.0265,
+      0.0102,
+      0.0062,
+      0.0209,
+      0.0479,
+      0.0325,
+      0.0351
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0133,
+     "support": [
+      "ദം",
+      "റാ",
+      "awaiter",
+      "cuts",
+      " العاشر",
+      " अत्याधुनिक",
+      "‌تر",
+      " and",
+      " Totally",
+      "截"
+     ],
+     "coef": [
+      0.0222,
+      0.0023,
+      0.0132,
+      0.0267,
+      0.0162,
+      0.0267,
+      0.0453,
+      0.0186,
+      0.022,
+      0.0172
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0116,
+     "support": [
+      "カラム",
+      "手工",
+      " allons",
+      "告示",
+      " самые",
+      " dihasilkan",
+      " সরে",
+      " bylaws",
+      " Hercules",
+      " PLANTS"
+     ],
+     "coef": [
+      0.0205,
+      0.0088,
+      0.0124,
+      0.0419,
+      0.004,
+      0.0172,
+      0.0185,
+      0.0091,
+      0.0224,
+      0.012
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0155,
+     "support": [
+      " ambit",
+      " rigorous",
+      " réflex",
+      "soccer",
+      " checklist",
+      "严肃",
+      " সেরা",
+      " geometries",
+      " scholarship",
+      " عالی"
+     ],
+     "coef": [
+      0.017,
+      0.0051,
+      0.0182,
+      0.0132,
+      0.031,
+      0.0347,
+      0.042,
+      0.0323,
+      0.0243,
+      0.0361
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "34": [
+    {
+     "label": "black",
+     "explained": 0.011,
+     "support": [
+      " Judas",
+      "合計",
+      " Dusty",
+      "ونا",
+      " File",
+      " HDD",
+      " Cemetery",
+      "</h4>",
+      " Un",
+      " Bowser"
+     ],
+     "coef": [
+      0.0349,
+      0.0078,
+      0.0259,
+      0.0044,
+      0.0414,
+      0.0183,
+      0.0139,
+      0.0351,
+      0.0144,
+      0.019
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0102,
+     "support": [
+      " sucks",
+      " Beaches",
+      " Moe",
+      " Attend",
+      " Classified",
+      " Lily",
+      "োডে",
+      "凄い",
+      "hésitez",
+      "</h4>"
+     ],
+     "coef": [
+      0.0315,
+      0.0016,
+      0.0135,
+      0.025,
+      0.0021,
+      0.0105,
+      0.0229,
+      0.0344,
+      0.0238,
+      0.0218
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0121,
+     "support": [
+      " khiển",
+      " Dow",
+      " சினிமா",
+      " यूएस",
+      "竣工",
+      " chimney",
+      "了一",
+      " WILD",
+      "اده",
+      " Ты"
+     ],
+     "coef": [
+      0.0277,
+      0.0168,
+      0.0,
+      0.0161,
+      0.0226,
+      0.0142,
+      0.0098,
+      0.0299,
+      0.026,
+      0.0169
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0141,
+     "support": [
+      " adequada",
+      " banyaknya",
+      " المسي",
+      " alluring",
+      " 感",
+      " Año",
+      " LIABILITY",
+      " CQL",
+      " DataSet",
+      " Liechtenstein"
+     ],
+     "coef": [
+      0.0013,
+      0.023,
+      0.0176,
+      0.0127,
+      0.0046,
+      0.0359,
+      0.0223,
+      0.0207,
+      0.0109,
+      0.0196
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.015,
+     "support": [
+      " triples",
+      "魁",
+      " ثلاث",
+      "越し",
+      " rewrite",
+      "に変更",
+      "physik",
+      " eBooks",
+      "otope",
+      "യിലേക്ക്"
+     ],
+     "coef": [
+      0.0012,
+      0.016,
+      0.0434,
+      0.0136,
+      0.0325,
+      0.0015,
+      0.0,
+      0.0155,
+      0.0162,
+      0.0371
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0106,
+     "support": [
+      " profile",
+      " difficiles",
+      "COURSE",
+      " CATEG",
+      " adsorbed",
+      "之外",
+      " sebag",
+      " كرد",
+      " Chilean",
+      " ILLUSTR"
+     ],
+     "coef": [
+      0.0,
+      0.0408,
+      0.0084,
+      0.0229,
+      0.0366,
+      0.0257,
+      0.0192,
+      0.0091,
+      0.0156,
+      0.021
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0118,
+     "support": [
+      "rangea",
+      "ಳಿ",
+      " flaky",
+      " Gorgeous",
+      " polos",
+      " la",
+      " subscrib",
+      " cardiomyocytes",
+      " schön",
+      " Trem"
+     ],
+     "coef": [
+      0.0,
+      0.0078,
+      0.034,
+      0.0211,
+      0.0219,
+      0.0368,
+      0.0255,
+      0.025,
+      0.0215,
+      0.0
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0111,
+     "support": [
+      " New",
+      " excitedly",
+      " Frederick",
+      " terbesar",
+      " Estud",
+      " XII",
+      " Recursive",
+      " zorunda",
+      " the",
+      "ூர"
+     ],
+     "coef": [
+      0.0267,
+      0.0,
+      0.005,
+      0.0156,
+      0.019,
+      0.0222,
+      0.0137,
+      0.0037,
+      0.0188,
+      0.0235
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0106,
+     "support": [
+      " ach",
+      " Exports",
+      "сторо",
+      " korzyst",
+      " vasculature",
+      "textAllCaps",
+      " chalkboard",
+      " anvil",
+      "ــــ",
+      " VARI"
+     ],
+     "coef": [
+      0.0,
+      0.0325,
+      0.0418,
+      0.0023,
+      0.0182,
+      0.0207,
+      0.0149,
+      0.0127,
+      0.0161,
+      0.0103
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0098,
+     "support": [
+      " rubrique",
+      " Künst",
+      "只需",
+      "ப்பட்ட",
+      " conforming",
+      "setDisplay",
+      " heady",
+      " ලෙස",
+      " BY",
+      " сторону"
+     ],
+     "coef": [
+      0.0,
+      0.031,
+      0.0208,
+      0.0191,
+      0.0106,
+      0.0119,
+      0.0046,
+      0.0198,
+      0.0222,
+      0.0327
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "36": [
+    {
+     "label": "black",
+     "explained": 0.0149,
+     "support": [
+      "ubis",
+      "NaOH",
+      " पुनर्",
+      " vyb",
+      "Lycodon",
+      "的好",
+      "ك",
+      " Nos",
+      " cylinder",
+      "玩家"
+     ],
+     "coef": [
+      0.0062,
+      0.0123,
+      0.0205,
+      0.0004,
+      0.0334,
+      0.0,
+      0.0572,
+      0.0399,
+      0.0121,
+      0.0366
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0216,
+     "support": [
+      " Oceanic",
+      "ขับ",
+      " VP",
+      "ເວ",
+      " manuscripts",
+      " asymptote",
+      " c",
+      "递归",
+      " Ships",
+      " gearing"
+     ],
+     "coef": [
+      0.0299,
+      0.0442,
+      0.0273,
+      0.0,
+      0.0239,
+      0.013,
+      0.0119,
+      0.0498,
+      0.0469,
+      0.0342
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0203,
+     "support": [
+      " பகுதி",
+      "専門",
+      " burger",
+      "凿",
+      " Game",
+      " स्टे",
+      " embodiment",
+      " wilderness",
+      "들어",
+      "PROCESSING"
+     ],
+     "coef": [
+      0.0426,
+      0.0174,
+      0.0043,
+      0.0,
+      0.0345,
+      0.0,
+      0.0269,
+      0.0332,
+      0.0195,
+      0.0265
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0144,
+     "support": [
+      "റ്റു",
+      "托管",
+      "隕",
+      " contending",
+      " convert",
+      " энциклопедия",
+      " vaults",
+      " summits",
+      " la",
+      "权重"
+     ],
+     "coef": [
+      0.0,
+      0.0155,
+      0.0121,
+      0.0454,
+      0.0347,
+      0.0421,
+      0.0223,
+      0.0049,
+      0.0459,
+      0.0205
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0135,
+     "support": [
+      "HAL",
+      " Translator",
+      "衡",
+      "PipelineState",
+      " Burgundy",
+      " জিজ্ঞাস",
+      "촛",
+      " PROBLEMS",
+      "Calibration",
+      " zuk"
+     ],
+     "coef": [
+      0.0308,
+      0.0,
+      0.0072,
+      0.0126,
+      0.0166,
+      0.0342,
+      0.0185,
+      0.0,
+      0.0193,
+      0.0476
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0173,
+     "support": [
+      " фло",
+      "Breed",
+      " primacy",
+      " hairy",
+      " шанс",
+      " chir",
+      "丛",
+      " rameaux",
+      "beest",
+      " ontwikk"
+     ],
+     "coef": [
+      0.0,
+      0.0255,
+      0.0514,
+      0.0104,
+      0.016,
+      0.0314,
+      0.0122,
+      0.0492,
+      0.0,
+      0.0268
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0142,
+     "support": [
+      " ultraviolet",
+      " 등장",
+      " Calgary",
+      " Astra",
+      " grit",
+      " Tween",
+      " Florida",
+      "binom",
+      " comed",
+      "rizable"
+     ],
+     "coef": [
+      0.0201,
+      0.0409,
+      0.0438,
+      0.0183,
+      0.0,
+      0.0188,
+      0.0419,
+      0.0284,
+      0.0356,
+      0.0403
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0097,
+     "support": [
+      " jedan",
+      " എന്നും",
+      " foil",
+      " namespace",
+      " neer",
+      " MIDDLE",
+      " Petersburg",
+      " Afro",
+      " cực",
+      "ienst"
+     ],
+     "coef": [
+      0.0192,
+      0.0105,
+      0.0,
+      0.0266,
+      0.013,
+      0.0158,
+      0.0263,
+      0.0006,
+      0.0324,
+      0.0382
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0172,
+     "support": [
+      " iPhones",
+      "teaser",
+      "ਾਨ",
+      "ferred",
+      " STANDARD",
+      " fluctuate",
+      "烀",
+      "पंजा",
+      " botones",
+      " जबरदस्त"
+     ],
+     "coef": [
+      0.02,
+      0.0197,
+      0.0,
+      0.043,
+      0.0177,
+      0.0155,
+      0.0155,
+      0.0489,
+      0.0242,
+      0.0196
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0188,
+     "support": [
+      " benefit",
+      " spez",
+      "uterine",
+      " SCIENCES",
+      " recyclable",
+      " thermal",
+      " Category",
+      " desliz",
+      " categorize",
+      " раствора"
+     ],
+     "coef": [
+      0.0165,
+      0.0234,
+      0.0151,
+      0.0331,
+      0.0245,
+      0.017,
+      0.0439,
+      0.0191,
+      0.0085,
+      0.0
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "38": [
+    {
+     "label": "black",
+     "explained": 0.0164,
+     "support": [
+      " fiasco",
+      "पतवार",
+      " 个",
+      " খারাপ",
+      "ழ்க",
+      "뱃",
+      " No",
+      " scav",
+      " đáo",
+      " Extracts"
+     ],
+     "coef": [
+      0.0,
+      0.0134,
+      0.0263,
+      0.0324,
+      0.0253,
+      0.0337,
+      0.0314,
+      0.045,
+      0.0189,
+      0.0
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0236,
+     "support": [
+      " replicated",
+      " amplify",
+      "velocity",
+      "เล",
+      "েন্সি",
+      " телевиде",
+      " উপন্যাস",
+      " electrolytes",
+      " thorough",
+      " strolled"
+     ],
+     "coef": [
+      0.0399,
+      0.0651,
+      0.0289,
+      0.0527,
+      0.0677,
+      0.0369,
+      0.042,
+      0.0463,
+      0.0007,
+      0.0545
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0169,
+     "support": [
+      "லாம்",
+      " ಗೋ",
+      " reconst",
+      "हाबाद",
+      " drove",
+      " skeletal",
+      " грузо",
+      " grandfather",
+      "だけでなく",
+      "꺽"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0504,
+      0.031,
+      0.004,
+      0.0581,
+      0.0356,
+      0.0189,
+      0.0423,
+      0.0378
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0127,
+     "support": [
+      "setBounds",
+      " банк",
+      " lanjut",
+      " productId",
+      " tambah",
+      " ต",
+      " hospitable",
+      " credito",
+      " আবিষ্কার",
+      " знал"
+     ],
+     "coef": [
+      0.0376,
+      0.0014,
+      0.0358,
+      0.0223,
+      0.0,
+      0.0359,
+      0.0034,
+      0.0486,
+      0.0209,
+      0.037
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0169,
+     "support": [
+      "𝙘",
+      "loc",
+      " nenhum",
+      " oldest",
+      "砌",
+      "HideFlags",
+      " Lê",
+      "Wheel",
+      "downarrow",
+      " or"
+     ],
+     "coef": [
+      0.0704,
+      0.0,
+      0.0343,
+      0.0407,
+      0.018,
+      0.0468,
+      0.0335,
+      0.0454,
+      0.0219,
+      0.0647
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.018,
+     "support": [
+      " grassy",
+      "rvats",
+      " ahi",
+      "english",
+      " красиво",
+      " ያ",
+      " разработки",
+      " Brooke",
+      " comic",
+      " عالی"
+     ],
+     "coef": [
+      0.0047,
+      0.0263,
+      0.0,
+      0.0,
+      0.03,
+      0.0233,
+      0.0398,
+      0.0013,
+      0.0331,
+      0.0061
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.016,
+     "support": [
+      " bride",
+      "ToSend",
+      " scenery",
+      " fáb",
+      " chicas",
+      " pane",
+      " a",
+      " laminate",
+      " Expanding",
+      "PropertyName"
+     ],
+     "coef": [
+      0.0,
+      0.0291,
+      0.0159,
+      0.0196,
+      0.0725,
+      0.0228,
+      0.0568,
+      0.076,
+      0.0257,
+      0.028
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0103,
+     "support": [
+      " eventi",
+      "decompose",
+      "奮",
+      " Directed",
+      "しているので",
+      "ፈላ",
+      " ambulance",
+      "的高度",
+      " sintet",
+      " MSc"
+     ],
+     "coef": [
+      0.0,
+      0.0371,
+      0.0315,
+      0.0198,
+      0.0176,
+      0.0,
+      0.0273,
+      0.0427,
+      0.0,
+      0.0397
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0173,
+     "support": [
+      " prominently",
+      " affirms",
+      "ክር",
+      " Shirley",
+      " stake",
+      " gars",
+      " VEL",
+      "নাম",
+      " பிரதி",
+      " canisters"
+     ],
+     "coef": [
+      0.0498,
+      0.0177,
+      0.0085,
+      0.0272,
+      0.0302,
+      0.1027,
+      0.0469,
+      0.0107,
+      0.0117,
+      0.0301
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0178,
+     "support": [
+      " Марина",
+      "Feb",
+      " शिल्प",
+      " garden",
+      " pleased",
+      " typesetting",
+      " noter",
+      " piece",
+      " excepted",
+      " ankle"
+     ],
+     "coef": [
+      0.017,
+      0.0556,
+      0.0485,
+      0.0154,
+      0.0,
+      0.0217,
+      0.0166,
+      0.0571,
+      0.0107,
+      0.0266
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "40": [
+    {
+     "label": "black",
+     "explained": 0.014,
+     "support": [
+      " tind",
+      "losses",
+      "zać",
+      " いた",
+      " zusätzlich",
+      "Communic",
+      "ීමට",
+      " laces",
+      " Abon",
+      " packer"
+     ],
+     "coef": [
+      0.0,
+      0.0041,
+      0.0118,
+      0.0413,
+      0.0547,
+      0.0207,
+      0.0074,
+      0.0306,
+      0.0023,
+      0.0354
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0118,
+     "support": [
+      " জটিল",
+      "Smoke",
+      " navigate",
+      " italy",
+      " ion",
+      " Zeiss",
+      "部队",
+      " SGS",
+      " koska",
+      " tóp"
+     ],
+     "coef": [
+      0.0714,
+      0.005,
+      0.0564,
+      0.0345,
+      0.0008,
+      0.0357,
+      0.0,
+      0.0505,
+      0.0627,
+      0.0
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0156,
+     "support": [
+      "喝酒",
+      "ูก",
+      " szy",
+      " poin",
+      " szá",
+      " الليل",
+      "ו",
+      "팁",
+      " Exxon",
+      " Waz"
+     ],
+     "coef": [
+      0.0,
+      0.0468,
+      0.0695,
+      0.0,
+      0.0223,
+      0.0221,
+      0.0461,
+      0.0544,
+      0.0249,
+      0.0268
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0115,
+     "support": [
+      "note",
+      " Вели",
+      " litres",
+      " diberi",
+      " contended",
+      " 타고",
+      " Stock",
+      " युग्",
+      " ڈویل",
+      " Hôm"
+     ],
+     "coef": [
+      0.0,
+      0.037,
+      0.0384,
+      0.023,
+      0.0551,
+      0.047,
+      0.0011,
+      0.0716,
+      0.0464,
+      0.0368
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0084,
+     "support": [
+      "ToListAsync",
+      " FB",
+      "giers",
+      " classifying",
+      " resonator",
+      " Metallurgy",
+      " स्‍",
+      "ຊ",
+      " tờ",
+      " Explor"
+     ],
+     "coef": [
+      0.0,
+      0.0335,
+      0.0,
+      0.0119,
+      0.0161,
+      0.0427,
+      0.0764,
+      0.0449,
+      0.0198,
+      0.0324
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0116,
+     "support": [
+      " বললাম",
+      "土地",
+      " herbal",
+      "ោក",
+      " illo",
+      " swatch",
+      "bboxes",
+      "对着",
+      " terhadap",
+      " koska"
+     ],
+     "coef": [
+      0.0,
+      0.0113,
+      0.0,
+      0.0,
+      0.0548,
+      0.0217,
+      0.0,
+      0.0203,
+      0.02,
+      0.0355
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0129,
+     "support": [
+      " perceptual",
+      " dissatisfied",
+      " Jeu",
+      " ability",
+      " derog",
+      " implicated",
+      " TextBox",
+      " பாடல்",
+      " הצ",
+      " disillusioned"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0373,
+      0.1144,
+      0.0273,
+      0.0558,
+      0.0785,
+      0.0236,
+      0.0342,
+      0.0527
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0083,
+     "support": [
+      " гі",
+      " psychic",
+      "हरू",
+      " степен",
+      " predator",
+      " связано",
+      " колдон",
+      "زش",
+      "னும்",
+      " ability"
+     ],
+     "coef": [
+      0.0402,
+      0.0358,
+      0.0,
+      0.0,
+      0.0083,
+      0.0118,
+      0.0496,
+      0.0481,
+      0.0455,
+      0.0867
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0127,
+     "support": [
+      "ethyst",
+      " дома",
+      "ழி",
+      "ிறான்",
+      " antique",
+      "াদে",
+      " डोनाल्ड",
+      " ehrlich",
+      "filePath",
+      " iyo"
+     ],
+     "coef": [
+      0.0184,
+      0.0,
+      0.038,
+      0.0056,
+      0.0152,
+      0.0299,
+      0.0,
+      0.053,
+      0.0644,
+      0.0506
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0119,
+     "support": [
+      " vulgaris",
+      " Skipping",
+      "Editorial",
+      " покри",
+      " luxurious",
+      " Download",
+      " 모르",
+      " Zucker",
+      " FILE",
+      " تخص"
+     ],
+     "coef": [
+      0.0255,
+      0.0,
+      0.0132,
+      0.0113,
+      0.0,
+      0.0013,
+      0.0615,
+      0.0517,
+      0.0712,
+      0.0376
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "42": [
+    {
+     "label": "black",
+     "explained": 0.0084,
+     "support": [
+      "لک",
+      "適切な",
+      " Kxh",
+      " Creole",
+      "volence",
+      " rivals",
+      " मददगार",
+      " patched",
+      "</a>",
+      "setUser"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0362,
+      0.0523,
+      0.0114,
+      0.0273,
+      0.0283,
+      0.0336,
+      0.0543,
+      0.0437
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0076,
+     "support": [
+      " holographic",
+      " Reprinted",
+      " зала",
+      " grunge",
+      " Hurst",
+      " powering",
+      " ialah",
+      " flock",
+      " telefono",
+      " المختلفة"
+     ],
+     "coef": [
+      0.0641,
+      0.0,
+      0.0455,
+      0.0,
+      0.0295,
+      0.0,
+      0.0722,
+      0.0,
+      0.041,
+      0.0567
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0067,
+     "support": [
+      "કિંગ",
+      "vercel",
+      " Scorpion",
+      " पाटील",
+      " Pistol",
+      "atched",
+      " cardamom",
+      " MVC",
+      " sexuales",
+      " JPMorgan"
+     ],
+     "coef": [
+      0.0,
+      0.0354,
+      0.0115,
+      0.0111,
+      0.0457,
+      0.0,
+      0.0417,
+      0.0396,
+      0.02,
+      0.0343
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0064,
+     "support": [
+      " shrouded",
+      " prematurely",
+      " Utilize",
+      " cms",
+      " stool",
+      " Whirl",
+      " upstream",
+      " ब्रे",
+      " bruk",
+      " interviewee"
+     ],
+     "coef": [
+      0.0,
+      0.009,
+      0.0001,
+      0.0092,
+      0.0405,
+      0.0497,
+      0.0,
+      0.0611,
+      0.0078,
+      0.0218
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.005,
+     "support": [
+      "寶寶",
+      " PB",
+      "svet",
+      " القدم",
+      " respirator",
+      "一个",
+      " hopes",
+      " paintbrush",
+      " l",
+      "けて"
+     ],
+     "coef": [
+      0.0,
+      0.0174,
+      0.0024,
+      0.0038,
+      0.0,
+      0.0301,
+      0.0,
+      0.0399,
+      0.0151,
+      0.0109
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0067,
+     "support": [
+      "طلاع",
+      " Brussel",
+      " bitmaps",
+      "<sup>",
+      " بتاريخ",
+      " DSLR",
+      " даль",
+      " poils",
+      " Skyl",
+      " dey"
+     ],
+     "coef": [
+      0.0283,
+      0.0016,
+      0.0202,
+      0.0558,
+      0.0292,
+      0.0525,
+      0.0272,
+      0.0418,
+      0.0235,
+      0.0
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0058,
+     "support": [
+      " temprana",
+      " concealment",
+      " hobby",
+      " form",
+      " scenery",
+      " vacations",
+      " ihrer",
+      " rozwo",
+      " sights",
+      " স্থগিত"
+     ],
+     "coef": [
+      0.0113,
+      0.0164,
+      0.015,
+      0.0004,
+      0.0235,
+      0.0133,
+      0.0569,
+      0.0482,
+      0.0308,
+      0.0427
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0054,
+     "support": [
+      " ঘনিষ্ঠ",
+      " மேலும்",
+      " chans",
+      " victoria",
+      " colony",
+      " Peloton",
+      " threaded",
+      " mushroom",
+      " Restriction",
+      " episode"
+     ],
+     "coef": [
+      0.0,
+      0.0034,
+      0.0079,
+      0.0331,
+      0.0204,
+      0.0155,
+      0.0,
+      0.0223,
+      0.0174,
+      0.029
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0078,
+     "support": [
+      "getDeclared",
+      " Romero",
+      " marginBottom",
+      "го",
+      "yahoo",
+      " confines",
+      "ḷ",
+      " eagerness",
+      " சார்ந்த",
+      " fancy"
+     ],
+     "coef": [
+      0.0041,
+      0.0,
+      0.0473,
+      0.0368,
+      0.0,
+      0.0247,
+      0.0311,
+      0.0302,
+      0.0377,
+      0.0371
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0062,
+     "support": [
+      "ष्क",
+      " basicamente",
+      "invokeLater",
+      " অভিব্যক্তি",
+      " convict",
+      " মন্ত্রণালয়",
+      " obligated",
+      "<i>",
+      " presentada",
+      " overarching"
+     ],
+     "coef": [
+      0.0112,
+      0.0111,
+      0.0,
+      0.0913,
+      0.0324,
+      0.0,
+      0.0173,
+      0.0272,
+      0.0127,
+      0.013
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "44": [
+    {
+     "label": "black",
+     "explained": 0.006,
+     "support": [
+      " boyhood",
+      " permanent",
+      " रहो",
+      " прис",
+      " trivia",
+      " 温",
+      " sunday",
+      " philanthropist",
+      "这样一个",
+      "Notably"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0176,
+      0.0149,
+      0.0278,
+      0.0,
+      0.0318,
+      0.0282,
+      0.0123,
+      0.0183
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.008,
+     "support": [
+      "aland",
+      "кован",
+      "odendron",
+      " creeks",
+      " garantiert",
+      "ህ",
+      " tratando",
+      "年モデル",
+      "स्कृत",
+      " genug"
+     ],
+     "coef": [
+      0.0,
+      0.022,
+      0.0,
+      0.0318,
+      0.0106,
+      0.0331,
+      0.0179,
+      0.017,
+      0.0149,
+      0.0544
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0099,
+     "support": [
+      "exploded",
+      "getStock",
+      "াচিত",
+      " склады",
+      " organizing",
+      " attendant",
+      " রাখেন",
+      " 第",
+      " overworked",
+      " Márquez"
+     ],
+     "coef": [
+      0.0093,
+      0.0011,
+      0.011,
+      0.0681,
+      0.0209,
+      0.0202,
+      0.0151,
+      0.0483,
+      0.0407,
+      0.0202
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0083,
+     "support": [
+      " bn",
+      " Neuer",
+      "spike",
+      "ชาย",
+      "numericUpDown",
+      " Xs",
+      " мене",
+      " starred",
+      " اقوام",
+      " Charleston"
+     ],
+     "coef": [
+      0.0074,
+      0.0164,
+      0.0031,
+      0.0221,
+      0.0304,
+      0.0,
+      0.0439,
+      0.0444,
+      0.0,
+      0.0298
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0057,
+     "support": [
+      " 수가",
+      " sleeper",
+      " exerts",
+      " 대신",
+      "Permalink",
+      " shifter",
+      " lb",
+      " Venice",
+      " réc",
+      "秤"
+     ],
+     "coef": [
+      0.0,
+      0.0015,
+      0.0104,
+      0.02,
+      0.0056,
+      0.0122,
+      0.0306,
+      0.0141,
+      0.0,
+      0.0249
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0063,
+     "support": [
+      " Ambrose",
+      " જરૂરી",
+      "ွက်",
+      " জেল",
+      " impulses",
+      " darkMode",
+      "Greece",
+      " arco",
+      "一个",
+      "如果您"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0432,
+      0.0173,
+      0.0323,
+      0.0041,
+      0.0126,
+      0.0218,
+      0.012,
+      0.001
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0088,
+     "support": [
+      " Mudd",
+      "騨",
+      " a",
+      " সূরা",
+      "slideDuplicate",
+      " médaille",
+      " عنها",
+      " hoe",
+      " निच",
+      " overworked"
+     ],
+     "coef": [
+      0.013,
+      0.0,
+      0.0865,
+      0.0163,
+      0.0128,
+      0.006,
+      0.0128,
+      0.0278,
+      0.0084,
+      0.0349
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0074,
+     "support": [
+      " Irishman",
+      "curs",
+      "するように",
+      " rétro",
+      " teak",
+      "Swimming",
+      " ది",
+      " maž",
+      " aimé",
+      " storyline"
+     ],
+     "coef": [
+      0.0072,
+      0.0,
+      0.0338,
+      0.0373,
+      0.0339,
+      0.0111,
+      0.0444,
+      0.0069,
+      0.0394,
+      0.027
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0068,
+     "support": [
+      " союз",
+      "ද",
+      " appliqué",
+      "والي",
+      " scrollTo",
+      "मंद",
+      "させた",
+      "rivers",
+      "macros",
+      "同行"
+     ],
+     "coef": [
+      0.0069,
+      0.0,
+      0.0428,
+      0.0277,
+      0.0241,
+      0.0095,
+      0.0745,
+      0.0,
+      0.0278,
+      0.0234
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0061,
+     "support": [
+      " daar",
+      " kyun",
+      " càng",
+      " 住",
+      " calorimeter",
+      " সহযোগিতা",
+      " FUNCTION",
+      " ظاہر",
+      " moles",
+      " jogging"
+     ],
+     "coef": [
+      0.0017,
+      0.0146,
+      0.021,
+      0.0234,
+      0.0093,
+      0.0,
+      0.0123,
+      0.0151,
+      0.033,
+      0.0196
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "45": [
+    {
+     "label": "black",
+     "explained": 0.0071,
+     "support": [
+      " mitte",
+      "ปลอด",
+      " lively",
+      " recyclerView",
+      "supplement",
+      " vigilant",
+      " libra",
+      "率",
+      " стой",
+      "出售"
+     ],
+     "coef": [
+      0.0,
+      0.0025,
+      0.0195,
+      0.0284,
+      0.027,
+      0.0256,
+      0.0161,
+      0.0292,
+      0.0033,
+      0.0267
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0079,
+     "support": [
+      " necesito",
+      " Ники",
+      " attainable",
+      " وسلم",
+      "ucksack",
+      " gato",
+      " Catalonia",
+      " навер",
+      "त्ती",
+      "GORITH"
+     ],
+     "coef": [
+      0.0159,
+      0.0,
+      0.0142,
+      0.0111,
+      0.0314,
+      0.0349,
+      0.0275,
+      0.0372,
+      0.0,
+      0.0183
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0081,
+     "support": [
+      " tides",
+      " egypt",
+      " ஆலய",
+      " établ",
+      " kred",
+      " ability",
+      "汞",
+      "技巧",
+      " आल्सो",
+      "一股"
+     ],
+     "coef": [
+      0.0244,
+      0.018,
+      0.0,
+      0.0248,
+      0.0295,
+      0.0625,
+      0.0068,
+      0.0194,
+      0.0321,
+      0.0338
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0066,
+     "support": [
+      "Realistic",
+      " செல்வ",
+      "dosage",
+      " renversement",
+      "以往",
+      " spokesperson",
+      " раньше",
+      " calories",
+      " subpoena",
+      " versus"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0003,
+      0.0427,
+      0.0064,
+      0.0152,
+      0.0304,
+      0.0276,
+      0.0,
+      0.0637
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0054,
+     "support": [
+      " desto",
+      "ட்டுகள்",
+      "Toyota",
+      " retweet",
+      " jumpsuit",
+      " mottled",
+      " Entropy",
+      " Breed",
+      " てる",
+      " appell"
+     ],
+     "coef": [
+      0.0071,
+      0.0,
+      0.006,
+      0.0,
+      0.0468,
+      0.0237,
+      0.0342,
+      0.032,
+      0.0145,
+      0.0231
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.006,
+     "support": [
+      "诌",
+      " มูล",
+      " صعب",
+      "omé",
+      " där",
+      " PDFs",
+      " sliced",
+      "桅",
+      " Culver",
+      " и"
+     ],
+     "coef": [
+      0.004,
+      0.0448,
+      0.0042,
+      0.0,
+      0.0584,
+      0.0265,
+      0.0301,
+      0.0352,
+      0.0368,
+      0.049
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0072,
+     "support": [
+      " Charl",
+      " Scarborough",
+      " collections",
+      " sports",
+      " уровнем",
+      " Temper",
+      " ज़्यादा",
+      " Zamora",
+      " bachelor",
+      "Alias"
+     ],
+     "coef": [
+      0.007,
+      0.0,
+      0.0145,
+      0.0039,
+      0.0163,
+      0.0033,
+      0.0119,
+      0.0175,
+      0.0564,
+      0.0119
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0078,
+     "support": [
+      "ன",
+      "Poz",
+      "чники",
+      "一个小",
+      "තුර",
+      " चार्",
+      " 휘",
+      " руки",
+      " bbox",
+      "corder"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0347,
+      0.0264,
+      0.0094,
+      0.0338,
+      0.0071,
+      0.0306,
+      0.0297,
+      0.0209
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0078,
+     "support": [
+      " pencil",
+      "asText",
+      "晝",
+      " Ayl",
+      "就被",
+      " Sunrise",
+      " REIT",
+      " suitcase",
+      " शूटिंग",
+      "อาการ"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0524,
+      0.0344,
+      0.0226,
+      0.0281,
+      0.0197,
+      0.0407,
+      0.0372,
+      0.0281
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0047,
+     "support": [
+      " sò",
+      " panch",
+      "House",
+      " işlemler",
+      " parabolic",
+      "Recording",
+      "スの",
+      " screenshot",
+      " брю",
+      " crippling"
+     ],
+     "coef": [
+      0.0194,
+      0.0211,
+      0.0214,
+      0.0618,
+      0.0256,
+      0.0134,
+      0.0453,
+      0.0184,
+      0.0379,
+      0.0403
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "46": [
+    {
+     "label": "black",
+     "explained": 0.0056,
+     "support": [
+      "糬",
+      " missp",
+      "PLY",
+      " skewers",
+      " oznac",
+      " overshoot",
+      "Fonte",
+      " acrylic",
+      " stocked",
+      " glycemic"
+     ],
+     "coef": [
+      0.0151,
+      0.0,
+      0.0043,
+      0.0008,
+      0.0176,
+      0.0148,
+      0.0355,
+      0.0048,
+      0.0463,
+      0.0324
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0068,
+     "support": [
+      " någon",
+      " farm",
+      " athe",
+      " irgende",
+      " ching",
+      " proble",
+      "狠狠",
+      " siren",
+      " yì",
+      " একা"
+     ],
+     "coef": [
+      0.0333,
+      0.0,
+      0.0141,
+      0.0163,
+      0.0159,
+      0.0258,
+      0.0208,
+      0.0245,
+      0.0316,
+      0.0222
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0069,
+     "support": [
+      " भटक",
+      " божомолдор",
+      "职位",
+      " Bora",
+      "ipton",
+      " sprawd",
+      "Cups",
+      " मौलिक",
+      "quele",
+      " Relating"
+     ],
+     "coef": [
+      0.0073,
+      0.027,
+      0.0311,
+      0.0071,
+      0.0239,
+      0.0363,
+      0.0,
+      0.0132,
+      0.021,
+      0.0417
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0061,
+     "support": [
+      "理事",
+      " مہارت",
+      " component",
+      " Üniversitesi",
+      "市",
+      " factoring",
+      "ObjectType",
+      " בכ",
+      " Suez",
+      "Mars"
+     ],
+     "coef": [
+      0.0,
+      0.0019,
+      0.0104,
+      0.0055,
+      0.0,
+      0.0099,
+      0.0,
+      0.0,
+      0.0396,
+      0.0455
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0063,
+     "support": [
+      " એ",
+      "providing",
+      "ด้",
+      " still",
+      " arada",
+      " tambah",
+      " sporty",
+      " insanın",
+      " procédés",
+      " quiser"
+     ],
+     "coef": [
+      0.0015,
+      0.0042,
+      0.0,
+      0.0,
+      0.0,
+      0.0119,
+      0.0305,
+      0.0466,
+      0.0441,
+      0.0396
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0066,
+     "support": [
+      "biggr",
+      " bì",
+      " CREDIT",
+      " библиотеки",
+      " curving",
+      " gorilla",
+      "生意",
+      " scrap",
+      "梯",
+      " bicycle"
+     ],
+     "coef": [
+      0.0,
+      0.0147,
+      0.0195,
+      0.0,
+      0.0301,
+      0.0253,
+      0.007,
+      0.0183,
+      0.0387,
+      0.0146
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0088,
+     "support": [
+      "被称为",
+      " Hir",
+      " dezvolt",
+      "安全性",
+      "topLeft",
+      " če",
+      " SPEED",
+      " spelt",
+      " maw",
+      " jaunes"
+     ],
+     "coef": [
+      0.0195,
+      0.0,
+      0.0,
+      0.0269,
+      0.0514,
+      0.0424,
+      0.0169,
+      0.0389,
+      0.0101,
+      0.0325
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0087,
+     "support": [
+      " Zach",
+      " وسط",
+      " datas",
+      " ব্রিজ",
+      " Choisissez",
+      "浔",
+      "ിലെ",
+      " EDGE",
+      " hooded",
+      " ничек"
+     ],
+     "coef": [
+      0.0,
+      0.0001,
+      0.0,
+      0.033,
+      0.0292,
+      0.0276,
+      0.003,
+      0.0185,
+      0.0327,
+      0.0269
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0074,
+     "support": [
+      "GOD",
+      " Commandments",
+      "outFile",
+      " Macedonia",
+      " femoral",
+      " capitol",
+      " Propulsion",
+      " HBC",
+      "atrical",
+      " işlemler"
+     ],
+     "coef": [
+      0.0,
+      0.0158,
+      0.0513,
+      0.0,
+      0.0,
+      0.0581,
+      0.0347,
+      0.0272,
+      0.0127,
+      0.0248
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0058,
+     "support": [
+      " শীত",
+      " Potatoes",
+      "ColumnHeaders",
+      " главы",
+      "ListOf",
+      " compré",
+      " glandular",
+      " lái",
+      " 士",
+      "者的"
+     ],
+     "coef": [
+      0.0353,
+      0.0,
+      0.0631,
+      0.0266,
+      0.024,
+      0.0076,
+      0.0262,
+      0.0248,
+      0.0502,
+      0.0129
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "48": [
+    {
+     "label": "black",
+     "explained": 0.0055,
+     "support": [
+      " fixing",
+      " fuego",
+      " forecast",
+      "头发",
+      " म्हणजे",
+      "নর",
+      "是很",
+      "Murphy",
+      " き",
+      "Reed"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0209,
+      0.0,
+      0.027,
+      0.0097,
+      0.0251,
+      0.0263,
+      0.044,
+      0.0298
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0076,
+     "support": [
+      " Roberta",
+      "Forge",
+      " frighten",
+      " comodidad",
+      " gradle",
+      "เท้า",
+      " gula",
+      "biology",
+      " délais",
+      "赂"
+     ],
+     "coef": [
+      0.0,
+      0.0,
+      0.0,
+      0.0536,
+      0.0431,
+      0.0247,
+      0.0416,
+      0.024,
+      0.0247,
+      0.0239
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0058,
+     "support": [
+      "qry",
+      "पीरिय",
+      " белорус",
+      " 이름",
+      " ശ",
+      " Tyre",
+      " pensé",
+      "するため",
+      "rze",
+      " toughest"
+     ],
+     "coef": [
+      0.0075,
+      0.0139,
+      0.015,
+      0.0193,
+      0.0095,
+      0.0024,
+      0.032,
+      0.007,
+      0.0329,
+      0.0286
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0065,
+     "support": [
+      "salmon",
+      " veículos",
+      "bracket",
+      "を迎",
+      " আল্লাহ",
+      " войне",
+      " Kyrgyzstan",
+      "្នែក",
+      " mengingat",
+      " besieged"
+     ],
+     "coef": [
+      0.0,
+      0.0267,
+      0.0289,
+      0.0302,
+      0.0015,
+      0.0195,
+      0.015,
+      0.0305,
+      0.0378,
+      0.0
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0062,
+     "support": [
+      " ولم",
+      " успе",
+      "likes",
+      " הור",
+      "φ",
+      " muối",
+      "檸",
+      "Philippines",
+      " umož",
+      " ярко"
+     ],
+     "coef": [
+      0.0388,
+      0.0,
+      0.0064,
+      0.0119,
+      0.0161,
+      0.0284,
+      0.0293,
+      0.0158,
+      0.0199,
+      0.0165
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0067,
+     "support": [
+      " beraber",
+      " getString",
+      "ús",
+      "description",
+      "uluh",
+      " Portugal",
+      " warrior",
+      " בש",
+      " الاستاذ",
+      "กรณี"
+     ],
+     "coef": [
+      0.0,
+      0.0175,
+      0.0,
+      0.0064,
+      0.0,
+      0.0112,
+      0.032,
+      0.0083,
+      0.0112,
+      0.0189
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0078,
+     "support": [
+      " Larsen",
+      " Estoy",
+      " ইলেক্ট্রো",
+      "sé",
+      " চেষ্ট",
+      " father",
+      " काउंसलिंग",
+      " ένα",
+      "</h4>",
+      " จึง"
+     ],
+     "coef": [
+      0.0035,
+      0.0,
+      0.0,
+      0.0125,
+      0.0,
+      0.0556,
+      0.0346,
+      0.0387,
+      0.0411,
+      0.0172
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0054,
+     "support": [
+      "르고",
+      "ালের",
+      " rede",
+      " verantwortlich",
+      " așa",
+      "了几",
+      "的所有",
+      "rmse",
+      " regulation",
+      "ស្"
+     ],
+     "coef": [
+      0.001,
+      0.0161,
+      0.0107,
+      0.0213,
+      0.0271,
+      0.017,
+      0.0,
+      0.0213,
+      0.0066,
+      0.0
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.008,
+     "support": [
+      " salió",
+      " Algeria",
+      "احت",
+      "Sunset",
+      "Вот",
+      " ولم",
+      " amén",
+      " গু",
+      "めでとう",
+      " pensé"
+     ],
+     "coef": [
+      0.0,
+      0.0195,
+      0.0245,
+      0.0,
+      0.0312,
+      0.0142,
+      0.0317,
+      0.0151,
+      0.0339,
+      0.0472
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0074,
+     "support": [
+      " REG",
+      "պես",
+      "GSM",
+      " apron",
+      " seeker",
+      "귤",
+      " groaned",
+      "を除",
+      " kata",
+      "adequ"
+     ],
+     "coef": [
+      0.0,
+      0.0131,
+      0.0,
+      0.0,
+      0.0,
+      0.0084,
+      0.0464,
+      0.0273,
+      0.0223,
+      0.014
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "50": [
+    {
+     "label": "black",
+     "explained": 0.0097,
+     "support": [
+      "Uttar",
+      "唐",
+      " ponies",
+      " sift",
+      "想到",
+      "rim",
+      " tournament",
+      "方向",
+      " جوس",
+      " учреждений"
+     ],
+     "coef": [
+      0.0177,
+      0.0263,
+      0.0,
+      0.0435,
+      0.0505,
+      0.0196,
+      0.0173,
+      0.0034,
+      0.0465,
+      0.0421
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0074,
+     "support": [
+      " গোল",
+      " daar",
+      " alcanzó",
+      "द्दाख",
+      "一台",
+      " 그래서",
+      " depos",
+      " glycoprotein",
+      " Flask",
+      " MySQL"
+     ],
+     "coef": [
+      0.0,
+      0.0078,
+      0.0431,
+      0.0125,
+      0.0075,
+      0.0414,
+      0.0283,
+      0.0336,
+      0.0286,
+      0.0326
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0077,
+     "support": [
+      " défaut",
+      " Lanc",
+      "స్ప",
+      "させて",
+      "abri",
+      "ด้",
+      "ahuasca",
+      " Trojans",
+      " 그리스",
+      "ளான"
+     ],
+     "coef": [
+      0.0534,
+      0.031,
+      0.0,
+      0.0579,
+      0.0,
+      0.0349,
+      0.015,
+      0.0201,
+      0.0381,
+      0.0321
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0073,
+     "support": [
+      " എന്നാണ്",
+      " Algebras",
+      " adesso",
+      " Lemma",
+      " அரசிய",
+      " শপথ",
+      " доро",
+      " Optional",
+      " Roosevelt",
+      " topping"
+     ],
+     "coef": [
+      0.0,
+      0.0099,
+      0.0301,
+      0.0114,
+      0.0,
+      0.0435,
+      0.0315,
+      0.0317,
+      0.0115,
+      0.01
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0062,
+     "support": [
+      "Mix",
+      " दशमलव",
+      " Excise",
+      "技巧",
+      "帖",
+      "cc",
+      "clone",
+      "と思っていた",
+      " PAINT",
+      " élytres"
+     ],
+     "coef": [
+      0.0,
+      0.0155,
+      0.022,
+      0.0,
+      0.0276,
+      0.0302,
+      0.0337,
+      0.0296,
+      0.022,
+      0.0351
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0064,
+     "support": [
+      " vicino",
+      " các",
+      " élytres",
+      "इंदौर",
+      " vices",
+      " graz",
+      "庣",
+      "ه",
+      "iklet",
+      " Faced"
+     ],
+     "coef": [
+      0.0214,
+      0.0,
+      0.0348,
+      0.0064,
+      0.0173,
+      0.0231,
+      0.0081,
+      0.0102,
+      0.0066,
+      0.0236
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.0064,
+     "support": [
+      " vlo",
+      " composure",
+      "合",
+      "事業",
+      " index",
+      "lingual",
+      " kỳ",
+      " Some",
+      " evoke",
+      "なの"
+     ],
+     "coef": [
+      0.0328,
+      0.0003,
+      0.0362,
+      0.0,
+      0.0061,
+      0.0264,
+      0.0354,
+      0.0152,
+      0.0545,
+      0.0
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0064,
+     "support": [
+      " এক্ষেত্রে",
+      " fuselage",
+      " Shack",
+      " giggle",
+      "zub",
+      " فرهنگ",
+      " Greek",
+      "agascar",
+      "फत",
+      " परिचय"
+     ],
+     "coef": [
+      0.0,
+      0.0008,
+      0.0237,
+      0.027,
+      0.0316,
+      0.0268,
+      0.0546,
+      0.006,
+      0.038,
+      0.031
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0089,
+     "support": [
+      " 최종",
+      "亳",
+      " joyas",
+      " खबर",
+      "uela",
+      "粝",
+      " प्रदर्शित",
+      "rhe",
+      " sukses",
+      "namespace"
+     ],
+     "coef": [
+      0.0473,
+      0.0,
+      0.0389,
+      0.0186,
+      0.0,
+      0.0427,
+      0.0541,
+      0.0266,
+      0.0199,
+      0.032
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0079,
+     "support": [
+      " scorched",
+      " kleur",
+      " можливість",
+      " That",
+      "roves",
+      "pian",
+      " ENGLISH",
+      "一边",
+      " least",
+      "通路"
+     ],
+     "coef": [
+      0.0284,
+      0.0247,
+      0.043,
+      0.0421,
+      0.034,
+      0.0166,
+      0.0349,
+      0.0185,
+      0.05,
+      0.0335
+     ],
+     "own_token_rank": null
+    }
+   ],
+   "52": [
+    {
+     "label": "black",
+     "explained": 0.0064,
+     "support": [
+      "Matic",
+      " marcó",
+      "ly",
+      " virtuales",
+      " Greensboro",
+      " الجرس",
+      " smugg",
+      " নীর",
+      "ized",
+      " यानी"
+     ],
+     "coef": [
+      0.006,
+      0.0136,
+      0.0,
+      0.0137,
+      0.0343,
+      0.0129,
+      0.0425,
+      0.0368,
+      0.0143,
+      0.026
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "blue",
+     "explained": 0.0049,
+     "support": [
+      " Hatch",
+      " MSE",
+      "นะ",
+      " hour",
+      " ক্যাম্প",
+      " Sleeps",
+      " Lane",
+      " Partie",
+      " speckled",
+      "olated"
+     ],
+     "coef": [
+      0.015,
+      0.0,
+      0.0318,
+      0.0242,
+      0.0,
+      0.0219,
+      0.0139,
+      0.0312,
+      0.0284,
+      0.0102
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "brown",
+     "explained": 0.0075,
+     "support": [
+      "upcoming",
+      " predator",
+      " चन्द्र",
+      "prog",
+      " खेलते",
+      " مشر",
+      " capacity",
+      "bhar",
+      " परिचाल",
+      " ویک"
+     ],
+     "coef": [
+      0.0,
+      0.0495,
+      0.0354,
+      0.0,
+      0.0358,
+      0.0264,
+      0.0163,
+      0.0268,
+      0.0424,
+      0.0227
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gold",
+     "explained": 0.0059,
+     "support": [
+      " Tm",
+      " dispos",
+      "owered",
+      " alianza",
+      "リエ",
+      "𒉰",
+      " fem",
+      " ಅಂ",
+      " realist",
+      " frail"
+     ],
+     "coef": [
+      0.012,
+      0.0428,
+      0.0156,
+      0.0232,
+      0.0,
+      0.0202,
+      0.0144,
+      0.0256,
+      0.0131,
+      0.0239
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "gray",
+     "explained": 0.0067,
+     "support": [
+      "趼",
+      "estion",
+      "izações",
+      " llamados",
+      " wersji",
+      "헉",
+      " hydrological",
+      " своим",
+      "和服务",
+      " hospitable"
+     ],
+     "coef": [
+      0.0183,
+      0.0,
+      0.0151,
+      0.0002,
+      0.0308,
+      0.0,
+      0.0365,
+      0.0343,
+      0.0254,
+      0.0254
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "green",
+     "explained": 0.0071,
+     "support": [
+      "rVert",
+      " japonais",
+      "関連記事",
+      " bevel",
+      " up",
+      "させた",
+      " componentWill",
+      "proposition",
+      " PPE",
+      " satellite"
+     ],
+     "coef": [
+      0.0055,
+      0.0,
+      0.0083,
+      0.0183,
+      0.0468,
+      0.0712,
+      0.0311,
+      0.0241,
+      0.0415,
+      0.0159
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "pink",
+     "explained": 0.007,
+     "support": [
+      "nungen",
+      "zechoslovak",
+      " marm",
+      " lambda",
+      " chond",
+      "اردوش",
+      " solen",
+      " activated",
+      "eneg",
+      "reasonably"
+     ],
+     "coef": [
+      0.0,
+      0.0312,
+      0.0257,
+      0.0394,
+      0.0,
+      0.016,
+      0.0382,
+      0.016,
+      0.0243,
+      0.0213
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "purple",
+     "explained": 0.0056,
+     "support": [
+      " chàng",
+      " trúc",
+      " praktik",
+      " streamlit",
+      "괴",
+      " peringkat",
+      " والف",
+      "ストラ",
+      "كد",
+      " കോള"
+     ],
+     "coef": [
+      0.0043,
+      0.002,
+      0.0229,
+      0.0223,
+      0.0,
+      0.021,
+      0.0217,
+      0.0159,
+      0.0077,
+      0.0231
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "red",
+     "explained": 0.0075,
+     "support": [
+      " પ્રસ",
+      " extremal",
+      "ற்போது",
+      " stupe",
+      " വസ്തു",
+      " pensions",
+      " ORDER",
+      "TouchEvent",
+      " thoải",
+      "浠"
+     ],
+     "coef": [
+      0.0161,
+      0.0253,
+      0.0214,
+      0.0271,
+      0.0398,
+      0.0332,
+      0.0457,
+      0.012,
+      0.0195,
+      0.0013
+     ],
+     "own_token_rank": null
+    },
+    {
+     "label": "white",
+     "explained": 0.0074,
+     "support": [
+      " 서울",
+      " 그러면은",
+      " indicate",
+      " twos",
+      "싼",
+      " Conform",
+      " ড",
+      " دو",
+      " PROCUREMENT",
+      " davvero"
+     ],
+     "coef": [
+      0.0435,
+      0.0473,
+      0.0042,
+      0.0412,
+      0.0259,
+      0.0303,
+      0.0339,
+      0.0281,
+      0.0118,
+      0.0253
+     ],
+     "own_token_rank": null
+    }
+   ]
+  }
+ }
+}

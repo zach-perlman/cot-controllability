@@ -1,0 +1,189 @@
+{
+ "experiment": "exp17_jspace_keys",
+ "question": "Is the key of a no-CoT brew lookup (the intermediate colour s1 on a correct h=2 item) carried by the J++ subspace (the 'global workspace') or outside it?",
+ "background": {
+  "paper": "Global-workspace / Jacobian-lens paper (anthropics/jacobian-lens): on two-hop factual prompts the J-space part of an intermediate's probe, swapped by a clamped coordinate swap, moves the answer in 61% of items vs 28% for the remainder, and the remainder's effect falls to 6% when the J coordinates are clamped; the J part explains ~10-15% of the probe's variance.",
+  "ours": "exp15/exp16 (Qwen3.6-27B): token-lens key swaps (J++ included) +0.03-0.13 over the random null, difference-of-means +0.56-0.67 at layer 40; lens answer swaps succeed (0.72-0.89). exp14 (Gemma): J++ reads s1 at the final position at AUC 0.66 where a probe reads it at 1.00."
+ },
+ "models": {
+  "qwen": {
+   "model": "Qwen3.6-27B",
+   "n_layers": 64,
+   "jpp": "koayon/jpp-lenses qwen3.6-27b/lens.pt (snapshot 6c96867a), layers 0-62, target block 63",
+   "final_norm_gain": "1 + norm.weight",
+   "unembedding": "lm_head.weight"
+  },
+  "gemma": {
+   "model": "google/gemma-4-31B-it",
+   "n_layers": 60,
+   "jpp": "exp12's own J++ fit for the -it model, cache/exp12/lenses/jpp_64p.pt (64 prompts; layers 0-58 even, plus 15 and 45). Not koayon's Gemma lens: it is fitted on the base model and transferred worse in exp12 (eval_transfer_v1)",
+   "final_norm_gain": "norm.weight",
+   "unembedding": "embed_tokens.weight (tied)"
+  }
+ },
+ "methods": {
+  "swap": "Clamped coordinate swap (exp17_swaps): for the pair V = [v(c); v(c')] at a layer, coordinates c(h) = V^+ h; with c0 from the clean pass of the same batch, h <- h + (c0 + alpha (sigma(c0) - c0) - c(h)) V at every J++-fitted block of a band and every window position. alpha = 1 exchanges the two coordinates; clamping to clean targets means later layers do not swap back.",
+  "window": "Brew primary: the start colour token through the last prompt token (after the rule table; an all-positions edit would also rewrite the table's rule lines). Secondary, test only: all positions. Factual positive control: every position after BOS (the paper's).",
+  "families": {
+   "jpp": "unit J++ vectors of the colour tokens: J_l^T (gain * W_U[' colour'])",
+   "dm_full": "unit difference of means of the final-position residual, key colour vs the rest, on correct h=2/h=3 dev items (exp15's diffmeans direction; key = s_{h-1})",
+   "dm_jpart": "dm_full's J++ part: non-negative gradient pursuit, k = 25 (the paper's multi-hop k), over unit J++ vectors of every readable token (a letter or digit; special tokens excluded)",
+   "dm_rem": "dm_full - dm_jpart",
+   "ar_full / ar_jpart / ar_rem": "Qwen only, layer 42: exp15's NLA reconstructor colour vectors, centred over the 10 colours and unit, split the same way"
+  },
+  "edit_kinds": {
+   "swap": "the family's own coordinate swap (natural size)",
+   "matched": "the family's swap rescaled per position to the norm of the full direction's swap (primary for J-part vs remainder: AGENTS.md's matched dose)",
+   "null": "a fixed random unit direction per (item, arm, layer) at the reference swap's norm",
+   "clamp": "optional: the colour pair's J++ coordinates held at their clean values (the paper's control)"
+  },
+  "decomposition_chance_level": "explained variance of 10 random unit vectors per layer under the same pursuit: the share of dm_full's variance a 25-atom J++ fit explains by chance"
+ },
+ "items": {
+  "dev": "exp11's single_test bank (250 per h; exp15's dev bank and exp12's Gemma gate): correct h=2 items with exp15's swap targets (exp15_edits.swap_targets, same seeds); difference of means from correct h=2/h=3 dev items",
+  "test": "a fresh bank shared by both models: seed exp17_test_20261012, single_first format, 1200 h=2 eval items + 1 shot, unique against exp11's, exp15's and exp16's banks; written only after the lock",
+  "eligible": "correct h=2 items (baseline argmax = gold) whose in-batch clean pass also gives gold and that have swap targets",
+  "factual": "probe-swap.json (anthropics/jacobian-lens @ 581d3986, Apache 2.0, sha256 a0edd27c...): 90 two-hop prompts, raw text, no chat template; each word = its first token after a space; eligible = clean next-token argmax is the answer's token"
+ },
+ "outcomes": {
+  "key arms": "argmax over the 10 colour tokens: success T(s1') (the written colour was looked up), start_swap T^2(s1'), echo s1' (said, not looked up), unchanged gold, other",
+  "answer arms": "success a' (said), relookup T(a') (looked up again), unchanged gold, other",
+  "factual": "success = full-vocabulary next-token argmax is swap_answer's token",
+  "collateral": "probability mass on the 10 colour tokens; 'other' rate; dose = mean |delta| / |h| over the edit",
+  "no_llm_judge": "every metric is an argmax rate; no judged outputs"
+ },
+ "arms": {
+  "posctl": "per band (multi-layer) x alpha in (1, 2, 4): J++ intermediate swap, J++ answer swap (the paper's check that the effect is not just writing the answer), random null at the intermediate swap's size",
+  "dev": "per band x alpha (bands (1, 2, 4, 8), single layer (2, 4, 8, 16)): jpp and dm_full key swaps, each with its own null; Qwen layer 42 also ar_full and its null; J++ answer swap at the two smallest alphas per band; one alpha-0 arm (must change nothing)",
+  "test": "at the locked settings: jpp_raw, null_jpp, jpp_answer (at jpp's setting); dm_full, dm_jpart (matched), dm_rem (matched), dm_jpart_own and dm_rem_own (natural size, the paper's protocol), dm_rem_clamp (matched remainder, J++ colour coordinates clamped), null_dm, other_item (dm_full swap of an unrelated colour pair), jpp_at_dm (raw J++ at dm's setting); Qwen: ar_full, ar_jpart, ar_rem (matched), null_ar; all positions: jpp_raw_all, dm_full_all, null_dm_all",
+  "bands": {
+   "qwen": {
+    "b24_36": [
+     24,
+     36
+    ],
+    "b30_42": [
+     30,
+     42
+    ],
+    "b36_48": [
+     36,
+     48
+    ],
+    "b42_54": [
+     42,
+     54
+    ],
+    "b24_48": [
+     24,
+     48
+    ],
+    "l42": [
+     42,
+     42
+    ]
+   },
+   "gemma": {
+    "b22_34": [
+     22,
+     34
+    ],
+    "b28_40": [
+     28,
+     40
+    ],
+    "b34_46": [
+     34,
+     46
+    ],
+    "b40_52": [
+     40,
+     52
+    ],
+    "b22_46": [
+     22,
+     46
+    ]
+   }
+  }
+ },
+ "selection_rule": "Per model and family (jpp, dm, ar): the dev (band, alpha) with the largest key-swap success minus its own null's success; within 0.01 of the best, the smaller alpha, then the band with fewer layers, then the earlier band. J-part / remainder arms use dm's setting (they are not selected on). Computed by exp17.py select; a human approves before the lock.",
+ "hypotheses": {
+  "H1_positive_control": "On the factual prompts, the J++ intermediate swap moves the answer to swap_answer more often than the null (the paper's effect reproduces with our lenses and swap).",
+  "H2_main": "On the brew test items, the J-part of the key direction (matched dose) swaps keys at a rate different from the remainder's (matched dose). The paper predicts J-part > remainder; our prior (exp14 reads, exp15 lens writes) predicts remainder >= J-part, i.e. the key is outside the workspace.",
+  "H3_clamp": "If the remainder swaps keys, clamping the J++ colour coordinates does not remove that effect (paper: 28% -> 6% on factual intermediates).",
+  "H4_dissociation": "The raw J++ answer swap succeeds while the raw J++ key swap does not: the workspace carries the output colour but not the lookup key."
+ },
+ "confirmatory_tests": {
+  "per_model": [
+   "T1 dm_jpart - dm_rem success (paired by item): mean, 95% bootstrap CI (10k, items)",
+   "T2 each of jpp_raw, dm_full, dm_jpart, dm_rem, dm_jpart_own, dm_rem_own, dm_rem_clamp (and Qwen ar_full, ar_jpart, ar_rem) vs its null: success difference, one-sided bootstrap p, Holm within model",
+   "T3 dm_rem - dm_rem_clamp success (paired): CI",
+   "T4 jpp_answer success - jpp_raw success (paired): CI"
+  ],
+  "reading": "'Key in J++ space' needs T1's CI above 0 and dm_jpart above its null; 'key outside J++ space' needs T1's CI below 0 and dm_rem above its null; otherwise inconclusive. Also reported: J-part and remainder gains as fractions of dm_full's gain, with doses."
+ },
+ "power": "Expected eligible test items: Qwen ~860 (h=2 dev accuracy 0.764), Gemma ~1100 (0.928). At n=860 a rate's SE is <= 0.017; paired differences of ~0.06 are resolvable.",
+ "stop_rules": {
+  "K0": "exp17.py check fails (trial path, hook numbering, or dev accuracy vs exp11/exp12): stop that model.",
+  "K1": "The positive control's best J++ intermediate swap gain over its null is < 0.15 on a model: report it and ask before reading that model's brew J++ results as a test of the paper's claim.",
+  "K2": "dm_full's selected dev gain over its null is < 0.10 on a model: the decomposition has nothing to split under this protocol; stop and ask (do not switch protocol unasked).",
+  "zero_arm": "the alpha-0 arm must reproduce the clean outcome on every eligible dev item"
+ },
+ "deviations_from_paper": [
+  "brew lookup keys, not factual intermediates (the factual set is run as the positive control)",
+  "difference-of-means key direction instead of a logistic probe (exp15's best writer; one vector per colour)",
+  "J++ lenses instead of the paper's J-lens; Gemma's J++ fit has only even layers (and 15, 45), so its bands edit about every other block",
+  "brew window starts after the rule table (all positions run as a secondary test arm)",
+  "matched-dose J-part/remainder is primary; the paper's natural-size swap is reported alongside"
+ ],
+ "run_plan": {
+  "order": "Qwen then Gemma, never together on the GPU",
+  "check_in_1": "check, prep (decomposition stats), positive control, both models",
+  "check_in_2": "dev grid both models, select, proposed lock (human approval)",
+  "check_in_3": "lock, test bank, test arms both models, report and figure",
+  "stages": "EXP17_MODEL=<m> exp17.py baseline:dev check prep posctl | dev select | baseline:test test; exp17.py bank once after the lock"
+ },
+ "status": "locked",
+ "written": "2026-10-12T20:57:31",
+ "locked": "2026-10-12T22:44:16",
+ "approved_by": "zach-perlman",
+ "locked_settings": {
+  "qwen": {
+   "jpp": {
+    "band": "b24_36",
+    "alpha": 8.0,
+    "dev_gain": 0.0365
+   },
+   "dm": {
+    "band": "b42_54",
+    "alpha": 1.0,
+    "dev_gain": 0.4167
+   },
+   "ar": {
+    "band": "l42",
+    "alpha": 4.0,
+    "dev_gain": 0.1615
+   },
+   "answer_control": {
+    "band": "b48_60",
+    "alpha": 2.0,
+    "dev_success": 0.974,
+    "dev_null": 0.0052,
+    "rule": "earliest control band, then smallest alpha, with dev success - null >= 0.9"
+   }
+  }
+ },
+ "pending_models": [
+  "gemma: raw J++ atoms lie 80-95% outside the residual stream's occupied subspace at layers 28-58 (gemma/occupied_subspace.json), so its J++ swaps move ~nothing and its matched J-part and null arms destroy the output; Gemma-it cannot do the raw-text factual control (0/76). An occupied-subspace variant (atoms and nulls projected onto the occupied subspace; chat-template factual control) is locked in a separate addendum before its test."
+ ],
+ "deviations_since_draft": [
+  "Matched-norm fix: null and matched arms use the reference arm's per-layer edit norms recorded in its own forward; the first implementation recomputed them per layer (nulls ran ~4x the swap's dose); those trials are superseded (cache/exp17/qwen/superseded_v0_unmatched_null).",
+  "Every forward uses equal-length, unpadded batches: padded batches moved Gemma's logits by up to 1.4; padded artifacts superseded; the check was rerun as check_v2.json (Qwen passes).",
+  "Gemma check_v2: h=3 dev accuracy 194/250 vs exp12's 190 (exp12's own loader gives 194 today: software stack; gemma/check_v2_deviation.json). Gemma is pending.",
+  "Added before the lock: test arm jpp_matched (raw J++ colour swap at dm_full's band, layers, positions and recorded norms) and test T5 (dm_full - jpp_matched); a preview stage (the test arms on dev at the dev selection; nothing selected on).",
+  "Added dev-only diagnostics: exp17_orth (factual control with the answer pair's span removed; natural-size inter_orth is ill-conditioned, only the matched inter_orth_m is reported), exp17_ksweep (pursuit k = 25/100/400 vs random), exp17_late (in-task J++ answer swap at later bands), exp17_active (occupied subspace of the residual stream and J++ atoms' share inside it).",
+  "Added test arms: dose-response (dm_jpart and jpp_matched at 2x and 4x dm_full's recorded norms, each with null_dm at the same size) and the in-task control (jpp_answer_ctl, gold -> a' at the answer_control setting chosen from exp17_late's dev trials by the stated rule, with its null); removed jpp_at_dm (subsumed by jpp_matched). Dose-response and control comparisons are secondary: paired CIs, outside the Holm family.",
+  "Kernels: Qwen runs with fla's chunk_gated_delta_rule and transformers' PyTorch causal_conv1d, as in dev (causal-conv1d not installed: at most 8.9% faster, log/exp17/kernel_bench.log)."
+ ]
+}

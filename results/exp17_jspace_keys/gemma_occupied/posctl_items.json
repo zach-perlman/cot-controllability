@@ -1,0 +1,23 @@
+{
+ "source": {
+  "repo": "https://github.com/anthropics/jacobian-lens",
+  "commit": "581d398613e5602a5af361e1c34d3a92ea82ba8e",
+  "path": "data/experiments/probe-swap.json",
+  "sha256": "a0edd27ca23f7b4d0fbe90448c2ddcc7457a3d812121bf024ed12a032ff86796"
+ },
+ "n_items": 90,
+ "n_usable": 76,
+ "chat_template": true,
+ "instruction": "Complete the sentence with one word. Reply with that word only.\n\n",
+ "multi_token_words": {
+  "organ-location-brain": [
+   "swap_answer"
+  ],
+  "osu-rival-mascot": [
+   "answer"
+  ],
+  "person-century-lincoln": [
+   "swap_answer"
+  ]
+ }
+}

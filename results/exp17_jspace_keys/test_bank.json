@@ -1,0 +1,24 @@
+{
+ "seed": "exp17_test_20261012",
+ "format": "single_first",
+ "per_h": {
+  "2": 1200
+ },
+ "n_eval": 1200,
+ "content_key": "3810770928c2",
+ "items_sha256": "2e84f959bb6523b77e47f25dde7d2cbc7248ace7e8965dc49b9952fd3c1f9e89",
+ "requests_sha256": "b6697e901f639778a5d4295192670b63b0064b9989c24b834f8d29cc22ef373d",
+ "checked_unique_against": [
+  "dev",
+  "test",
+  "fmt_dev",
+  "fmt_same_dev",
+  "single_test",
+  "dev_twins",
+  "fmt_dev_twins",
+  "test_twins",
+  "single_test_twins",
+  "cache/exp15/items_test.jsonl",
+  "cache/exp16/items_test.jsonl"
+ ]
+}

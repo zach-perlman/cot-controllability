@@ -1,0 +1,57 @@
+{
+ "batched_vs_single": [
+  {
+   "n_tokens": 397,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.00011
+  },
+  {
+   "n_tokens": 397,
+   "argmax_same": true,
+   "colour_prob_max_diff": 1e-05
+  },
+  {
+   "n_tokens": 397,
+   "argmax_same": true,
+   "colour_prob_max_diff": 4e-05
+  },
+  {
+   "n_tokens": 397,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.00104
+  },
+  {
+   "n_tokens": 398,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.00098
+  },
+  {
+   "n_tokens": 398,
+   "argmax_same": true,
+   "colour_prob_max_diff": 0.01172
+  }
+ ],
+ "hook_layer": 24,
+ "hook_is_hidden_l+1": true,
+ "accuracy": {
+  "1": {
+   "n": 250,
+   "accuracy": 1.0,
+   "reference": 1.0,
+   "ok": true
+  },
+  "2": {
+   "n": 250,
+   "accuracy": 0.776,
+   "reference": 0.764,
+   "ok": true
+  },
+  "3": {
+   "n": 250,
+   "accuracy": 0.352,
+   "reference": 0.352,
+   "ok": true
+  }
+ },
+ "pass": true
+}

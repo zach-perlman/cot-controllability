@@ -1,0 +1,15 @@
+{
+ "check": "check_v2.json (stop rule K0)",
+ "failed_criterion": "dev h=3 accuracy 0.776 (194/250) vs exp12's recorded brew gate 0.760 (190/250): 4 items, tolerance 3",
+ "passed_criteria": ["equal-length batched text path == unbatched full model on 8 rows (colour logit diff 0.0)",
+                     "hook on block 22 sees hidden_states[23]",
+                     "h=1 accuracy 1.000 == exp12", "h=2 accuracy 0.928 == exp12 (the swap population)"],
+ "diagnosis": {
+  "exp12_loader_rerun_today": "AutoModelForImageTextToText, default attention (resolves to sdpa), unbatched: h=3 194/250, colour logits identical to exp17's baseline (max |diff| 0.000)",
+  "eager_attention": "h=3 193/250; argmax differs from exp17's baseline on 7 items; max |logit diff| 2.625",
+  "padded_batches": "the first check (check.json) used padded batches, which move Gemma's logits by up to 1.4 (log/exp17/gemma_batch_diag.log); exp17 now never pads",
+  "conclusion": "the 4-item gap is between exp12's software stack at the time and today's (transformers 5.17.0), on near-tie h=3 items; exp17's path is today's model exactly. h=3 enters exp17 only as difference-of-means training data."
+ },
+ "decision": "Gemma continues (prep posctl dev select) without re-running check; flagged to the human at check-in 2 and listed in the lock's deviations",
+ "logs": ["log/exp17/gemma_batch_diag.log", "log/exp17/gemma_attn_diag.log"]
+}
